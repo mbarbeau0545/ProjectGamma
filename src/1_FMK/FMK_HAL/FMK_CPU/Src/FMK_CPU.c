@@ -85,7 +85,7 @@ t_bool g_IsSysClkInit_b = (t_bool)False;
 
 /* CAUTION : Automatic generated code section for Variable: Start */
 /**< Variable to store information about the Dma and the Channel */
-t_sFMKCPU_DmaInfo g_DmaInfo_as[FMKCPU_DMA_CTRL_NB] = {
+t_sFMKCPU_DmaInfo g_DmaInfo_as[FMKCPU_DMA_CTRL_NB];/* = {
      {//------- DMA1_CONTROLLER -------//
         .c_clock_e = FMKCPU_RCC_CLK_DMA1,
         .channel_as = {
@@ -180,7 +180,7 @@ t_sFMKCPU_DmaInfo g_DmaInfo_as[FMKCPU_DMA_CTRL_NB] = {
 
         }
     },
-};
+}; */
 
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************

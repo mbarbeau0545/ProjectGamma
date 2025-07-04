@@ -17,7 +17,7 @@
 // *                      Includes
 // ********************************************************************
 #include "./FMKIO_ConfigSpecific.h"
-
+#include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
 // ********************************************************************
 // *                      Defines
 // ********************************************************************
@@ -148,6 +148,44 @@ t_eReturnCode FMKIO_GetGpioRccClock(t_eFMKIO_GpioPort f_gpioPort_e, t_eFMKCPU_Cl
     }
     return Ret_e;
 }
+
+/* CAUTION : Automatic generated code section for Exti IRQN_Handler: Start */
+/*********************************
+ * EXTI0_IRQHandler
+*********************************/
+void EXTI0_IRQHandler(void)               {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI1_IRQHandler
+*********************************/
+void EXTI1_IRQHandler(void)               {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI2_IRQHandler
+*********************************/
+void EXTI2_IRQHandler(void)               {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI3_IRQHandler
+*********************************/
+void EXTI3_IRQHandler(void)               {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI4_IRQHandler
+*********************************/
+void EXTI4_IRQHandler(void)               {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI9_5_IRQHandler
+*********************************/
+void EXTI9_5_IRQHandler(void)             {return FMKIO_BspRqst_InterruptMngmt();}
+
+/*********************************
+ * EXTI15_10_IRQHandler
+*********************************/
+void EXTI15_10_IRQHandler(void)           {return FMKIO_BspRqst_InterruptMngmt();}
+
+/* CAUTION : Automatic generated code section for Exti IRQN_Handler: End */
 //********************************************************************************
 //                      Local functions - Implementation
 //********************************************************************************

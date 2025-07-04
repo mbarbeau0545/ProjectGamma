@@ -107,7 +107,6 @@ class FMKIO_CodeGen():
         switch_gpio = ""
         switch_gpio_rcc  = ""
         func_irqn = ''
-        gpio_enable_clk = "/**< Variable to store the state of GPIO Clock */\nt_eFMKCPU_ClockPortOpe g_IsGpioClockEnable_ae[FMKIO_GPIO_PORT_NB];\n"
 
         enum_suffix_a: List[str] = []
         enum_description = ""
@@ -178,7 +177,7 @@ class FMKIO_CodeGen():
                         + '*********************************/\n' \
                         + f'void {exti_irqn[0]}(void)' \
                         + " " * (42 - len(f'void {exti_irqn[0]}(void)')) \
-                        + '{' + 'return s_FMKIO_BspRqst_InterruptMngmt();' + '}\n\n'
+                        + '{' + 'return FMKIO_BspRqst_InterruptMngmt();' + '}\n\n'
                         
 
         #---------------------------------------------------------------
@@ -541,19 +540,17 @@ class FMKIO_CodeGen():
         print("\t- For FMKIO.c file")
         
 
-        cls.code_gen.change_target_balise(TARGET_T_VARIABLE_START_LINE[4:], TARGET_T_VARIABLE_END_LINE[4:])
-        print("\t\t- variable for GPIO enum")
-        cls.code_gen._write_into_file(gpio_enable_clk, FMKIO_PATH)
 
-        print('\t\t- Exti IRQN Handler')
-        cls.code_gen.change_target_balise(TARGET_EXTI_X_IRQN_START, TARGET_EXTI_X_IRQN_END)
-        cls.code_gen._write_into_file(func_irqn, FMKIO_PATH)
         
         # for FMKIO
         print("\t- For FMKIO_ConfigSpec.c file")
         cls.code_gen.change_target_balise(TARGET_BALISE_SWITCH_GPIO_START, TARGET_BALISE_SWITCH_GPIO_END)
         print("\t\t- switch case to found stm GPIO from enum")
         cls.code_gen._write_into_file(switch_gpio, FMKIO_CONFIGSPEC_C)
+
+        print('\t\t- Exti IRQN Handler')
+        cls.code_gen.change_target_balise(TARGET_EXTI_X_IRQN_START, TARGET_EXTI_X_IRQN_END)
+        cls.code_gen._write_into_file(func_irqn, FMKIO_CONFIGSPEC_C)
 
         cls.code_gen.change_target_balise(TARGET_SWITCH_GPIO_RCC_START, TARGET_SWITCH_GPIO_RCC_END)
         print("\t\t- switch case to found Rcc clock for a GPIO")
