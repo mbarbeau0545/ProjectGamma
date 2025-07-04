@@ -1,0 +1,4 @@
+[submodule "src/1_FMK/FMK_HAL/FMK_IO"]
+	path = src/1_FMK/FMK_HAL/FMK_IO
+	url = https://github.com/mbarbeau0545/STM32_FMKIO
+	branch = Dev
