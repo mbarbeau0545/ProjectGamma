@@ -460,6 +460,14 @@ class FMKCPU_CodeGen():
         
         #---------------------For FMKCPU_Config Spec---------------------#
         print('\t For Config Specific File')
+        cls.code_gen.change_target_balise(TARGET_VARIABLE_START_LINE, TARGET_VARIABLE_END_LINE)
+        print('\t\t- For Dma Info variable')
+        cls.code_gen._write_into_file(var_info, FMKCPU_CONFIGSPECIFIC_C)
+
+        print('\t\tFor IRQN Handler')
+        cls.code_gen.change_target_balise(TARGET_FMKCPU_IRQN_HANDLER_START, TARGET_FMKCPU_IRQN_HANDLER_END)
+        cls.code_gen._write_into_file(dma_irqn_hdler, FMKCPU_CONFIGSPECIFIC_C)
+
         print('\t\tFor Switch case for Request Dma')
         cls.code_gen.change_target_balise(TARGET_FMKCPU_SWITCH_RQST_START, TARGET_FMKCPU_SWITCH_RQST_END)
         cls.code_gen._write_into_file(switch_rqst, FMKCPU_CONFIGSPECIFIC_C)
@@ -487,14 +495,6 @@ class FMKCPU_CodeGen():
 
         print('\t\t- Function for Prescaler Peripherique External Clock')
         #---------------------For FMKCPU.c---------------------#
-        print("\t- For FMKCPU.c file")
-        cls.code_gen.change_target_balise(TARGET_VARIABLE_START_LINE, TARGET_VARIABLE_END_LINE)
-        print('\t\t- For Dma Info variable')
-        cls.code_gen._write_into_file(var_info, FMKCPU)
-
-        print('\t\tFor IRQN Handler')
-        cls.code_gen.change_target_balise(TARGET_FMKCPU_IRQN_HANDLER_START, TARGET_FMKCPU_IRQN_HANDLER_END)
-        cls.code_gen._write_into_file(dma_irqn_hdler, FMKCPU)
 
         
 
