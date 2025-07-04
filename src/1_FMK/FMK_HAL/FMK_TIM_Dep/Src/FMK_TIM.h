@@ -32,16 +32,6 @@
     /* CAUTION : Automatic generated code section for Enum: Start */
 
     /* CAUTION : Automatic generated code section for Enum: End */
-    /**< Enum for channel run mode */
-    typedef enum 
-    {
-        FMKTIM_LINE_RUNMODE_POLLING = 0x0U,     /**< The channel is running in polling mode (standard mode) */
-        FMKTIM_LINE_RUNMODE_INTERRUPT,          /**< The channel is running in interrupt mode, which means HAL error callback is active,
-                                                 among other things*/
-        FMKTIM_LINE_RUNMODE_DMA,                /**< The channel is running in DMA Mode */
-
-        FMKTIM_LINE_RUNMODE_NB                  /**< Number of channel run mode take in charge (DMA currently not available) */
-    } t_eFMKTIM_ChnlRunMode; 
 
     /**< Enum for interruption channel trigger */
     typedef enum 
@@ -213,16 +203,7 @@
     } t_sFMKTIM_ICValue;
 
     //-----------------------------TYPEDEF TYPES---------------------------//
-    /**
-    *
-    *	@brief  Call back function for channels
-    *
-    *	@param[in]      f_timer_e : timer channel 
-    *	@param[out]     f_channel_e : channel which make the interruption
-    *	 
-    *
-    */
-   typedef void (t_cbFMKTIM_InterruptLine)(t_eFMKTIM_InterruptLineType f_InterruptType_e, t_uint8 f_InterruptLine_u8);
+
     //-----------------------------STRUCT TYPES---------------------------//
     /* CAUTION : Automatic generated code section for Structure: Start */
 
@@ -553,7 +534,22 @@
                                                 t_uint32 f_IT_line_u8,
                                                 t_uint16 *f_chnlErrInfo_pu16);
     
-
+    /**
+    *
+    *	@brief      Function to redirect all callback function.\n
+    *  @note       Every HAL callback call this function, thsi function redirect to the right
+    *              user function depending on which timer is called
+    *
+    *	@param[in]  f_timerIstce_ps         : bsp instance timer which make interruption
+    *	@param[in]  f_HwTimcfg_e            : the timer configuration 
+    *	@param[in]  f_chnlState_e           : The state of the timer.\n
+    *
+    *  @retval RC_OK                             @ref RC_OK
+    *  @retval RC_ERROR_PARAM_INVALID            @ref RC_ERROR_PARAM_INVALID
+    *  @retval RC_ERROR_PTR_NULL                 @ref RC_ERROR_PTR_NULL
+    *
+    */
+    void FMKTIM_BspRqst_InterruptMngmt(TIM_HandleTypeDef *f_timerIstce_ps, t_eFMKTIM_BspEvent f_cbEvent_e);
 #endif // FMKTIM_H_INCLUDED           
 //************************************************************************************
 // End of File

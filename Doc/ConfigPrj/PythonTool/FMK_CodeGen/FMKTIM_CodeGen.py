@@ -319,6 +319,12 @@ class FMKTIM_CodeGen():
         print("\t- For configPublic file")
         cls.code_gen.change_target_balise(TARGET_T_ENUM_START_LINE,TARGET_T_ENUM_END_LINE)
 
+        print("\t\t- enum for timer channel")
+        cls.code_gen._write_into_file(enum_channel, FMKTIM_CFGPUBLIC)
+
+        print("\t\t- enum for timer")
+        cls.code_gen._write_into_file(enum_timer, FMKTIM_CFGPUBLIC)
+
         print('\t\t- enum for dac purpose timer')
         cls.code_gen._write_into_file(enum_it_lines_dac, FMKTIM_CFGPUBLIC)
 
@@ -330,13 +336,7 @@ class FMKTIM_CodeGen():
 
         print("\t- For configPrivate file")
         #---------------------For FMKTIM_Config Private---------------------#
-        cls.code_gen.change_target_balise(TARGET_T_ENUM_START_LINE,TARGET_T_ENUM_END_LINE)
 
-        print("\t\t- enum for timer channel")
-        cls.code_gen._write_into_file(enum_channel, FMKTIM_CFGPRIVATE)
-
-        print("\t\t- enum for timer")
-        cls.code_gen._write_into_file(enum_timer, FMKTIM_CFGPRIVATE)
 
         cls.code_gen.change_target_balise(TARGET_TIMER_CHNLNB_START, TARGET_TIMER_CHNLNB_END)
         print("\t\t- Define for max channel per timer")
@@ -360,18 +360,22 @@ class FMKTIM_CodeGen():
         cls.code_gen._write_into_file(const_mapp_gp_tim, FMKTIM_CFGPRIVATE)
 
 
+        print('\t for FMKTIM_ConfigSpecific')
+
+        print("\t\t- Timer IRQN Handler start")
+        cls.code_gen.change_target_balise(TARGET_TIMER_X_IRQH_START, TARGET_TIMER_X_IRQH_END)
+        cls.code_gen._write_into_file(func_imple, FMKTIM_CFGSPEC_C)
+
+        cls.code_gen.change_target_balise(TARGET_TIMER_INFO_START, TARGET_TIMER_INFO_END)
+        print("\t\t- variable for timer information")
+        cls.code_gen._write_into_file(var_timinfo, FMKTIM_CFGSPEC_C)
+
+
     
 
        
-        #---------------------For FMKTIM.c---------------------#
-        print("\t- For FMKTIM.c file")
-        cls.code_gen.change_target_balise(TARGET_TIMER_INFO_START, TARGET_TIMER_INFO_END)
-        print("\t\t- variable for timer information")
-        cls.code_gen._write_into_file(var_timinfo, FMKTIM_CFILE)
+        #---------------------For FMKTIM.c---------------------#     
         
-        print("\t\t- Timer IRQN Handler start")
-        cls.code_gen.change_target_balise(TARGET_TIMER_X_IRQH_START, TARGET_TIMER_X_IRQH_END)
-        cls.code_gen._write_into_file(func_imple, FMKTIM_CFILE)
 
         
 

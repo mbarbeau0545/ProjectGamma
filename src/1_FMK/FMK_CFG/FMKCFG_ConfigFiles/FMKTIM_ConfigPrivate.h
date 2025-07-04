@@ -53,38 +53,8 @@
     // *                      Types
     // ********************************************************************
     /* CAUTION : Automatic generated code section for Enum: Start */
-    /**
-    * @brief Number of timer enable in smt32xxx board.
-    */
-    typedef enum
-    {
-        FMKTIM_TIMER_1 = 0x0,                  /**< Reference for HAL timer_1, this timer has 4 channel(s) */
-        FMKTIM_TIMER_2,                        /**< Reference for HAL timer_2, this timer has 4 channel(s) */
-        FMKTIM_TIMER_3,                        /**< Reference for HAL timer_3, this timer has 4 channel(s) */
-        FMKTIM_TIMER_4,                        /**< Reference for HAL timer_4, this timer has 4 channel(s) */
-        FMKTIM_TIMER_5,                        /**< Reference for HAL timer_5, this timer has 4 channel(s) */
-        FMKTIM_TIMER_6,                        /**< Reference for HAL timer_6, this timer has 1 channel(s) */
-        FMKTIM_TIMER_7,                        /**< Reference for HAL timer_7, this timer has 1 channel(s) */
-        FMKTIM_TIMER_8,                        /**< Reference for HAL timer_8, this timer has 4 channel(s) */
-        FMKTIM_TIMER_15,                       /**< Reference for HAL timer_15, this timer has 2 channel(s) */
-        FMKTIM_TIMER_16,                       /**< Reference for HAL timer_16, this timer has 1 channel(s) */
-        FMKTIM_TIMER_17,                       /**< Reference for HAL timer_17, this timer has 1 channel(s) */
-        FMKTIM_TIMER_20,                       /**< Reference for HAL timer_20, this timer has 4 channel(s) */
+
     
-        FMKTIM_TIMER_NB,
-    } t_eFMKTIM_Timer;
-
-    /**< Number max of channel enable by timer */
-     typedef enum
-    {
-        FMKTIM_CHANNEL_1 = 0x00,              // Reference to HAL channel 1
-        FMKTIM_CHANNEL_2,              // f"Reference to HAL channel 2
-        FMKTIM_CHANNEL_3,              // f"Reference to HAL channel 3
-        FMKTIM_CHANNEL_4,              // f"Reference to HAL channel 4
-
-        FMKTIM_CHANNEL_NB,
-        FMKTIM_CHANNEL_ALL,
-    } t_eFMKTIM_InterruptChnl;
 
     /* CAUTION : Automatic generated code section for Enum: End */
    /**
