@@ -10,3 +10,35 @@
 	path = src/1_FMK/FMK_HAL/FMK_TIM
 	url = https://github.com/mbarbeau0545/STM32_FMKTIM
 	branch = Dev
+[submodule "src/1_FMK/FMK_HAL/FMK_CDA"]
+	path = src/1_FMK/FMK_HAL/FMK_CDA
+	url = https://github.com/mbarbeau0545/STM32_FMKCDA
+	branch = Dev
+[submodule "src/1_FMK/FMK_HAL/FMK_SRL"]
+	path = src/1_FMK/FMK_HAL/FMK_SRL
+	url = https://github.com/mbarbeau0545/STM32_FMKSRL
+	branch = Dev
+[submodule "src/1_FMK/FMK_HAL/FMK_HRT"]
+	path = src/1_FMK/FMK_HAL/FMK_HRT
+	url = https://github.com/mbarbeau0545/STM32_FMKHRT
+	branch = Dev
+[submodule "src/1_FMK/FMK_HAL/FMK_CAN"]
+	path = src/1_FMK/FMK_HAL/FMK_CAN
+	url = https://github.com/mbarbeau0545/STM32_FMKCAN
+	branch = Dev
+[submodule "src/3_APP/APP_CTRL/APP_ACT"]
+	path = src/3_APP/APP_CTRL/APP_ACT
+	url = https://github.com/mbarbeau0545/APP_ACT
+	branch = Dev
+[submodule "src/3_APP/APP_CTRL/APP_SNS"]
+	path = src/3_APP/APP_CTRL/APP_SNS
+	url = https://github.com/mbarbeau0545/APPSNS
+	branch = Dev
+[submodule "src/3_APP/APP_CTRL/APP_SDM"]
+	path = src/3_APP/APP_CTRL/APP_SDM
+	url = https://github.com/mbarbeau0545/APPSDM
+	branch = Dev
+[submodule "src/3_APP/APP_CTRL/APP_SYS"]
+	path = src/3_APP/APP_CTRL/APP_SYS
+	url = https://github.com/mbarbeau0545/APPSYS
+	branch = Dev
