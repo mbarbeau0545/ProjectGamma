@@ -23,8 +23,8 @@ TARGET_ADC_SWITCH_START = "            /* CAUTION : Automatic generated code sec
 TARGET_ADC_SWITCH_END   = "            /* CAUTION : Automatic generated code section for switch_case ADC channel: End */\n"
 TARGET_ADC_CHNLNB_START = "    /* CAUTION : Automatic generated code section for ADC channels number: Start */\n"
 TARGET_ADC_CHNLNB_END   = "    /* CAUTION : Automatic generated code section for ADC channels number: End */\n"
-TARGET_ADC_X_IRQN_START = "/* CAUTION : Automatic generated code section for ADCx IRQN_Handler: Start */\n"
-TARGET_ADC_X_IRQN_END = "/* CAUTION : Automatic generated code section for ADCx IRQN_Handler: End */\n"
+TARGET_ADC_X_IRQN_START = "    /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: Start */\n"
+TARGET_ADC_X_IRQN_END =   "    /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: End */\n"
 # CAUTION : Automatic generated code section: Start #
 
 # CAUTION : Automatic generated code section: End #
@@ -67,7 +67,7 @@ class FMKCDA_CodeGen():
         enum_adc = ""
         enum_adc_channel = ""
         switch_adc_channel = ""
-        var_adc_info = ""
+        var_adc_cfg = ""
         var_hw_vref = ""
         enum_other_calib = ""
         def_other_calib = ""
@@ -102,8 +102,8 @@ class FMKCDA_CodeGen():
         #--------------------------make adc channel max define-----------
         #-------------------------------make adc info--------------------
         #-----------------------------------------------------------------
-        var_adc_info += "/**< Store the Adc Info variable*/\n" \
-                        +"t_sFMKCDA_AdcInfo g_AdcInfo_as[FMKCDA_ADC_NB] = {\n"
+        var_adc_cfg += "    /**< Variable for Adc Config */\n" \
+                        +"    const t_sFMKCDA_AdcCfg c_FmkCda_AdcCfg_as[FMKCDA_ADC_NB] = {\n"
         var_rank_counter += "/**< Rank for each channel add for ADC */\n"\
                             + "t_uint8 g_counterRank_au8[FMKCDA_ADC_NB] = {\n"
         var_adc_max_channel += "    /**< Variable for Adc Max channel*/\n" \
@@ -116,19 +116,19 @@ class FMKCDA_CodeGen():
             # make define max ADCx channel
             def_adcx_max_channel += f"    #define FMKCDA_ADC_{adc_index}_MAX_CHANNELS ((t_uint8){adc_info[1]})\n"
             #make adc info
-            var_adc_info += "    {\n" + f"        // ADC_{adc_index}\n" \
-                        + f"        .bspIsct_s.Instance = ADC{adc_index},\n" \
-                        + f"        .c_clock_e = {ENUM_FMKCPU_RCC_ROOT}_{str(adc_info[3]).upper()},\n" \
-                        + f"        .c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{str(adc_info[2]).upper()},\n" \
-                        + f'        .c_DmaAdc_e = {ENUM_FMKCPU_DMARQST}_ADC{adc_index},\n'\
-                        + "    },\n"
+            var_adc_cfg +=f"        [FMKCDA_ADC_{adc_index}] =" + " {\n" \
+                        + f"            .adcTypedef_ps = ADC{adc_index},\n" \
+                        + f"            .c_clock_e = {ENUM_FMKCPU_RCC_ROOT}_{str(adc_info[3]).upper()},\n" \
+                        + f"            .c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{str(adc_info[2]).upper()},\n" \
+                        + f'            .c_DmaAdc_e = {ENUM_FMKCPU_DMARQST}_ADC{adc_index},\n'\
+                        + "        },\n"
             #make rank coutner 
             var_rank_counter += "    (t_uint8)0,\n"
             # make variable adc maxchannel
             var_adc_max_channel += f"        (t_uint8)FMKCDA_ADC_{adc_index}_MAX_CHANNELS,\n"
 
         var_adc_max_channel += "    };\n\n"
-        var_adc_info += "};\n\n"
+        var_adc_cfg += "    };\n\n"
         var_rank_counter += "};\n\n"
         enum_adc_channel = cls.code_gen.make_enum_from_variable(ENUM_ADC_CHNL_ROOT, [int(idx) for idx in range(max_adc_channel)],
                                                                 "t_eFMKCDA_AdcChannel", 0 , " Number of channel in ADC Instances",
@@ -138,21 +138,19 @@ class FMKCDA_CodeGen():
         #-----------------------------Make IRQNHandler-------------------
         #----------------------------------------------------------------
         for adc_irqn in list_irqn[1:]:
-            func_irqn += '/*********************************\n' \
-                        + f' * {adc_irqn[0]}\n' \
-                        + '*********************************/\n' \
-                        + f'void {adc_irqn[0]}(void)\n' \
-                        + '{\n'  
+            func_irqn += '    /*********************************\n' \
+                        + f'     * {adc_irqn[0]}\n' \
+                        + '    *********************************/\n' \
+                        + f'    void {adc_irqn[0]}(void)\n' \
+                        + '    {\n'  
             list_adc_asso = str(adc_irqn[1]).split(',')
             for adc_asso in list_adc_asso:
                 adc_asso = adc_asso.replace(' ', '')
-                func_irqn += f'    if(g_AdcInfo_as[{ENUM_ADC_ISCT_ROOT}_{str(adc_asso)[-1]}].IsConfigured_b == (t_bool)True)\n'\
-                            + '    {\n'\
-                            + '        HAL_ADC_IRQHandler(&g_AdcInfo_as[' \
-                            + f'{ENUM_ADC_ISCT_ROOT}_{adc_asso[-1]}].bspIsct_s);\n'\
-                            + '    }\n'
-            func_irqn += '    return;\n'         
-            func_irqn += '}\n'
+                func_irqn += '        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(' \
+                            + f'{ENUM_ADC_ISCT_ROOT}_{adc_asso[-1]}));\n'\
+                            
+            func_irqn += '        return;\n'         
+            func_irqn += '    }\n'
         #----------------------------------------------------------------
         #-----------------------------make channel switch case-----------
         #-----------------------------------------------------------------
@@ -231,17 +229,14 @@ class FMKCDA_CodeGen():
         cls.code_gen._write_into_file(var_hw_vref, FMKCDA_CONFIGPRIVATE)
         cls.code_gen._write_into_file(var_vref_calib, FMKCDA_CONFIGPRIVATE)
         cls.code_gen._write_into_file(var_adc_max_channel, FMKCDA_CONFIGPRIVATE)
+        cls.code_gen._write_into_file(var_adc_cfg, FMKCDA_CONFIGPRIVATE)
         cls.code_gen.change_target_balise(TARGET_ADC_SWITCH_START, TARGET_ADC_SWITCH_END)
         print("\t\t- swtich case to find stm channel from enum")
-        cls.code_gen._write_into_file(switch_adc_channel, FMKCDA)
-        cls.code_gen.change_target_balise(TARGET_T_VARIABLE_START_LINE[4:], TARGET_T_VARIABLE_END_LINE[4:])
-        print("\t\t- variable for Adc Info")
-        cls.code_gen._write_into_file(var_rank_counter, FMKCDA)
-        cls.code_gen._write_into_file(var_adc_info, FMKCDA)
+        cls.code_gen._write_into_file(switch_adc_channel, FMKCDA_CONFIG_SPEC)
 
         print('\t\t- Irqn Handler Function Declaration')
         cls.code_gen.change_target_balise(TARGET_ADC_X_IRQN_START, TARGET_ADC_X_IRQN_END)
-        cls.code_gen._write_into_file(func_irqn, FMKCDA)
+        cls.code_gen._write_into_file(func_irqn, FMKCDA_CONFIGPRIVATE)
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print("<<<<<<<<<<<<<<<<<<<<End code generation for FmkCda Module>>>>>>>>>>>>>>>>>>>")
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")

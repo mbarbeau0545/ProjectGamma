@@ -63,6 +63,14 @@
         t_eFMKCDA_AdcChannel chnl_e;
     } t_sFMKCDA_HwAdcCfg;
     
+    ///@brief Adc Configuration Structure
+    typedef struct 
+    {
+        ADC_TypeDef * adcTypedef_ps;
+        t_eFMKCPU_ClockPort c_clock_e;
+        t_eFMKCPU_IRQNType c_IRQNType_e;
+        t_eFMKCPU_DmaRqst c_DmaAdc_e;
+    } t_sFMKCDA_AdcCfg;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************
@@ -71,6 +79,40 @@
     // *                      Variables
     // ********************************************************************
     /* CAUTION : Automatic generated code section for Variable: Start */
+    /**< Variable for Adc Config */
+    const t_sFMKCDA_AdcCfg c_FmkCda_AdcCfg_as[FMKCDA_ADC_NB] = {
+        [FMKCDA_ADC_1] = {
+            .adcTypedef_ps = ADC1,
+            .c_clock_e = FMKCPU_RCC_CLK_ADC12,
+            .c_IRQNType_e = FMKCPU_NVIC_ADC1_2_IRQN,
+            .c_DmaAdc_e = FMKCPU_DMA_RQSTYPE_ADC1,
+        },
+        [FMKCDA_ADC_2] = {
+            .adcTypedef_ps = ADC2,
+            .c_clock_e = FMKCPU_RCC_CLK_ADC12,
+            .c_IRQNType_e = FMKCPU_NVIC_ADC1_2_IRQN,
+            .c_DmaAdc_e = FMKCPU_DMA_RQSTYPE_ADC2,
+        },
+        [FMKCDA_ADC_3] = {
+            .adcTypedef_ps = ADC3,
+            .c_clock_e = FMKCPU_RCC_CLK_ADC345,
+            .c_IRQNType_e = FMKCPU_NVIC_ADC3_IRQN,
+            .c_DmaAdc_e = FMKCPU_DMA_RQSTYPE_ADC3,
+        },
+        [FMKCDA_ADC_4] = {
+            .adcTypedef_ps = ADC4,
+            .c_clock_e = FMKCPU_RCC_CLK_ADC345,
+            .c_IRQNType_e = FMKCPU_NVIC_ADC4_IRQN,
+            .c_DmaAdc_e = FMKCPU_DMA_RQSTYPE_ADC4,
+        },
+        [FMKCDA_ADC_5] = {
+            .adcTypedef_ps = ADC5,
+            .c_clock_e = FMKCPU_RCC_CLK_ADC345,
+            .c_IRQNType_e = FMKCPU_NVIC_ADC5_IRQN,
+            .c_DmaAdc_e = FMKCPU_DMA_RQSTYPE_ADC5,
+        },
+    };
+
     /**< Variable for Adc Max channel*/
     const t_uint8 c_FmkCda_AdcMaxChnl_ua8[FMKCDA_ADC_NB] = {
         (t_uint8)FMKCDA_ADC_1_MAX_CHANNELS,
@@ -114,7 +156,41 @@
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
-
+    /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: Start */
+    /*********************************
+     * ADC1_2_IRQHandler
+    *********************************/
+    void ADC1_2_IRQHandler(void)
+    {
+        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(FMKCDA_ADC_1));
+        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(FMKCDA_ADC_2));
+        return;
+    }
+    /*********************************
+     * ADC3_IRQHandler
+    *********************************/
+    void ADC3_IRQHandler(void)
+    {
+        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(FMKCDA_ADC_3));
+        return;
+    }
+    /*********************************
+     * ADC4_IRQHandler
+    *********************************/
+    void ADC4_IRQHandler(void)
+    {
+        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(FMKCDA_ADC_4));
+        return;
+    }
+    /*********************************
+     * ADC5_IRQHandler
+    *********************************/
+    void ADC5_IRQHandler(void)
+    {
+        HAL_ADC_IRQHandler(FMKCDA_PRIVATE_GetHandleTypeDef(FMKCDA_ADC_5));
+        return;
+    }
+    /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: End */
 #endif // FMKCDA_CONFIGPRIVATE_H_INCLUDED           
 //************************************************************************************
 // End of File

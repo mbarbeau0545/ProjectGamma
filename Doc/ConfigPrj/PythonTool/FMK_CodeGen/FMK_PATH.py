@@ -28,6 +28,7 @@ FMKCPU = "src\\1_FMK\FMK_HAL\FMK_CPU\Src\FMK_CPU.c"
 
 FMKCDA_CONFIGPUBLIC = "src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKCDA_ConfigPublic.h"
 FMKCDA_CONFIGPRIVATE = "src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKCDA_ConfigPrivate.h"
+FMKCDA_CONFIG_SPEC = r"src\1_FMK\FMK_CFG\FMKCFG_ConfigSpecific\FMKCDA_ConfigSpecific.c"
 FMKCDA = "src\\1_FMK\FMK_HAL\FMK_CDA\Src\FMK_CDA.c"
 
 

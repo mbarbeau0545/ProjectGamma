@@ -19,6 +19,7 @@
     // *                      Includes
     // ********************************************************************
     #include "../FMKCFG_ConfigSpecific/FMKTIM_ConfigSpecific.h"
+    #include "FMK_HAL/FMK_TIM/Src/FMK_TIM.h"
     #include "TypeCommon.h"
     // ********************************************************************
     // *                      Defines
@@ -53,10 +54,48 @@
     // *                      Types
     // ********************************************************************
     /* CAUTION : Automatic generated code section for Enum: Start */
-
+    /**
+    * @brief Number of timer enable in smt32xxx board.
+    */
+    typedef enum
+    {
+        FMKTIM_TIMER_1 = 0,                  /**< Reference for HAL timer_1, this timer has 4 channel(s) */
+        FMKTIM_TIMER_2,                        /**< Reference for HAL timer_2, this timer has 4 channel(s) */
+        FMKTIM_TIMER_3,                        /**< Reference for HAL timer_3, this timer has 4 channel(s) */
+        FMKTIM_TIMER_4,                        /**< Reference for HAL timer_4, this timer has 4 channel(s) */
+        FMKTIM_TIMER_5,                        /**< Reference for HAL timer_5, this timer has 4 channel(s) */
+        FMKTIM_TIMER_6,                        /**< Reference for HAL timer_6, this timer has 1 channel(s) */
+        FMKTIM_TIMER_7,                        /**< Reference for HAL timer_7, this timer has 1 channel(s) */
+        FMKTIM_TIMER_8,                        /**< Reference for HAL timer_8, this timer has 4 channel(s) */
+        FMKTIM_TIMER_15,                       /**< Reference for HAL timer_15, this timer has 2 channel(s) */
+        FMKTIM_TIMER_16,                       /**< Reference for HAL timer_16, this timer has 1 channel(s) */
+        FMKTIM_TIMER_17,                       /**< Reference for HAL timer_17, this timer has 1 channel(s) */
+        FMKTIM_TIMER_20,                       /**< Reference for HAL timer_20, this timer has 4 channel(s) */
     
+        FMKTIM_TIMER_NB,
+    } t_eFMKTIM_Timer;
+
+    /**< Number max of channel enable by timer */
+     typedef enum
+    {
+        FMKTIM_CHANNEL_1 = 0x00,              // Reference to HAL channel 1
+        FMKTIM_CHANNEL_2,              // f"Reference to HAL channel 2
+        FMKTIM_CHANNEL_3,              // f"Reference to HAL channel 3
+        FMKTIM_CHANNEL_4,              // f"Reference to HAL channel 4
+
+        FMKTIM_CHANNEL_NB,
+        FMKTIM_CHANNEL_ALL,
+    } t_eFMKTIM_InterruptChnl;
 
     /* CAUTION : Automatic generated code section for Enum: End */
+
+    ///@brief Timer Configuration Structure 
+    typedef struct 
+    {
+        TIM_TypeDef * bspIstc_ps;         //---- pointor to timer bsp instance ----//
+        const t_eFMKCPU_ClockPort c_clock_e;
+        const t_eFMKCPU_IRQNType c_IRQNType_e; 
+    } t_sFMKTIM_TimerCfg;
    /**
     *
     *	@brief    Get the Prescaler and ARR value For Timer Configured in PWM.\n
@@ -221,14 +260,13 @@
         t_eFMKTIM_InterruptLineType type_e;
         t_uint8 ITLine_u8;
     } t_sFMKTIM_ChnlITLineMapping;
+
+    
     // **********²**********************************************************
     // *                      Prototypes
     // ********************************************************************
-    t_sFMKTIM_ChnlITLineMapping c_aifds[FMKTIM_TIMER_NB][FMKTIM_CHANNEL_NB] = {
-        [FMKTIM_TIMER_1] = {
+    /**< timer information variable */
 
-        }
-    };
     // ********************************************************************
     // *                      Variables
     // ********************************************************************
@@ -245,6 +283,70 @@
     };
 
     /* CAUTION : Automatic generated code section for Variable: Start */
+/**< timer configuration variable */
+    t_sFMKTIM_TimerCfg c_FmkTim_TimersCfg_as[FMKTIM_TIMER_NB] = {
+        [FMKTIM_TIMER_1] = {
+        .bspIstc_ps = TIM1,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM1,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM1_UP_TIM16_IRQN
+    },
+        [FMKTIM_TIMER_2] = {
+        .bspIstc_ps = TIM2,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM2,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM2_IRQN
+    },
+        [FMKTIM_TIMER_3] = {
+        .bspIstc_ps = TIM3,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM3,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM3_IRQN
+    },
+        [FMKTIM_TIMER_4] = {
+        .bspIstc_ps = TIM4,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM4,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM4_IRQN
+    },
+        [FMKTIM_TIMER_5] = {
+        .bspIstc_ps = TIM5,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM5,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM5_IRQN
+    },
+        [FMKTIM_TIMER_6] = {
+        .bspIstc_ps = TIM6,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM6,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM6_DAC_IRQN
+    },
+        [FMKTIM_TIMER_7] = {
+        .bspIstc_ps = TIM7,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM7,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM7_DAC_IRQN
+    },
+        [FMKTIM_TIMER_8] = {
+        .bspIstc_ps = TIM8,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM8,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM8_UP_IRQN
+    },
+        [FMKTIM_TIMER_15] = {
+        .bspIstc_ps = TIM15,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM15,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN
+    },
+        [FMKTIM_TIMER_16] = {
+        .bspIstc_ps = TIM16,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM16,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM1_UP_TIM16_IRQN
+    },
+        [FMKTIM_TIMER_17] = {
+        .bspIstc_ps = TIM17,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM17,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN
+    },
+        [FMKTIM_TIMER_20] = {
+        .bspIstc_ps = TIM20,
+        .c_clock_e = FMKCPU_RCC_CLK_TIM20,
+        .c_IRQNType_e = FMKCPU_NVIC_TIM20_UP_IRQN
+    },
+};
+
     /**< General Purpose Timer Channel Mapping */
     t_sFMKTIM_BspTimerCfg c_FmkTim_ITLineIOMapp_as[FMKTIM_INTERRUPT_LINE_IO_NB] = {
         {FMKTIM_TIMER_1,                        FMKTIM_CHANNEL_1},    // FMKTIM_INTERRUPT_LINE_EVNT_11
@@ -384,6 +486,61 @@
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */
+
+/* CAUTION : Automatic generated code section for TIMx IRQHandler: Start */
+/*********************************
+ * TIM1_BRK_TIM15_IRQHandler
+*********************************/
+void TIM1_BRK_TIM15_IRQHandler(void)      {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_15));}
+/*********************************
+ * TIM20_TRG_COM_IRQHandler
+*********************************/
+void TIM20_TRG_COM_IRQHandler(void)       {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_16));}
+/*********************************
+ * TIM1_TRG_COM_TIM17_IRQHandler
+*********************************/
+void TIM1_TRG_COM_TIM17_IRQHandler(void)  {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_17));}
+/*********************************
+ * TIM1_UP_TIM16_IRQHandler
+*********************************/
+void TIM1_UP_TIM16_IRQHandler(void)       {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_1));}
+/*********************************
+ * TIM2_IRQHandler
+*********************************/
+void TIM2_IRQHandler(void)                {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_2));}
+/*********************************
+ * TIM3_IRQHandler
+*********************************/
+void TIM3_IRQHandler(void)                {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_3));}
+/*********************************
+ * TIM4_IRQHandler
+*********************************/
+void TIM4_IRQHandler(void)                {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_4));}
+/*********************************
+ * TIM6_DAC_IRQHandler
+*********************************/
+void TIM6_DAC_IRQHandler(void)            {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_6));}
+/*********************************
+ * TIM7_DAC_IRQHandler
+*********************************/
+void TIM7_DAC_IRQHandler(void)            {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_7));}
+/*********************************
+ * TIM8_UP_IRQHandler
+*********************************/
+void TIM8_UP_IRQHandler(void)             {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_8));}
+/*********************************
+ * TIM20_BRK_IRQHandler
+*********************************/
+void TIM20_BRK_IRQHandler(void)           {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_20));}
+/*********************************
+ * TIM20_UP_IRQHandler
+*********************************/
+void TIM20_UP_IRQHandler(void)            {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_20));}
+/*********************************
+ * TIM20_CC_IRQHandler
+*********************************/
+void TIM20_CC_IRQHandler(void)            {return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8)FMKTIM_TIMER_20));}
+/* CAUTION : Automatic generated code section for TIMx IRQHandler: End */
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************

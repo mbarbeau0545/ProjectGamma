@@ -45,8 +45,8 @@ TARGET_FUNC_PERIPH_PRESC_START = '    /* CAUTION : Automatic generated code sect
 TARGET_FUNC_PERIPH_PRESC_END   = '    /* CAUTION : Automatic generated code section for Function Prescaler Configuration: End */\n'
 TARGET_SWITCH_PERIPH_CLK_CFG_START = '            /* CAUTION : Automatic generated code section for Periph Clock Cfg: Start */\n'
 TARGET_SWITCH_PERIPH_CLK_CFG_END = '            /* CAUTION : Automatic generated code section for Periph Clock Cfg: End */\n'
-TARGET_FMKCPU_IRQN_HANDLER_START = '/* CAUTION : Automatic generated code section for DMA_Channel IRQHandler: Start */\n'
-TARGET_FMKCPU_IRQN_HANDLER_END   = '/* CAUTION : Automatic generated code section for DMA_Channel IRQHandler: End */\n'
+TARGET_FMKCPU_IRQN_HANDLER_START = '    /* CAUTION : Automatic generated code section for DMA_Channel IRQHandler: Start */\n'
+TARGET_FMKCPU_IRQN_HANDLER_END   = '    /* CAUTION : Automatic generated code section for DMA_Channel IRQHandler: End */\n'
 TARGET_FMKCPU_SWITCH_RQST_START  = '            /* CAUTION : Automatic generated code section for Request Dma: Start */\n'
 TARGET_FMKCPU_SWITCH_RQST_END    = '            /* CAUTION : Automatic generated code section for Request Dma: End */\n'
 TARGET_FMKCPU_SWITCH_DMATYPE_START = '            /* CAUTION : Automatic generated code section for Dma Type: Start */\n'
@@ -156,7 +156,7 @@ class FMKCPU_CodeGen():
         switch_clk_periph = ''
         include_cpu = ""
 
-        var_info = ''
+        var_dma_cfg = ''
         cst_cfg = ''
         enm_rqst = ''
         switch_rqst = ''
@@ -358,45 +358,40 @@ class FMKCPU_CodeGen():
                     raise DMA_ConfigError('Cannot reach the DMA Idx')
                 
 
-                dma_irqn_hdler +='/**\n' \
-                            + f'* @brief This function handles {str(irqn_info[0])[:3]} {str(irqn_info[0])[5:-11]} interrupt.\n' \
-                            + '*/\n' \
-                            + f'void {irqn_info[0]}(void)\n' \
-                            + '{\n'
+                dma_irqn_hdler +='    /**\n' \
+                            + f'    * @brief This function handles {str(irqn_info[0])[:3]} {str(irqn_info[0])[5:-11]} interrupt.\n' \
+                            + '    */\n' \
+                            + f'    void {irqn_info[0]}(void)\n' \
+                            + '    {\n'
                 # Look for channel Idx
                 for char in str(irqn_info[0][5:]):
                     if char.isdigit():
-                        dma_irqn_hdler    += f'    if(g_DmaInfo_as[{ENUM_FMKCPU_DMA_CTRL}_{idx_dma}].channel_as[{ENUM_FMKCPU_DMA_CHANNEL}_{char}].isChnlConfigured_b == (t_bool)True)\n'\
-                                        + '    {\n' \
-                                        + f'       HAL_DMA_IRQHandler(&(g_DmaInfo_as[{ENUM_FMKCPU_DMA_CTRL}_{idx_dma}].channel_as[{ENUM_FMKCPU_DMA_CHANNEL}_{char}].bspDma_ps));\n' \
-                                        + '    }\n'
+                        dma_irqn_hdler   += f'        HAL_DMA_IRQHandler(FMKCPU_PRIVATE_GetHandleTypeDef({ENUM_FMKCPU_DMA_CTRL}_{idx_dma}, {ENUM_FMKCPU_DMA_CHANNEL}_{char}));\n'
 
-                dma_irqn_hdler += '    return;\n}\n\n'
+                dma_irqn_hdler += '    return;\n    }\n\n'
         
         #----------------------------------------------------------------
         #----------------------------Make Variable Info -----------------
         #----------------------------------------------------------------
-        var_info += '/**< Variable to store information about the Dma and the Channel */\n' \
-                    + f't_sFMKCPU_DmaInfo g_DmaInfo_as[{ENUM_FMKCPU_DMA_CTRL}_NB] = ' \
-                    + '{\n'
+        var_dma_cfg += '    /**< Variable to Dma Configuration */\n' \
+                    + f'    const t_sFMKCPU_DmaCfg c_FmkCpu_DmaCfg_as[{ENUM_FMKCPU_DMA_CTRL}_NB] = ' + '{\n'
         
         for dma_info in  dma_info_array:
             
-            var_info += '     {'\
-                    + f'//------- {dma_info[2]}_CONTROLLER -------//\n' \
-                    + f'        .c_clock_e = {ENUM_FMKCPU_RCC_ROOT}_{dma_info[2]},\n' \
-                    +  '        .channel_as = {\n\n\n'
+            var_dma_cfg += f'        [{ENUM_FMKCPU_DMA_CTRL}_{dma_info[0][-1]}] = ' + '{\n' \
+                    + f'            .c_clock_e = {ENUM_FMKCPU_RCC_ROOT}_{dma_info[2]},\n' \
+                    +  '            .chnlCfg_as = {\n'
             
             for idx_cnhl in range(1, (dma_info[1]  + 1)):
-                 var_info += f'            [{ENUM_FMKCPU_DMA_CHANNEL}_{idx_cnhl}] = ' \
+                 var_dma_cfg += f'                [{ENUM_FMKCPU_DMA_CHANNEL}_{idx_cnhl}] = ' \
                             + '{\n' \
-                            + '                .bspDma_ps = {' + f'.Instance = {dma_info[2]}_Channel{idx_cnhl}' + '},\n' \
-                            + f'               .c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{str(f"{dma_info[2]}_Channel{idx_cnhl}").upper()}_IRQN,\n' \
-                            + '            },\n\n'
-            var_info += '        }\n'
-            var_info += '    },\n'
+                            + f'                    .Instance = {dma_info[2]}_Channel{idx_cnhl},\n' \
+                            + f'                   .c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{str(f"{dma_info[2]}_Channel{idx_cnhl}").upper()}_IRQN,\n' \
+                            + '                },\n\n'
+            var_dma_cfg += '            },\n'
+            var_dma_cfg += '        },\n'
 
-        var_info += '};\n\n'
+        var_dma_cfg += '    };\n\n'
         #-----------------------------------------------------------
         #------------code genration for FMKCPU module---------------
         #-----------------------------------------------------------
@@ -455,18 +450,18 @@ class FMKCPU_CodeGen():
 
         print("\t\t- Configuration for nvic priority")
         cls.code_gen._write_into_file(var_nvic_prio, FMKCPU_CONFIGPRIVATE)
+        print('\t\t- For Dma Info variable')
+        cls.code_gen._write_into_file(var_dma_cfg, FMKCPU_CONFIGPRIVATE)
 
 
         
         #---------------------For FMKCPU_Config Spec---------------------#
         print('\t For Config Specific File')
         cls.code_gen.change_target_balise(TARGET_VARIABLE_START_LINE, TARGET_VARIABLE_END_LINE)
-        print('\t\t- For Dma Info variable')
-        cls.code_gen._write_into_file(var_info, FMKCPU_CONFIGSPECIFIC_C)
 
         print('\t\tFor IRQN Handler')
         cls.code_gen.change_target_balise(TARGET_FMKCPU_IRQN_HANDLER_START, TARGET_FMKCPU_IRQN_HANDLER_END)
-        cls.code_gen._write_into_file(dma_irqn_hdler, FMKCPU_CONFIGSPECIFIC_C)
+        cls.code_gen._write_into_file(dma_irqn_hdler, FMKCPU_CONFIGPRIVATE)
 
         print('\t\tFor Switch case for Request Dma')
         cls.code_gen.change_target_balise(TARGET_FMKCPU_SWITCH_RQST_START, TARGET_FMKCPU_SWITCH_RQST_END)

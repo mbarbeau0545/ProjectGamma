@@ -196,10 +196,7 @@ class AppAct_CodeGen():
         print("\t- For configPrivate file")
         print("\t\t- Write variable act_cfg, drv_cfg")
         cls.code_gen.change_target_balise(TARGET_T_VARIABLE_START_LINE[4:],TARGET_T_VARIABLE_END_LINE[4:])
-        print("\t- For AppAct.c file")
-        print("\t\t- Write variable act_state, drv_state in APPACT.c")
-        cls.code_gen._write_into_file(var_drv_state, APPACT_C_PATH)
-        cls.code_gen._write_into_file(var_act_state, APPACT_C_PATH)
+
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print("<<<<<<<<<<<<<<<<<<<<End code generation for AppSns Module>>>>>>>>>>>>>>>>>>>>>")
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n")

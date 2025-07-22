@@ -85,7 +85,7 @@ class FMKTIM_CodeGen():
         enum_timer = ""
         enum_evnt = ""
         var_evntcfg   = ""
-        var_timinfo = ""
+        var_timcfg = ""
         const_mapp_chnl_itline = ""
 
         const_mapp_evnt_tim = ""
@@ -118,8 +118,8 @@ class FMKTIM_CodeGen():
         suffix_pg_tim = []
         const_mapp_chnl_itline +=  "    /**< Interrupt Line/Channel Mapping for IO IT Line */\n" \
                                 + "    const t_sFMKTIM_ChnlITLineMapping c_FmkTim_ChnlItLineMapp[FMKTIM_TIMER_NB][FMKTIM_CHANNEL_NB] = {\n"
-        var_timinfo += "/**< timer information variable */\n" \
-                    + "t_sFMKTIM_TimerInfo g_TimerInfo_as[FMKTIM_TIMER_NB] = {\n"
+        var_timcfg += "/**< timer configuration variable */\n" \
+                    + "    t_sFMKTIM_TimerCfg c_FmkTim_TimersCfg_as[FMKTIM_TIMER_NB] = {\n"
         var_tim_max_chnl += "    /**< timer max channel variable */\n" \
                             + "    const t_uint8 c_FMKTIM_TimMaxChnl_ua8[FMKTIM_TIMER_NB] = {\n"
         
@@ -146,9 +146,8 @@ class FMKTIM_CodeGen():
             timer_number_a.append(idx_timer)
             
 
-            var_timinfo += "    {\n" \
-                        + f"        // Timer_{idx_timer}\n" \
-                        + f"        .bspTimer_s.Instance = TIM{idx_timer},\n" \
+            var_timcfg += f'        [{ENUM_FMKTIM_TIMER_ROOT}_{idx_timer}] = ' + '{\n'\
+                        + f"        .bspIstc_ps = TIM{idx_timer},\n" \
                         + f"        .c_clock_e = {ENUM_FMKCPU_RCC_ROOT}_TIM{idx_timer},\n" \
                         + f"        .c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{str(timer_cfg[2]).upper()}\n" \
                         + "    },\n"
@@ -233,7 +232,7 @@ class FMKTIM_CodeGen():
             
         const_tim_clk_src += '    };\n\n'
         var_tim_max_chnl += "    };\n\n"
-        var_timinfo += "};\n\n"
+        var_timcfg += "};\n\n"
         const_mapp_gp_tim += "    };\n\n"
         const_mapp_evnt_tim += "    };\n\n"
         const_mapp_dac_tim += "    };\n\n"
@@ -281,7 +280,7 @@ class FMKTIM_CodeGen():
                         + '*********************************/\n' \
                         + f'void {irqn_handler[0]}(void)' \
                         + " " * (42 - len(f'void {irqn_handler[0]}(void)')) \
-                        + '{' + f'return HAL_TIM_IRQHandler(&g_TimerInfo_as[{ENUM_FMKTIM_TIMER_ROOT}_{str(irqn_handler[1])[idx_nb_tim:]}].bspTimer_s);' + '}\n'
+                        + '{' + f'return HAL_TIM_IRQHandler(FMKTIM_PRIVATE_GetHandleTypeDef((t_uint8){ENUM_FMKTIM_TIMER_ROOT}_{str(irqn_handler[1])[idx_nb_tim:]}));' + '}\n'
         #----------------------------------------------------------------
         #-----------------------------make var evnt cfg------------------
         #-----------------------------make eenum evnt channel------------
@@ -319,12 +318,6 @@ class FMKTIM_CodeGen():
         print("\t- For configPublic file")
         cls.code_gen.change_target_balise(TARGET_T_ENUM_START_LINE,TARGET_T_ENUM_END_LINE)
 
-        print("\t\t- enum for timer channel")
-        cls.code_gen._write_into_file(enum_channel, FMKTIM_CFGPUBLIC)
-
-        print("\t\t- enum for timer")
-        cls.code_gen._write_into_file(enum_timer, FMKTIM_CFGPUBLIC)
-
         print('\t\t- enum for dac purpose timer')
         cls.code_gen._write_into_file(enum_it_lines_dac, FMKTIM_CFGPUBLIC)
 
@@ -337,6 +330,11 @@ class FMKTIM_CodeGen():
         print("\t- For configPrivate file")
         #---------------------For FMKTIM_Config Private---------------------#
 
+        print("\t\t- enum for timer channel")
+        cls.code_gen.change_target_balise(TARGET_T_ENUM_START_LINE,TARGET_T_ENUM_END_LINE)
+        cls.code_gen._write_into_file(enum_channel, FMKTIM_CFGPRIVATE)
+        print("\t\t- enum for timer")
+        cls.code_gen._write_into_file(enum_timer, FMKTIM_CFGPRIVATE)
 
         cls.code_gen.change_target_balise(TARGET_TIMER_CHNLNB_START, TARGET_TIMER_CHNLNB_END)
         print("\t\t- Define for max channel per timer")
@@ -359,16 +357,19 @@ class FMKTIM_CodeGen():
         print("\t\t- General Purpose Timer_Channel Mapping")
         cls.code_gen._write_into_file(const_mapp_gp_tim, FMKTIM_CFGPRIVATE)
 
-
-        print('\t for FMKTIM_ConfigSpecific')
+        print("\t\t- variable for timer information")
+        cls.code_gen._write_into_file(var_timcfg, FMKTIM_CFGPRIVATE)
 
         print("\t\t- Timer IRQN Handler start")
         cls.code_gen.change_target_balise(TARGET_TIMER_X_IRQH_START, TARGET_TIMER_X_IRQH_END)
-        cls.code_gen._write_into_file(func_imple, FMKTIM_CFGSPEC_C)
+        cls.code_gen._write_into_file(func_imple, FMKTIM_CFGPRIVATE)
+        
 
-        cls.code_gen.change_target_balise(TARGET_TIMER_INFO_START, TARGET_TIMER_INFO_END)
-        print("\t\t- variable for timer information")
-        cls.code_gen._write_into_file(var_timinfo, FMKTIM_CFGSPEC_C)
+
+        print('\t for FMKTIM_ConfigSpecific')
+
+
+        
 
 
     

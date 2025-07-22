@@ -21,14 +21,15 @@ from .FMK_PATH import *
 #------------------------------------------------------------------------------
 TARGET_SWITCH_CASE_HR_LINE_START = "            /* CAUTION : Automatic generated code section for switch case mapping: Start */\n"
 TARGET_SWITCH_CASE_HR_LINE_STOP = "            /* CAUTION : Automatic generated code section for switch case mapping: Stop */\n"
-TARGET_IRQHAND_HR_LINE_START = "/* CAUTION : Automatic generated code section for IRQ Handler: Start */\n"
-TARGET_IRQHAND_HR_LINE_STOP = "/* CAUTION : Automatic generated code section for IRQ Handler: Stop */\n"
+TARGET_IRQHAND_HR_LINE_START = "    /* CAUTION : Automatic generated code section for IRQ Handler: Start */\n"
+TARGET_IRQHAND_HR_LINE_STOP = "    /* CAUTION : Automatic generated code section for IRQ Handler: Stop */\n"
 TARGET_VARIABLE_HR_LINE_START = "/* CAUTION : Automatic generated code section for Variables: Start */\n"
 TARGET_VARIABLE_HR_LINE_STOP  = "/* CAUTION : Automatic generated code section for Variables: Stop */\n"
 FMKHRT_CFG_PUBLIC_PATH = 'src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKHRT_ConfigPublic.h'
 FMKHRT_CFG_PRIVATE_PATH = 'src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKHRT_ConfigPrivate.h'
 FMKHRT_C_FILE = 'src\\1_FMK\FMK_HAL\FMK_HRT\Src\FMK_HRT.c'
-
+FMKHRT_CFG_SPEC = r"src\1_FMK\FMK_CFG\FMKCFG_ConfigSpecific\FMKHRT_ConfigSpecific.c"
+FMKHRT_CFG_SPEC_H = r"src\1_FMK\FMK_CFG\FMKCFG_ConfigSpecific\FMKHRT_ConfigSpecific.h"
 ENUM_ROOT_HR_LINE = "FMKHRT_HR_LINE"
 ENUM_ROOT_HR_TIM = "FMKHRT_HIGH_RES_TIMER"
 ENUM_ROOT_HR_SLV = "FMKHRT_HRTIM_SLAVE"
@@ -77,7 +78,7 @@ class FMKHRT_CodeGen():
         enum_highres_timer = ""
         const_mapp_chnl_line = ""
         switch_mapp_line = ""
-        var_timinfo = ""
+        var_timcfg = ""
         
         desc_hr_line = []
         nb_slave = 0 
@@ -91,8 +92,8 @@ class FMKHRT_CodeGen():
 
         const_mapp_chnl_line +=  "    /**< Interrupt Line/Channel Mapping for  High Resolution Line */\n" \
                                 + "    const t_eFMKHRT_HighResLine c_FMkHrt_ChnlLineMapp_ae[FMKHRT_HIGH_RES_TIMER_NB][FMKHRT_HRTIM_SLAVE_NB][FMKHRT_HRTIM_CHANNEL_NB] = {\n"
-        var_timinfo += "/**< High Resolution Timer information variable */\n" \
-                    + "static t_sFMKHRT_HrTimInfo g_HrTimInfo_as[FMKHRT_HIGH_RES_TIMER_NB] = {\n"
+        var_timcfg += "/**<  High Resolution Timer Cfg */\n" \
+                    + "const t_sFMKHRT_HrTimerCfg c_FmkHrt_HrTimCfg_as[FMKHRT_HIGH_RES_TIMER_NB] = {\n"
 
 
 
@@ -109,15 +110,16 @@ class FMKHRT_CodeGen():
 
             
             const_mapp_chnl_line += f'    [{ENUM_ROOT_HR_TIM}_{int(idx+1)}] = ' + '{\n'
-            var_timinfo += f'    [{ENUM_ROOT_HR_TIM}_{int(idx+1)}] = ' + '{\n'\
-                        + f'        .bspItsc_s = {str(timer_cfg[0])},\n'\
+            var_timcfg += f'    [{ENUM_ROOT_HR_TIM}_{int(idx+1)}] = ' + '{\n'\
+                        + f'        .bspItsc_ps = {str(timer_cfg[0])},\n'\
                         + f'        .c_clkPort_e = {ENUM_FMKCPU_RCC_ROOT}_{str(timer_cfg[0])},\n'\
-                        + f'        .mstInfo_s.c_IRQNType_e                        = {ENUM_FMKCPU_NVIC_ROOT}_{timer_cfg[0]}_MASTER_IRQN,\n'
-                                
+                        + f'        .c_MasterIRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{timer_cfg[0]}_MASTER_IRQN,\n'
+
+            var_timcfg += '            .c_SlaveTimIRQNType_ae = {\n'  
             for idx_slave in range(nb_slave):
 
                 const_mapp_chnl_line += f'            [{ENUM_ROOT_HR_SLV}_{int(idx_slave + 1)}] = ' + '{\n'
-                var_timinfo += f'        .slvInfo_as[{ENUM_ROOT_HR_SLV}_{int(idx_slave + 1)}].c_IRQNType_e = {ENUM_FMKCPU_NVIC_ROOT}_{timer_cfg[0]}_TIM{LETTER_LIST[idx_slave]}_IRQN,\n'
+                var_timcfg += f'                [{ENUM_ROOT_HR_SLV}_{int(idx_slave + 1)}] = {ENUM_FMKCPU_NVIC_ROOT}_{timer_cfg[0]}_TIM{LETTER_LIST[idx_slave]}_IRQN,\n'
 
                 for idx_chnl in range(nb_channel):
 
@@ -144,12 +146,12 @@ class FMKHRT_CodeGen():
                                     + '            }\n'
                                     
                 const_mapp_chnl_line += '            },\n'
-
-            var_timinfo += '    },\n'
+            var_timcfg += '            }\n'
+            var_timcfg += '    },\n'
             const_mapp_chnl_line += '        },\n'
 
 
-        var_timinfo += '};\n'
+        var_timcfg += '};\n'
         const_mapp_chnl_line += '    };\n'
         enum_channel = cls.code_gen.make_enum_from_variable(ENUM_ROOT_HR_CHNL, [f"{int(idx_chnl + 1)}" for idx_chnl in range(nb_channel)],
                                                                 't_eFMKHRT_HrTimChannel', 0, "High Resolution Timer Channel",
@@ -171,19 +173,16 @@ class FMKHRT_CodeGen():
         #----------------------------------------------------------------
         for irqn_handler in list_irqn_hdler:
             idx_hres = str(irqn_handler)[7]
-            gencode_irqn_hdler += f'void {str(irqn_handler[0])}(void)\n'\
-                                + '{\n'\
-                                + f'    if(g_HrTimInfo_as[{ENUM_ROOT_HR_TIM}_{idx_hres}].isConfigured_b == (t_bool)True)\n'\
+            gencode_irqn_hdler += f'    void {str(irqn_handler[0])}(void)\n'\
                                 + '    {\n'
             if 'MASTER' in str(irqn_handler).upper():
-                gencode_irqn_hdler += f'        HAL_HRTIM_IRQHandler(   &g_HrTimInfo_as[{ENUM_ROOT_HR_TIM}_{str(idx_hres)}].bspItsc_s,\n'\
-                                    + f'                                 HRTIM_TIMERINDEX_MASTER);\n'
+                gencode_irqn_hdler += f'        HAL_HRTIM_IRQHandler(   FMKHRT_PRIVATE_GetHandleTypeDef({ENUM_ROOT_HR_TIM}_{str(idx_hres)}),\n'\
+                                    + f'                                HRTIM_TIMERINDEX_MASTER);\n'
             else:           
-                 gencode_irqn_hdler += f'        HAL_HRTIM_IRQHandler(   &g_HrTimInfo_as[{ENUM_ROOT_HR_TIM}_{str(idx_hres)}].bspItsc_s,\n'\
-                                    + f'                                 HRTIM_TIMERINDEX_TIMER_{str(irqn_handler)[12]});\n'  
-            gencode_irqn_hdler += '    }\n'\
-                                + '    return;\n'\
-                                + '}\n'
+                 gencode_irqn_hdler += f'        HAL_HRTIM_IRQHandler(   FMKHRT_PRIVATE_GetHandleTypeDef({ENUM_ROOT_HR_TIM}_{str(idx_hres)}),\n'\
+                                    + f'                                HRTIM_TIMERINDEX_TIMER_{str(irqn_handler)[12]});\n'  
+            gencode_irqn_hdler += '        return;\n'\
+                                + '    }\n'
 
     
 
@@ -209,34 +208,32 @@ class FMKHRT_CodeGen():
         cls.code_gen.change_target_balise(TARGET_T_ENUM_START_LINE,TARGET_T_ENUM_END_LINE)
 
         print("\t\t- enum for timer channel")
-        cls.code_gen._write_into_file(enum_channel, FMKHRT_CFG_PRIVATE_PATH)
+        cls.code_gen._write_into_file(enum_channel, FMKHRT_CFG_SPEC_H)
 
         print("\t\t- enum for timer slave ")
-        cls.code_gen._write_into_file(enum_slave, FMKHRT_CFG_PRIVATE_PATH)
+        cls.code_gen._write_into_file(enum_slave, FMKHRT_CFG_SPEC_H)
 
         print("\t\t- enum for timer instance ")
-        cls.code_gen._write_into_file(enum_highres_timer, FMKHRT_CFG_PRIVATE_PATH)
+        cls.code_gen._write_into_file(enum_highres_timer, FMKHRT_CFG_SPEC_H)
 
         cls.code_gen.change_target_balise(TARGET_T_VARIABLE_START_LINE, TARGET_T_VARIABLE_END_LINE)
       
         print("\t\t- Variable for max channel per timer")
         cls.code_gen._write_into_file(const_mapp_chnl_line, FMKHRT_CFG_PRIVATE_PATH)
+        cls.code_gen._write_into_file(var_timcfg, FMKHRT_CFG_PRIVATE_PATH)
     
 
        
         #---------------------For FMKTIM.c---------------------#
         print("\t- For FMKTIM.c file")
-        print("\t\t- variable for timer information")
-        cls.code_gen.change_target_balise(TARGET_VARIABLE_HR_LINE_START, TARGET_VARIABLE_HR_LINE_STOP)
-        cls.code_gen._write_into_file(var_timinfo, FMKHRT_C_FILE)
         
         print("\t\t- Timer Switch Case start")
         cls.code_gen.change_target_balise(TARGET_SWITCH_CASE_HR_LINE_START, TARGET_SWITCH_CASE_HR_LINE_STOP)
-        cls.code_gen._write_into_file(switch_mapp_line, FMKHRT_C_FILE)
+        cls.code_gen._write_into_file(switch_mapp_line, FMKHRT_CFG_SPEC)
 
         print("\t\t- IRQ Handler start")
         cls.code_gen.change_target_balise(TARGET_IRQHAND_HR_LINE_START, TARGET_IRQHAND_HR_LINE_STOP)
-        cls.code_gen._write_into_file(gencode_irqn_hdler, FMKHRT_C_FILE)
+        cls.code_gen._write_into_file(gencode_irqn_hdler, FMKHRT_CFG_PRIVATE_PATH)
 
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print("<<<<<<<<<<<<<<<<<<<<End code generation for FMKTIM Module>>>>>>>>>>>>>>>>>>>")

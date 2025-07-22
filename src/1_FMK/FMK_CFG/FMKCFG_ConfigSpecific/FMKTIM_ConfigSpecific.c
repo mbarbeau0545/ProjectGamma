@@ -19,7 +19,6 @@
 #include <math.h>
 #include "FMKTIM_ConfigSpecific.h"
 #include "../FMKCFG_ConfigFiles/FMKCPU_ConfigPublic.h"
-#include "FMK_HAL/FMK_TIM/Src/FMK_TIM.h"
 
 // ********************************************************************
 // *                      Defines
@@ -49,81 +48,7 @@
 // *                      Variables
 // ********************************************************************
 /* CAUTION : Automatic generated code section for Timer Configuration: Start */
-/**< timer information variable */
-t_sFMKTIM_TimerInfo g_TimerInfo_as[FMKTIM_TIMER_NB] = {
-    {
-        // Timer_1
-        .bspTimer_s.Instance = TIM1,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM1,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM1_UP_TIM16_IRQN
-    },
-    {
-        // Timer_2
-        .bspTimer_s.Instance = TIM2,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM2,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM2_IRQN
-    },
-    {
-        // Timer_3
-        .bspTimer_s.Instance = TIM3,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM3,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM3_IRQN
-    },
-    {
-        // Timer_4
-        .bspTimer_s.Instance = TIM4,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM4,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM4_IRQN
-    },
-    {
-        // Timer_5
-        .bspTimer_s.Instance = TIM5,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM5,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM5_IRQN
-    },
-    {
-        // Timer_6
-        .bspTimer_s.Instance = TIM6,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM6,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM6_DAC_IRQN
-    },
-    {
-        // Timer_7
-        .bspTimer_s.Instance = TIM7,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM7,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM7_DAC_IRQN
-    },
-    {
-        // Timer_8
-        .bspTimer_s.Instance = TIM8,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM8,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM8_UP_IRQN
-    },
-    {
-        // Timer_15
-        .bspTimer_s.Instance = TIM15,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM15,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN
-    },
-    {
-        // Timer_16
-        .bspTimer_s.Instance = TIM16,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM16,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM1_UP_TIM16_IRQN
-    },
-    {
-        // Timer_17
-        .bspTimer_s.Instance = TIM17,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM17,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN
-    },
-    {
-        // Timer_20
-        .bspTimer_s.Instance = TIM20,
-        .c_clock_e = FMKCPU_RCC_CLK_TIM20,
-        .c_IRQNType_e = FMKCPU_NVIC_TIM20_UP_IRQN
-    },
-};
+
 
 /* CAUTION : Automatic generated code section for Timer Configuration: End */
 //********************************************************************************
@@ -643,74 +568,6 @@ HAL_StatusTypeDef FMKTIM_HAL_TIM_Encoder_Init(TIM_HandleTypeDef *htim, void * f_
  *	@brief      Implementation of every timer IRQHandler wardware function.\n 
  *
  */
-/* CAUTION : Automatic generated code section for TIMx IRQHandler: Start */
-/*********************************
- * TIM1_BRK_TIM15_IRQHandler
-*********************************/
-void TIM1_BRK_TIM15_IRQHandler(void)      {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_15].bspTimer_s);}
-/*********************************
- * TIM20_TRG_COM_IRQHandler
-*********************************/
-void TIM20_TRG_COM_IRQHandler(void)       {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_16].bspTimer_s);}
-/*********************************
- * TIM1_TRG_COM_TIM17_IRQHandler
-*********************************/
-void TIM1_TRG_COM_TIM17_IRQHandler(void)  {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_17].bspTimer_s);}
-/*********************************
- * TIM1_UP_TIM16_IRQHandler
-*********************************/
-void TIM1_UP_TIM16_IRQHandler(void)       {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_1].bspTimer_s);}
-/*********************************
- * TIM2_IRQHandler
-*********************************/
-void TIM2_IRQHandler(void)                {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_2].bspTimer_s);}
-/*********************************
- * TIM3_IRQHandler
-*********************************/
-void TIM3_IRQHandler(void)                {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_3].bspTimer_s);}
-/*********************************
- * TIM4_IRQHandler
-*********************************/
-void TIM4_IRQHandler(void)                {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_4].bspTimer_s);}
-/*********************************
- * TIM6_DAC_IRQHandler
-*********************************/
-void TIM6_DAC_IRQHandler(void)            {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_6].bspTimer_s);}
-/*********************************
- * TIM7_DAC_IRQHandler
-*********************************/
-void TIM7_DAC_IRQHandler(void)            {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_7].bspTimer_s);}
-/*********************************
- * TIM8_UP_IRQHandler
-*********************************/
-void TIM8_UP_IRQHandler(void)             {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_8].bspTimer_s);}
-/*********************************
- * TIM20_BRK_IRQHandler
-*********************************/
-void TIM20_BRK_IRQHandler(void)           {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_20].bspTimer_s);}
-/*********************************
- * TIM20_UP_IRQHandler
-*********************************/
-void TIM20_UP_IRQHandler(void)            {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_20].bspTimer_s);}
-/*********************************
- * TIM20_CC_IRQHandler
-*********************************/
-void TIM20_CC_IRQHandler(void)            {return HAL_TIM_IRQHandler(&g_TimerInfo_as[FMKTIM_TIMER_20].bspTimer_s);}
-/* CAUTION : Automatic generated code section for TIMx IRQHandler: End */
-
-/**
- *
- *	@brief      Every callback function is now centralized in one function
- *
- */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim, FMKTIM_BSP_CB_PERIOD_ELAPSED); }
-//void HAL_TIM_PeriodElapsedHalfCpltCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim); }
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim, FMKTIM_BSP_CB_IC_CAPTURE); }
-//void HAL_TIM_IC_CaptureHalfCpltCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim); }
-//void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim, FMKTIM_BSP_CB_OC_DELAY_ELAPSED); }
-//void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim, FMKTIM_BSP_CB_PWM_PULSE_FINISHED); }
-//void HAL_TIM_PWM_PulseFinishedHalfCpltCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim); }
-//void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim) { return FMKTIM_BspRqst_InterruptMngmt(htim, FMKTIM_HWTIM_CFG_TRGR); }
 //********************************************************************************
 //                      Local functions - Implementation
 //********************************************************************************

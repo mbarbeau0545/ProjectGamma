@@ -35,8 +35,6 @@
 // ********************************************************************
 // *                      Types
 // ********************************************************************
-
-
 /* CAUTION : Automatic generated code section for Enum: Start */
 
 /* CAUTION : Automatic generated code section for Enum: End */

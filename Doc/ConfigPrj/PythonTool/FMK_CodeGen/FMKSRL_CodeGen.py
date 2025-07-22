@@ -24,8 +24,8 @@ ENUM_FMKSRL_HW_PROT = 'FMKSRL_HW_PROTOCOL'
 
 TARGET_BUFF_MAPP_START = '    /* CAUTION : Automatic generated code section for Buffer Mapping: Start */\n'
 TARGET_BUFF_MAPP_END =   '    /* CAUTION : Automatic generated code section for Buffer Mapping: End */\n'
-TARGET_IRQN_HDLR_START = '/* CAUTION : Automatic generated code section for UART/USART IRQHandler: Start */\n'
-TARGET_IRQN_HDLR_END = '/* CAUTION : Automatic generated code section for UART/USART IRQHandler: End */\n'
+TARGET_IRQN_HDLR_START = '    /* CAUTION : Automatic generated code section for UART/USART IRQHandler: Start */\n'
+TARGET_IRQN_HDLR_END = '    /* CAUTION : Automatic generated code section for UART/USART IRQHandler: End */\n'
 FMKSRL_CFGSPEC_C   = 'src\\1_FMK\FMK_CFG\FMKCFG_ConfigSpecific\FMKSRL_ConfigSpecific.c'
 FMKSRL_CFGPUBLIC   = 'src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKSRL_ConfigPublic.h'
 FMKSRL_CFGPRIVATE  = 'src\\1_FMK\FMK_CFG\FMKCFG_ConfigFiles\FMKSRL_ConfigPrivate.h'
@@ -68,7 +68,6 @@ class FMKSRL_CodeGen():
         var_srl_info = ''
         irqn_hdlr = ''
         var_RxTx_buffer = ''
-        mapp_buffer = ''
         #----------------------------------------------------------------
         #-------------------------------Make Enum -----------------------
         #----------------------------------------------------------------
@@ -86,9 +85,8 @@ class FMKSRL_CodeGen():
                         +    '    * @brief Mapping between Serial Line And Bsp Handle Typedef\n' \
                         +    '    */\n' \
                         + f'    USART_TypeDef * c_FmkSrl_BspInitIstcMapp_pas[{ENUM_FMKSRL_LINE}_NB]' +  ' = {\n'
-        var_srl_info += '/**< Store the Serial Info for all lines */\n' \
-                     + f'static t_sFMKSRL_SerialInfo g_SerialInfo_as[{ENUM_FMKSRL_LINE}_NB]' + ' = {\n'
-        
+        var_srl_info += '    /**< Store the Serial Configuration */\n' \
+                     + f'    const t_sFMKSRL_SerialCfg c_FmkSrl_SerialCfg_as[{ENUM_FMKSRL_LINE}_NB]' + ' = {\n'
         tx_size_buff = 0
         rx_size_buff = 0
         is_istce_used = True
@@ -111,9 +109,9 @@ class FMKSRL_CodeGen():
                 is_istce_used = True
                 tx_size_buff = line_info[3]
 
-            var_RxTx_buffer += f'//--------- Tx, Rx Buffer for Serial Line {idx_line} ---------//\n' \
-                            + f'static t_uint8 g_SrlLine_{idx_line}_RxBuffer_ua8[{rx_size_buff}];\n' \
-                            + f'static t_uint8 g_SrlLine_{idx_line}_TxBuffer_ua8[{tx_size_buff}];\n' \
+            var_RxTx_buffer += f'    //--------- Tx, Rx Buffer for Serial Line {idx_line} ---------//\n' \
+                            + f'    t_uint8 g_SrlLine_{idx_line}_RxBuffer_ua8[{rx_size_buff}];\n' \
+                            + f'    t_uint8 g_SrlLine_{idx_line}_TxBuffer_ua8[{tx_size_buff}];\n' \
                             + '\n'
             
             # code generation for mapping instance
@@ -122,45 +120,50 @@ class FMKSRL_CodeGen():
                             + f' // Reference to Serial Line {idx_line} \n'
                             
             # code generation for Serial info
-            var_srl_info += f'    [{ENUM_FMKSRL_LINE}_{idx_line}]' + ' = {\n' \
-                            + f'        .c_clockPort_e = {ENUM_FMKCPU_RCC_ROOT}_{line_info[0]},\n' \
-                            + f'        .c_HwType_e    = {ENUM_FMKSRL_HW_PROT}_{str(line_info[0])[:-1]},\n' \
-                            + f'        .c_IRQNType_e  = {ENUM_FMKCPU_NVIC_ROOT}_{line_info[0]}_IRQN,\n'
+            var_srl_info += f'        [{ENUM_FMKSRL_LINE}_{idx_line}]' + ' = {\n' \
+                            + f'            .c_clockPort_e = {ENUM_FMKCPU_RCC_ROOT}_{line_info[0]},\n' \
+                            + f'            .c_HwType_e    = {ENUM_FMKSRL_HW_PROT}_{str(line_info[0])[:-1]},\n' \
+                            + f'            .c_IRQNType_e  = {ENUM_FMKCPU_NVIC_ROOT}_{line_info[0]}_IRQN,\n'
             
             if is_istce_used:
-                var_srl_info +=  f'        .c_DmaRqstRx   = {ENUM_FMKCPU_DMARQST}_{line_info[0]}_RX,\n' \
-                                + f'        .c_DmaRqstTx   = {ENUM_FMKCPU_DMARQST}_{line_info[0]}_TX,\n' 
+                var_srl_info +=  f'            .c_DmaRqstRx   = {ENUM_FMKCPU_DMARQST}_{line_info[0]}_RX,\n' \
+                                + f'            .c_DmaRqstTx   = {ENUM_FMKCPU_DMARQST}_{line_info[0]}_TX,\n' 
             else: 
-                var_srl_info +=  f'        .c_DmaRqstRx   = (t_eFMKCPU_DmaRqst)0xFF,\n' \
-                             + f'        .c_DmaRqstTx   = (t_eFMKCPU_DmaRqst)0xFF,\n' 
-                
-            var_srl_info   +=  '    },\n\n'
+                var_srl_info +=  f'            .c_DmaRqstRx   = (t_eFMKCPU_DmaRqst)0xFF,\n' \
+                             + f'            .c_DmaRqstTx   = (t_eFMKCPU_DmaRqst)0xFF,\n' 
+            var_srl_info    += f'            .Rx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_{idx_line}_RxBuffer_ua8),\n'\
+                            +  f'            .Rx_bufferSize_u16 = (t_uint16){rx_size_buff},\n'\
+                            +  f'            .Tx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_{idx_line}_TxBuffer_ua8),\n'\
+                            +  f'            .Tx_bufferSize_u16 = (t_uint16){tx_size_buff},\n'
+            var_srl_info   +=  '        },\n'
             
             
             #code generation for IRQN Handler
-            irqn_hdlr += '/*********************************\n' \
-                        + f'* {line_info[1]}\n' \
-                        +'*********************************/\n' \
-                        + f'void {line_info[1]}(void)\n' \
-                        + '{\n' + f'    if(g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].isLineConfigured_b == (t_bool)True)\n' \
-                        + '    {\n' + f'        if(g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].SoftType_e == FMKSRL_HW_PROTOCOL_UART)\n' \
-                        + '        {\n' + f'            HAL_UART_IRQHandler((UART_HandleTypeDef *)(&g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].bspHandle_u));\n' + '        }\n' \
-                        + f'        else if(g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].SoftType_e == FMKSRL_HW_PROTOCOL_USART)\n' \
-                        + '        {\n' + f'            HAL_USART_IRQHandler((USART_HandleTypeDef *)(&g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].bspHandle_u));\n' + '        }\n' \
-                        + '    }\n' + '}\n\n'
+            irqn_hdlr += (
+                    f'    void {line_info[1]}(void)\n'
+                    '    {\n'
+                    '        UART_HandleTypeDef * uartHandle_ps = NULL;\n'
+                    '        USART_HandleTypeDef * usartHandle_ps = NULL;\n\n'
+                    f'        FMKSRL_PRIVATE_GetHandleTypeDef(FMKSRL_SERIAL_LINE_{idx_line}, '
+                    '&uartHandle_ps, &usartHandle_ps);\n\n'
+                    '        if(uartHandle_ps != (UART_HandleTypeDef *)NULL)\n'
+                    '        {\n'
+                    '            HAL_UART_IRQHandler((UART_HandleTypeDef *)(uartHandle_ps));\n'
+                    '        }\n'
+                    '        else if(usartHandle_ps != (USART_HandleTypeDef *)NULL)\n'
+                    '        {\n'
+                    '            HAL_USART_IRQHandler((USART_HandleTypeDef *)(usartHandle_ps));\n'
+                    '        }\n'
+                    '    }\n\n'
+                )
             
             # code generation for buffer-serial_line mapping
-            mapp_buffer +=  f'    //--------- Buffer Mapping for Serial Line {idx_line} ---------//\n' \
-                        +  '    //--------- Rx Buffer ---------//\n' \
-                        + f'    g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].RxInfo_s.Buffer_s.bufferAdd_pu8 = (t_uint8 *)(&g_SrlLine_{idx_line}_RxBuffer_ua8);\n' \
-                        + f'    g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].RxInfo_s.Buffer_s.buffferSize_u16 = (t_uint16){rx_size_buff};\n' \
-                        +  '    //--------- Tx Buffer ---------//\n' \
-                        + f'    g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].TxInfo_s.Buffer_s.bufferAdd_pu8 = (t_uint8 *)(&g_SrlLine_{idx_line}_TxBuffer_ua8);\n' \
-                        + f'    g_SerialInfo_as[FMKSRL_SERIAL_LINE_{idx_line}].TxInfo_s.Buffer_s.buffferSize_u16 = (t_uint16){rx_size_buff};\n' \
-                        + '\n'
+
+
                         
-        var_srl_info += '};\n'
+        var_srl_info += '    };\n'
         cst_mapp_istnc += '    };\n\n'
+        
                  
         #-----------------------------------------------------------
         #------------code genration for FMKCPU module---------------
@@ -179,21 +182,14 @@ class FMKSRL_CodeGen():
 
         print('\t\t- For constant mapping instance')
         cls.code_gen._write_into_file(cst_mapp_istnc, FMKSRL_CFGPRIVATE)
-
-        print('\t- For FMKCPU.c File ')
-
-        print('\t\t- For Srl Info variable')
-        cls.code_gen.change_target_balise(TARGET_VARIABLE_START_LINE, TARGET_VARIABLE_END_LINE)
-        cls.code_gen._write_into_file(var_srl_info, FMKSRL_CFILE)
-        cls.code_gen._write_into_file(var_RxTx_buffer, FMKSRL_CFILE)
-
-        print('\t\tFor IRQN Handler')
-        cls.code_gen.change_target_balise(TARGET_BUFF_MAPP_START, TARGET_BUFF_MAPP_END)
-        cls.code_gen._write_into_file(mapp_buffer, FMKSRL_CFILE)
+        print('\t\tFor Buffer Size')
+        cls.code_gen._write_into_file(var_srl_info, FMKSRL_CFGPRIVATE)
+        cls.code_gen._write_into_file(var_RxTx_buffer, FMKSRL_CFGPRIVATE)
+        
 
         print('\t\tFor IRQN Handler')
         cls.code_gen.change_target_balise(TARGET_IRQN_HDLR_START, TARGET_IRQN_HDLR_END)
-        cls.code_gen._write_into_file(irqn_hdlr, FMKSRL_CFILE)
+        cls.code_gen._write_into_file(irqn_hdlr, FMKSRL_CFGPRIVATE)
 
       
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")

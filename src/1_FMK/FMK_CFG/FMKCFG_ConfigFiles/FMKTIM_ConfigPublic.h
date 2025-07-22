@@ -68,43 +68,12 @@
         FMKTIM_INTERRUPT_LINE_TYPE_NB,
     } t_eFMKTIM_InterruptLineType;
     /* CAUTION : Automatic generated code section for Enum: Start */
-    /**< Number max of channel enable by timer */
-     typedef enum
-    {
-        FMKTIM_CHANNEL_1 = 0x00,              // Reference to HAL channel 1
-        FMKTIM_CHANNEL_2,              // f"Reference to HAL channel 2
-        FMKTIM_CHANNEL_3,              // f"Reference to HAL channel 3
-        FMKTIM_CHANNEL_4,              // f"Reference to HAL channel 4
-
-        FMKTIM_CHANNEL_NB,
-        FMKTIM_CHANNEL_ALL,
-    } t_eFMKTIM_InterruptChnl;
-        /**
-    * @brief Number of timer enable in smt32xxx board.
-    */
-    typedef enum
-    {
-        FMKTIM_TIMER_1 = 0x0,                  /**< Reference for HAL timer_1, this timer has 4 channel(s) */
-        FMKTIM_TIMER_2,                        /**< Reference for HAL timer_2, this timer has 4 channel(s) */
-        FMKTIM_TIMER_3,                        /**< Reference for HAL timer_3, this timer has 4 channel(s) */
-        FMKTIM_TIMER_4,                        /**< Reference for HAL timer_4, this timer has 4 channel(s) */
-        FMKTIM_TIMER_5,                        /**< Reference for HAL timer_5, this timer has 4 channel(s) */
-        FMKTIM_TIMER_6,                        /**< Reference for HAL timer_6, this timer has 1 channel(s) */
-        FMKTIM_TIMER_7,                        /**< Reference for HAL timer_7, this timer has 1 channel(s) */
-        FMKTIM_TIMER_8,                        /**< Reference for HAL timer_8, this timer has 4 channel(s) */
-        FMKTIM_TIMER_15,                       /**< Reference for HAL timer_15, this timer has 2 channel(s) */
-        FMKTIM_TIMER_16,                       /**< Reference for HAL timer_16, this timer has 1 channel(s) */
-        FMKTIM_TIMER_17,                       /**< Reference for HAL timer_17, this timer has 1 channel(s) */
-        FMKTIM_TIMER_20,                       /**< Reference for HAL timer_20, this timer has 4 channel(s) */
-    
-        FMKTIM_TIMER_NB,
-    } t_eFMKTIM_Timer;
     /**
     * @brief Number of General Purpose Interrupt Line, for PWM, Input-Compare, Output Compare, One sPulse.
     */
     typedef enum
     {
-        FMKTIM_INTERRUPT_LINE_IO_11 = 0x0,                 /**< General Purpose Timer, Reference to Timer 1 Channel 1 */
+        FMKTIM_INTERRUPT_LINE_IO_11 = 0,                 /**< General Purpose Timer, Reference to Timer 1 Channel 1 */
         FMKTIM_INTERRUPT_LINE_IO_12,                       /**< General Purpose Timer, Reference to Timer 1 Channel 2 */
         FMKTIM_INTERRUPT_LINE_IO_13,                       /**< General Purpose Timer, Reference to Timer 1 Channel 3 */
         FMKTIM_INTERRUPT_LINE_IO_14,                       /**< General Purpose Timer, Reference to Timer 1 Channel 4 */
@@ -145,7 +114,7 @@
     */
     typedef enum
     {
-        FMKTIM_INTERRUPT_LINE_EVNT_1 = 0x0,                  /**< Event Purpose Timer, Reference to Timer 6 Channel 1 */
+        FMKTIM_INTERRUPT_LINE_EVNT_1 = 0,                  /**< Event Purpose Timer, Reference to Timer 6 Channel 1 */
         FMKTIM_INTERRUPT_LINE_EVNT_2,                        /**< Event Purpose Timer, Reference to Timer 7 Channel 1 */
     
         FMKTIM_INTERRUPT_LINE_EVNT_NB,
@@ -161,84 +130,8 @@
     } t_eFMKTIM_InterruptLineDAC;
 
     /* CAUTION : Automatic generated code section for Enum: End */
-    
-    typedef enum 
-    {
-        FMKTIM_BSP_CB_PERIOD_ELAPSED = 0x00,
-        FMKTIM_BSP_CB_IC_CAPTURE,
-        FMKTIM_BSP_CB_OC_DELAY_ELAPSED,
-        FMKTIM_BSP_CB_PWM_PULSE_FINISHED,
 
-        FMKTIM_BSP_CB_NB,
-    } t_eFMKTIM_BspEvent;
-    /**< Enum  for channel state */
-    typedef enum
-    {
-        FMKTIM_CHNLST_DISACTIVATED = 0x0U,       /**< the channel is disactivated by software, not running */
-        FMKTIM_CHNLST_ACTIVATED,                 /**< The channel is acitvated by software, is running */
-
-        FMKTIM_CHNLST_NB                         /**< Number of channel state */
-    } t_eFMKTIM_ChnlState;
-    
-
-    /**< Enum for channel run mode */
-    typedef enum 
-    {
-        FMKTIM_LINE_RUNMODE_POLLING = 0x0U,     /**< The channel is running in polling mode (standard mode) */
-        FMKTIM_LINE_RUNMODE_INTERRUPT,          /**< The channel is running in interrupt mode, which means HAL error callback is active,
-                                                 among other things*/
-        FMKTIM_LINE_RUNMODE_DMA,                /**< The channel is running in DMA Mode */
-
-        FMKTIM_LINE_RUNMODE_NB                  /**< Number of channel run mode take in charge (DMA currently not available) */
-    } t_eFMKTIM_ChnlRunMode; 
     //-----------------------------TYPEDEF TYPES---------------------------//
-    /**
-    *
-    *	@brief  Call back function for channels
-    *
-    *	@param[in]      f_timer_e : timer channel 
-    *	@param[out]     f_channel_e : channel which make the interruption
-    *	 
-    *
-    */
-   typedef void (t_cbFMKTIM_InterruptLine)(t_eFMKTIM_InterruptLineType f_InterruptType_e, t_uint8 f_InterruptLine_u8);
-
-    typedef struct 
-    {
-        t_uint32 * BufferAdd1_pu32; /**< Dma Buffer Address 1 */
-        t_uint32 * BufferAdd2_pu32; /**< Dma Buffer Address 2 */
-        t_uint16 bufferLen_u16;
-        t_eFMKCPU_DmaRqst RqstId_e;
-    } t_sFMKTIM_ChnlDmaInfo;
-    /**< Structure of information on a timer-channel*/
-    typedef struct
-    {
-        t_eFMKTIM_ChnlState State_e;                        /**< State of the channel */
-        t_eFMKTIM_ChnlRunMode RunMode_e;                    /**< Run mode for the channel */
-        t_sFMKTIM_ChnlDmaInfo DmaInfo_ps;
-        t_uint16 ErrState_u16;                /**< Error state of the channel */
-        t_cbFMKTIM_InterruptLine *chnl_cb;                  /**< Callback function of the channel */
-        t_bool IsChnlConfigure_b;                           /**< Wether or not the channel has beeen configured */
-        
-    } t_sFMKTIM_ChnlInfo;
-
-    /**< Structure of information on a timer*/
-    typedef struct
-    {
-        TIM_HandleTypeDef bspTimer_s;                       /**< The Timer structure for HAL STM32*/
-        t_eFMKTIM_HwTimerCfg HwCfg_e;                       /**< The hardware configuration of the timer */
-        t_sFMKTIM_ChnlInfo Channel_as[FMKTIM_CHANNEL_NB];   /**< Channels info structure */
-        const t_eFMKCPU_IRQNType c_IRQNType_e;              /**< IRQN type related to the timer */
-        const t_eFMKCPU_ClockPort c_clock_e;                /**< RCC clock related to the timer */
-        t_uint16 timerFreqMHz_u32;                              /**< Timer frequency in Mhz */
-        t_uint16 mskChnlState_u16;
-        //const t_eFMKCPU_DmaRqst c_RqstDma_e;               /**< RCC clock related to the timer */
-        t_bool IsTimerRunning_b;                            /**< Flag for timer is runnning */
-        t_bool isConfigured_b;                              /**< flag timer is configured */  
-        t_bool IsNVICTimerEnable_b;                         /**< flag timer NVCIC enable or not */
-        t_bool ignoreInterrupt_b;                            /**< Flag to ignore interruption */
-
-    } t_sFMKTIM_TimerInfo;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************

@@ -33,7 +33,7 @@
     */
     typedef enum
     {
-        FMKCDA_ADC_INTERN_TS_CAL1 = 0x0,            /**< Refernce to TS_CAL1 */
+        FMKCDA_ADC_INTERN_TS_CAL1 = 0,            /**< Refernce to TS_CAL1 */
         FMKCDA_ADC_INTERN_TS_CAL2,                  /**< Refernce to TS_CAL2 */
     
         FMKCDA_ADC_INTERN_NB,
@@ -44,7 +44,7 @@
     */
     typedef enum
     {
-        FMKCDA_ADC_1 = 0x0,                  /**< Reference to HAL ADC1 */
+        FMKCDA_ADC_1 = 0,                  /**< Reference to HAL ADC1 */
         FMKCDA_ADC_2,                        /**< Reference to HAL ADC2 */
         FMKCDA_ADC_3,                        /**< Reference to HAL ADC3 */
         FMKCDA_ADC_4,                        /**< Reference to HAL ADC4 */
@@ -58,7 +58,7 @@
     */
     typedef enum
     {
-        FMKCDA_ADC_CHANNEL_0 = 0x0,                  /**< Reference to HAL adc channel 0 */
+        FMKCDA_ADC_CHANNEL_0 = 0,                  /**< Reference to HAL adc channel 0 */
         FMKCDA_ADC_CHANNEL_1,                        /**< Reference to HAL adc channel 1 */
         FMKCDA_ADC_CHANNEL_2,                        /**< Reference to HAL adc channel 2 */
         FMKCDA_ADC_CHANNEL_3,                        /**< Reference to HAL adc channel 3 */

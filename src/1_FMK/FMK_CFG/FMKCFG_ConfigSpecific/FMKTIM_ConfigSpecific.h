@@ -20,6 +20,7 @@
     // ********************************************************************
     #include "FMK_CFG/FMKCFG_ConfigFiles/FMKTIM_ConfigPublic.h"
     #include "FMK_CFG/FMKCFG_ConfigFiles/FMKCPU_ConfigPublic.h"
+    #include "FMK_HAL/FMK_TIM/Src/FMK_TIM.h"
     #include "TypeCommon.h"
     // ********************************************************************
     // *                      Defines
@@ -45,7 +46,6 @@
     // ********************************************************************
     // *                      Variables
     // ********************************************************************
-    extern t_sFMKTIM_TimerInfo g_TimerInfo_as[FMKTIM_TIMER_NB];
     
 
 

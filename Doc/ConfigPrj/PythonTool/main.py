@@ -62,7 +62,7 @@ def main()-> None:
     FMKHRT.code_generation(hardware_cfg_path)
     FMKCDA.code_genration(hardware_cfg_path)
     FMKSRL.code_genration(hardware_cfg_path)
-    FMKIO.code_generation(hardware_cfg_path)
+    #FMKIO.code_generation(hardware_cfg_path)
 
     #--- create Json file for Uds Configuration with the version ---# 
     code_gen = LCFE()
@@ -85,11 +85,11 @@ def main()-> None:
                     json.dump({}, file, indent=4)
                     print(f"Uds Config for {soft_version} has been created.")
     
-    APPSNS.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
-    APPACT.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
-    APPSDM.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
-    APPSPM.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
-    APPLGC.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
+    #APPSNS.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
+    #APPACT.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
+    #APPSDM.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
+    #APPSPM.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
+    #APPLGC.code_generation(software_cfg_path, soft_udscfg_path, filled_uds_file)
 
     print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print("<<<<<<<<<<<<<<<<<Successfuly made code generation for project>>>>>>>>>>>>>>>>>")

@@ -90,7 +90,8 @@
     "fmk_hrt.h": "c",
     "fmkhrt_configprivate.h": "c",
     "crc.h": "c",
-    "app_spm.h": "c"
+    "app_spm.h": "c",
+    "*.tpl": "cpp"
   },
   "stm32-for-vscode.armToolchainPath": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",
