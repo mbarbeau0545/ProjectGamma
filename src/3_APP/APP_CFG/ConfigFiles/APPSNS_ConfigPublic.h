@@ -51,7 +51,7 @@
     */
     typedef enum
     {
-        APPSNS_MEASTYPE_RAW = 0x0,                /**< Raw value is not changed */
+        APPSNS_MEASTYPE_RAW = 0,                /**< Raw value is not changed */
         APPSNS_MEASTYPE_PRESSURE,                 /**< Sensor value converted to angle in radians */
         APPSNS_MEASTYPE_TEMPERATURE,              /**< Sensor value converted to angle in degrees */
         APPSNS_MEASTYPE_SPEED,                    /**< Sensor value converted to distance in meters */

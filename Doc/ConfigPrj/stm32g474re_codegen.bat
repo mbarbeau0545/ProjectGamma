@@ -5,7 +5,7 @@ set PYTHON_PATH=python
 cd /d %~dp0\..\..
 
 REM Exécuter le script Python avec des arguments fixes
-%PYTHON_PATH% Doc/ConfigPrj/PythonTool/main.py Doc\ConfigPrj\ExcelCfg\STM32G474RE\STM32G474RE_HwCfg.xlsx Doc\ConfigPrj\ExcelCfg\Project_SoftwareCfg.xlsm
+%PYTHON_PATH% Doc/ConfigPrj/PythonTool_CodeGen/main.py Doc\ConfigPrj\ExcelCfg\STM32G474RE\STM32G474RE_HwCfg.xlsx Doc\ConfigPrj\ExcelCfg\Project_SoftwareCfg.xlsm
 
 echo Press any key to continue...
 pause

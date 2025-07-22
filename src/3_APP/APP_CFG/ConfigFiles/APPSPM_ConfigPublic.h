@@ -34,7 +34,7 @@
     */
     typedef enum
     {
-        APPSPM_PRM_MOTOR_X_KP = 0x0,
+        APPSPM_PRM_MOTOR_X_KP = 0,
         APPSPM_PRM_MOTOR_X_KI,
         APPSPM_PRM_MOTOR_X_KD,
     

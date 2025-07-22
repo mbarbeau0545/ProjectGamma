@@ -42,3 +42,31 @@
 	path = src/3_APP/APP_CTRL/APP_SYS
 	url = https://github.com/mbarbeau0545/APPSYS
 	branch = Dev
+[submodule "src/0_Common/Library/CRC"]
+	path = src/0_Common/Library/CRC
+	url = https://github.com/mbarbeau0545/LIB_CRC
+	branch = Dev
+[submodule "src/0_Common/Library/PID"]
+	path = src/0_Common/Library/PID
+	url = https://github.com/mbarbeau0545/LIB_PID
+	branch = Dev
+[submodule "src/0_Common/Library/QUEUE"]
+	path = src/0_Common/Library/QUEUE
+	url = https://github.com/mbarbeau0545/LIB_QUEUE
+	branch = Dev
+[submodule "src/0_Common/Library/RAMP"]
+	path = src/0_Common/Library/RAMP
+	url = https://github.com/mbarbeau0545/LIB_RAMP
+	branch = Dev
+[submodule "src/0_Common/Library/SafeMem"]
+	path = src/0_Common/Library/SafeMem
+	url = https://github.com/mbarbeau0545/LIB_SAFEMEM
+	branch = Dev
+[submodule "Doc/ConfigPrj/PythonTool_CodeGen"]
+	path = Doc/ConfigPrj/PythonTool_CodeGen
+	url = https://github.com/mbarbeau0545/PythonToolStm32CodeGen
+	branch = Dev
+[submodule "src/3_APP/APP_CTRL/APP_SIG"]
+	path = src/3_APP/APP_CTRL/APP_SIG
+	url = https://github.com/mbarbeau0545/APPSIG
+	branch = Dev

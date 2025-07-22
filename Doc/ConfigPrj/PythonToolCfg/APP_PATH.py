@@ -14,33 +14,36 @@
 #------------------------------------------------------------------------------
 #                                       CONSTANT
 #------------------------------------------------------------------------------
-SOFTWARE_CFG_PATH = "Doc\\ConfigPrj\\ExcelCfg\\Software_Configuration.xlsm"
+SOFTWARE_CFG_PATH = r"Doc\\ConfigPrj\\ExcelCfg\\Software_Configuration.xlsm"
 
-SNS_SPEC_FOLDER_PATH = "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific"
-SNS_SPEC_FOLDER_FULLPATH = "src\\3_APP\\APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific"
+SNS_SPEC_FOLDER_PATH = r"APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific"
+SNS_SPEC_FOLDER_FULLPATH = r"src\\3_APP\\APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific"
 
-ACT_SPEC_FOLDER_FULLPATH = "src\\3_APP\\APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific"
-ACT_SPEC_FOLDER_PATH = "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific"
+ACT_SPEC_FOLDER_FULLPATH = r"src\\3_APP\\APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific"
+ACT_SPEC_FOLDER_PATH = r"APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific"
 
-APPSNS_CONFIGPUBLIC_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPublic.h"
-APPSNS_CONFIGPRIVATE_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPrivate.h"
-APPSNS_C_PATH = "src\\3_APP\\APP_CTRL\\APP_SNS\\Src\\APP_SNS.c"
+APPSNS_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPublic.h"
+APPSNS_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPrivate.h"
+APPSNS_C_PATH = r"src\\3_APP\\APP_CTRL\\APP_SNS\\Src\\APP_SNS.c"
 
-APPACT_CONFIGPUBLIC_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPublic.h"
-APPACT_CONFIGPRIVATE_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPrivate.h"
-APPACT_C_PATH = "src\\3_APP\\APP_CTRL\\APP_ACT\\Src\\APP_ACT.c"
+APPACT_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPublic.h"
+APPACT_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPrivate.h"
+APPACT_C_PATH = r"src\\3_APP\\APP_CTRL\\APP_ACT\\Src\\APP_ACT.c"
 
-APPSDM_CONFIGPUBLIC_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPSDM_ConfigPublic.h"
-APPSDM_CONFIGPRIVATE_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPSDM_ConfigPrivate.h"
-APPSDM_CONGSPECIFIC_C = "src\\3_APP\\APP_CFG\\ConfigSpecific\\APPSDM_ConfigSpecific.c"
-APPSDM_CONGSPECIFIC_H = "src\\3_APP\\APP_CFG\\ConfigSpecific\\APPSDM_ConfigSpecific.h"
+APPSDM_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSDM_ConfigPublic.h"
+APPSDM_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSDM_ConfigPrivate.h"
+APPSDM_CONGSPECIFIC_C = r"src\\3_APP\\APP_CFG\\ConfigSpecific\\APPSDM_ConfigSpecific.c"
+APPSDM_CONGSPECIFIC_H = r"src\\3_APP\\APP_CFG\\ConfigSpecific\\APPSDM_ConfigSpecific.h"
 
-APPLGC_CONFIGPUBLIC_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPLGC_ConfigPublic.h"
-APPLGC_CONFIGPRIVATE_PATH = "src\\3_APP\\APP_CFG\\ConfigFiles\\APPLGC_ConfigPrivate.h"
-APPLGC_C = "src\\3_APP\\APP_LGC\\Src\\APP_LGC.c"
+APPLGC_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPLGC_ConfigPublic.h"
+APPLGC_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPLGC_ConfigPrivate.h"
+APPLGC_C = r"src\\3_APP\\APP_LGC\\Src\\APP_LGC.c"
 
-TPL_APP_SPC_PATH_H = "Doc\\ConfigPrj\\PythonTool\\App_CodeGen\\template_files\\APPSPEC_tpl.h"
-TPL_APP_SPC_PATH_C = "Doc\\ConfigPrj\\PythonTool\\App_CodeGen\\template_files\\APPSPEC_tpl.c"
+TPL_APP_SPC_PATH_H = r"Doc\\ConfigPrj\\PythonTool_CodeGen\\App_CodeGen\\template_files\\APPSPEC_tpl.h"
+TPL_APP_SPC_PATH_C = r"Doc\\ConfigPrj\\PythonTool_CodeGen\\App_CodeGen\\template_files\\APPSPEC_tpl.c"
+
+APPSPM_CFG_PRIVATE = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPrivate.h'
+APPSPM_CFG_PUBLIC = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPublic.h'
 
 SPACE_VARIABLE = 30
 EMPTY_CELL = "None"

@@ -18,7 +18,7 @@ The main idea of this project is no matter the MCU used the logic will always wo
 For the doxygen documentation search the file "index.html"
 - Once it is done, you have to configure the Excel in Doc/ConfigPrj/ExcelCfg/Hardware_Configuration, see in Annexe 1 how to do so.
 - Do the same for the Software_Configuration, Annexe 2. (not a restriction if user just want to test signal)
-- To generate configuration in files from Excel (Hardware and Software) configuration, go to Doc/ConfigPrj/PythonTool and launch the main.py file. To do so wether the CPU you're using is already in stm32xxxx_code_gen.bat if not, create by copying one of the .bat and change the path for Excel Hardware/Software Configuration.\n
+- To generate configuration in files from Excel (Hardware and Software) configuration, go to Doc/ConfigPrj/PythonTool_CodeGen and launch the main.py file. To do so wether the CPU you're using is already in stm32xxxx_code_gen.bat if not, create by copying one of the .bat and change the path for Excel Hardware/Software Configuration.\n
 - Now you can Build/Flash you're project using platform.io framework
 - Put your code in the file APP_LGC.c, in function APPLGC_Init to run once and APPLGC_Cyclic to run cyclically
 
@@ -34,7 +34,7 @@ For the doxygen documentation search the file "index.html"
 
 	for PWM purpose be careful on which timer you choose, some of them are not meant to make pwm signal
 - Go to the sheet CPU and inform the timer used for event timers whhich means periodic timer
-- Save and Generate code from Doc/ConfigPrj/PythonTool/somethnig.bat file.
+- Save and Generate code from Doc/ConfigPrj/PythonTool_CodeGen/somethnig.bat file.
 
 ## bugs
 - Comprendre pourquoi HAL_Delay -> Infinite Loop
