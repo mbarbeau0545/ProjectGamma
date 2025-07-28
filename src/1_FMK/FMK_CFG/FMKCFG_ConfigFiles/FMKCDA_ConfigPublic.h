@@ -33,7 +33,8 @@
     */
     typedef enum
     {
-        FMKCDA_ADC_INTERN_TS_CAL1 = 0,            /**< Refernce to TS_CAL1 */
+        FMKCDA_ADC_INTERN_VBAT = 0,               /**< Refernce to VBAT */
+        FMKCDA_ADC_INTERN_TS_CAL1,                  /**< Refernce to TS_CAL1 */
         FMKCDA_ADC_INTERN_TS_CAL2,                  /**< Refernce to TS_CAL2 */
     
         FMKCDA_ADC_INTERN_NB,

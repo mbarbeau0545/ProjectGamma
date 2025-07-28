@@ -45,6 +45,10 @@ TPL_APP_SPC_PATH_C = r"Doc\\ConfigPrj\\PythonTool_CodeGen\\App_CodeGen\\template
 APPSPM_CFG_PRIVATE = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPrivate.h'
 APPSPM_CFG_PUBLIC = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPublic.h'
 
+APPSIG_CFG_PRIVATE = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPrivate.h'
+APPSIG_CFG_PUBLIC = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPublic.h'
+SYM_MSG_CFG = r'Doc\ConfigPrj\MessagingCfg\Untitled.sym'
+
 SPACE_VARIABLE = 30
 EMPTY_CELL = "None"
 

@@ -31,6 +31,7 @@
     #include "3_APP/APP_CTRL/APP_SPM/Src/APP_SPM.h"
     #include "3_APP/APP_CTRL/APP_SNS/Src/APP_SNS.h"
     #include "3_APP/APP_CTRL/APP_UDS/Src/APP_UDS.h"
+    #include "3_APP/APP_CTRL/APP_SIG/Src/APP_SIG.h"
     #include "3_APP/APP_LGC/Src/APP_LGC.h"
     // ********************************************************************
     // *                      Defines
@@ -125,10 +126,10 @@
         //----- Application module -----//
         {APPSDM_Init,    APPSDM_Cyclic,     APPSDM_GetState,   APPSDM_SetState},
         {APPSPM_Init,    APPSPM_Cyclic,     APPSPM_GetState,   APPSPM_SetState},
+        {APPSIG_Init,    APPSIG_Cyclic,     APPSIG_GetState,   APPSIG_SetState},
         {APPSNS_Init,    APPSNS_Cyclic,     APPSNS_GetState,   APPSNS_SetState},
         {APPACT_Init,    APPACT_Cyclic,     APPACT_GetState,   APPACT_SetState},
         {APPLGC_Init,    APPLGC_Cyclic,     APPLGC_GetState,   APPLGC_SetState},
-        {APPUDS_Init,    APPUDS_Cyclic,     APPUDS_GetState,   APPUDS_SetState},
     };
 
     //********************************************************************************

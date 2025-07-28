@@ -24,6 +24,9 @@
     // *                      Defines
     // ********************************************************************
     #define APPSDM_MAX_DIAG_ITEM_MONITORING ((t_uint8)10)
+
+    ///@brief activate deactivate diagnostic managment 
+    #define APPSDM_DIAG_MNGMT_STATUS        ((t_bool)FALSE)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -82,6 +85,7 @@
         {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
         {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
         {(t_uint16)0,                  (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
+        {(t_uint16)100,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

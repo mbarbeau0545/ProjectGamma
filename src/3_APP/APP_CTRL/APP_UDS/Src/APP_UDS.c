@@ -832,10 +832,10 @@ static void s_APPUDS_ClientRcvCallback( t_uint8 * f_rxData_pu8,
             case FMKSRL_CB_INFO_RECEIVE_OVERFLOW:
             {
                 //----- Report Diagnostic Evnt -----//
-                Ret_e = APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_UDS_COM_ERROR,
-                                                APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                                (t_uint16)f_InfoCb_e,
-                                                (t_uint16)0);
+                APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_UDS_COM_ERROR,
+                                        APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                        (t_uint16)f_InfoCb_e,
+                                        (t_uint16)0);
                 break;
             }
         }

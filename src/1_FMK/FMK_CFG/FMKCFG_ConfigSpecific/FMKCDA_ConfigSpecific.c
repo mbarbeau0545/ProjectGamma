@@ -48,9 +48,12 @@
 /*********************************
  * FMKCDA_Get_BspChannel
  *********************************/
-t_eReturnCode FMKCDA_Get_BspChannel(t_eFMKCDA_AdcChannel f_channel_e, t_uint32 *f_bspChannel_32)
+t_eReturnCode FMKCDA_Get_BspChannel(t_eFMKCDA_Adc f_Adc_e,
+                                    t_eFMKCDA_AdcChannel f_channel_e, 
+                                    t_uint32 *f_bspChannel_32)
 {
     t_eReturnCode Ret_e = RC_OK;
+
     if (f_channel_e >= FMKCDA_ADC_CHANNEL_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
