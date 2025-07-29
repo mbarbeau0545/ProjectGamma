@@ -40,14 +40,13 @@
     #define FMKCDA_ADC_5_MAX_CHANNELS ((t_uint8)19)
     /* CAUTION : Automatic generated code section for ADC channels number: End */
 
-    #define FMKCDA_TIME_BTWN_DIAG_MS ((t_uint16)2000)   /**< Time between diagnostic for adc & dac channel in cyclic ope mode*/
+    #define FMKCDA_TIME_BTWN_DIAG_MS ((t_uint16)100)   /**< Time between diagnostic for adc & dac channel in cyclic ope mode*/
     #define FMKCDA_OVR_CONVERSION_MS ((t_uint32)500)    /**< Delay after considering there is no conversion in circular mode  */
     #define FMKCDA_CYCLIC_CALIB      ((t_uint16)2000)   /**< Time between we get the Vref for calibration */
 
     ///@brief max number of conversion in a cyclic adc conversion
     #define FMKCDA_ADC_MAX_CONVERSION ((t_uint8)16)
 
-    /// define to get Vbatterie tension 
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -162,12 +161,12 @@
     /**< Variable for Interna Sensors configuration*/
     const t_sFMKCDA_ADcInternalSnsCfg c_FmkCda_HwInternalSnsCfg_as[FMKCDA_ADC_INTERN_NB] ={
         {{FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_17},                TRUE                          },// for FMKCDA_ADC_INTERN_VBAT
-        {{FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_16},                TRUE                         },// for FMKCDA_ADC_INTERN_TS_CAL1
+        {{FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_16},                TRUE                          },// for FMKCDA_ADC_INTERN_TS_CAL1
         {{FMKCDA_ADC_5,                         FMKCDA_ADC_CHANNEL_4},                 FALSE                         },// for FMKCDA_ADC_INTERN_TS_CAL2
     };
 
     /**< Variable for Internal Sensors Calibration address */
-    const volatile t_uint16* c_FmkCda_HwInternalSnsAddress_pas16[FMKCDA_ADC_INTERN_NB] = {
+    const volatile t_uint16* c_FmkCda_HwInternalSnsAddress_pau16[FMKCDA_ADC_INTERN_NB] = {
         (volatile t_uint16 *)FMKCDA_ADC_INTERN_VBAT_ADDRESS,                              // FMKCDA_ADC_INTERN_VBAT
         (volatile t_uint16 *)FMKCDA_ADC_INTERN_TS_CAL1_ADDRESS,                           // FMKCDA_ADC_INTERN_TS_CAL1
         (volatile t_uint16 *)FMKCDA_ADC_INTERN_TS_CAL2_ADDRESS,                           // FMKCDA_ADC_INTERN_TS_CAL2

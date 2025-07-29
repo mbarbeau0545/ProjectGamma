@@ -25,6 +25,7 @@
 #include "3_APP/APP_CTRL/APP_SPM/Src/APP_SPM.h"
 #include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
 #include "FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
+#include "FMK_HAL/FMK_CDA/Src/FMK_CDA.h"
 
 #include "Library/SafeMem/SafeMem.h"
 
@@ -449,7 +450,25 @@ static t_eReturnCode s_APPLGC_Operational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
     
-        
+    t_float32 sigAna1;
+    t_float32 sigAna2;
+    t_float32 sigAnaVbat;
+    t_float32 sigAnaTemp;
+
+    (void)FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_1, &sigAna1);
+    (void)FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_2, &sigAna1);
+    (void)FMKCDA_Get_AnaInternSnsMeasure (FMKCDA_ADC_INTERN_VBAT, &sigAnaVbat);
+    (void)FMKCDA_Get_AnaInternSnsMeasure(FMKCDA_ADC_INTERN_TS_CAL1, &sigAnaTemp);
+
+    if(sigAnaTemp > sigAnaVbat)
+    {
+        Ret_e = RC_WARNING_BUSY;
+    }
+    if(sigAna1 > sigAna2)
+    {
+        Ret_e = RC_WARNING_NOT_ALLOWED;
+    }
+    
         /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
