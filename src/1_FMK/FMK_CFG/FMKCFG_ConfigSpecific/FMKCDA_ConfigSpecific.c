@@ -137,16 +137,16 @@ t_eReturnCode FMKCDA_Get_BspChannel(t_eFMKCDA_Adc f_Adc_e,
  * FMKCDA_ConvertRawInterSnsValue
  *********************************/
 t_eReturnCode FMKCDA_ConvertRawInterSnsValue(t_eFMKCDA_AdcInternSns f_AdcInternSns_e,
-                                            t_float32 f_rawAnamEasure_f32, 
+                                            t_float32 f_rawAnaMeasure_f32,
+                                            t_float32 f_calibValue_f32,
                                             t_float32 *f_snsAnaMeasure_pf32,
                                             const volatile t_uint16 * f_AdcInterSnsCalibStatic_pua16[])
 {
     t_eReturnCode Ret_e;
     t_uint16 tsCalLow_u16;
     t_uint16 tsCalHigh_u16;
-    t_float32 tsCalLowMvolt_f32;
-    t_float32 tsCalHighMVolt_f32;
     t_float32 coeffDir_f32;
+    t_float32 measCalibrate_f32;
 
     if(f_AdcInternSns_e >= FMKCDA_ADC_INTERN_NB)
     {
@@ -163,27 +163,28 @@ t_eReturnCode FMKCDA_ConvertRawInterSnsValue(t_eFMKCDA_AdcInternSns f_AdcInternS
         switch(f_AdcInternSns_e)
         {
             case FMKCDA_ADC_INTERN_VBAT:
+                //--- calib value is pretty simple here ----//
+                measCalibrate_f32 = f_rawAnaMeasure_f32 * f_calibValue_f32;
                 //---- the signal is measuring from adc divided by 3 (Datasheet)
                 //          mulutiply it also by 3 ----//
-                *f_snsAnaMeasure_pf32 = (t_float32)(f_rawAnamEasure_f32 * (t_float32)FMKCDA_ADC_VBAT_MULTPIPLIER);
+                *f_snsAnaMeasure_pf32 = (t_float32)((measCalibrate_f32 *(t_float32)FMKCDA_ADC_VBAT_MULTPIPLIER) 
+                                                        / (t_float32)FMKCDA_ADC_RESOLUTION);
+                *f_snsAnaMeasure_pf32 *= FMKCDA_ADC_VOLT_PROMILLE;
             break;
             case FMKCDA_ADC_INTERN_TS_CAL1:
             case FMKCDA_ADC_INTERN_TS_CAL2:
             {
+                //---- calibration value has to be without dimension ----//
+                measCalibrate_f32 = f_rawAnaMeasure_f32 * (f_calibValue_f32 / FMKCDA_ADC_CALIB_VREF);
                 //---- get the refereence static value for linear equation ----//
                 tsCalLow_u16 = (t_uint16)(*f_AdcInterSnsCalibStatic_pua16[FMKCDA_ADC_INTERN_TS_CAL1]);
                 tsCalHigh_u16 = (t_uint16)(*f_AdcInterSnsCalibStatic_pua16[FMKCDA_ADC_INTERN_TS_CAL2]);
                 //---- put all in voltage ----//
-                tsCalLowMvolt_f32 = (FMKCDA_ADC_CALIB_VREF * (t_float32)tsCalLow_u16)  / FMKCDA_ADC_RESOLUTION;
-                tsCalHighMVolt_f32 = (FMKCDA_ADC_CALIB_VREF * (t_float32)tsCalHigh_u16)  / FMKCDA_ADC_RESOLUTION;
-                //---- put all in millivoltage ----//
-                tsCalLowMvolt_f32 *= FMKCDA_ADC_VOLT_PROMILLE;
-                tsCalHighMVolt_f32 *= FMKCDA_ADC_VOLT_PROMILLE;
                 //---- calibration are made at low -> 30°C and low-> 130°C ----//
                 //---- use aT + b = adcMeasure where b = 30, a = coeff dir
-                coeffDir_f32 = ((t_float32)(tsCalHighMVolt_f32 - tsCalLowMvolt_f32)) / 100.0f;
+                coeffDir_f32 = ((t_float32)(tsCalHigh_u16 - tsCalLow_u16)) / 100.0f;
                 *f_snsAnaMeasure_pf32 = 30.0f + 
-                    ((f_rawAnamEasure_f32 - (t_float32)tsCalLowMvolt_f32) / coeffDir_f32);
+                    ((measCalibrate_f32 - (t_float32)tsCalLow_u16) / coeffDir_f32);
             break;
             case FMKCDA_ADC_INTERN_NB:
             default:

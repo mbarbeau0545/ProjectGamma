@@ -74,7 +74,8 @@
     *
     */
     t_eReturnCode FMKCDA_ConvertRawInterSnsValue(t_eFMKCDA_AdcInternSns f_AdcInternSns_e,
-                                            t_float32 f_rawAnamEasure_f32, 
+                                            t_float32 f_rawAnaMeasure_f32,
+                                            t_float32 f_calibValue_f32,
                                             t_float32 *f_snsAnaMeasure_pf32,
                                             const volatile t_uint16 * f_AdcInterSnsCalibStatic_pua16[]);
                                         
