@@ -125,7 +125,6 @@
 
         //----- Application module -----//
         {APPSDM_Init,    APPSDM_Cyclic,     APPSDM_GetState,   APPSDM_SetState},
-        {APPSPM_Init,    APPSPM_Cyclic,     APPSPM_GetState,   APPSPM_SetState},
         {APPSIG_Init,    APPSIG_Cyclic,     APPSIG_GetState,   APPSIG_SetState},
         {APPSNS_Init,    APPSNS_Cyclic,     APPSNS_GetState,   APPSNS_SetState},
         {APPACT_Init,    APPACT_Cyclic,     APPACT_GetState,   APPACT_SetState},

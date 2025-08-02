@@ -83,11 +83,11 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a2f1c9b5f338ca53ed1e79c6d50732d71a1e908bede4b586ecdf4cbcee9d4ee993">FMKCDA_ADC_CFG_NB</a>
  }</td></tr>
 <tr class="separator:a2f1c9b5f338ca53ed1e79c6d50732d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a094a68e7da206f421e2a0a092d7b8193" id="r_a094a68e7da206f421e2a0a092d7b8193"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_ChnlErrState</a> { <br />
+<tr class="memitem:a094a68e7da206f421e2a0a092d7b8193" id="r_a094a68e7da206f421e2a0a092d7b8193"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_AdcErrState</a> { <br />
 &#160;&#160;<a class="el" href="#a094a68e7da206f421e2a0a092d7b8193a95a4fdeb058e767b7ba54d71185c3ac4">FMKCDA_ERRSTATE_OK</a> = 0x00U
-, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6">FMKCDA_ERRSTATE_ERR_INTERNAL</a> = 0x01U
-, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d">FMKCDA_ERRSTATE_ERR_OVR</a> = 0x02U
-, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af">FMKCDA_ERRSTATE_ERR_DMA</a> = 0x04U
+, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6">FMKCDA_ERRSTATE_INTERNAL</a> = 0x01U
+, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d">FMKCDA_ERRSTATE_OVR</a> = 0x02U
+, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af">FMKCDA_ERRSTATE_DMA</a> = 0x04U
 , <br />
 &#160;&#160;<a class="el" href="#a094a68e7da206f421e2a0a092d7b8193aee84faaf4b0e650c1bd817fd76e763fc">FMKCDA_ERRSTATE_CB</a> = 0x08U
 , <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193ab5c87206dc9c6b482ab072381ac5e574">FMKCDA_ERRSTATE_JQOVF</a> = 0x10U
@@ -118,7 +118,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a72f42677fc974ef82b042e88c597d6e9" id="r_a72f42677fc974ef82b042e88c597d6e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_type_common_8h.html#ab3f5e6efd9022415f4ec123116731f1c">t_eReturnCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72f42677fc974ef82b042e88c597d6e9">FMKCDA_Get_AnaChannelMeasure</a> (<a class="el" href="_f_m_k_c_d_a___config_public_8h.html#a05ef889bfb1abced1e626d16ac71690a">t_eFMKCDA_Adc</a> f_Adc_e, <a class="el" href="_f_m_k_c_d_a___config_public_8h.html#a8a7cf2dd524526e08e4b02ba4399ae33">t_eFMKCDA_AdcChannel</a> f_channel_e, <a class="el" href="_type_common_8h.html#a2f8b43fd51d852dadf2f4e8fb70b6a50">t_uint16</a> *f_AnaMeasure_u16)</td></tr>
 <tr class="memdesc:a72f42677fc974ef82b042e88c597d6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the analog value from a adc channel.  <br /></td></tr>
 <tr class="separator:a72f42677fc974ef82b042e88c597d6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad958a572a48dd6473bafe9872f15c5c2" id="r_ad958a572a48dd6473bafe9872f15c5c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_type_common_8h.html#ab3f5e6efd9022415f4ec123116731f1c">t_eReturnCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad958a572a48dd6473bafe9872f15c5c2">FMKCDA_Get_AdcError</a> (<a class="el" href="_f_m_k_c_d_a___config_public_8h.html#a05ef889bfb1abced1e626d16ac71690a">t_eFMKCDA_Adc</a> f_adc_e, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_ChnlErrState</a> *f_chnlErrInfo_pe)</td></tr>
+<tr class="memitem:ad958a572a48dd6473bafe9872f15c5c2" id="r_ad958a572a48dd6473bafe9872f15c5c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_type_common_8h.html#ab3f5e6efd9022415f4ec123116731f1c">t_eReturnCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad958a572a48dd6473bafe9872f15c5c2">FMKCDA_Get_AdcError</a> (<a class="el" href="_f_m_k_c_d_a___config_public_8h.html#a05ef889bfb1abced1e626d16ac71690a">t_eFMKCDA_Adc</a> f_adc_e, <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_AdcErrState</a> *f_chnlErrInfo_pe)</td></tr>
 <tr class="memdesc:ad958a572a48dd6473bafe9872f15c5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the error code for a adc_channel.  <br /></td></tr>
 <tr class="separator:ad958a572a48dd6473bafe9872f15c5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -131,24 +131,24 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a094a68e7da206f421e2a0a092d7b8193" name="a094a68e7da206f421e2a0a092d7b8193"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094a68e7da206f421e2a0a092d7b8193">&#9670;&#160;</a></span>t_eFMKCDA_ChnlErrState</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a094a68e7da206f421e2a0a092d7b8193">&#9670;&#160;</a></span>t_eFMKCDA_AdcErrState</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_ChnlErrState</a></td>
+          <td class="memname">enum <a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_AdcErrState</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193a95a4fdeb058e767b7ba54d71185c3ac4" name="a094a68e7da206f421e2a0a092d7b8193a95a4fdeb058e767b7ba54d71185c3ac4"></a>FMKCDA_ERRSTATE_OK&#160;</td><td class="fielddoc"><p>No error detected on channel </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6" name="a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6"></a>FMKCDA_ERRSTATE_ERR_INTERNAL&#160;</td><td class="fielddoc"><p>Internal/ bsp error detected on channel </p>
+<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6" name="a094a68e7da206f421e2a0a092d7b8193a6cede9b582c54020f7cf306f478a46c6"></a>FMKCDA_ERRSTATE_INTERNAL&#160;</td><td class="fielddoc"><p>Internal/ bsp error detected on channel </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d" name="a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d"></a>FMKCDA_ERRSTATE_ERR_OVR&#160;</td><td class="fielddoc"><p>overrun error detetcted on channel </p>
+<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d" name="a094a68e7da206f421e2a0a092d7b8193a8710b79541edf414d0ccd00b46a30d5d"></a>FMKCDA_ERRSTATE_OVR&#160;</td><td class="fielddoc"><p>overrun error detetcted on channel </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af" name="a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af"></a>FMKCDA_ERRSTATE_ERR_DMA&#160;</td><td class="fielddoc"><p>Dma error detetected on channel </p>
+<tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af" name="a094a68e7da206f421e2a0a092d7b8193af5471748827379a034cd84de564dc6af"></a>FMKCDA_ERRSTATE_DMA&#160;</td><td class="fielddoc"><p>Dma error detetected on channel </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a094a68e7da206f421e2a0a092d7b8193aee84faaf4b0e650c1bd817fd76e763fc" name="a094a68e7da206f421e2a0a092d7b8193aee84faaf4b0e650c1bd817fd76e763fc"></a>FMKCDA_ERRSTATE_CB&#160;</td><td class="fielddoc"><p>callback error detetected on channel </p>
 </td></tr>
@@ -233,7 +233,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_ChnlErrState</a> *</td>          <td class="paramname"><span class="paramname"><em>f_chnlErrInfo_pe</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a094a68e7da206f421e2a0a092d7b8193">t_eFMKCDA_AdcErrState</a> *</td>          <td class="paramname"><span class="paramname"><em>f_chnlErrInfo_pe</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

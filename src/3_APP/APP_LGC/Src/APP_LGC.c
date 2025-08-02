@@ -25,7 +25,7 @@
 #include "3_APP/APP_CTRL/APP_SPM/Src/APP_SPM.h"
 #include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
 #include "FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
-#include "FMK_HAL/FMK_CDA/Src/FMK_CDA.h"
+#include "FMK_HAL/FMK_CAN/Src/FMK_FDCAN.h"
 
 #include "Library/SafeMem/SafeMem.h"
 
@@ -163,7 +163,13 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                                         t_uint16 f_debugInfo1_u16,
                                         t_uint16 f_debugInfo2_u16);
 
+static void s_APPLGC_CanCallback(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e);
 
+static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -424,13 +430,6 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 
     t_eReturnCode Ret_e;
     
-    Ret_e = FMKIO_Set_InAnaSigCfg(  FMKIO_INPUT_SIGANA_1,
-                                    NULL_FUNCTION);
-    Ret_e = FMKIO_Set_InAnaSigCfg(  FMKIO_INPUT_SIGANA_2,
-                                    NULL_FUNCTION);
-
-
-    
 
     return Ret_e;
 }
@@ -441,6 +440,7 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
+
     return Ret_e;
 }
 /*********************************
@@ -448,26 +448,7 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
-    t_eReturnCode Ret_e = RC_OK;
-    
-    t_float32 sigAna1;
-    t_float32 sigAna2;
-    t_float32 sigAnaVbat;
-    t_float32 sigAnaTemp;
-
-    (void)FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_1, &sigAna1);
-    (void)FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_2, &sigAna1);
-    (void)FMKCDA_Get_AnaInternSnsMeasure (FMKCDA_ADC_INTERN_VBAT, &sigAnaVbat);
-    (void)FMKCDA_Get_AnaInternSnsMeasure(FMKCDA_ADC_INTERN_TS_CAL1, &sigAnaTemp);
-
-    if(sigAnaTemp > sigAnaVbat)
-    {
-        Ret_e = RC_WARNING_BUSY;
-    }
-    if(sigAna1 > sigAna2)
-    {
-        Ret_e = RC_WARNING_NOT_ALLOWED;
-    }
+    t_eReturnCode Ret_e = RC_OK; 
     
         /*t_uint8 idxAgent_u8;
         
@@ -596,6 +577,52 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
     return;
 }
 
+/*********************************
+ * s_APPLGC_DiagnosticEvent
+ *********************************/
+static void s_APPLGC_CanCallback(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e)
+{
+    t_uint8 data_u8[8] = {0};
+
+    if(f_Node_e == FMKFDCAN_NODE_1)
+    {
+        if(f_RxItem_s.ItemId_s.Identifier_u32 == 0x18FF9087)
+        {
+            memcpy(data_u8, f_RxItem_s.CanMsg_s.data_pu8, 8);
+
+            if(data_u8[1] > 8)
+            {
+                g_AppLgc_ModState_e = STATE_CYCLIC_OPE;
+            }
+        }
+    }
+
+    return;
+}
+
+static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e)
+{
+    t_uint8 data_u8[8] = {0};
+
+    if(f_Node_e == FMKFDCAN_NODE_1)
+    {
+        if(f_RxItem_s.ItemId_s.Identifier_u32 == 0x18FF9088)
+        {
+            memcpy(data_u8, f_RxItem_s.CanMsg_s.data_pu8, 8);
+
+            if(data_u8[1] > 8)
+            {
+                g_AppLgc_ModState_e = STATE_CYCLIC_OPE;
+            }
+        }
+    }
+
+    return;
+}
 //************************************************************************************
 // End of File
 //************************************************************************************

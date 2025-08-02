@@ -176,6 +176,7 @@
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
+    
     /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: Start */
     /*********************************
      * ADC1_2_IRQHandler
@@ -211,6 +212,7 @@
         return;
     }
     /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: End */
+
 #endif // FMKCDA_CONFIGPRIVATE_H_INCLUDED           
 //************************************************************************************
 // End of File

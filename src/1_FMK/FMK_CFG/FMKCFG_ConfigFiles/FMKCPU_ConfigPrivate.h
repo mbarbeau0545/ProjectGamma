@@ -324,7 +324,7 @@
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI3_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART4_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART5_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM6_DAC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM6_DAC_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM7_DAC_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel1_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel2_IRQn
@@ -512,6 +512,8 @@
         {FMKCPU_DMA_CTRL_1,             FMKCPU_DMA_CHANNEL_7,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_USART1_TX
         {FMKCPU_DMA_CTRL_1,             FMKCPU_DMA_CHANNEL_2,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_USART2_RX
         {FMKCPU_DMA_CTRL_1,             FMKCPU_DMA_CHANNEL_1,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_USART2_TX
+        {FMKCPU_DMA_CTRL_2,             FMKCPU_DMA_CHANNEL_6,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_USART3_RX
+        {FMKCPU_DMA_CTRL_2,             FMKCPU_DMA_CHANNEL_7,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_USART3_TX
         {FMKCPU_DMA_CTRL_2,             FMKCPU_DMA_CHANNEL_3,          FMKCPU_DMA_TRANSPRIO_MEDIUM},   // FMKCPU_DMA_RQSTYPE_TIM8_CH1
     };
 
@@ -607,6 +609,24 @@
     void DMA1_Channel5_IRQHandler(void)
     {
         HAL_DMA_IRQHandler(FMKCPU_PRIVATE_GetHandleTypeDef(FMKCPU_DMA_CTRL_1, FMKCPU_DMA_CHANNEL_5));
+    return;
+    }
+
+    /**
+    * @brief This function handles DMA Channel6 interrupt.
+    */
+    void DMA1_Channel6_IRQHandler(void)
+    {
+        HAL_DMA_IRQHandler(FMKCPU_PRIVATE_GetHandleTypeDef(FMKCPU_DMA_CTRL_1, FMKCPU_DMA_CHANNEL_6));
+    return;
+    }
+
+    /**
+    * @brief This function handles DMA Channel7 interrupt.
+    */
+    void DMA1_Channel7_IRQHandler(void)
+    {
+        HAL_DMA_IRQHandler(FMKCPU_PRIVATE_GetHandleTypeDef(FMKCPU_DMA_CTRL_1, FMKCPU_DMA_CHANNEL_7));
     return;
     }
 

@@ -26,7 +26,7 @@
     #define APPSDM_MAX_DIAG_ITEM_MONITORING ((t_uint8)10)
 
     ///@brief activate deactivate diagnostic managment 
-    #define APPSDM_DIAG_MNGMT_STATUS        ((t_bool)FALSE)
+    #define APPSDM_DIAG_MNGMT_STATUS        ((t_bool)TRUE)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -81,7 +81,12 @@
     * @brief Variable for Diagnostic Item Information
     */
         {(t_uint16)0,                  (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CFG_ERROR
-        {(t_uint16)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_FDCAN_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_SRL_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_HRT_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_TIM_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CDA_OPE_ERROR
+        {(t_uint16)200,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CPU_OPE_ERROR
         {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
         {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
         {(t_uint16)0,                  (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR

@@ -10,8 +10,9 @@
 // ********************************************************************
 // *                      Includes
 // ********************************************************************
+
 #include "./APP_UDS.h"
-#include "./APP_CTRL/APP_SYS/Src/APP_SYS.h"
+#ifdef APPSYS_MODULE_APP_UDS_ENABLE
 #include "APP_CTRL/APP_SDM/Src/APP_SDM.h"
 #include "APP_LGC/Src/APP_LGC.h"
 #include "FMK_HAL/FMK_CPU/Src/FMK_CPU.h"
@@ -33,7 +34,7 @@
 /**
  * @brief Max Data Len
  */
-#define APPUDS_MAX_TIME_WAIT_ACK ((t_uint32)20000)
+#define APPUDS_MAX_TIME_WAIT_ACK ((t_uint32)20001)
 /**
  * @brief Define for Message Id
  */
@@ -1001,6 +1002,8 @@ static t_eReturnCode s_APPUDS_SendMcuInfo(void)
 
     return Ret_e;
 }
+
+#endif // APPSYS_MODULE_APP_UDS_ENABLE
 //************************************************************************************
 // End of File
 //************************************************************************************

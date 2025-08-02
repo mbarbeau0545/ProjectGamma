@@ -14,6 +14,8 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    #include "./APP_CTRL/APP_SYS/Src/APP_SYS.h"
+    #ifdef APPSYS_MODULE_APP_UDS_ENABLE
     #include "TypeCommon.h"
     #include "FMK_HAL/FMK_SRL/Src/FMK_SRL.h"
     #include "Library/CRC/CRC.h"
@@ -84,7 +86,7 @@
      //********************************************************************************
      //                      Public functions - Prototyupes
      //********************************************************************************
-     
+    #endif // APPSYS_MODULE_APP_UDS_ENABLE
  #endif // LIBRAMP_H_INCLUDED
  //************************************************************************************
  // End of File

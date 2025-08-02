@@ -141,7 +141,6 @@
     {
         FMKIO_INPUT_SIGEVNT_1 = 0,                  /**< Reference to PB3 */
         FMKIO_INPUT_SIGEVNT_2,                        /**< Reference to PB5 */
-        FMKIO_INPUT_SIGEVNT_3,                        /**< Reference to PC4 */
     
         FMKIO_INPUT_SIGEVNT_NB,
     } t_eFMKIO_InEvntSig;
@@ -158,9 +157,8 @@
         FMKIO_OUTPUT_SIGDIG_5,                        /**< Reference to PB8 */
         FMKIO_OUTPUT_SIGDIG_6,                        /**< Reference to PC3 */
         FMKIO_OUTPUT_SIGDIG_7,                        /**< Reference to PC9 */
-        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PC5 */
-        FMKIO_OUTPUT_SIGDIG_9,                        /**< Reference to PF0 */
-        FMKIO_OUTPUT_SIGDIG_10,                       /**< Reference to PF1 */
+        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PF0 */
+        FMKIO_OUTPUT_SIGDIG_9,                        /**< Reference to PF1 */
     
         FMKIO_OUTPUT_SIGDIG_NB,
     } t_eFMKIO_OutDigSig;
@@ -204,7 +202,7 @@
     */
     typedef enum
     {
-        FMKIO_COM_SIGNAL_SERIAL_1 = 0,                  /**< Rx -> PG3, Tx -> PG4, Reference to Serial PIN_3 */
+        FMKIO_COM_SIGNAL_SERIAL_1 = 0,                  /**< Rx -> PC5, Tx -> PC4, Reference to Serial PIN_5 */
         FMKIO_COM_SIGNAL_SERIAL_2,                        /**< Rx -> PA3, Tx -> PA2, Reference to Serial PIN_3 */
         FMKIO_COM_SIGNAL_SERIAL_3,                        /**< Rx -> PG5, Tx -> PG6, Reference to Serial PIN_5 */
         FMKIO_COM_SIGNAL_SERIAL_4,                        /**< Rx -> PG7, Tx -> PG8, Reference to Serial PIN_7 */

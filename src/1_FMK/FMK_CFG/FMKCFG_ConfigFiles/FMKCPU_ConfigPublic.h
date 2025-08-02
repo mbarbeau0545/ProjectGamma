@@ -336,6 +336,8 @@
         FMKCPU_DMA_RQSTYPE_USART1_TX,                /**< Reference to Bsp Dma Request for USART1_TX */
         FMKCPU_DMA_RQSTYPE_USART2_RX,                /**< Reference to Bsp Dma Request for USART2_RX */
         FMKCPU_DMA_RQSTYPE_USART2_TX,                /**< Reference to Bsp Dma Request for USART2_TX */
+        FMKCPU_DMA_RQSTYPE_USART3_RX,                /**< Reference to Bsp Dma Request for USART3_RX */
+        FMKCPU_DMA_RQSTYPE_USART3_TX,                /**< Reference to Bsp Dma Request for USART3_TX */
         FMKCPU_DMA_RQSTYPE_TIM8_CH1,                 /**< Reference to Bsp Dma Request for TIM8_CH1 */
     
         FMKCPU_DMA_RQSTYPE_NB,
