@@ -1588,7 +1588,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html"><param name="Name" value="FMK_CPU.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_ResetWwdg(void)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_RearmWwdg(void)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html"><param name="Name" value="FMK_CPU.c"></OBJECT>
   <UL>
@@ -1912,7 +1912,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html"><param name="Name" value="FMK_CPU.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_ResetWwdg(void)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_RearmWwdg(void)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html"><param name="Name" value="FMK_CPU.h"></OBJECT>
   <UL>
@@ -6825,11 +6825,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a1667f208dff1f64a5c256a8851c480dca096b05ea81c7da912ccbfc1ec09bc21c"><param name="Name" value="FMKCPU_RCC_CLK_USART3"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a1667f208dff1f64a5c256a8851c480dcad4ffb62d312500f4c70a07a165d6921d"><param name="Name" value="FMKCPU_RCC_CLK_USB"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a1667f208dff1f64a5c256a8851c480dca8fc1da406d79e2711bdb91fddc66003c"><param name="Name" value="FMKCPU_RCC_CLK_WWDG"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_ResetWwdg(void)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_RearmWwdg(void)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMK_CPU.c"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_ResetWwdg(void)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMKCPU_RearmWwdg(void)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#ae434d44245887176331de9aa495f401b"><param name="Name" value="FMK_CPU.h"></OBJECT>
   </UL>

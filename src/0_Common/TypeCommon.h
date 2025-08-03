@@ -18,6 +18,8 @@
     #define False         ((t_uint8)0)
     #define TRUE          ((t_uint8)1)
     #define FALSE         ((t_uint8)0)
+    #define M_TRUE        (1)
+    #define M_FALSE       (0)
     #define NULL_FUNCTION ((void *)0)
 
     #ifndef NULL

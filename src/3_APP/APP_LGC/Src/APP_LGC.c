@@ -205,7 +205,7 @@ t_eReturnCode APPLGC_Init(void)
         Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_u8].init_pcb();
     }
 
-    Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
+    //Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
 
     return Ret_e;
 }
@@ -440,6 +440,14 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
+    APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_FMK_CDA_OPE_ERROR,
+                                APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                (t_uint16)2,
+                                (t_uint16)0);
+        APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_FMK_CPU_OPE_ERROR,
+                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                    (t_uint16)3,
+                                    (t_uint16)6);
 
     return Ret_e;
 }
@@ -480,7 +488,7 @@ static t_eReturnCode s_APPLGC_Operational(void)
     { 
         Ret_e = s_APPLGC_SetActValues();
     }*/
-    return Ret_e;
+
 }
 /*********************************
  * s_APPLGC_GetSnsValues

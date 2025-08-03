@@ -61,7 +61,8 @@
 	//-----------------------------STRUCT TYPES---------------------------//
     typedef struct
     {
-        t_uint16 debuncValueMs_u16;
+        t_uint16 DebuncCnt_u16;
+        t_uint32 unactiveDelay_u32;
         t_bool notifyUser_b;
         t_bool logItem_b;
         t_eAPPSDM_DiagnosticStrat diagStrat_e;

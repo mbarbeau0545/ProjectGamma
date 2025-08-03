@@ -1,4 +1,4 @@
-/*********************************************************************
+    /*********************************************************************
  * @file        FMKCPU_ConfigPrivate.h
  * @brief       Template_BriefDescription.
  * @note        TemplateDetailsDescription.\n
@@ -167,10 +167,10 @@
     /**< Hardware configuration watchdog Period Timer */
     const t_sFMKCPU_BspWwdgCfg c_FMKCPU_WwdgPeriodcfg_ua16[FMKCPU_WWDG_RESET_NB] = {
         // prescaler value         reload value
-        {WWDG_PRESCALER_1,          98}, // FMKCPU_WWDG_RESET_50MS
-        {WWDG_PRESCALER_2,          98}, // FMKCPU_WWDG_RESET_100MS
-        {WWDG_PRESCALER_4,          98}, // FMKCPU_WWDG_RESET_200MS
-        {WWDG_PRESCALER_8,          122},// FMKCPU_WWDG_RESET_500MS
+        {IWDG_PRESCALER_32,          49}, // FMKCPU_WWDG_RESET_50MS
+        {IWDG_PRESCALER_32,          99}, // FMKCPU_WWDG_RESET_100MS
+        {IWDG_PRESCALER_32,          199}, // FMKCPU_WWDG_RESET_200MS
+        {IWDG_PRESCALER_32,          499},// FMKCPU_WWDG_RESET_500MS
     };
 
     /* CAUTION : Automatic generated code section for Variable: Start */

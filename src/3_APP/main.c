@@ -27,6 +27,7 @@
 //********************************************************************************
 int main(void)
 {
+    static t_uint32 saveTime_U32 = 0;
     // code running once
     APPSYS_Init();
 
