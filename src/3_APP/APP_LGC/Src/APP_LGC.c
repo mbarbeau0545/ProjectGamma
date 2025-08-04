@@ -26,6 +26,7 @@
 #include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
 #include "FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
 #include "FMK_HAL/FMK_CAN/Src/FMK_FDCAN.h"
+#include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
 
 #include "Library/SafeMem/SafeMem.h"
 
@@ -440,14 +441,17 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
-    APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_FMK_CDA_OPE_ERROR,
-                                APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                (t_uint16)2,
-                                (t_uint16)0);
-        APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_FMK_CPU_OPE_ERROR,
-                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                    (t_uint16)3,
-                                    (t_uint16)6);
+
+    t_sFMKFDCAN_RxItemEventCfg rxItemEvnCfg_s = {
+        .ItemId_s.Identifier_u32 = 0x18FF999,
+        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
+        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
+        .Dlc_e = FMKFDCAN_DLC_8,
+        .maskId_u32 = 0X18FF9FFF,
+        .callback_cb = s_APPLGC_CanCallback
+    };
+
+    Ret_e = FMKFDCAN_ConfigureRxItemEvent(FMKFDCAN_NODE_1, rxItemEvnCfg_s);
 
     return Ret_e;
 }
@@ -456,8 +460,20 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
-    t_eReturnCode Ret_e = RC_OK; 
-    
+    t_eReturnCode Ret_e = RC_OK;  
+    t_uint8 data_u8 = { 0,1,2,3,4,5,6,7};
+    t_sFMKFDCAN_TxItem txItem_s = {
+        .BitRate_e = FMKFDCAN_BITRATE_SWITCH_OFF,
+        .frameFormat_e = FMKFDCAN_FRAME_FORMAT_CLASSIC,
+        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
+        .ItemId_s.Identifier_u32 = 0x18FF999,
+        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
+        .CanMsg_s.Direction_e = FMKFDCAN_NODE_DIRECTION_TX,
+        .CanMsg_s.Dlc_e = FMKFDCAN_DLC_8,
+        .CanMsg_s.data_pu8 = data_u8
+
+    };
+    Ret_e = FMKFDCAN_SendTxItem(FMKFDCAN_NODE_1, txItem_s);
         /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)

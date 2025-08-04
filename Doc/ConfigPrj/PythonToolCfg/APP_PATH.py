@@ -47,7 +47,7 @@ APPSPM_CFG_PUBLIC = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPublic.h'
 
 APPSIG_CFG_PRIVATE = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPrivate.h'
 APPSIG_CFG_PUBLIC = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPublic.h'
-SYM_MSG_CFG = r'Doc\ConfigPrj\MessagingCfg\Untitled.sym'
+SYM_MSG_CFG = r'Doc\ConfigPrj\MessagingCfg\PrjMsgDefinition.sym'
 
 SPACE_VARIABLE = 30
 EMPTY_CELL = "None"

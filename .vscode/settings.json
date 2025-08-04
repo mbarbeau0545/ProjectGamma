@@ -94,7 +94,9 @@
     "*.tpl": "cpp",
     "fmkcda_configspecific.h": "c",
     "fmksrl_configprivate.h": "c",
-    "fmksrl_configpublic.h": "c"
+    "fmksrl_configpublic.h": "c",
+    "appsig_configprivate.h": "c",
+    "app_sig.h": "c"
   },
   "stm32-for-vscode.armToolchainPath": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",

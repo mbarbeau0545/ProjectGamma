@@ -226,7 +226,7 @@
     t_uint8 g_SrlLine_1_TxBuffer_ua8[256];
 
     //--------- Tx, Rx Buffer for Serial Line 2 ---------//
-    t_uint8 g_SrlLine_2_RxBuffer_ua8[0];
+    t_uint8 g_SrlLine_2_RxBuffer_ua8[256];
     t_uint8 g_SrlLine_2_TxBuffer_ua8[1024];
 
     //--------- Tx, Rx Buffer for Serial Line 3 ---------//
@@ -261,7 +261,7 @@
             .c_DmaRqstRx   = FMKCPU_DMA_RQSTYPE_USART2_RX,
             .c_DmaRqstTx   = FMKCPU_DMA_RQSTYPE_USART2_TX,
             .Rx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_RxBuffer_ua8[0]),
-            .Rx_bufferSize_u16 = (t_uint16)0,
+            .Rx_bufferSize_u16 = (t_uint16)256,
             .Tx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_TxBuffer_ua8[0]),
             .Tx_bufferSize_u16 = (t_uint16)1024,
         },

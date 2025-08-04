@@ -16,8 +16,9 @@
 // ********************************************************************
 // *                      Includes
 // ********************************************************************
-#include "./APP_SPM.h"
+#include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
 #ifdef APPSYS_MODULE_APP_SPM_ENABLE
+#include "./APP_SPM.h"
 #include "APP_CFG/ConfigFiles/APPSPM_ConfigPrivate.h"
 // ********************************************************************
 // *                      Defines

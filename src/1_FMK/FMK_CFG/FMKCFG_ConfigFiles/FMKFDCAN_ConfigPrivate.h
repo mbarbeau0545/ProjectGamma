@@ -41,12 +41,12 @@
     /**
      * @brief Buffer size for reception software queue.
      */
-    #define FMKFDCAN_RX_DATA_SIZE       (FMKFDCAN_DLC_64)
+    #define FMKFDCAN_RX_DATA_SIZE       (FMKFDCAN_DLC_8)
 
     /**
      * @brief Buffer size for transmission software queue.
      */
-    #define FMKFDCAN_TX_DATA_SIZE       (FMKFDCAN_DLC_64)
+    #define FMKFDCAN_TX_DATA_SIZE       (FMKFDCAN_DLC_8)
 
     /**
      * @brief Maximum number of RX event registrations.

@@ -25,9 +25,12 @@
     // ********************************************************************
     #define BASE_PATH "src\\"
     #define SHORTEN_PATH(path) (strstr(path, BASE_PATH) ? strstr(path, BASE_PATH) : path)
+
+    ///@brief Optional Module
     #define APPSYS_MODULE_FMKCAN_ENABLE
     #define APPSYS_MODULE_FMKSRL_ENABLE
     #define APPSYS_MODULE_APPLGC_ENABLE
+    #define APPSYS_MODULE_APP_SPM_ENABLE
 
     #define APPSYS_ELAPSED_TIME_CYCLIC ((t_uint8)40)     /**< Elapsed time (in ms) between cyclic function call*/
     #define APPSYS_ITLINE_FASTTASK FMKTIM_INTERRUPT_LINE_EVNT_1 /**< Timer Line use for FastTask */
@@ -57,6 +60,7 @@
         APPSYS_MODULE_FMK_SERIAL,
 #endif // APPSYS_MODULE_FMKSRL_ENABLE
         APPSYS_MODULE_APP_SDM,
+        APPSYS_MODULE_APP_SPM,
         APPSYS_MODULE_APP_SIG,
         APPSYS_MODULE_APP_SNS,
         APPSYS_MODULE_APP_ACT,
