@@ -28,7 +28,7 @@
     // ********************************************************************
     #define FMKSRL_TIMEOUT_POLLING ((t_uint32)0x0000FFFF)
 
-    #define FMKSRL_MAX_BYTES_TO_SEND ((t_uint16)256)
+    #define FMKSRL_MAX_BYTES_TO_SEND ((t_uint16)512)
 
     #define FMKSRL_MAX_ERR_CNT       ((t_uint8)10)
 

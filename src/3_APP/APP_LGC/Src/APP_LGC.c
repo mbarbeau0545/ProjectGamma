@@ -59,6 +59,7 @@
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
+RTC_HandleTypeDef g_rtcHandle_s;
 /**
 * @brief App Logic Module State
 */
@@ -187,6 +188,7 @@ t_eReturnCode APPLGC_Init(void)
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxAgent_u8 = (t_uint8)0; 
     t_uint8 idxSrv_u8 = (t_uint8)0;
+    
 
     /* CAUTION : Automatic generated code section for Actuators Containers/Service: Start */
     /* CAUTION : Automatic generated code section for Actuators Containers/Service: End */
@@ -430,6 +432,25 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
     t_eReturnCode Ret_e;
+    HAL_StatusTypeDef bspRet_e;
+    t_sFMKIO_PwmControlPrm rampCtrl = {
+        .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
+        .rampCfg_ps = NULL,
+    };
+    t_sFMKIO_PwmWaveformCfg pwmWave_s = {
+        .deadTime_u32 = 0,
+        .frequency_u32 = 100,
+        .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
+        .pullMode_e = FMKIO_PULL_MODE_DISABLE,
+        .spdMode_e = FMKIO_SPD_MODE_HIGH,
+    };
+
+    //Ret_e = FMKIO_Set_InFreqSigCfg(FMKIO_INPUT_SIGFREQ_1, FMKIO_STC_RISING_EDGE, FMKIO_FREQ_MEAS_FREQ, NULL_FUNCTION);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_5, pwmWave_s, rampCtrl, NULL_FUNCTION,NULL_FUNCTION);
+    }
+    
     
 
     return Ret_e;
@@ -442,16 +463,9 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    t_sFMKFDCAN_RxItemEventCfg rxItemEvnCfg_s = {
-        .ItemId_s.Identifier_u32 = 0x18FF999,
-        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
-        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
-        .Dlc_e = FMKFDCAN_DLC_8,
-        .maskId_u32 = 0X18FF9FFF,
-        .callback_cb = s_APPLGC_CanCallback
-    };
+    Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_5, 500);
+    Ret_e = FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, 1450);
 
-    Ret_e = FMKFDCAN_ConfigureRxItemEvent(FMKFDCAN_NODE_1, rxItemEvnCfg_s);
 
     return Ret_e;
 }
@@ -461,19 +475,33 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 static t_eReturnCode s_APPLGC_Operational(void)
 {
     t_eReturnCode Ret_e = RC_OK;  
-    t_uint8 data_u8 = { 0,1,2,3,4,5,6,7};
-    t_sFMKFDCAN_TxItem txItem_s = {
-        .BitRate_e = FMKFDCAN_BITRATE_SWITCH_OFF,
-        .frameFormat_e = FMKFDCAN_FRAME_FORMAT_CLASSIC,
-        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
-        .ItemId_s.Identifier_u32 = 0x18FF999,
-        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
-        .CanMsg_s.Direction_e = FMKFDCAN_NODE_DIRECTION_TX,
-        .CanMsg_s.Dlc_e = FMKFDCAN_DLC_8,
-        .CanMsg_s.data_pu8 = data_u8
+    static t_uint32 frequencyVal_u32 = 450;
+    static t_uint32 s_saveTime_u32;
+    t_uint32 currentTime_u32;
+    t_float32 valueMeas_f32;
+    t_float32 valSet_f32;
+    t_uint32 startTime_u32;
+    t_uint32 endTIme_u32;
 
-    };
-    Ret_e = FMKFDCAN_SendTxItem(FMKFDCAN_NODE_1, txItem_s);
+    FMKCPU_GetTick(&startTime_u32);
+    for(t_uint8 LLI_u8 = (t_uint8)0 ; LLI_u8 < 100 ; LLI_u8++)
+    {
+        frequencyVal_u32 += 200;
+        Ret_e = FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, frequencyVal_u32);
+        
+    }
+    FMKCPU_GetTick(&endTIme_u32);
+    FMKSRL_LOG("Takes %d\r\n", (t_uint32)(endTIme_u32 - startTime_u32));
+    if((endTIme_u32 - startTime_u32) > 500)
+    {
+        Ret_e = FMKIO_Get_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, &valSet_f32);
+    }
+
+
+    if(Ret_e != RC_OK)
+    {
+        FMKSRL_LOG("ERROR OCCURED %d",Ret_e);
+    }
         /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
@@ -647,6 +675,7 @@ static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
 
     return;
 }
+
 //************************************************************************************
 // End of File
 //************************************************************************************
