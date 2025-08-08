@@ -439,7 +439,7 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
     };
     t_sFMKIO_PwmWaveformCfg pwmWave_s = {
         .deadTime_u32 = 0,
-        .frequency_u32 = 100,
+        .frequency_u32 = 600,
         .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
         .pullMode_e = FMKIO_PULL_MODE_DISABLE,
         .spdMode_e = FMKIO_SPD_MODE_HIGH,
@@ -448,7 +448,11 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
     //Ret_e = FMKIO_Set_InFreqSigCfg(FMKIO_INPUT_SIGFREQ_1, FMKIO_STC_RISING_EDGE, FMKIO_FREQ_MEAS_FREQ, NULL_FUNCTION);
     if(Ret_e == RC_OK)
     {
-        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_5, pwmWave_s, rampCtrl, NULL_FUNCTION,NULL_FUNCTION);
+        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_8, pwmWave_s, rampCtrl, NULL_FUNCTION,NULL_FUNCTION);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = FMKIO_Set_InAnaSigCfg(FMKIO_INPUT_SIGANA_3, NULL_FUNCTION);
     }
     
     
@@ -463,9 +467,13 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_5, 500);
-    Ret_e = FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, 1450);
+   
+    Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_8, 500);
 
+    if(Ret_e < RC_OK)
+    {
+        ASSERT((t_uint16)Ret_e);
+    }
 
     return Ret_e;
 }
@@ -474,35 +482,22 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
-    t_eReturnCode Ret_e = RC_OK;  
-    static t_uint32 frequencyVal_u32 = 450;
-    static t_uint32 s_saveTime_u32;
-    t_uint32 currentTime_u32;
-    t_float32 valueMeas_f32;
-    t_float32 valSet_f32;
-    t_uint32 startTime_u32;
-    t_uint32 endTIme_u32;
+    t_eReturnCode Ret_e = RC_OK; 
+    t_float32 anaMeasure_f32;
+    
+    Ret_e = FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_3, &anaMeasure_f32);
 
-    FMKCPU_GetTick(&startTime_u32);
-    for(t_uint8 LLI_u8 = (t_uint8)0 ; LLI_u8 < 100 ; LLI_u8++)
+    if(Ret_e == RC_OK)
     {
-        frequencyVal_u32 += 200;
-        Ret_e = FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, frequencyVal_u32);
-        
-    }
-    FMKCPU_GetTick(&endTIme_u32);
-    FMKSRL_LOG("Takes %d\r\n", (t_uint32)(endTIme_u32 - startTime_u32));
-    if((endTIme_u32 - startTime_u32) > 500)
-    {
-        Ret_e = FMKIO_Get_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, &valSet_f32);
+        if(anaMeasure_f32 > 4000.0f)
+        {
+            Ret_e = RC_WARNING_BUSY;
+        }
     }
 
+    FMKSRL_LOG("Ana Measure %d, retcode %d\r\n", (t_uint16)anaMeasure_f32, Ret_e);
 
-    if(Ret_e != RC_OK)
-    {
-        FMKSRL_LOG("ERROR OCCURED %d",Ret_e);
-    }
-        /*t_uint8 idxAgent_u8;
+           /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
         {

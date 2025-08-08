@@ -162,7 +162,7 @@
 
     ///@brief Serial Message Information
     const t_sAPPSIG_MsgInfo c_AppSig_SrlMsgCfg_as[APPSIG_SRL_MSG_NB] = {
-    //  Identifier                          Direction                    CyclicSend                      TimeOut                        Sig Cfg                  nbSignal
+    //  Identifier                                          Direction                                                CyclicSend                                                 TimeOut                                                         Sig Cfg                                         nbSignal
     {APPSIG_SRL_ID_APPLICATIONINFO1,                         APPSIG_MSG_DIR_TX,                                      (t_uint16)500,                                          (t_uint16)0,                                            c_AppSig_Srl_ApplicationInfo1_as,                       (t_uint8)15}, // APPSIG_SRL_APPLICATIONINFO1
     };
 

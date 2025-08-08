@@ -19,11 +19,24 @@
     // *                      Includes
     // ********************************************************************
     #include "../FMKCFG_ConfigSpecific/FMKCPU_ConfigSpecific.h"
+    #include "FMK_HAL/FMK_CDA/Src/FMK_CDA.h"
     #include "TypeCommon.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    
+    ///@brief supply voltage and temp Cpu monitoring, put FMKCDA_ADC_INTERN_NB
+    ///         if the intern sens does not exist.
+    #define FMKPCU_ADC_INTERN_SNS_VBAT (FMKCDA_ADC_INTERN_VBAT)
+    #define FMKPCU_ADC_INTERN_SNS_TEMP (FMKCDA_ADC_INTERN_TS_CAL1)
+
+    ///@brief max/min treshold for vbatterie 
+    #define FMKCPU_VBAT_TRESHOLD_MIN ((t_float32)2900.0f) // mV
+    #define FMKCPU_VBAT_TRESHOLD_MAX ((t_float32)3500.0f) // mV
+
+    ///@brief max/min treshold for Temperature
+    #define FMKCPU_CPU_TEMP_TRESHOLD_MIN    ((t_float32)-10.0f)
+    #define FMKCPU_CPU_TEMP_TRESHOLD_MAX    ((t_float32)110.0f)
+
     // ********************************************************************
     // *                      Types
     // ********************************************************************

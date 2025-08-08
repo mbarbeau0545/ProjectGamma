@@ -84,7 +84,7 @@
         FMKTIM_CHANNEL_4,              // f"Reference to HAL channel 4
 
         FMKTIM_CHANNEL_NB,
-         FMKTIM_CHANNEL_ALL,
+        FMKTIM_CHANNEL_ALL,
     } t_eFMKTIM_InterruptChnl;
 
     /* CAUTION : Automatic generated code section for Enum: End */
