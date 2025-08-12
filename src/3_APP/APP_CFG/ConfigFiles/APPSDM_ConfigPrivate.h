@@ -24,6 +24,9 @@
     // *                      Defines
     // ********************************************************************
     #define APPSDM_MAX_DIAG_ITEM_MONITORING ((t_uint8)10)
+
+    ///@brief activate deactivate diagnostic managment 
+    #define APPSDM_DIAG_MNGMT_STATUS        ((t_bool)TRUE)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -73,15 +76,20 @@
     * @brief Diagnostic Item Configuration
     */
     t_sAPPSM_DiagItemCfg c_AppSdm_DiagItemCfg_as[APPSDM_DIAG_ITEM_NB] ={
-        // DebuncerValueMs                        NotifyUser                     Log Error                      Applied Startegy
-    /**
-    * @brief Variable for Diagnostic Item Information
-    */
-        {(t_uint16)0,                  (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CFG_ERROR
-        {(t_uint16)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_OPE_ERROR
-        {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
-        {(t_uint16)500,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
-        {(t_uint16)0,                  (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
+        // DebuncerCounter              Unactive Item Delay          NotifyUser                     Log Error                      Applied Startegy
+        {(t_uint16)0,                  (t_uint32)0xFFFFFFFF,         (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CFG_ERROR
+        {(t_uint16)20,                 (t_uint32)3000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CPU_TEMP_OUT_OF_RANGE
+        {(t_uint16)20,                 (t_uint32)3000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_SUPPLY_VOLTAGE_OUT_OF_RANGE
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_FDCAN_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_SRL_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_HRT_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_TIM_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CDA_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CPU_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
+        {(t_uint16)5,                  (t_uint32)200,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

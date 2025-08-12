@@ -18,6 +18,7 @@
 	// ********************************************************************
 	// *                      Includes
 	// ********************************************************************
+    #ifdef APPSYS_MODULE_APP_SPM_ENABLE
 	#include "TypeCommon.h"
 	#include "APP_CFG/ConfigFiles/APPSPM_ConfigPublic.h"
 	// ********************************************************************
@@ -107,6 +108,7 @@
                                         t_uint16 * f_prmMinValue_pu16,
                                         t_uint16 * f_prmMaxValue_pu16,
                                         t_uint16 * f_prmDefaultValue_pu16);
+    #endif // APPSYS_MODULE_APP_SPM_ENABLE
 #endif // FILE_CONFIGPRIVATE_H_INCLUDED           
 //************************************************************************************
 // End of File

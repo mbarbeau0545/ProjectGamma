@@ -159,7 +159,6 @@
         //GPIO_name                     Pin_name                      GPIO_IRQN                     
         {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_3},              FMKCPU_NVIC_EXTI3_IRQN},               // FMKIO_INPUT_SIGEVNT_1,
         {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_5},              FMKCPU_NVIC_EXTI9_5_IRQN},             // FMKIO_INPUT_SIGEVNT_2,
-        {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_4},              FMKCPU_NVIC_EXTI4_IRQN},               // FMKIO_INPUT_SIGEVNT_3,
     };
 
     /**< Variable for bsp_Gpio_Pin Digital ouput signal mapping */
@@ -172,9 +171,8 @@
         {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_8},    // FMKIO_OUTPUT_SIGDIG_5,
         {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_3},    // FMKIO_OUTPUT_SIGDIG_6,
         {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_9},    // FMKIO_OUTPUT_SIGDIG_7,
-        {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_5},    // FMKIO_OUTPUT_SIGDIG_8,
-        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_0},    // FMKIO_OUTPUT_SIGDIG_9,
-        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_1},    // FMKIO_OUTPUT_SIGDIG_10,
+        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_0},    // FMKIO_OUTPUT_SIGDIG_8,
+        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_1},    // FMKIO_OUTPUT_SIGDIG_9,
     };
 
     /**< Variable for bsp_Gpio_Pin PWM output signal mapping */
@@ -199,13 +197,13 @@
     const t_sFMKIO_RxTxComCfg c_FmkIo_CanSigCfg_as[FMKIO_COM_SIGNAL_CAN_NB] ={
         // Rx Gpio Port                        Rx Pin                       Tx Gpio Port                      Tx Pin                    Alternate Function
         {{FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_11},             {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_12},             GPIO_AF9_FDCAN1}, // FMKIO_COM_SIGNAL_CAN_1
-        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_14},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_15},             GPIO_AF9_FDCAN1}, // FMKIO_COM_SIGNAL_CAN_2
-        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_13},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_12},             GPIO_AF9_FDCAN1}, // FMKIO_COM_SIGNAL_CAN_3
+        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_14},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_15},             GPIO_AF9_FDCAN2}, // FMKIO_COM_SIGNAL_CAN_2
+        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_13},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_12},             GPIO_AF11_FDCAN3}, // FMKIO_COM_SIGNAL_CAN_3
     };
     /**< Variable for RxTx Reference for Serial Line */
     const t_sFMKIO_RxTxComCfg c_FmkIo_SerialSigCfg_as[FMKIO_COM_SIGNAL_SERIAL_NB] ={
         // Rx Gpio Port                        Rx Pin                       Tx Gpio Port                      Tx Pin                    Alternate Function
-        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_3},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_4},             GPIO_AF7_USART1}, // FMKIO_COM_SIGNAL_SERIAL_1
+        {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_5},              {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_4},             GPIO_AF7_USART1}, // FMKIO_COM_SIGNAL_SERIAL_1
         {{FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_3},              {FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_2},             GPIO_AF7_USART2}, // FMKIO_COM_SIGNAL_SERIAL_2
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_5},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_6},             GPIO_AF7_USART3}, // FMKIO_COM_SIGNAL_SERIAL_3
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_7},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_8},             GPIO_AF14_UART4}, // FMKIO_COM_SIGNAL_SERIAL_4

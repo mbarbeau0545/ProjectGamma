@@ -16,6 +16,8 @@
 // ********************************************************************
 // *                      Includes
 // ********************************************************************
+#include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
+#ifdef APPSYS_MODULE_APP_SPM_ENABLE
 #include "./APP_SPM.h"
 #include "APP_CFG/ConfigFiles/APPSPM_ConfigPrivate.h"
 // ********************************************************************
@@ -306,6 +308,8 @@ t_eReturnCode APPSPM_GetParamInfo(	t_eAPPSPM_ItemPrm f_itemId_e,
 
     return Ret_e;
 }
+
+#endif // APPSYS_MODULE_APP_SPM_ENABLE
 //************************************************************************************
 // End of File
 //************************************************************************************

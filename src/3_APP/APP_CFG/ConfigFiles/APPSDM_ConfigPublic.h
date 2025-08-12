@@ -29,10 +29,18 @@
     typedef enum ____t_eAPPSDM_DiagnosticItem
     {
         APPSDM_DIAG_ITEM_FMK_CFG_ERROR = 0x00,// None
-        APPSDM_DIAG_ITEM_FMK_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_CPU_TEMP_OUT_OF_RANGE,// None
+        APPSDM_DIAG_ITEM_FMK_SUPPLY_VOLTAGE_OUT_OF_RANGE,// None
+        APPSDM_DIAG_ITEM_FMK_FDCAN_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_SRL_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_HRT_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_TIM_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_CDA_OPE_ERROR,// None
+        APPSDM_DIAG_ITEM_FMK_CPU_OPE_ERROR,// None
         APPSDM_DIAG_ITEM_APP_CYCLIC_TIMEOUT,// None
         APPSDM_DIAG_ITEM_APP_FASTTASK_TIMEOUT,// None
         APPSDM_DIAG_ITEM_UDS_COM_ERROR,// None
+        APPSDM_DIAG_ITEM_APPSIG_MSG_TIMEOUT,// None
 
         APPSDM_DIAG_ITEM_NB,
     } t_eAPPSDM_DiagnosticItem;
@@ -55,7 +63,8 @@
 	//-----------------------------STRUCT TYPES---------------------------//
     typedef struct
     {
-        t_uint16 debuncValueMs_u16;
+        t_uint16 DebuncCnt_u16;
+        t_uint32 unactiveDelay_u32;
         t_bool notifyUser_b;
         t_bool logItem_b;
         t_eAPPSDM_DiagnosticStrat diagStrat_e;

@@ -37,14 +37,10 @@ For the doxygen documentation search the file "index.html"
 - Save and Generate code from Doc/ConfigPrj/PythonTool_CodeGen/somethnig.bat file.
 
 ## bugs
-- Comprendre pourquoi HAL_Delay -> Infinite Loop
-- Comprendre pourquoi FDCAN marche po lo
 - FMKSRL en mode interruption , Size Cyclic, dans la callback quand on reset la reception on la reset à 0 après 
 
 ## To test 
-    - retester les PWM en mode normal 
-    - tester les PWM en mode pulse 
-    - tester les Input Frequentiel
+
 
 
 ## Left to do

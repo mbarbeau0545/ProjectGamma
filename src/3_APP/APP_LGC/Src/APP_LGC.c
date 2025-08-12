@@ -25,6 +25,8 @@
 #include "3_APP/APP_CTRL/APP_SPM/Src/APP_SPM.h"
 #include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
 #include "FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
+#include "FMK_HAL/FMK_CAN/Src/FMK_FDCAN.h"
+#include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
 
 #include "Library/SafeMem/SafeMem.h"
 
@@ -57,6 +59,7 @@
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
+RTC_HandleTypeDef g_rtcHandle_s;
 /**
 * @brief App Logic Module State
 */
@@ -162,7 +165,13 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                                         t_uint16 f_debugInfo1_u16,
                                         t_uint16 f_debugInfo2_u16);
 
+static void s_APPLGC_CanCallback(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e);
 
+static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -179,6 +188,7 @@ t_eReturnCode APPLGC_Init(void)
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxAgent_u8 = (t_uint8)0; 
     t_uint8 idxSrv_u8 = (t_uint8)0;
+    
 
     /* CAUTION : Automatic generated code section for Actuators Containers/Service: Start */
     /* CAUTION : Automatic generated code section for Actuators Containers/Service: End */
@@ -198,7 +208,7 @@ t_eReturnCode APPLGC_Init(void)
         Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_u8].init_pcb();
     }
 
-    Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
+    //Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
 
     return Ret_e;
 }
@@ -422,47 +432,32 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
     t_eReturnCode Ret_e;
-    t_sFMKIO_SigEcdrCfg SigEcdrCfg_s;
-    t_sFMKSRL_DrvSerialCfg SrlCfg_s;
+    HAL_StatusTypeDef bspRet_e;
+    t_sFMKIO_PwmControlPrm rampCtrl = {
+        .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
+        .rampCfg_ps = NULL,
+    };
+    t_sFMKIO_PwmWaveformCfg pwmWave_s = {
+        .deadTime_u32 = 0,
+        .frequency_u32 = 600,
+        .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
+        .pullMode_e = FMKIO_PULL_MODE_DISABLE,
+        .spdMode_e = FMKIO_SPD_MODE_HIGH,
+    };
 
-    SigEcdrCfg_s.hwCfg_s.HwMode_e = FMKTIM_ECDR_MODE_TI12;
-    SigEcdrCfg_s.hwCfg_s.IC1_s.Polarity_e = FMKTIM_ECDR_IN_POLARITY_RISING;
-    SigEcdrCfg_s.hwCfg_s.IC1_s.Selection_e = FMKTIM_ICSELECT_DIRECT_TI;
-    SigEcdrCfg_s.hwCfg_s.IC2_s.Polarity_e = FMKTIM_ECDR_IN_POLARITY_RISING;
-    SigEcdrCfg_s.hwCfg_s.IC2_s.Selection_e = FMKTIM_ICSELECT_DIRECT_TI;
-    SigEcdrCfg_s.pullMode_e = FMKIO_PULL_MODE_UP;
-    SigEcdrCfg_s.speedMode_e = FMKIO_SPD_MODE_HIGH;
-    SigEcdrCfg_s.PulsePerRev_u16 = 4000;
-    SigEcdrCfg_s.MultipleTourPerRev_u8 = 1;
-
+    //Ret_e = FMKIO_Set_InFreqSigCfg(FMKIO_INPUT_SIGFREQ_1, FMKIO_STC_RISING_EDGE, FMKIO_FREQ_MEAS_FREQ, NULL_FUNCTION);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_8, pwmWave_s, rampCtrl, NULL_FUNCTION,NULL_FUNCTION);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = FMKIO_Set_InAnaSigCfg(FMKIO_INPUT_SIGANA_3, NULL_FUNCTION);
+    }
     
-    Ret_e = FMKIO_Set_InEncoderSigCfg(  FMKIO_INPUT_ENCODER_1,
-                                        SigEcdrCfg_s,
-                                        FMKIO_ENCODER_START_BOTH);
-    SrlCfg_s.runMode_e = FMKSRL_LINE_RUNMODE_DMA;
-    SrlCfg_s.hwProtType_e = FMKSRL_HW_PROTOCOL_UART;
-
-    SrlCfg_s.hwCfg_s.Baudrate_e = FMKSRL_LINE_BAUDRATE_115200,
-    SrlCfg_s.hwCfg_s.Mode_e = FMKSRL_LINE_MODE_RX_TX;
-    SrlCfg_s.hwCfg_s.Parity_e = FMKSRL_LINE_PARITY_NONE,
-    SrlCfg_s.hwCfg_s.Stopbit_e = FMKSRL_LINE_STOPBIT_1,
-    SrlCfg_s.hwCfg_s.wordLenght_e = FMKSRL_LINE_WORDLEN_8BITS,
-
-    SrlCfg_s.CfgSpec_u.uartCfg_s.hwFlowCtrl_e = FMKSRL_UART_HW_FLOW_CTRL_NONE;
-    SrlCfg_s.CfgSpec_u.uartCfg_s.Type_e = FMKSRL_UART_TYPECFG_UART,
-    
-    /*Ret_e = FMKIO_Set_InAnaSigCfg(  FMKIO_INPUT_SIGANA_4,
-                                    FMKIO_PULL_MODE_DISABLE,
-                                    NULL_FUNCTION);*/
-
-
-    Ret_e = FMKSRL_InitDrv( APPLGC_SERIAL_LINE_APP, 
-                            SrlCfg_s,
-                            s_APPLGC_AppEvntCallback,
-                            (t_cbFMKSRL_TransmitMsgEvent *)NULL_FUNCTION);
     
 
-    return RC_OK;
+    return Ret_e;
 }
 
 /*********************************
@@ -471,6 +466,15 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
+
+   
+    Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_8, 500);
+
+    if(Ret_e < RC_OK)
+    {
+        ASSERT((t_uint16)Ret_e);
+    }
+
     return Ret_e;
 }
 /*********************************
@@ -478,40 +482,22 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
-    t_eReturnCode Ret_e = RC_OK;
-    t_uint32 prmValue_u16 = (t_uint16)0;
-    t_eFMKIO_EcdrDir ecdrdirValue_e;
-    t_float32 ecdrPosition_f32;
-    t_float32 ecdrSpeed_f32;
-    char msgbuffer[64];
-
-
-        
+    t_eReturnCode Ret_e = RC_OK; 
+    t_float32 anaMeasure_f32;
     
-    Ret_e = FMKIO_Get_InEcdrDirectionValue(FMKIO_INPUT_ENCODER_1, &ecdrdirValue_e);
-    
+    Ret_e = FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_3, &anaMeasure_f32);
+
     if(Ret_e == RC_OK)
     {
-        Ret_e = FMKIO_Get_InEcdrPositionValue(  FMKIO_INPUT_ENCODER_1, 
-                                                FMKIO_ECDR_VAL_FORMAT_MDEGREE,
-                                                &ecdrPosition_f32);
-        
-        Ret_e = FMKIO_Get_InEcdrSpeed(  FMKIO_INPUT_ENCODER_1, 
-                                        FMKIO_ECDR_VAL_FORMAT_MRADIAN,
-                                        &ecdrSpeed_f32);
+        if(anaMeasure_f32 > 4000.0f)
+        {
+            Ret_e = RC_WARNING_BUSY;
+        }
     }
 
-    sprintf(msgbuffer, "Dir :%d\r\n Position : %d, speed : %d", (t_uint8)ecdrdirValue_e, (t_uint32)(ecdrPosition_f32), (t_uint32)ecdrSpeed_f32);
+    FMKSRL_LOG("Ana Measure %d, retcode %d\r\n", (t_uint16)anaMeasure_f32, Ret_e);
 
-    Ret_e = FMKSRL_Transmit(FMKSRL_SERIAL_LINE_2,
-                            FMKSRL_TX_ONESHOT,
-                            (t_uint8 * )msgbuffer,
-                            strlen(msgbuffer),
-                            (t_uint16)0,
-                            (t_bool)False);
-
-        
-        /*t_uint8 idxAgent_u8;
+           /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
         {
@@ -541,7 +527,7 @@ static t_eReturnCode s_APPLGC_Operational(void)
     { 
         Ret_e = s_APPLGC_SetActValues();
     }*/
-    return Ret_e;
+
 }
 /*********************************
  * s_APPLGC_GetSnsValues
@@ -634,6 +620,53 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
     t_eReturnCode Ret_e = RC_OK;
 
     // choose a way to communicate error
+
+    return;
+}
+
+/*********************************
+ * s_APPLGC_DiagnosticEvent
+ *********************************/
+static void s_APPLGC_CanCallback(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e)
+{
+    t_uint8 data_u8[8] = {0};
+
+    if(f_Node_e == FMKFDCAN_NODE_1)
+    {
+        if(f_RxItem_s.ItemId_s.Identifier_u32 == 0x18FF9087)
+        {
+            memcpy(data_u8, f_RxItem_s.CanMsg_s.data_pu8, 8);
+
+            if(data_u8[1] > 8)
+            {
+                g_AppLgc_ModState_e = STATE_CYCLIC_OPE;
+            }
+        }
+    }
+
+    return;
+}
+
+static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
+                                    t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
+                                    t_eFMKFDCAN_NodeStatus f_NodeStatus_e)
+{
+    t_uint8 data_u8[8] = {0};
+
+    if(f_Node_e == FMKFDCAN_NODE_1)
+    {
+        if(f_RxItem_s.ItemId_s.Identifier_u32 == 0x18FF9088)
+        {
+            memcpy(data_u8, f_RxItem_s.CanMsg_s.data_pu8, 8);
+
+            if(data_u8[1] > 8)
+            {
+                g_AppLgc_ModState_e = STATE_CYCLIC_OPE;
+            }
+        }
+    }
 
     return;
 }

@@ -54,7 +54,7 @@
     */
     typedef enum
     {
-        FMKIO_GPIO_PORT_A = 0x0,                  /**< Reference to bsp gpio A register */
+        FMKIO_GPIO_PORT_A = 0,                  /**< Reference to bsp gpio A register */
         FMKIO_GPIO_PORT_B,                        /**< Reference to bsp gpio B register */
         FMKIO_GPIO_PORT_C,                        /**< Reference to bsp gpio C register */
         FMKIO_GPIO_PORT_D,                        /**< Reference to bsp gpio D register */
@@ -70,7 +70,7 @@
     */
     typedef enum
     {
-        FMKIO_GPIO_PIN_0 = 0x0,                  /**< Reference to bsp gpio pin 0 */
+        FMKIO_GPIO_PIN_0 = 0,                  /**< Reference to bsp gpio pin 0 */
         FMKIO_GPIO_PIN_1,                        /**< Reference to bsp gpio pin 1 */
         FMKIO_GPIO_PIN_2,                        /**< Reference to bsp gpio pin 2 */
         FMKIO_GPIO_PIN_3,                        /**< Reference to bsp gpio pin 3 */
@@ -95,7 +95,7 @@
     */
     typedef enum
     {
-        FMKIO_INPUT_SIGDIG_1 = 0x0,                  /**< Reference to PC10 */
+        FMKIO_INPUT_SIGDIG_1 = 0,                  /**< Reference to PC10 */
         FMKIO_INPUT_SIGDIG_2,                        /**< Reference to PC11 */
         FMKIO_INPUT_SIGDIG_3,                        /**< Reference to PC13 */
         FMKIO_INPUT_SIGDIG_4,                        /**< Reference to PC14 */
@@ -113,7 +113,7 @@
     */
     typedef enum
     {
-        FMKIO_INPUT_SIGANA_1 = 0x0,                  /**< Reference to PA1 */
+        FMKIO_INPUT_SIGANA_1 = 0,                  /**< Reference to PA1 */
         FMKIO_INPUT_SIGANA_2,                        /**< Reference to PA4 */
         FMKIO_INPUT_SIGANA_3,                        /**< Reference to PB1 */
         FMKIO_INPUT_SIGANA_4,                        /**< Reference to PB0 */
@@ -128,7 +128,7 @@
     */
     typedef enum
     {
-        FMKIO_INPUT_SIGFREQ_1 = 0x0,                  /**< Reference to PB6, TIMER_4 CHANNEL_1 */
+        FMKIO_INPUT_SIGFREQ_1 = 0,                  /**< Reference to PB6, TIMER_4 CHANNEL_1 */
         FMKIO_INPUT_SIGFREQ_2,                        /**< Reference to PB7, TIMER_4 CHANNEL_2 */
     
         FMKIO_INPUT_SIGFREQ_NB,
@@ -139,9 +139,8 @@
     */
     typedef enum
     {
-        FMKIO_INPUT_SIGEVNT_1 = 0x0,                  /**< Reference to PB3 */
+        FMKIO_INPUT_SIGEVNT_1 = 0,                  /**< Reference to PB3 */
         FMKIO_INPUT_SIGEVNT_2,                        /**< Reference to PB5 */
-        FMKIO_INPUT_SIGEVNT_3,                        /**< Reference to PC4 */
     
         FMKIO_INPUT_SIGEVNT_NB,
     } t_eFMKIO_InEvntSig;
@@ -151,16 +150,15 @@
     */
     typedef enum
     {
-        FMKIO_OUTPUT_SIGDIG_1 = 0x0,                  /**< Reference to PB11 */
+        FMKIO_OUTPUT_SIGDIG_1 = 0,                  /**< Reference to PB11 */
         FMKIO_OUTPUT_SIGDIG_2,                        /**< Reference to PA11 */
         FMKIO_OUTPUT_SIGDIG_3,                        /**< Reference to PA12 */
         FMKIO_OUTPUT_SIGDIG_4,                        /**< Reference to PA9 */
         FMKIO_OUTPUT_SIGDIG_5,                        /**< Reference to PB8 */
         FMKIO_OUTPUT_SIGDIG_6,                        /**< Reference to PC3 */
         FMKIO_OUTPUT_SIGDIG_7,                        /**< Reference to PC9 */
-        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PC5 */
-        FMKIO_OUTPUT_SIGDIG_9,                        /**< Reference to PF0 */
-        FMKIO_OUTPUT_SIGDIG_10,                       /**< Reference to PF1 */
+        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PF0 */
+        FMKIO_OUTPUT_SIGDIG_9,                        /**< Reference to PF1 */
     
         FMKIO_OUTPUT_SIGDIG_NB,
     } t_eFMKIO_OutDigSig;
@@ -170,7 +168,7 @@
     */
     typedef enum
     {
-        FMKIO_OUTPUT_SIGPWM_1 = 0x0,                  /**< Reference to PB4, TIMER_16 CHANNEL_1 ,Pwm with Adaptable Frequency and DutyCycle */
+        FMKIO_OUTPUT_SIGPWM_1 = 0,                  /**< Reference to PB4, TIMER_16 CHANNEL_1 ,Pwm with Adaptable Frequency and DutyCycle */
         FMKIO_OUTPUT_SIGPWM_2,                        /**< Reference to PB9, TIMER_17 CHANNEL_1 ,Pwm with Adaptable Frequency and DutyCycle */
         FMKIO_OUTPUT_SIGPWM_3,                        /**< Reference to PC12, TIMER_5 CHANNEL_2 ,Pwm with Adaptable Frequency and DutyCycle */
         FMKIO_OUTPUT_SIGPWM_4,                        /**< Reference to PB15, TIMER_15 CHANNEL_2 ,Pwm with Adaptable Frequency and DutyCycle */
@@ -192,7 +190,7 @@
     */
     typedef enum
     {
-        FMKIO_COM_SIGNAL_CAN_1 = 0x0,                  /**< Rx -> PF11, Tx -> PF12, Reference to CAN 0 */
+        FMKIO_COM_SIGNAL_CAN_1 = 0,                  /**< Rx -> PF11, Tx -> PF12, Reference to CAN 0 */
         FMKIO_COM_SIGNAL_CAN_2,                        /**< Rx -> PG14, Tx -> PG15, Reference to CAN 1 */
         FMKIO_COM_SIGNAL_CAN_3,                        /**< Rx -> PG13, Tx -> PG12, Reference to CAN 2 */
     
@@ -204,7 +202,7 @@
     */
     typedef enum
     {
-        FMKIO_COM_SIGNAL_SERIAL_1 = 0x0,                  /**< Rx -> PG3, Tx -> PG4, Reference to Serial PIN_3 */
+        FMKIO_COM_SIGNAL_SERIAL_1 = 0,                  /**< Rx -> PC5, Tx -> PC4, Reference to Serial PIN_5 */
         FMKIO_COM_SIGNAL_SERIAL_2,                        /**< Rx -> PA3, Tx -> PA2, Reference to Serial PIN_3 */
         FMKIO_COM_SIGNAL_SERIAL_3,                        /**< Rx -> PG5, Tx -> PG6, Reference to Serial PIN_5 */
         FMKIO_COM_SIGNAL_SERIAL_4,                        /**< Rx -> PG7, Tx -> PG8, Reference to Serial PIN_7 */

@@ -20,7 +20,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define APPLGC_APP_PROTOCOL_LEN_DATA ((t_uint8)8)
+    #define APPLGC_APP_PROTOCOL_LEN_DATA ((t_uint8)9)
     #define APPLGC_IDX_APP_DATA_START ((t_uint8)1)
     #define APPLGC_APPUSER_COM_TIMEOUT ((t_uint32)1000)
     #define APPLGC_APPUSER_ERR_RX ((t_uint16)0)

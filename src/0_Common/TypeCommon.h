@@ -16,6 +16,10 @@
     #define false	      ((t_uint8)0)
     #define True          ((t_uint8)1)
     #define False         ((t_uint8)0)
+    #define TRUE          ((t_uint8)1)
+    #define FALSE         ((t_uint8)0)
+    #define M_TRUE        (1)
+    #define M_FALSE       (0)
     #define NULL_FUNCTION ((void *)0)
 
     #ifndef NULL
@@ -25,31 +29,31 @@
      * @brief Get a bit from a flag macro
      */
     #ifndef GETBIT
-        #define GETBIT(flag, bit) ((flag >> (bit)) & 1U)
+        #define GETBIT(flag, bit) (((flag >> (bit))) & 1U)
     #endif
     /**
      * @brief Set a bit in a 16 bit flag
      */
     #ifndef SETBIT_16B
-        #define SETBIT_16B(flag, bit) ((flag) |= (t_uint16)1 << (bit))
+        #define SETBIT_16B(flag, bit) ((flag) |= ((t_uint16)1 << (bit)))
     #endif
     /**
      * @brief Set a bit in a 32 bit flag
      */
     #ifndef SETBIT_32B
-        #define SETBIT_32B(flag, bit) ((flag) |= (t_uint32)1 << (bit))
+        #define SETBIT_32B(flag, bit) ((flag) |= ((t_uint32)1 << (bit)))
     #endif
     /**
      * @brief Reset a bit in a 16 bit flag
      */
     #ifndef RESETBIT_16B
-        #define RESETBIT_16B(flag, bit) ((flag) &= ~(t_uint16)1 << (bit))
+        #define RESETBIT_16B(flag, bit) ((flag) &= ~((t_uint16)1 << (bit)))
     #endif
     /**
      * @brief Reset a bit in a 32 bit flag
      */
     #ifndef RESETBIT_32B
-        #define RESETBIT_32B(flag, bit) ((flag) &= ~(t_uint32)1 << (bit))
+        #define RESETBIT_32B(flag, bit) ((flag) &= ~((t_uint32)1 << (bit)))
     #endif
     /**
      * @brief Bit in a 16 bit flag is set

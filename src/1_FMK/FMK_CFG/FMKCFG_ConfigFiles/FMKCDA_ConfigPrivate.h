@@ -30,6 +30,7 @@
     #define FMKCDA_ADC_INTERN_VREFINT_CAL_3_ADDRESS ((volatile t_uint16 *)0x1FFF75AA)
     #define FMKCDA_ADC_INTERN_VREFINT_CAL_4_ADDRESS ((volatile t_uint16 *)0x1FFF75AA)
     #define FMKCDA_ADC_INTERN_VREFINT_CAL_5_ADDRESS ((volatile t_uint16 *)0x1FFF75AA)
+    #define FMKCDA_ADC_INTERN_VBAT_ADDRESS ((volatile t_uint16*)0x00000000)
     #define FMKCDA_ADC_INTERN_TS_CAL1_ADDRESS ((volatile t_uint16*)0x1FFF75A8)
     #define FMKCDA_ADC_INTERN_TS_CAL2_ADDRESS ((volatile t_uint16*)0x1FFF75CA)
     #define FMKCDA_ADC_1_MAX_CHANNELS ((t_uint8)19)
@@ -39,9 +40,13 @@
     #define FMKCDA_ADC_5_MAX_CHANNELS ((t_uint8)19)
     /* CAUTION : Automatic generated code section for ADC channels number: End */
 
-    #define FMKCDA_TIME_BTWN_DIAG_MS ((t_uint16)2000)   /**< Time between diagnostic for adc & dac channel in cyclic ope mode*/
+    #define FMKCDA_TIME_BTWN_DIAG_MS ((t_uint16)100)   /**< Time between diagnostic for adc & dac channel in cyclic ope mode*/
     #define FMKCDA_OVR_CONVERSION_MS ((t_uint32)500)    /**< Delay after considering there is no conversion in circular mode  */
     #define FMKCDA_CYCLIC_CALIB      ((t_uint16)2000)   /**< Time between we get the Vref for calibration */
+
+    ///@brief max number of conversion in a cyclic adc conversion
+    #define FMKCDA_ADC_MAX_CONVERSION ((t_uint8)16)
+
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -71,6 +76,13 @@
         t_eFMKCPU_IRQNType c_IRQNType_e;
         t_eFMKCPU_DmaRqst c_DmaAdc_e;
     } t_sFMKCDA_AdcCfg;
+
+    ///@brief configuration for internal sensors 
+    typedef struct 
+    {
+        t_sFMKCDA_HwAdcCfg adcCfg_s;
+        t_bool isEnable_b;
+    } t_sFMKCDA_ADcInternalSnsCfg;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************
@@ -78,6 +90,12 @@
     // ********************************************************************
     // *                      Variables
     // ********************************************************************
+    const t_uint32 c_FmkCda_AdcRankTable_ua32[FMKCDA_ADC_MAX_CONVERSION] = {
+        ADC_REGULAR_RANK_1,  ADC_REGULAR_RANK_2,  ADC_REGULAR_RANK_3,  ADC_REGULAR_RANK_4,
+        ADC_REGULAR_RANK_5,  ADC_REGULAR_RANK_6,  ADC_REGULAR_RANK_7,  ADC_REGULAR_RANK_8,
+        ADC_REGULAR_RANK_9,  ADC_REGULAR_RANK_10, ADC_REGULAR_RANK_11, ADC_REGULAR_RANK_12,
+        ADC_REGULAR_RANK_13, ADC_REGULAR_RANK_14, ADC_REGULAR_RANK_15, ADC_REGULAR_RANK_16
+    };
     /* CAUTION : Automatic generated code section for Variable: Start */
     /**< Variable for Adc Config */
     const t_sFMKCDA_AdcCfg c_FmkCda_AdcCfg_as[FMKCDA_ADC_NB] = {
@@ -141,13 +159,15 @@
     };
 
     /**< Variable for Interna Sensors configuration*/
-    const t_sFMKCDA_HwAdcCfg c_FmkCda_HwInternalSnsCfg_as[FMKCDA_ADC_INTERN_NB] ={
-        {FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_16},                // for FMKCDA_ADC_INTERN_TS_CAL1
-        {FMKCDA_ADC_5,                         FMKCDA_ADC_CHANNEL_4},                 // for FMKCDA_ADC_INTERN_TS_CAL2
+    const t_sFMKCDA_ADcInternalSnsCfg c_FmkCda_HwInternalSnsCfg_as[FMKCDA_ADC_INTERN_NB] ={
+        {{FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_17},                TRUE                          },// for FMKCDA_ADC_INTERN_VBAT
+        {{FMKCDA_ADC_1,                         FMKCDA_ADC_CHANNEL_16},                TRUE                          },// for FMKCDA_ADC_INTERN_TS_CAL1
+        {{FMKCDA_ADC_5,                         FMKCDA_ADC_CHANNEL_4},                 FALSE                         },// for FMKCDA_ADC_INTERN_TS_CAL2
     };
 
     /**< Variable for Internal Sensors Calibration address */
-    const volatile t_uint16* c_FmkCda_HwInternalSnsAddress_pas16[FMKCDA_ADC_INTERN_NB] = {
+    const volatile t_uint16* c_FmkCda_HwInternalSnsAddress_pau16[FMKCDA_ADC_INTERN_NB] = {
+        (volatile t_uint16 *)FMKCDA_ADC_INTERN_VBAT_ADDRESS,                              // FMKCDA_ADC_INTERN_VBAT
         (volatile t_uint16 *)FMKCDA_ADC_INTERN_TS_CAL1_ADDRESS,                           // FMKCDA_ADC_INTERN_TS_CAL1
         (volatile t_uint16 *)FMKCDA_ADC_INTERN_TS_CAL2_ADDRESS,                           // FMKCDA_ADC_INTERN_TS_CAL2
     };
@@ -156,6 +176,7 @@
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
+    
     /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: Start */
     /*********************************
      * ADC1_2_IRQHandler
@@ -191,6 +212,7 @@
         return;
     }
     /* CAUTION : Automatic generated code section for ADCx IRQN_Handler: End */
+
 #endif // FMKCDA_CONFIGPRIVATE_H_INCLUDED           
 //************************************************************************************
 // End of File

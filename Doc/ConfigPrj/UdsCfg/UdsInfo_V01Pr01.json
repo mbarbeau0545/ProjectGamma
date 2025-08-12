@@ -26,6 +26,16 @@
             "id": "4",
             "debug_Info_1": "Info Errror",
             "debug_Info_2": "None"
+        },
+        "APPSIG_MSG_TIMEOUT": {
+            "id": "5",
+            "debug_Info_1": "idx of the message",
+            "debug_Info_2": "type of the message"
+        },
+        "FMKCAN_FIFO_ERROR": {
+            "id": "6",
+            "debug_Info_1": "Fifo Rx = 0, Fifo Tx = 1",
+            "debug_Info_2": "ErrorCode"
         }
     },
     "PARAMETERS": {
