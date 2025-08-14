@@ -20,7 +20,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #ifdef FMKCPU_STM32_ECU_FAMILY_G
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4) || defined(FMKCPU_STM32_ECU_FAMILY_H7)
         #define FMKIO_BSP_MODE_INPUT ((t_uint32)GPIO_MODE_INPUT)
         #define FMKIO_BSP_MODE_ANALOG ((t_uint32)GPIO_MODE_ANALOG)
     #elif FMKCPU_STM32_ECU_FAMILY_F
@@ -41,12 +41,6 @@
     // *                      Types
     // ********************************************************************
     //-----------------------------ENUM TYPES-----------------------------//
-    typedef enum
-    {
-        FMKIO_INPUT_ENCODER_1,
-        FMKIO_INPUT_ENCODER_2,
-        FMKIO_INPUT_ENCODER_NB,
-    } t_eFMKIO_InEcdrSignals;
 
     /* CAUTION : Automatic generated code section for Enum: Start */
     /**
@@ -135,6 +129,15 @@
     } t_eFMKIO_InFreqSig;
 
     /**
+    * @brief List of signals used for Input Encoder.
+    */
+    typedef enum
+    {
+    
+        FMKIO_INPUT_ENCODER_NB,
+    } t_eFMKIO_InEcdrSignals;
+
+    /**
     * @brief List of input event pin available on this board.
     */
     typedef enum
@@ -175,12 +178,12 @@
         FMKIO_OUTPUT_SIGPWM_5,                        /**< Reference to PC7, TIMER_8 CHANNEL_2 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation) */
         FMKIO_OUTPUT_SIGPWM_6,                        /**< Reference to PB2, TIMER_20 CHANNEL_1 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation) */
         FMKIO_OUTPUT_SIGPWM_7,                        /**< Reference to PC2, TIMER_1 CHANNEL_3 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_8,                        /**< Reference to PA8, TIMER_A CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_9,                        /**< Reference to PA10, TIMER_B CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_10,                       /**< Reference to PB12, TIMER_C CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_11,                       /**< Reference to PB14, TIMER_D CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_12,                       /**< Reference to PC6, TIMER_F CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_13,                       /**< Reference to PC8, TIMER_E CHANNEL_1 ,Pwm with Adaptable Frequency > 500 Hz, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_8,                        /**< Reference to PA8, TIMER_A CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_9,                        /**< Reference to PA10, TIMER_B CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_10,                       /**< Reference to PB12, TIMER_C CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_11,                       /**< Reference to PB14, TIMER_D CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_12,                       /**< Reference to PC6, TIMER_F CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_13,                       /**< Reference to PC8, TIMER_E CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
     
         FMKIO_OUTPUT_SIGPWM_NB,
     } t_eFMKIO_OutPwmSig;

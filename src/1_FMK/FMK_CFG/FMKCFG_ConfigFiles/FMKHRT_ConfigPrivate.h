@@ -18,6 +18,8 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+#include "APP_CFG/ConfigFiles/APPSYS_ConfigPublic.h"
+#if defined(APPSYS_MODULE_FMKHRT_ENABLE)
     #include "../FMKCFG_ConfigSpecific/FMKHRT_ConfigSpecific.h"
     #include "../FMKCFG_ConfigFiles/FMKHRT_ConfigPublic.h"
     
@@ -301,6 +303,7 @@ const t_sFMKHRT_HrTimerCfg c_FmkHrt_HrTimCfg_as[FMKHRT_HIGH_RES_TIMER_NB] = {
         return;
     }
     /* CAUTION : Automatic generated code section for IRQ Handler: Stop */
+#endif // APPSYS_MODULE_FMKHRT_ENABLE
 #endif // FMKHRT_CONFIGPRIVATE_H_INCLUDED
     //************************************************************************************
     // End of File

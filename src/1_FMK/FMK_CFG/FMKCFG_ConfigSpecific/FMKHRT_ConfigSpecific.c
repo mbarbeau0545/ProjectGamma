@@ -16,6 +16,8 @@
 // ********************************************************************
 // *                      Includes
 // ********************************************************************
+#include "APP_CFG/ConfigFiles/APPSYS_ConfigPublic.h"
+#if defined(APPSYS_MODULE_FMKHRT_ENABLE)
 #include "./FMKHRT_ConfigSpecific.h"
 // ********************************************************************
 // *                      Defines
@@ -645,9 +647,11 @@ static t_eReturnCode s_FMKHRTSPEC_GetSlvTimerId(t_uint32 f_slvTimIdx_u32, t_uint
             case HRTIM_TIMERINDEX_TIMER_E:
                 *f_slvTimId_pu32 = HRTIM_TIMERID_TIMER_E;
                 break;
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
             case HRTIM_TIMERINDEX_TIMER_F:
                 *f_slvTimId_pu32 = HRTIM_TIMERID_TIMER_F;
                 break;
+#endif
             default:
                 Ret_e = RC_ERROR_NOT_SUPPORTED;
         }
@@ -656,7 +660,7 @@ static t_eReturnCode s_FMKHRTSPEC_GetSlvTimerId(t_uint32 f_slvTimIdx_u32, t_uint
     return Ret_e;
 }
 
-
+#endif // APPSYS_MODULE_FMKHRT_ENABLE
 //************************************************************************************
 // End of File
 //************************************************************************************

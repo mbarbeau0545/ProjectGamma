@@ -27,6 +27,7 @@
     #define SHORTEN_PATH(path) (strstr(path, BASE_PATH) ? strstr(path, BASE_PATH) : path)
 
     ///@brief Optional Module
+    #define APPSYS_MODULE_FMKHRT_ENABLE
     #define APPSYS_MODULE_FMKCAN_ENABLE
     #define APPSYS_MODULE_FMKSRL_ENABLE
     #define APPSYS_MODULE_APPLGC_ENABLE

@@ -18,9 +18,12 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    #include "APP_CFG/ConfigFiles/APPSYS_ConfigPublic.h"
+#if defined(APPSYS_MODULE_FMKHRT_ENABLE)
     #include "FMK_CFG/FMKCFG_ConfigFiles/FMKCPU_ConfigPublic.h"
     #include "../FMKCFG_ConfigFiles/FMKHRT_ConfigPublic.h"
     #include "TypeCommon.h"
+
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -178,7 +181,7 @@
                                                             t_uint32 f_srcAddress_u32,
                                                             t_uint32 f_destAddress_u32,
                                                             t_uint32 f_size_u32);                                                                                                                   
-    
+#endif // APPSYS_MODULE_FMKHRT_ENABLE
 #endif // FMKHRT_CONFIGSPECIFIC_H_INCLUDED
            //************************************************************************************
            // End of File

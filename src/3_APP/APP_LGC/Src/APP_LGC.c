@@ -29,7 +29,7 @@
 #include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
 
 #include "Library/SafeMem/SafeMem.h"
-
+#include "CL42T/Src/CL42T.h"
 // ********************************************************************
 // *                      Defines
 // ********************************************************************
@@ -172,6 +172,12 @@ static void s_APPLGC_CanCallback(   t_eFMKFDCAN_NodeList f_Node_e,
 static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
                                     t_sFMKFDCAN_RxItemEvent f_RxItem_s, 
                                     t_eFMKFDCAN_NodeStatus f_NodeStatus_e);
+
+static void s_APPLGC_MotorDiag(t_eCL42T_MotorId f_MotorID_e, t_eCL42T_DiagError f_DefeultInfo_e);
+static void s_APPLGC_PulseDropped(t_eCL42T_MotorId f_MotorID_e, 
+                                    t_uint16 f_pulseDropped_u16, 
+                                    t_eCL42T_MotorDirection f_direction_e);
+static void s_APPLGC_FastTask(void);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -188,6 +194,7 @@ t_eReturnCode APPLGC_Init(void)
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxAgent_u8 = (t_uint8)0; 
     t_uint8 idxSrv_u8 = (t_uint8)0;
+    Ret_e = CL42T_Init();
     
 
     /* CAUTION : Automatic generated code section for Actuators Containers/Service: Start */
@@ -251,8 +258,8 @@ t_eReturnCode APPLGC_Cyclic(void)
     }
     case STATE_CYCLIC_OPE:
     {
-        Ret_e = s_APPLGC_Operational();
 
+        Ret_e = s_APPLGC_Operational();
         break;
     }
     case STATE_CYCLIC_ERROR:
@@ -342,53 +349,6 @@ t_eReturnCode APPLGC_GetServiceHealth(t_eAPPLGC_SrvList f_service_e, t_eAPPLGC_S
 }
 
 /*********************************
- * APPLGC_GetServiceInfo
- *********************************/
-t_eReturnCode APPLGC_GetActValue(t_eAPPACT_Actuators f_actuators_e, t_sint32 * f_actValue_ps32)
-{
-    t_eReturnCode Ret_e = RC_OK;
-    t_uint8 idxSrv_u8;
-    t_uint8 idxActSrv_u8;
-    t_eAPPACT_Actuators actLabel_e;
-    t_bool findActVal_b = False;
-
-    if(f_actuators_e >= APPACT_ACTUATOR_NB)
-    {
-        Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)f_actuators_e);
-    }
-    if(f_actValue_ps32 == (t_sint32 *)NULL)
-    {
-        Ret_e = RC_ERROR_PTR_NULL;
-        ASSERT((t_uint16)0);
-    }
-    if(Ret_e == RC_OK)
-    {
-        for(idxSrv_u8 = (t_uint8)0 ; (idxSrv_u8 < APPLGC_SRV_NB) && (Ret_e == RC_OK) ; idxSrv_u8++)
-        {
-            //----- Loop on every Actuators For this Service -----//
-            for(idxActSrv_u8 = (t_uint8)0 ; idxActSrv_u8 < c_AppLGc_SrvActuatorsMax_ua8[idxSrv_u8] ; idxActSrv_u8++)
-            {
-                actLabel_e = c_AppLGc_SrvDepedencies_pae[idxSrv_u8][idxActSrv_u8];
-
-                if(actLabel_e == f_actuators_e)
-                {
-                    *f_actValue_ps32 = (t_sint32)g_srvFuncInfo_as[idxSrv_u8].actVal_pau[idxActSrv_u8].setPoint_s32;
-                    findActVal_b = True;
-                    break;
-                }
-            }
-            if(findActVal_b == (t_bool)True)
-            {
-                break;
-            }
-        }
-    }
-
-    return Ret_e;
-}
-
-/*********************************
  * APPLGC_GetSnsValue
  *********************************/
 t_eReturnCode APPLGC_GetSnsValue(t_eAPPSNS_Sensors f_sensors_e, t_sint32 * f_snsValue_ps32)
@@ -433,27 +393,43 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 
     t_eReturnCode Ret_e;
     HAL_StatusTypeDef bspRet_e;
-    t_sFMKIO_PwmControlPrm rampCtrl = {
-        .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
-        .rampCfg_ps = NULL,
-    };
-    t_sFMKIO_PwmWaveformCfg pwmWave_s = {
-        .deadTime_u32 = 0,
-        .frequency_u32 = 600,
-        .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
-        .pullMode_e = FMKIO_PULL_MODE_DISABLE,
-        .spdMode_e = FMKIO_SPD_MODE_HIGH,
+    t_sCL42T_MotorSigCfg motor_config = {
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_1,
+        .DirSignal_e = FMKIO_OUTPUT_SIGDIG_1,
+        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_2,
+        .EndStopSigCW_s = {
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_1,
+            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .triggerEvnt_e = FMKIO_STC_RISING_EDGE
+        },
+        .EndStopSigCCW_s = {
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_2,
+            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .triggerEvnt_e = FMKIO_STC_RISING_EDGE
+        },
+        .PulseSigCfg_s = {
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_5,
+            .pwmWaveForm_s = {
+                .deadTime_u32 = 0,
+                .frequency_f32 = 1000,
+                .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
+                .pullMode_e = FMKIO_PULL_MODE_DISABLE,
+                .spdMode_e = FMKIO_SPD_MODE_HIGH,
+            },
+            .pwmCtrlPrm_s = {
+                .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
+                .rampCfg_ps = NULL,
+            }
+        }
+
     };
 
-    //Ret_e = FMKIO_Set_InFreqSigCfg(FMKIO_INPUT_SIGFREQ_1, FMKIO_STC_RISING_EDGE, FMKIO_FREQ_MEAS_FREQ, NULL_FUNCTION);
-    if(Ret_e == RC_OK)
-    {
-        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_8, pwmWave_s, rampCtrl, NULL_FUNCTION,NULL_FUNCTION);
-    }
-    if(Ret_e == RC_OK)
-    {
-        Ret_e = FMKIO_Set_InAnaSigCfg(FMKIO_INPUT_SIGANA_3, NULL_FUNCTION);
-    }
+    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    
+    Ret_e = CL42T_AddMotorConfiguration(CL42T_MOTOR_1,
+                                        motor_config,
+                                        s_APPLGC_MotorDiag,
+                                        s_APPLGC_PulseDropped);
     
     
 
@@ -467,9 +443,7 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-   
-    Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_8, 500);
-
+    Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
     if(Ret_e < RC_OK)
     {
         ASSERT((t_uint16)Ret_e);
@@ -480,23 +454,54 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 /*********************************
  * s_APPLGC_Operational
  *********************************/
+typedef enum 
+{
+    APPLGC_MOTOR_STATE_SET_CMD,
+    APPLGC_MOTOR_STATE_WAIT,
+} t_eAPPLGC_MotorSts;
 static t_eReturnCode s_APPLGC_Operational(void)
 {
     t_eReturnCode Ret_e = RC_OK; 
+    t_uint16 mototbitSts_u16;
+    t_sCL42T_SetMotorValue motorValue_s = {
+        .frequency_u32 = 1000,
+        .nbPulses_s32  = 6000,
+    };
     t_float32 anaMeasure_f32;
-    
-    Ret_e = FMKIO_Get_InAnaSigValue(FMKIO_INPUT_SIGANA_3, &anaMeasure_f32);
+    static t_eAPPLGC_MotorSts motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
 
-    if(Ret_e == RC_OK)
+    switch (motorSs_e)
     {
-        if(anaMeasure_f32 > 4000.0f)
-        {
-            Ret_e = RC_WARNING_BUSY;
-        }
+        case APPLGC_MOTOR_STATE_SET_CMD:
+            Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_1, motorValue_s);
+
+            if(Ret_e == RC_OK)
+            {
+                motorValue_s.nbPulses_s32 = 2000;
+                Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_1, motorValue_s);
+            }
+            if(Ret_e == RC_OK)
+            {
+                FMKSRL_LOG("CHange state waiting\r\n");
+                motorSs_e = APPLGC_MOTOR_STATE_WAIT;
+            }
+        break;
+        case APPLGC_MOTOR_STATE_WAIT:
+            Ret_e = CL42T_GetMotorInfo(CL42T_MOTOR_1, &mototbitSts_u16);
+
+            if(Ret_e == RC_OK)
+            {
+                if(GETBIT(mototbitSts_u16, CL42T_BITFIELD_MOTOR_ON) == BIT_IS_RESET_16B)
+                {
+                    FMKSRL_LOG("CHange state setcmd\r\n");
+                    motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
+                }
+            }
+        break;
+        default:
+        break;
+
     }
-
-    FMKSRL_LOG("Ana Measure %d, retcode %d\r\n", (t_uint16)anaMeasure_f32, Ret_e);
-
            /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
@@ -576,7 +581,7 @@ static t_eReturnCode s_APPLGC_SetActValues(void)
         {
             actuatorLabel_e = c_AppLGc_SrvDepedencies_pae[idxSrv_u8][idxAct_u8];
 
-            Ret_e = APPACT_Set_ActValue(actuatorLabel_e, (t_uAPPACT_SetValue)g_srvFuncInfo_as[idxSrv_u8].actVal_pau[idxAct_u8]);
+            //Ret_e = APPACT_Set_ActValue(actuatorLabel_e, (t_uAPPACT_SetValue)g_srvFuncInfo_as[idxSrv_u8].actVal_pau[idxAct_u8]);
 
         }
     }
@@ -671,6 +676,31 @@ static void s_APPLGC_CanCallback_2(   t_eFMKFDCAN_NodeList f_Node_e,
     return;
 }
 
+static void s_APPLGC_MotorDiag(t_eCL42T_MotorId f_MotorID_e, t_eCL42T_DiagError f_DefeultInfo_e)
+{
+    FMKSRL_LOG("Motor Id %d, Error %d\r\n", f_MotorID_e, f_DefeultInfo_e);
+}
+
+static void s_APPLGC_PulseDropped(t_eCL42T_MotorId f_MotorID_e, 
+                                    t_uint16 f_pulseDropped_u16, 
+                                    t_eCL42T_MotorDirection f_direction_e)
+{
+    FMKSRL_LOG("Motor Id : %d, pulse dropped %d in dir %d\r\n", f_MotorID_e, f_pulseDropped_u16, f_direction_e);
+}
+
+static void s_APPLGC_FastTask(void)
+{
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = CL42T_Cyclic();
+
+    if(Ret_e < RC_OK)
+    {
+        FMKSRL_LOG("Cyclic CL42T went wrong %d", Ret_e);
+    }
+
+    return;
+}
 //************************************************************************************
 // End of File
 //************************************************************************************

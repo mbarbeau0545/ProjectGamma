@@ -36,9 +36,11 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
     #define APPSYS_SYSTEM_CORE_SPEED FMKCPU_CORE_CLOCK_SPEED_128MHZ
-
+#elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+    #define APPSYS_SYSTEM_CORE_SPEED FMKCPU_CORE_CLOCK_SPEED_400MHZ
+#endif
     #define APPSYS_ELAPSED_TIME_CYCLIC          ((t_uint8)40)                   /**< Elapsed time (in ms) between cyclic function call*/
     #define APPSYS_ITLINE_FASTTASK              FMKTIM_INTERRUPT_LINE_EVNT_1    /**< Timer Line use for FastTask */
     #define APPSYS_ELASPED_TIME_FASTTASK        ((t_uint32)5)                   /**< Fast Task every 5 ms */

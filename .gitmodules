@@ -70,3 +70,7 @@
 	path = src/3_APP/APP_CTRL/APP_SIG
 	url = https://github.com/mbarbeau0545/APPSIG
 	branch = Dev
+[submodule "src/2_DRV/CL42T"]
+	path = src/2_DRV/CL42T
+	url = https://github.com/mbarbeau0545/CL42T_MotorDrv
+	branch = Dev

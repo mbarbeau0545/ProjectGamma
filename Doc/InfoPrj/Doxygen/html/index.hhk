@@ -4394,7 +4394,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html"><param name="Name" value="FMKCPU_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a79dbdb4daa990faad7f54d77c6f9a7cc"><param name="Name" value="FMKCPU_STM32_ECU_FAMILY_G"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a79dbdb4daa990faad7f54d77c6f9a7cc"><param name="Name" value="FMKCPU_STM32_ECU_FAMILY_G4"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html"><param name="Name" value="FMKCPU_ConfigPublic.h"></OBJECT>
   <UL>
@@ -6915,7 +6915,7 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8h.html#a08facef521cc2efa4977bce51932ddf0"><param name="Name" value="FMK_CPU.h"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a79dbdb4daa990faad7f54d77c6f9a7cc"><param name="Name" value="FMKCPU_STM32_ECU_FAMILY_G"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a79dbdb4daa990faad7f54d77c6f9a7cc"><param name="Name" value="FMKCPU_STM32_ECU_FAMILY_G4"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a513e1632617ad7134f7d85b8d605b971a594a674e2882c60d1e8fe51486744159"><param name="Name" value="FMKCPU_SYS_CLOCK_AHB1"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a513e1632617ad7134f7d85b8d605b971a3ed4a0cb63880b271a423feda444a537"><param name="Name" value="FMKCPU_SYS_CLOCK_AHB2"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_c_p_u___config_public_8h.html#a513e1632617ad7134f7d85b8d605b971a6fee95733f6709eb1d9a35a97ae87263"><param name="Name" value="FMKCPU_SYS_CLOCK_APB1"></OBJECT>

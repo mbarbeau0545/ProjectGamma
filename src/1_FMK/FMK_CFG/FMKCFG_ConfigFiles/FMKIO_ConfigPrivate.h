@@ -22,16 +22,26 @@
     #include "../FMKCFG_ConfigSpecific/FMKIO_ConfigSpecific.h"
     #include "./FMKTIM_ConfigPublic.h"
     #include "./FMKHRT_ConfigPublic.h"
+    
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define FMKIO_TIME_BTWN_DIAG_MS ((t_uint16)2000)  /**< Time between diagnostic for timer and channel in cyclic ope mode*/
+    ///@brief Time between diagnostic for timer and channel in cyclic ope mode
+    #define FMKIO_TIME_BTWN_DIAG_MS ((t_uint16)100)  
 
-    #define FMKIO_FREQ_MIN_CC_VALUE ((t_uint32)1000) /**< Min Value to considered, we cann compute a frequency upon */
+    ///@brief Min Value to considered, we cann compute a frequency upon
+    #define FMKIO_FREQ_MIN_CC_VALUE ((t_uint32)75) 
+    #define FMKIO_FREQ_MAX_CC_VALUE ((t_uint32)29000) 
+
+    ///@brief Max Error registering before changing the Ic timer frequency 
+    #define FMKIO_EXCEED_CNT_MAX        ((t_uint8)10)
     /**
      * @brief ARR value for timer in Encoder Mode
      */
     #define FMKIO_ECDR_ARR_VALUE ((t_uint32)(0xFFFF - 1))
+
+    ///@brief Flag to say that the alternate function is not used in Signal Init
+    #define FMKIO_AF_UNUSED   ((t_uint8)0xFF) 
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -193,6 +203,9 @@
         {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_8},              GPIO_AF3_HRTIM1,               (t_uint8)FMKHRT_HR_LINE_9,                                   FMKIO_ITLINE_TYPE_HRTIM},    // FMKIO_OUTPUT_SIGPWM_13,
     };
 
+    ///@brief Variable for bsp_Gpio_Pin Encoder mapping */
+    const t_sFMKIO_BspEcdrCfg c_FmkIo_InEcdrSigBspCfg_as[FMKIO_INPUT_ENCODER_NB] =  {
+    };
     /**< Variable for RxTx Reference for Can Node */
     const t_sFMKIO_RxTxComCfg c_FmkIo_CanSigCfg_as[FMKIO_COM_SIGNAL_CAN_NB] ={
         // Rx Gpio Port                        Rx Pin                       Tx Gpio Port                      Tx Pin                    Alternate Function
@@ -210,12 +223,6 @@
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_9},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_10},            GPIO_AF8_UART5}, // FMKIO_COM_SIGNAL_SERIAL_5
     };
     /* CAUTION : Automatic generated code section for Variable: End */
-
-    const t_sFMKIO_BspEcdrCfg c_FmkIo_InEcdrSigBspCfg_as[FMKIO_INPUT_ENCODER_NB] = 
-    {
-        {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_6}, {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_7},   GPIO_AF4_TIM8,  FMKTIM_INTERRUPT_LINE_IO_61},      // FMKIO_INPUT_ENCODER_1
-        {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_6}, {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_7},   GPIO_AF4_TIM8,  FMKTIM_INTERRUPT_LINE_IO_61},      // FMKIO_INPUT_ENCODER_2
-    };
 
     //********************************************************************************
     //                      Public functions - Prototyupes

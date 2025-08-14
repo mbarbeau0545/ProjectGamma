@@ -70,6 +70,73 @@
      */
     #define FMKFDCAN_64_BYTES ((t_uint8)64)
 
+#if defined (FMKCPU_STM32_ECU_FAMILY_G4)
+    ///@brief Rx,Tx Bsp Buffer size, @note once we integrate the HAL_LIB inside project change this define in fdcan.c for G4
+    #define FMKFDCAN_SRAMCAN_RF0_NBR                ((t_uint32)6U)         /* RX FIFO 0 Elements Number             */
+    #define FMKFDCAN_SRAMCAN_RF1_NBR                ((t_uint32)0U)         /* RX FIFO 1 Elements Number             */
+    #define FMKFDCAN_SRAMCAN_TEF_NBR                ((t_uint32)3U)         /* TX Event FIFO Elements Number         */
+    #define FMKFDCAN_SRAMCAN_TFQ_NBR                ((t_uint32)3U)         /* TX FIFO/Queue Elements Number         */
+
+    #define FMKFDCA_SRAMCAN_FLS_SIZE                ((t_uint32)1U  * 4U)         /* Filter Standard Element Size in bytes */
+    #define FMKFDCA_SRAMCAN_FLE_SIZE                ((t_uint32)2U  * 4U)         /* Filter Extended Element Size in bytes */
+    #define FMKFDCA_SRAMCAN_RF0_SIZE                ((t_uint32)18U * 4U)         /* RX FIFO 0 Elements Size in bytes      */
+    #define FMKFDCA_SRAMCAN_RF1_SIZE                ((t_uint32)18U * 4U)         /* RX FIFO 1 Elements Size in bytes      */
+    #define FMKFDCA_SRAMCAN_TEF_SIZE                ((t_uint32)2U  * 4U)         /* TX Event FIFO Elements Size in bytes  */
+    #define FMKFDCA_SRAMCAN_TFQ_SIZE                ((t_uint32)18U * 4U)         /* TX FIFO/Queue Elements Size in bytes  */
+#elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+    ///@brief Rx,Tx Bsp Buffer size, 
+
+    #define FMKCPU_SRAMCAN_FLS_NBR                  ((t_uint32)28U)        /* Max. Filter List Standard Number      */
+    #define FMKCPU_SRAMCAN_FLE_NBR                  ((t_uint32)8U)         /* Max. Filter List Extended Number      */
+    #define FMKFDCAN_SRAMCAN_RF0_NBR                ((t_uint32)64U)         /* RX FIFO 0 Elements Number */
+    #define FMKFDCAN_SRAMCAN_RF1_NBR                ((t_uint32)0U)         /* RX FIFO 1 Elements Number */
+    #define FMKFDCAN_SRAMCAN_RB0_NBR                ((t_uint32)0U)         /* RX Buffer 0 Elements Number */
+    #define FMKFDCAN_SRAMCAN_TEF_NBR                ((t_uint32)32U)         /* TX Event FIFO Elements Number */
+    #define FMKFDCAN_SRAMCAN_TFQ_NBR                ((t_uint32)32U)         /* TX FIFO/Queue Elements Number */
+
+    #define FMKFDCA_SRAMCAN_FLS_SIZE                ((t_uint32)1U  * 4U)         /* Filter Standard Element Size in bytes */
+    #define FMKFDCA_SRAMCAN_FLE_SIZE                ((t_uint32)2U  * 4U)         /* Filter Extended Element Size in bytes */
+    #define FMKFDCA_SRAMCAN_RF0_SIZE                ((t_uint32)18U * 4U)         /* RX FIFO 0 Elements Size in bytes */
+    #define FMKFDCA_SRAMCAN_RF1_SIZE                ((t_uint32)18U * 4U)         /* RX FIFO 1 Elements Size in bytes */
+    #define FMKFDCA_SRAMCAN_RB0_SIZE                ((t_uint32)18U * 4U)         /* RX buffer 0 Elements Size in bytes */
+    #define FMKFDCA_SRAMCAN_TEF_SIZE                ((t_uint32)2U  * 4U)         /* TX Event FIFO Elements Size in bytes */
+    #define FMKFDCA_SRAMCAN_TFQ_SIZE                ((t_uint32)18U * 4U)         /* TX FIFO/Queue Elements Size in bytes */
+#endif //
+///@brief Define for Interrupt mask set they are define in G4 but not in H7
+#ifndef FDCAN_IT_LIST_RX_FIFO0
+#define FDCAN_IT_LIST_RX_FIFO0         (FDCAN_IT_RX_FIFO0_MESSAGE_LOST | \
+                                        FDCAN_IT_RX_FIFO0_FULL         | \
+                                        FDCAN_IT_RX_FIFO0_NEW_MESSAGE)       /*!< RX FIFO 0 Interrupts List          */
+#endif // FDCAN_IT_LIST_RX_FIFO0
+#ifndef FDCAN_IT_LIST_RX_FIFO1
+#define FDCAN_IT_LIST_RX_FIFO1         (FDCAN_IT_RX_FIFO1_MESSAGE_LOST | \
+                                        FDCAN_IT_RX_FIFO1_FULL         | \
+                                        FDCAN_IT_RX_FIFO1_NEW_MESSAGE)       /*!< RX FIFO 1 Interrupts List          */
+#endif // FDCAN_IT_LIST_RX_FIFO1
+#define FDCAN_IT_LIST_SMSG             (FDCAN_IT_TX_ABORT_COMPLETE | \
+                                        FDCAN_IT_TX_COMPLETE | \
+                                        FDCAN_IT_RX_HIGH_PRIORITY_MSG)       /*!< Status Message Interrupts List     */
+#ifndef FDCAN_IT_LIST_TX_FIFO_ERROR
+#define FDCAN_IT_LIST_TX_FIFO_ERROR    (FDCAN_IT_TX_EVT_FIFO_ELT_LOST | \
+                                        FDCAN_IT_TX_EVT_FIFO_FULL | \
+                                        FDCAN_IT_TX_EVT_FIFO_NEW_DATA | \
+                                        FDCAN_IT_TX_FIFO_EMPTY)              /*!< TX FIFO Error Interrupts List      */
+#endif // FDCAN_IT_LIST_SMSG
+#define FDCAN_IT_LIST_MISC             (FDCAN_IT_TIMEOUT_OCCURRED | \
+                                        FDCAN_IT_RAM_ACCESS_FAILURE | \
+                                        FDCAN_IT_TIMESTAMP_WRAPAROUND)       /*!< Misc. Interrupts List              */
+#ifndef FDCAN_IT_LIST_BIT_LINE_ERROR
+#define FDCAN_IT_LIST_BIT_LINE_ERROR   (FDCAN_IT_ERROR_PASSIVE | \
+                                        FDCAN_IT_ERROR_LOGGING_OVERFLOW)     /*!< Bit and Line Error Interrupts List */
+#endif // FDCAN_IT_LIST_BIT_LINE_ERROR
+#ifndef FDCAN_IT_LIST_PROTOCOL_ERROR
+#define FDCAN_IT_LIST_PROTOCOL_ERROR   (FDCAN_IT_RESERVED_ADDRESS_ACCESS | \
+                                        FDCAN_IT_DATA_PROTOCOL_ERROR | \
+                                        FDCAN_IT_ARB_PROTOCOL_ERROR | \
+                                        FDCAN_IT_RAM_WATCHDOG | \
+                                        FDCAN_IT_BUS_OFF | \
+                                        FDCAN_IT_ERROR_WARNING) 
+#endif // FDCAN_IT_LIST_PROTOCOL_ERROR
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -209,14 +276,18 @@
     const t_eFMKFDCAN_NodeCfgList c_FmkCan_NodeCfg_ae[FMKFDCAN_NODE_NB] = {
         FMKFDCAN_NODE_CFG_1,  // FMKFDCAN_NODE_1
         FMKFDCAN_NODE_CFG_1, // FMKFDCAN_NODE_2
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
         FMKFDCAN_NODE_CFG_1, // FMKFDCAN_NODE_3
+#endif
     };
     
 
     const t_bool c_FmkCan_IsNodeActive[FMKFDCAN_NODE_NB] = {
         (t_bool)True,  // FMKFDCAN_NODE_1
         (t_bool)False, // FMKFDCAN_NODE_2
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
         (t_bool)False, // FMKFDCAN_NODE_3
+#endif
     };
 
 
