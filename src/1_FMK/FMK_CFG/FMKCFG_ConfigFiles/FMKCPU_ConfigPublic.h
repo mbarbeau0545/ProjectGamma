@@ -189,63 +189,63 @@
     */
     typedef enum
     {
-        FMKCPU_RCC_CLK_ADC12 = 0,              /**< Reference to RCC Clock ADC12 */
-        FMKCPU_RCC_CLK_ADC345,                   /**< Reference to RCC Clock ADC345 */
+        FMKCPU_RCC_CLK_DMA1 = 0,               /**< Reference to RCC Clock DMA1 */
+        FMKCPU_RCC_CLK_DMA2,                     /**< Reference to RCC Clock DMA2 */
+        FMKCPU_RCC_CLK_DMAMUX1,                  /**< Reference to RCC Clock DMAMUX1 */
         FMKCPU_RCC_CLK_CORDIC,                   /**< Reference to RCC Clock CORDIC */
+        FMKCPU_RCC_CLK_FMAC,                     /**< Reference to RCC Clock FMAC */
+        FMKCPU_RCC_CLK_FLASH,                    /**< Reference to RCC Clock FLASH */
         FMKCPU_RCC_CLK_CRC,                      /**< Reference to RCC Clock CRC */
-        FMKCPU_RCC_CLK_CRS,                      /**< Reference to RCC Clock CRS */
+        FMKCPU_RCC_CLK_GPIOG,                    /**< Reference to RCC Clock GPIOG */
+        FMKCPU_RCC_CLK_GPIOF,                    /**< Reference to RCC Clock GPIOF */
+        FMKCPU_RCC_CLK_GPIOE,                    /**< Reference to RCC Clock GPIOE */
+        FMKCPU_RCC_CLK_GPIOD,                    /**< Reference to RCC Clock GPIOD */
+        FMKCPU_RCC_CLK_GPIOC,                    /**< Reference to RCC Clock GPIOC */
+        FMKCPU_RCC_CLK_GPIOB,                    /**< Reference to RCC Clock GPIOB */
+        FMKCPU_RCC_CLK_GPIOA,                    /**< Reference to RCC Clock GPIOA */
+        FMKCPU_RCC_CLK_ADC12,                    /**< Reference to RCC Clock ADC12 */
+        FMKCPU_RCC_CLK_ADC345,                   /**< Reference to RCC Clock ADC345 */
         FMKCPU_RCC_CLK_DAC1,                     /**< Reference to RCC Clock DAC1 */
         FMKCPU_RCC_CLK_DAC2,                     /**< Reference to RCC Clock DAC2 */
         FMKCPU_RCC_CLK_DAC3,                     /**< Reference to RCC Clock DAC3 */
         FMKCPU_RCC_CLK_DAC4,                     /**< Reference to RCC Clock DAC4 */
-        FMKCPU_RCC_CLK_DMA1,                     /**< Reference to RCC Clock DMA1 */
-        FMKCPU_RCC_CLK_DMA2,                     /**< Reference to RCC Clock DMA2 */
-        FMKCPU_RCC_CLK_DMAMUX1,                  /**< Reference to RCC Clock DMAMUX1 */
-        FMKCPU_RCC_CLK_FDCAN,                    /**< Reference to RCC Clock FDCAN */
-        FMKCPU_RCC_CLK_FLASH,                    /**< Reference to RCC Clock FLASH */
-        FMKCPU_RCC_CLK_FMAC,                     /**< Reference to RCC Clock FMAC */
-        FMKCPU_RCC_CLK_FMC,                      /**< Reference to RCC Clock FMC */
-        FMKCPU_RCC_CLK_GPIOA,                    /**< Reference to RCC Clock GPIOA */
-        FMKCPU_RCC_CLK_GPIOB,                    /**< Reference to RCC Clock GPIOB */
-        FMKCPU_RCC_CLK_GPIOC,                    /**< Reference to RCC Clock GPIOC */
-        FMKCPU_RCC_CLK_GPIOD,                    /**< Reference to RCC Clock GPIOD */
-        FMKCPU_RCC_CLK_GPIOE,                    /**< Reference to RCC Clock GPIOE */
-        FMKCPU_RCC_CLK_GPIOF,                    /**< Reference to RCC Clock GPIOF */
-        FMKCPU_RCC_CLK_GPIOG,                    /**< Reference to RCC Clock GPIOG */
-        FMKCPU_RCC_CLK_HRTIM1,                   /**< Reference to RCC Clock HRTIM1 */
-        FMKCPU_RCC_CLK_I2C2,                     /**< Reference to RCC Clock I2C2 */
-        FMKCPU_RCC_CLK_I2C3,                     /**< Reference to RCC Clock I2C3 */
-        FMKCPU_RCC_CLK_LPTIM1,                   /**< Reference to RCC Clock LPTIM1 */
-        FMKCPU_RCC_CLK_PWR,                      /**< Reference to RCC Clock PWR */
-        FMKCPU_RCC_CLK_QSPI,                     /**< Reference to RCC Clock QSPI */
         FMKCPU_RCC_CLK_RNG,                      /**< Reference to RCC Clock RNG */
-        FMKCPU_RCC_CLK_RTCAPB,                   /**< Reference to RCC Clock RTCAPB */
-        FMKCPU_RCC_CLK_SAI1,                     /**< Reference to RCC Clock SAI1 */
-        FMKCPU_RCC_CLK_SPI1,                     /**< Reference to RCC Clock SPI1 */
-        FMKCPU_RCC_CLK_SPI2,                     /**< Reference to RCC Clock SPI2 */
-        FMKCPU_RCC_CLK_SPI3,                     /**< Reference to RCC Clock SPI3 */
-        FMKCPU_RCC_CLK_SPI4,                     /**< Reference to RCC Clock SPI4 */
-        FMKCPU_RCC_CLK_SYSCFG,                   /**< Reference to RCC Clock SYSCFG */
-        FMKCPU_RCC_CLK_TIM1,                     /**< Reference to RCC Clock TIM1 */
-        FMKCPU_RCC_CLK_TIM15,                    /**< Reference to RCC Clock TIM15 */
-        FMKCPU_RCC_CLK_TIM16,                    /**< Reference to RCC Clock TIM16 */
-        FMKCPU_RCC_CLK_TIM17,                    /**< Reference to RCC Clock TIM17 */
+        FMKCPU_RCC_CLK_FMC,                      /**< Reference to RCC Clock FMC */
+        FMKCPU_RCC_CLK_QSPI,                     /**< Reference to RCC Clock QSPI */
         FMKCPU_RCC_CLK_TIM2,                     /**< Reference to RCC Clock TIM2 */
-        FMKCPU_RCC_CLK_TIM20,                    /**< Reference to RCC Clock TIM20 */
         FMKCPU_RCC_CLK_TIM3,                     /**< Reference to RCC Clock TIM3 */
         FMKCPU_RCC_CLK_TIM4,                     /**< Reference to RCC Clock TIM4 */
         FMKCPU_RCC_CLK_TIM5,                     /**< Reference to RCC Clock TIM5 */
         FMKCPU_RCC_CLK_TIM6,                     /**< Reference to RCC Clock TIM6 */
         FMKCPU_RCC_CLK_TIM7,                     /**< Reference to RCC Clock TIM7 */
-        FMKCPU_RCC_CLK_TIM8,                     /**< Reference to RCC Clock TIM8 */
-        FMKCPU_RCC_CLK_UART4,                    /**< Reference to RCC Clock UART4 */
-        FMKCPU_RCC_CLK_UART5,                    /**< Reference to RCC Clock UART5 */
-        FMKCPU_RCC_CLK_UCPD1,                    /**< Reference to RCC Clock UCPD1 */
-        FMKCPU_RCC_CLK_USART1,                   /**< Reference to RCC Clock USART1 */
+        FMKCPU_RCC_CLK_CRS,                      /**< Reference to RCC Clock CRS */
+        FMKCPU_RCC_CLK_RTCAPB,                   /**< Reference to RCC Clock RTCAPB */
+        FMKCPU_RCC_CLK_WWDG,                     /**< Reference to RCC Clock WWDG */
+        FMKCPU_RCC_CLK_SPI2,                     /**< Reference to RCC Clock SPI2 */
+        FMKCPU_RCC_CLK_SPI3,                     /**< Reference to RCC Clock SPI3 */
         FMKCPU_RCC_CLK_USART2,                   /**< Reference to RCC Clock USART2 */
         FMKCPU_RCC_CLK_USART3,                   /**< Reference to RCC Clock USART3 */
+        FMKCPU_RCC_CLK_UART4,                    /**< Reference to RCC Clock UART4 */
+        FMKCPU_RCC_CLK_UART5,                    /**< Reference to RCC Clock UART5 */
+        FMKCPU_RCC_CLK_I2C2,                     /**< Reference to RCC Clock I2C2 */
         FMKCPU_RCC_CLK_USB,                      /**< Reference to RCC Clock USB */
-        FMKCPU_RCC_CLK_WWDG,                     /**< Reference to RCC Clock WWDG */
+        FMKCPU_RCC_CLK_FDCAN,                    /**< Reference to RCC Clock FDCAN */
+        FMKCPU_RCC_CLK_PWR,                      /**< Reference to RCC Clock PWR */
+        FMKCPU_RCC_CLK_I2C3,                     /**< Reference to RCC Clock I2C3 */
+        FMKCPU_RCC_CLK_LPTIM1,                   /**< Reference to RCC Clock LPTIM1 */
+        FMKCPU_RCC_CLK_UCPD1,                    /**< Reference to RCC Clock UCPD1 */
+        FMKCPU_RCC_CLK_SYSCFG,                   /**< Reference to RCC Clock SYSCFG */
+        FMKCPU_RCC_CLK_TIM1,                     /**< Reference to RCC Clock TIM1 */
+        FMKCPU_RCC_CLK_SPI1,                     /**< Reference to RCC Clock SPI1 */
+        FMKCPU_RCC_CLK_TIM8,                     /**< Reference to RCC Clock TIM8 */
+        FMKCPU_RCC_CLK_USART1,                   /**< Reference to RCC Clock USART1 */
+        FMKCPU_RCC_CLK_SPI4,                     /**< Reference to RCC Clock SPI4 */
+        FMKCPU_RCC_CLK_TIM15,                    /**< Reference to RCC Clock TIM15 */
+        FMKCPU_RCC_CLK_TIM16,                    /**< Reference to RCC Clock TIM16 */
+        FMKCPU_RCC_CLK_TIM17,                    /**< Reference to RCC Clock TIM17 */
+        FMKCPU_RCC_CLK_TIM20,                    /**< Reference to RCC Clock TIM20 */
+        FMKCPU_RCC_CLK_SAI1,                     /**< Reference to RCC Clock SAI1 */
+        FMKCPU_RCC_CLK_HRTIM1,                   /**< Reference to RCC Clock HRTIM1 */
     
         FMKCPU_RCC_CLK_NB,
     } t_eFMKCPU_ClockPort;

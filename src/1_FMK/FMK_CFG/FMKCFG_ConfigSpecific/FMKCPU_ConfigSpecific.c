@@ -513,98 +513,103 @@ t_eReturnCode FMKCPU_SetPeriphClockCfg(t_sFMKCPU_PllOscCfg ** f_PllOtherCfg_pas)
             case FMKCPU_RCC_CLK_ADC12:
                 periphClkCfg_s.Adc12ClockSelection = RCC_ADC12CLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLP ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_ADC12;
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
                 break;
             case FMKCPU_RCC_CLK_ADC345:
                 periphClkCfg_s.Adc345ClockSelection = RCC_ADC345CLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLP ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_ADC345;
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_ADC345;
                 break;
-            case FMKCPU_RCC_CLK_FDCAN:
-                periphClkCfg_s.FdcanClockSelection = RCC_FDCANCLKSOURCE_PLL;
+            case FMKCPU_RCC_CLK_QSPI:
+                periphClkCfg_s.QspiClockSelection = RCC_QSPICLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLQ ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_FDCAN;
-                break;
-            case FMKCPU_RCC_CLK_I2C3:
-                periphClkCfg_s.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
-                //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_I2C3;
-                break;
-            case FMKCPU_RCC_CLK_UART4:
-                periphClkCfg_s.Uart4ClockSelection = RCC_UART4CLKSOURCE_PCLK1;
-                //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_UART4;
-                break;
-            case FMKCPU_RCC_CLK_UART5:
-                periphClkCfg_s.Uart5ClockSelection = RCC_UART5CLKSOURCE_PCLK1;
-                //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_UART5;
-                break;
-            case FMKCPU_RCC_CLK_USART1:
-                periphClkCfg_s.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
-                //------ Reference Clock  Source APB2 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART1;
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_QSPI;
                 break;
             case FMKCPU_RCC_CLK_USART2:
                 periphClkCfg_s.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART2;
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART2;
                 break;
             case FMKCPU_RCC_CLK_USART3:
                 periphClkCfg_s.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART3;
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART3;
                 break;
+            case FMKCPU_RCC_CLK_UART4:
+                periphClkCfg_s.Uart4ClockSelection = RCC_UART4CLKSOURCE_PCLK1;
+                //------ Reference Clock  Source APB1 ------//
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_UART4;
+                break;
+            case FMKCPU_RCC_CLK_UART5:
+                periphClkCfg_s.Uart5ClockSelection = RCC_UART5CLKSOURCE_PCLK1;
+                //------ Reference Clock  Source APB1 ------//
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_UART5;
+                break;
+            case FMKCPU_RCC_CLK_FDCAN:
+                periphClkCfg_s.FdcanClockSelection = RCC_FDCANCLKSOURCE_PLL;
+                //------ Reference Clock  Source PLLQ ------//
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+                break;
+            case FMKCPU_RCC_CLK_I2C3:
+                periphClkCfg_s.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
+                //------ Reference Clock  Source APB1 ------//
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_I2C3;
+                break;
+            case FMKCPU_RCC_CLK_USART1:
+                periphClkCfg_s.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
+                //------ Reference Clock  Source APB2 ------//
+                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART1;
+                break;
+            case FMKCPU_RCC_CLK_DMA1:
+            case FMKCPU_RCC_CLK_DMA2:
+            case FMKCPU_RCC_CLK_DMAMUX1:
             case FMKCPU_RCC_CLK_CORDIC:
+            case FMKCPU_RCC_CLK_FMAC:
+            case FMKCPU_RCC_CLK_FLASH:
             case FMKCPU_RCC_CLK_CRC:
-            case FMKCPU_RCC_CLK_CRS:
+            case FMKCPU_RCC_CLK_GPIOG:
+            case FMKCPU_RCC_CLK_GPIOF:
+            case FMKCPU_RCC_CLK_GPIOE:
+            case FMKCPU_RCC_CLK_GPIOD:
+            case FMKCPU_RCC_CLK_GPIOC:
+            case FMKCPU_RCC_CLK_GPIOB:
+            case FMKCPU_RCC_CLK_GPIOA:
             case FMKCPU_RCC_CLK_DAC1:
             case FMKCPU_RCC_CLK_DAC2:
             case FMKCPU_RCC_CLK_DAC3:
             case FMKCPU_RCC_CLK_DAC4:
-            case FMKCPU_RCC_CLK_DMA1:
-            case FMKCPU_RCC_CLK_DMA2:
-            case FMKCPU_RCC_CLK_DMAMUX1:
-            case FMKCPU_RCC_CLK_FLASH:
-            case FMKCPU_RCC_CLK_FMAC:
-            case FMKCPU_RCC_CLK_FMC:
-            case FMKCPU_RCC_CLK_GPIOA:
-            case FMKCPU_RCC_CLK_GPIOB:
-            case FMKCPU_RCC_CLK_GPIOC:
-            case FMKCPU_RCC_CLK_GPIOD:
-            case FMKCPU_RCC_CLK_GPIOE:
-            case FMKCPU_RCC_CLK_GPIOF:
-            case FMKCPU_RCC_CLK_GPIOG:
-            case FMKCPU_RCC_CLK_HRTIM1:
-            case FMKCPU_RCC_CLK_I2C2:
-            case FMKCPU_RCC_CLK_LPTIM1:
-            case FMKCPU_RCC_CLK_PWR:
-            case FMKCPU_RCC_CLK_QSPI:
             case FMKCPU_RCC_CLK_RNG:
-            case FMKCPU_RCC_CLK_RTCAPB:
-            case FMKCPU_RCC_CLK_SAI1:
-            case FMKCPU_RCC_CLK_SPI1:
-            case FMKCPU_RCC_CLK_SPI2:
-            case FMKCPU_RCC_CLK_SPI3:
-            case FMKCPU_RCC_CLK_SPI4:
-            case FMKCPU_RCC_CLK_SYSCFG:
-            case FMKCPU_RCC_CLK_TIM1:
-            case FMKCPU_RCC_CLK_TIM15:
-            case FMKCPU_RCC_CLK_TIM16:
-            case FMKCPU_RCC_CLK_TIM17:
+            case FMKCPU_RCC_CLK_FMC:
             case FMKCPU_RCC_CLK_TIM2:
-            case FMKCPU_RCC_CLK_TIM20:
             case FMKCPU_RCC_CLK_TIM3:
             case FMKCPU_RCC_CLK_TIM4:
             case FMKCPU_RCC_CLK_TIM5:
             case FMKCPU_RCC_CLK_TIM6:
             case FMKCPU_RCC_CLK_TIM7:
-            case FMKCPU_RCC_CLK_TIM8:
-            case FMKCPU_RCC_CLK_UCPD1:
-            case FMKCPU_RCC_CLK_USB:
+            case FMKCPU_RCC_CLK_CRS:
+            case FMKCPU_RCC_CLK_RTCAPB:
             case FMKCPU_RCC_CLK_WWDG:
+            case FMKCPU_RCC_CLK_SPI2:
+            case FMKCPU_RCC_CLK_SPI3:
+            case FMKCPU_RCC_CLK_I2C2:
+            case FMKCPU_RCC_CLK_USB:
+            case FMKCPU_RCC_CLK_PWR:
+            case FMKCPU_RCC_CLK_LPTIM1:
+            case FMKCPU_RCC_CLK_UCPD1:
+            case FMKCPU_RCC_CLK_SYSCFG:
+            case FMKCPU_RCC_CLK_TIM1:
+            case FMKCPU_RCC_CLK_SPI1:
+            case FMKCPU_RCC_CLK_TIM8:
+            case FMKCPU_RCC_CLK_SPI4:
+            case FMKCPU_RCC_CLK_TIM15:
+            case FMKCPU_RCC_CLK_TIM16:
+            case FMKCPU_RCC_CLK_TIM17:
+            case FMKCPU_RCC_CLK_TIM20:
+            case FMKCPU_RCC_CLK_SAI1:
+            case FMKCPU_RCC_CLK_HRTIM1:
             case FMKCPU_RCC_CLK_NB:
             default:
+                Ret_e = RC_WARNING_NO_OPERATION;
                 break;
             /* CAUTION : Automatic generated code section for Periph Clock Cfg: End */
         }
@@ -628,16 +633,38 @@ t_eReturnCode FMKCPU_SetPeriphClockCfg(t_sFMKCPU_PllOscCfg ** f_PllOtherCfg_pas)
 #endif // FMKCPU_STM32_ECU_FAMILY_G4 | FMKCPU_STM32_ECU_FAMILY_H7
 
 /* CAUTION : Automatic generated code section for Enable Clk Implementation: Start */
+/**< Function to enable DMA1 rcc clock*/
+void FMKCPU_Enable_DMA1_Clock(void) {__HAL_RCC_DMA1_CLK_ENABLE();}
+/**< Function to enable DMA2 rcc clock*/
+void FMKCPU_Enable_DMA2_Clock(void) {__HAL_RCC_DMA2_CLK_ENABLE();}
+/**< Function to enable DMAMUX1 rcc clock*/
+void FMKCPU_Enable_DMAMUX1_Clock(void) {__HAL_RCC_DMAMUX1_CLK_ENABLE();}
+/**< Function to enable CORDIC rcc clock*/
+void FMKCPU_Enable_CORDIC_Clock(void) {__HAL_RCC_CORDIC_CLK_ENABLE();}
+/**< Function to enable FMAC rcc clock*/
+void FMKCPU_Enable_FMAC_Clock(void) {__HAL_RCC_FMAC_CLK_ENABLE();}
+/**< Function to enable FLASH rcc clock*/
+void FMKCPU_Enable_FLASH_Clock(void) {__HAL_RCC_FLASH_CLK_ENABLE();}
+/**< Function to enable CRC rcc clock*/
+void FMKCPU_Enable_CRC_Clock(void) {__HAL_RCC_CRC_CLK_ENABLE();}
+/**< Function to enable GPIOG rcc clock*/
+void FMKCPU_Enable_GPIOG_Clock(void) {__HAL_RCC_GPIOG_CLK_ENABLE();}
+/**< Function to enable GPIOF rcc clock*/
+void FMKCPU_Enable_GPIOF_Clock(void) {__HAL_RCC_GPIOF_CLK_ENABLE();}
+/**< Function to enable GPIOE rcc clock*/
+void FMKCPU_Enable_GPIOE_Clock(void) {__HAL_RCC_GPIOE_CLK_ENABLE();}
+/**< Function to enable GPIOD rcc clock*/
+void FMKCPU_Enable_GPIOD_Clock(void) {__HAL_RCC_GPIOD_CLK_ENABLE();}
+/**< Function to enable GPIOC rcc clock*/
+void FMKCPU_Enable_GPIOC_Clock(void) {__HAL_RCC_GPIOC_CLK_ENABLE();}
+/**< Function to enable GPIOB rcc clock*/
+void FMKCPU_Enable_GPIOB_Clock(void) {__HAL_RCC_GPIOB_CLK_ENABLE();}
+/**< Function to enable GPIOA rcc clock*/
+void FMKCPU_Enable_GPIOA_Clock(void) {__HAL_RCC_GPIOA_CLK_ENABLE();}
 /**< Function to enable ADC12 rcc clock*/
 void FMKCPU_Enable_ADC12_Clock(void) {__HAL_RCC_ADC12_CLK_ENABLE();}
 /**< Function to enable ADC345 rcc clock*/
 void FMKCPU_Enable_ADC345_Clock(void) {__HAL_RCC_ADC345_CLK_ENABLE();}
-/**< Function to enable CORDIC rcc clock*/
-void FMKCPU_Enable_CORDIC_Clock(void) {__HAL_RCC_CORDIC_CLK_ENABLE();}
-/**< Function to enable CRC rcc clock*/
-void FMKCPU_Enable_CRC_Clock(void) {__HAL_RCC_CRC_CLK_ENABLE();}
-/**< Function to enable CRS rcc clock*/
-void FMKCPU_Enable_CRS_Clock(void) {__HAL_RCC_CRS_CLK_ENABLE();}
 /**< Function to enable DAC1 rcc clock*/
 void FMKCPU_Enable_DAC1_Clock(void) {__HAL_RCC_DAC1_CLK_ENABLE();}
 /**< Function to enable DAC2 rcc clock*/
@@ -646,74 +673,14 @@ void FMKCPU_Enable_DAC2_Clock(void) {__HAL_RCC_DAC2_CLK_ENABLE();}
 void FMKCPU_Enable_DAC3_Clock(void) {__HAL_RCC_DAC3_CLK_ENABLE();}
 /**< Function to enable DAC4 rcc clock*/
 void FMKCPU_Enable_DAC4_Clock(void) {__HAL_RCC_DAC4_CLK_ENABLE();}
-/**< Function to enable DMA1 rcc clock*/
-void FMKCPU_Enable_DMA1_Clock(void) {__HAL_RCC_DMA1_CLK_ENABLE();}
-/**< Function to enable DMA2 rcc clock*/
-void FMKCPU_Enable_DMA2_Clock(void) {__HAL_RCC_DMA2_CLK_ENABLE();}
-/**< Function to enable DMAMUX1 rcc clock*/
-void FMKCPU_Enable_DMAMUX1_Clock(void) {__HAL_RCC_DMAMUX1_CLK_ENABLE();}
-/**< Function to enable FDCAN rcc clock*/
-void FMKCPU_Enable_FDCAN_Clock(void) {__HAL_RCC_FDCAN_CLK_ENABLE();}
-/**< Function to enable FLASH rcc clock*/
-void FMKCPU_Enable_FLASH_Clock(void) {__HAL_RCC_FLASH_CLK_ENABLE();}
-/**< Function to enable FMAC rcc clock*/
-void FMKCPU_Enable_FMAC_Clock(void) {__HAL_RCC_FMAC_CLK_ENABLE();}
-/**< Function to enable FMC rcc clock*/
-void FMKCPU_Enable_FMC_Clock(void) {__HAL_RCC_FMC_CLK_ENABLE();}
-/**< Function to enable GPIOA rcc clock*/
-void FMKCPU_Enable_GPIOA_Clock(void) {__HAL_RCC_GPIOA_CLK_ENABLE();}
-/**< Function to enable GPIOB rcc clock*/
-void FMKCPU_Enable_GPIOB_Clock(void) {__HAL_RCC_GPIOB_CLK_ENABLE();}
-/**< Function to enable GPIOC rcc clock*/
-void FMKCPU_Enable_GPIOC_Clock(void) {__HAL_RCC_GPIOC_CLK_ENABLE();}
-/**< Function to enable GPIOD rcc clock*/
-void FMKCPU_Enable_GPIOD_Clock(void) {__HAL_RCC_GPIOD_CLK_ENABLE();}
-/**< Function to enable GPIOE rcc clock*/
-void FMKCPU_Enable_GPIOE_Clock(void) {__HAL_RCC_GPIOE_CLK_ENABLE();}
-/**< Function to enable GPIOF rcc clock*/
-void FMKCPU_Enable_GPIOF_Clock(void) {__HAL_RCC_GPIOF_CLK_ENABLE();}
-/**< Function to enable GPIOG rcc clock*/
-void FMKCPU_Enable_GPIOG_Clock(void) {__HAL_RCC_GPIOG_CLK_ENABLE();}
-/**< Function to enable HRTIM1 rcc clock*/
-void FMKCPU_Enable_HRTIM1_Clock(void) {__HAL_RCC_HRTIM1_CLK_ENABLE();}
-/**< Function to enable I2C2 rcc clock*/
-void FMKCPU_Enable_I2C2_Clock(void) {__HAL_RCC_I2C2_CLK_ENABLE();}
-/**< Function to enable I2C3 rcc clock*/
-void FMKCPU_Enable_I2C3_Clock(void) {__HAL_RCC_I2C3_CLK_ENABLE();}
-/**< Function to enable LPTIM1 rcc clock*/
-void FMKCPU_Enable_LPTIM1_Clock(void) {__HAL_RCC_LPTIM1_CLK_ENABLE();}
-/**< Function to enable PWR rcc clock*/
-void FMKCPU_Enable_PWR_Clock(void) {__HAL_RCC_PWR_CLK_ENABLE();}
-/**< Function to enable QSPI rcc clock*/
-void FMKCPU_Enable_QSPI_Clock(void) {__HAL_RCC_QSPI_CLK_ENABLE();}
 /**< Function to enable RNG rcc clock*/
 void FMKCPU_Enable_RNG_Clock(void) {__HAL_RCC_RNG_CLK_ENABLE();}
-/**< Function to enable RTCAPB rcc clock*/
-void FMKCPU_Enable_RTCAPB_Clock(void) {__HAL_RCC_RTCAPB_CLK_ENABLE();}
-/**< Function to enable SAI1 rcc clock*/
-void FMKCPU_Enable_SAI1_Clock(void) {__HAL_RCC_SAI1_CLK_ENABLE();}
-/**< Function to enable SPI1 rcc clock*/
-void FMKCPU_Enable_SPI1_Clock(void) {__HAL_RCC_SPI1_CLK_ENABLE();}
-/**< Function to enable SPI2 rcc clock*/
-void FMKCPU_Enable_SPI2_Clock(void) {__HAL_RCC_SPI2_CLK_ENABLE();}
-/**< Function to enable SPI3 rcc clock*/
-void FMKCPU_Enable_SPI3_Clock(void) {__HAL_RCC_SPI3_CLK_ENABLE();}
-/**< Function to enable SPI4 rcc clock*/
-void FMKCPU_Enable_SPI4_Clock(void) {__HAL_RCC_SPI4_CLK_ENABLE();}
-/**< Function to enable SYSCFG rcc clock*/
-void FMKCPU_Enable_SYSCFG_Clock(void) {__HAL_RCC_SYSCFG_CLK_ENABLE();}
-/**< Function to enable TIM1 rcc clock*/
-void FMKCPU_Enable_TIM1_Clock(void) {__HAL_RCC_TIM1_CLK_ENABLE();}
-/**< Function to enable TIM15 rcc clock*/
-void FMKCPU_Enable_TIM15_Clock(void) {__HAL_RCC_TIM15_CLK_ENABLE();}
-/**< Function to enable TIM16 rcc clock*/
-void FMKCPU_Enable_TIM16_Clock(void) {__HAL_RCC_TIM16_CLK_ENABLE();}
-/**< Function to enable TIM17 rcc clock*/
-void FMKCPU_Enable_TIM17_Clock(void) {__HAL_RCC_TIM17_CLK_ENABLE();}
+/**< Function to enable FMC rcc clock*/
+void FMKCPU_Enable_FMC_Clock(void) {__HAL_RCC_FMC_CLK_ENABLE();}
+/**< Function to enable QSPI rcc clock*/
+void FMKCPU_Enable_QSPI_Clock(void) {__HAL_RCC_QSPI_CLK_ENABLE();}
 /**< Function to enable TIM2 rcc clock*/
 void FMKCPU_Enable_TIM2_Clock(void) {__HAL_RCC_TIM2_CLK_ENABLE();}
-/**< Function to enable TIM20 rcc clock*/
-void FMKCPU_Enable_TIM20_Clock(void) {__HAL_RCC_TIM20_CLK_ENABLE();}
 /**< Function to enable TIM3 rcc clock*/
 void FMKCPU_Enable_TIM3_Clock(void) {__HAL_RCC_TIM3_CLK_ENABLE();}
 /**< Function to enable TIM4 rcc clock*/
@@ -724,37 +691,97 @@ void FMKCPU_Enable_TIM5_Clock(void) {__HAL_RCC_TIM5_CLK_ENABLE();}
 void FMKCPU_Enable_TIM6_Clock(void) {__HAL_RCC_TIM6_CLK_ENABLE();}
 /**< Function to enable TIM7 rcc clock*/
 void FMKCPU_Enable_TIM7_Clock(void) {__HAL_RCC_TIM7_CLK_ENABLE();}
-/**< Function to enable TIM8 rcc clock*/
-void FMKCPU_Enable_TIM8_Clock(void) {__HAL_RCC_TIM8_CLK_ENABLE();}
-/**< Function to enable UART4 rcc clock*/
-void FMKCPU_Enable_UART4_Clock(void) {__HAL_RCC_UART4_CLK_ENABLE();}
-/**< Function to enable UART5 rcc clock*/
-void FMKCPU_Enable_UART5_Clock(void) {__HAL_RCC_UART5_CLK_ENABLE();}
-/**< Function to enable UCPD1 rcc clock*/
-void FMKCPU_Enable_UCPD1_Clock(void) {__HAL_RCC_UCPD1_CLK_ENABLE();}
-/**< Function to enable USART1 rcc clock*/
-void FMKCPU_Enable_USART1_Clock(void) {__HAL_RCC_USART1_CLK_ENABLE();}
+/**< Function to enable CRS rcc clock*/
+void FMKCPU_Enable_CRS_Clock(void) {__HAL_RCC_CRS_CLK_ENABLE();}
+/**< Function to enable RTCAPB rcc clock*/
+void FMKCPU_Enable_RTCAPB_Clock(void) {__HAL_RCC_RTCAPB_CLK_ENABLE();}
+/**< Function to enable WWDG rcc clock*/
+void FMKCPU_Enable_WWDG_Clock(void) {__HAL_RCC_WWDG_CLK_ENABLE();}
+/**< Function to enable SPI2 rcc clock*/
+void FMKCPU_Enable_SPI2_Clock(void) {__HAL_RCC_SPI2_CLK_ENABLE();}
+/**< Function to enable SPI3 rcc clock*/
+void FMKCPU_Enable_SPI3_Clock(void) {__HAL_RCC_SPI3_CLK_ENABLE();}
 /**< Function to enable USART2 rcc clock*/
 void FMKCPU_Enable_USART2_Clock(void) {__HAL_RCC_USART2_CLK_ENABLE();}
 /**< Function to enable USART3 rcc clock*/
 void FMKCPU_Enable_USART3_Clock(void) {__HAL_RCC_USART3_CLK_ENABLE();}
+/**< Function to enable UART4 rcc clock*/
+void FMKCPU_Enable_UART4_Clock(void) {__HAL_RCC_UART4_CLK_ENABLE();}
+/**< Function to enable UART5 rcc clock*/
+void FMKCPU_Enable_UART5_Clock(void) {__HAL_RCC_UART5_CLK_ENABLE();}
+/**< Function to enable I2C2 rcc clock*/
+void FMKCPU_Enable_I2C2_Clock(void) {__HAL_RCC_I2C2_CLK_ENABLE();}
 /**< Function to enable USB rcc clock*/
 void FMKCPU_Enable_USB_Clock(void) {__HAL_RCC_USB_CLK_ENABLE();}
-/**< Function to enable WWDG rcc clock*/
-void FMKCPU_Enable_WWDG_Clock(void) {__HAL_RCC_WWDG_CLK_ENABLE();}
+/**< Function to enable FDCAN rcc clock*/
+void FMKCPU_Enable_FDCAN_Clock(void) {__HAL_RCC_FDCAN_CLK_ENABLE();}
+/**< Function to enable PWR rcc clock*/
+void FMKCPU_Enable_PWR_Clock(void) {__HAL_RCC_PWR_CLK_ENABLE();}
+/**< Function to enable I2C3 rcc clock*/
+void FMKCPU_Enable_I2C3_Clock(void) {__HAL_RCC_I2C3_CLK_ENABLE();}
+/**< Function to enable LPTIM1 rcc clock*/
+void FMKCPU_Enable_LPTIM1_Clock(void) {__HAL_RCC_LPTIM1_CLK_ENABLE();}
+/**< Function to enable UCPD1 rcc clock*/
+void FMKCPU_Enable_UCPD1_Clock(void) {__HAL_RCC_UCPD1_CLK_ENABLE();}
+/**< Function to enable SYSCFG rcc clock*/
+void FMKCPU_Enable_SYSCFG_Clock(void) {__HAL_RCC_SYSCFG_CLK_ENABLE();}
+/**< Function to enable TIM1 rcc clock*/
+void FMKCPU_Enable_TIM1_Clock(void) {__HAL_RCC_TIM1_CLK_ENABLE();}
+/**< Function to enable SPI1 rcc clock*/
+void FMKCPU_Enable_SPI1_Clock(void) {__HAL_RCC_SPI1_CLK_ENABLE();}
+/**< Function to enable TIM8 rcc clock*/
+void FMKCPU_Enable_TIM8_Clock(void) {__HAL_RCC_TIM8_CLK_ENABLE();}
+/**< Function to enable USART1 rcc clock*/
+void FMKCPU_Enable_USART1_Clock(void) {__HAL_RCC_USART1_CLK_ENABLE();}
+/**< Function to enable SPI4 rcc clock*/
+void FMKCPU_Enable_SPI4_Clock(void) {__HAL_RCC_SPI4_CLK_ENABLE();}
+/**< Function to enable TIM15 rcc clock*/
+void FMKCPU_Enable_TIM15_Clock(void) {__HAL_RCC_TIM15_CLK_ENABLE();}
+/**< Function to enable TIM16 rcc clock*/
+void FMKCPU_Enable_TIM16_Clock(void) {__HAL_RCC_TIM16_CLK_ENABLE();}
+/**< Function to enable TIM17 rcc clock*/
+void FMKCPU_Enable_TIM17_Clock(void) {__HAL_RCC_TIM17_CLK_ENABLE();}
+/**< Function to enable TIM20 rcc clock*/
+void FMKCPU_Enable_TIM20_Clock(void) {__HAL_RCC_TIM20_CLK_ENABLE();}
+/**< Function to enable SAI1 rcc clock*/
+void FMKCPU_Enable_SAI1_Clock(void) {__HAL_RCC_SAI1_CLK_ENABLE();}
+/**< Function to enable HRTIM1 rcc clock*/
+void FMKCPU_Enable_HRTIM1_Clock(void) {__HAL_RCC_HRTIM1_CLK_ENABLE();}
 /* CAUTION : Automatic generated code section for Enable Clk Implementation: End */
 
 /* CAUTION : Automatic generated code section for Disable Clk Implementation: Start */
+/**< Function to disable DMA1 rcc clock*/
+void FMKCPU_Disable_DMA1_Clock(void) {__HAL_RCC_DMA1_CLK_DISABLE();}
+/**< Function to disable DMA2 rcc clock*/
+void FMKCPU_Disable_DMA2_Clock(void) {__HAL_RCC_DMA2_CLK_DISABLE();}
+/**< Function to disable DMAMUX1 rcc clock*/
+void FMKCPU_Disable_DMAMUX1_Clock(void) {__HAL_RCC_DMAMUX1_CLK_DISABLE();}
+/**< Function to disable CORDIC rcc clock*/
+void FMKCPU_Disable_CORDIC_Clock(void) {__HAL_RCC_CORDIC_CLK_DISABLE();}
+/**< Function to disable FMAC rcc clock*/
+void FMKCPU_Disable_FMAC_Clock(void) {__HAL_RCC_FMAC_CLK_DISABLE();}
+/**< Function to disable FLASH rcc clock*/
+void FMKCPU_Disable_FLASH_Clock(void) {__HAL_RCC_FLASH_CLK_DISABLE();}
+/**< Function to disable CRC rcc clock*/
+void FMKCPU_Disable_CRC_Clock(void) {__HAL_RCC_CRC_CLK_DISABLE();}
+/**< Function to disable GPIOG rcc clock*/
+void FMKCPU_Disable_GPIOG_Clock(void) {__HAL_RCC_GPIOG_CLK_DISABLE();}
+/**< Function to disable GPIOF rcc clock*/
+void FMKCPU_Disable_GPIOF_Clock(void) {__HAL_RCC_GPIOF_CLK_DISABLE();}
+/**< Function to disable GPIOE rcc clock*/
+void FMKCPU_Disable_GPIOE_Clock(void) {__HAL_RCC_GPIOE_CLK_DISABLE();}
+/**< Function to disable GPIOD rcc clock*/
+void FMKCPU_Disable_GPIOD_Clock(void) {__HAL_RCC_GPIOD_CLK_DISABLE();}
+/**< Function to disable GPIOC rcc clock*/
+void FMKCPU_Disable_GPIOC_Clock(void) {__HAL_RCC_GPIOC_CLK_DISABLE();}
+/**< Function to disable GPIOB rcc clock*/
+void FMKCPU_Disable_GPIOB_Clock(void) {__HAL_RCC_GPIOB_CLK_DISABLE();}
+/**< Function to disable GPIOA rcc clock*/
+void FMKCPU_Disable_GPIOA_Clock(void) {__HAL_RCC_GPIOA_CLK_DISABLE();}
 /**< Function to disable ADC12 rcc clock*/
 void FMKCPU_Disable_ADC12_Clock(void) {__HAL_RCC_ADC12_CLK_DISABLE();}
 /**< Function to disable ADC345 rcc clock*/
 void FMKCPU_Disable_ADC345_Clock(void) {__HAL_RCC_ADC345_CLK_DISABLE();}
-/**< Function to disable CORDIC rcc clock*/
-void FMKCPU_Disable_CORDIC_Clock(void) {__HAL_RCC_CORDIC_CLK_DISABLE();}
-/**< Function to disable CRC rcc clock*/
-void FMKCPU_Disable_CRC_Clock(void) {__HAL_RCC_CRC_CLK_DISABLE();}
-/**< Function to disable CRS rcc clock*/
-void FMKCPU_Disable_CRS_Clock(void) {__HAL_RCC_CRS_CLK_DISABLE();}
 /**< Function to disable DAC1 rcc clock*/
 void FMKCPU_Disable_DAC1_Clock(void) {__HAL_RCC_DAC1_CLK_DISABLE();}
 /**< Function to disable DAC2 rcc clock*/
@@ -763,74 +790,14 @@ void FMKCPU_Disable_DAC2_Clock(void) {__HAL_RCC_DAC2_CLK_DISABLE();}
 void FMKCPU_Disable_DAC3_Clock(void) {__HAL_RCC_DAC3_CLK_DISABLE();}
 /**< Function to disable DAC4 rcc clock*/
 void FMKCPU_Disable_DAC4_Clock(void) {__HAL_RCC_DAC4_CLK_DISABLE();}
-/**< Function to disable DMA1 rcc clock*/
-void FMKCPU_Disable_DMA1_Clock(void) {__HAL_RCC_DMA1_CLK_DISABLE();}
-/**< Function to disable DMA2 rcc clock*/
-void FMKCPU_Disable_DMA2_Clock(void) {__HAL_RCC_DMA2_CLK_DISABLE();}
-/**< Function to disable DMAMUX1 rcc clock*/
-void FMKCPU_Disable_DMAMUX1_Clock(void) {__HAL_RCC_DMAMUX1_CLK_DISABLE();}
-/**< Function to disable FDCAN rcc clock*/
-void FMKCPU_Disable_FDCAN_Clock(void) {__HAL_RCC_FDCAN_CLK_DISABLE();}
-/**< Function to disable FLASH rcc clock*/
-void FMKCPU_Disable_FLASH_Clock(void) {__HAL_RCC_FLASH_CLK_DISABLE();}
-/**< Function to disable FMAC rcc clock*/
-void FMKCPU_Disable_FMAC_Clock(void) {__HAL_RCC_FMAC_CLK_DISABLE();}
-/**< Function to disable FMC rcc clock*/
-void FMKCPU_Disable_FMC_Clock(void) {__HAL_RCC_FMC_CLK_DISABLE();}
-/**< Function to disable GPIOA rcc clock*/
-void FMKCPU_Disable_GPIOA_Clock(void) {__HAL_RCC_GPIOA_CLK_DISABLE();}
-/**< Function to disable GPIOB rcc clock*/
-void FMKCPU_Disable_GPIOB_Clock(void) {__HAL_RCC_GPIOB_CLK_DISABLE();}
-/**< Function to disable GPIOC rcc clock*/
-void FMKCPU_Disable_GPIOC_Clock(void) {__HAL_RCC_GPIOC_CLK_DISABLE();}
-/**< Function to disable GPIOD rcc clock*/
-void FMKCPU_Disable_GPIOD_Clock(void) {__HAL_RCC_GPIOD_CLK_DISABLE();}
-/**< Function to disable GPIOE rcc clock*/
-void FMKCPU_Disable_GPIOE_Clock(void) {__HAL_RCC_GPIOE_CLK_DISABLE();}
-/**< Function to disable GPIOF rcc clock*/
-void FMKCPU_Disable_GPIOF_Clock(void) {__HAL_RCC_GPIOF_CLK_DISABLE();}
-/**< Function to disable GPIOG rcc clock*/
-void FMKCPU_Disable_GPIOG_Clock(void) {__HAL_RCC_GPIOG_CLK_DISABLE();}
-/**< Function to disable HRTIM1 rcc clock*/
-void FMKCPU_Disable_HRTIM1_Clock(void) {__HAL_RCC_HRTIM1_CLK_DISABLE();}
-/**< Function to disable I2C2 rcc clock*/
-void FMKCPU_Disable_I2C2_Clock(void) {__HAL_RCC_I2C2_CLK_DISABLE();}
-/**< Function to disable I2C3 rcc clock*/
-void FMKCPU_Disable_I2C3_Clock(void) {__HAL_RCC_I2C3_CLK_DISABLE();}
-/**< Function to disable LPTIM1 rcc clock*/
-void FMKCPU_Disable_LPTIM1_Clock(void) {__HAL_RCC_LPTIM1_CLK_DISABLE();}
-/**< Function to disable PWR rcc clock*/
-void FMKCPU_Disable_PWR_Clock(void) {__HAL_RCC_PWR_CLK_DISABLE();}
-/**< Function to disable QSPI rcc clock*/
-void FMKCPU_Disable_QSPI_Clock(void) {__HAL_RCC_QSPI_CLK_DISABLE();}
 /**< Function to disable RNG rcc clock*/
 void FMKCPU_Disable_RNG_Clock(void) {__HAL_RCC_RNG_CLK_DISABLE();}
-/**< Function to disable RTCAPB rcc clock*/
-void FMKCPU_Disable_RTCAPB_Clock(void) {__HAL_RCC_RTCAPB_CLK_DISABLE();}
-/**< Function to disable SAI1 rcc clock*/
-void FMKCPU_Disable_SAI1_Clock(void) {__HAL_RCC_SAI1_CLK_DISABLE();}
-/**< Function to disable SPI1 rcc clock*/
-void FMKCPU_Disable_SPI1_Clock(void) {__HAL_RCC_SPI1_CLK_DISABLE();}
-/**< Function to disable SPI2 rcc clock*/
-void FMKCPU_Disable_SPI2_Clock(void) {__HAL_RCC_SPI2_CLK_DISABLE();}
-/**< Function to disable SPI3 rcc clock*/
-void FMKCPU_Disable_SPI3_Clock(void) {__HAL_RCC_SPI3_CLK_DISABLE();}
-/**< Function to disable SPI4 rcc clock*/
-void FMKCPU_Disable_SPI4_Clock(void) {__HAL_RCC_SPI4_CLK_DISABLE();}
-/**< Function to disable SYSCFG rcc clock*/
-void FMKCPU_Disable_SYSCFG_Clock(void) {__HAL_RCC_SYSCFG_CLK_DISABLE();}
-/**< Function to disable TIM1 rcc clock*/
-void FMKCPU_Disable_TIM1_Clock(void) {__HAL_RCC_TIM1_CLK_DISABLE();}
-/**< Function to disable TIM15 rcc clock*/
-void FMKCPU_Disable_TIM15_Clock(void) {__HAL_RCC_TIM15_CLK_DISABLE();}
-/**< Function to disable TIM16 rcc clock*/
-void FMKCPU_Disable_TIM16_Clock(void) {__HAL_RCC_TIM16_CLK_DISABLE();}
-/**< Function to disable TIM17 rcc clock*/
-void FMKCPU_Disable_TIM17_Clock(void) {__HAL_RCC_TIM17_CLK_DISABLE();}
+/**< Function to disable FMC rcc clock*/
+void FMKCPU_Disable_FMC_Clock(void) {__HAL_RCC_FMC_CLK_DISABLE();}
+/**< Function to disable QSPI rcc clock*/
+void FMKCPU_Disable_QSPI_Clock(void) {__HAL_RCC_QSPI_CLK_DISABLE();}
 /**< Function to disable TIM2 rcc clock*/
 void FMKCPU_Disable_TIM2_Clock(void) {__HAL_RCC_TIM2_CLK_DISABLE();}
-/**< Function to disable TIM20 rcc clock*/
-void FMKCPU_Disable_TIM20_Clock(void) {__HAL_RCC_TIM20_CLK_DISABLE();}
 /**< Function to disable TIM3 rcc clock*/
 void FMKCPU_Disable_TIM3_Clock(void) {__HAL_RCC_TIM3_CLK_DISABLE();}
 /**< Function to disable TIM4 rcc clock*/
@@ -841,24 +808,62 @@ void FMKCPU_Disable_TIM5_Clock(void) {__HAL_RCC_TIM5_CLK_DISABLE();}
 void FMKCPU_Disable_TIM6_Clock(void) {__HAL_RCC_TIM6_CLK_DISABLE();}
 /**< Function to disable TIM7 rcc clock*/
 void FMKCPU_Disable_TIM7_Clock(void) {__HAL_RCC_TIM7_CLK_DISABLE();}
-/**< Function to disable TIM8 rcc clock*/
-void FMKCPU_Disable_TIM8_Clock(void) {__HAL_RCC_TIM8_CLK_DISABLE();}
-/**< Function to disable UART4 rcc clock*/
-void FMKCPU_Disable_UART4_Clock(void) {__HAL_RCC_UART4_CLK_DISABLE();}
-/**< Function to disable UART5 rcc clock*/
-void FMKCPU_Disable_UART5_Clock(void) {__HAL_RCC_UART5_CLK_DISABLE();}
-/**< Function to disable UCPD1 rcc clock*/
-void FMKCPU_Disable_UCPD1_Clock(void) {__HAL_RCC_UCPD1_CLK_DISABLE();}
-/**< Function to disable USART1 rcc clock*/
-void FMKCPU_Disable_USART1_Clock(void) {__HAL_RCC_USART1_CLK_DISABLE();}
+/**< Function to disable CRS rcc clock*/
+void FMKCPU_Disable_CRS_Clock(void) {__HAL_RCC_CRS_CLK_DISABLE();}
+/**< Function to disable RTCAPB rcc clock*/
+void FMKCPU_Disable_RTCAPB_Clock(void) {__HAL_RCC_RTCAPB_CLK_DISABLE();}
+/**< Function to disable WWDG rcc clock*/
+void FMKCPU_Disable_WWDG_Clock(void) {__HAL_RCC_WWDG_CLK_DISABLE();}
+/**< Function to disable SPI2 rcc clock*/
+void FMKCPU_Disable_SPI2_Clock(void) {__HAL_RCC_SPI2_CLK_DISABLE();}
+/**< Function to disable SPI3 rcc clock*/
+void FMKCPU_Disable_SPI3_Clock(void) {__HAL_RCC_SPI3_CLK_DISABLE();}
 /**< Function to disable USART2 rcc clock*/
 void FMKCPU_Disable_USART2_Clock(void) {__HAL_RCC_USART2_CLK_DISABLE();}
 /**< Function to disable USART3 rcc clock*/
 void FMKCPU_Disable_USART3_Clock(void) {__HAL_RCC_USART3_CLK_DISABLE();}
+/**< Function to disable UART4 rcc clock*/
+void FMKCPU_Disable_UART4_Clock(void) {__HAL_RCC_UART4_CLK_DISABLE();}
+/**< Function to disable UART5 rcc clock*/
+void FMKCPU_Disable_UART5_Clock(void) {__HAL_RCC_UART5_CLK_DISABLE();}
+/**< Function to disable I2C2 rcc clock*/
+void FMKCPU_Disable_I2C2_Clock(void) {__HAL_RCC_I2C2_CLK_DISABLE();}
 /**< Function to disable USB rcc clock*/
 void FMKCPU_Disable_USB_Clock(void) {__HAL_RCC_USB_CLK_DISABLE();}
-/**< Function to disable WWDG rcc clock*/
-void FMKCPU_Disable_WWDG_Clock(void) {__HAL_RCC_WWDG_CLK_DISABLE();}
+/**< Function to disable FDCAN rcc clock*/
+void FMKCPU_Disable_FDCAN_Clock(void) {__HAL_RCC_FDCAN_CLK_DISABLE();}
+/**< Function to disable PWR rcc clock*/
+void FMKCPU_Disable_PWR_Clock(void) {__HAL_RCC_PWR_CLK_DISABLE();}
+/**< Function to disable I2C3 rcc clock*/
+void FMKCPU_Disable_I2C3_Clock(void) {__HAL_RCC_I2C3_CLK_DISABLE();}
+/**< Function to disable LPTIM1 rcc clock*/
+void FMKCPU_Disable_LPTIM1_Clock(void) {__HAL_RCC_LPTIM1_CLK_DISABLE();}
+/**< Function to disable UCPD1 rcc clock*/
+void FMKCPU_Disable_UCPD1_Clock(void) {__HAL_RCC_UCPD1_CLK_DISABLE();}
+/**< Function to disable SYSCFG rcc clock*/
+void FMKCPU_Disable_SYSCFG_Clock(void) {__HAL_RCC_SYSCFG_CLK_DISABLE();}
+/**< Function to disable TIM1 rcc clock*/
+void FMKCPU_Disable_TIM1_Clock(void) {__HAL_RCC_TIM1_CLK_DISABLE();}
+/**< Function to disable SPI1 rcc clock*/
+void FMKCPU_Disable_SPI1_Clock(void) {__HAL_RCC_SPI1_CLK_DISABLE();}
+/**< Function to disable TIM8 rcc clock*/
+void FMKCPU_Disable_TIM8_Clock(void) {__HAL_RCC_TIM8_CLK_DISABLE();}
+/**< Function to disable USART1 rcc clock*/
+void FMKCPU_Disable_USART1_Clock(void) {__HAL_RCC_USART1_CLK_DISABLE();}
+/**< Function to disable SPI4 rcc clock*/
+void FMKCPU_Disable_SPI4_Clock(void) {__HAL_RCC_SPI4_CLK_DISABLE();}
+/**< Function to disable TIM15 rcc clock*/
+void FMKCPU_Disable_TIM15_Clock(void) {__HAL_RCC_TIM15_CLK_DISABLE();}
+/**< Function to disable TIM16 rcc clock*/
+void FMKCPU_Disable_TIM16_Clock(void) {__HAL_RCC_TIM16_CLK_DISABLE();}
+/**< Function to disable TIM17 rcc clock*/
+void FMKCPU_Disable_TIM17_Clock(void) {__HAL_RCC_TIM17_CLK_DISABLE();}
+/**< Function to disable TIM20 rcc clock*/
+void FMKCPU_Disable_TIM20_Clock(void) {__HAL_RCC_TIM20_CLK_DISABLE();}
+/**< Function to disable SAI1 rcc clock*/
+void FMKCPU_Disable_SAI1_Clock(void) {__HAL_RCC_SAI1_CLK_DISABLE();}
+/**< Function to disable HRTIM1 rcc clock*/
+void FMKCPU_Disable_HRTIM1_Clock(void) {__HAL_RCC_HRTIM1_CLK_DISABLE();}
 /* CAUTION : Automatic generated code section for Disable Clk Implementation: End */
 
 

@@ -498,123 +498,123 @@
 
     /**< Referencing all Enable/Disable Rcc clock function */
     const t_sFMKCPU_ClkFunc c_FMKCPU_ClkFunctions_apcb[FMKCPU_NVIC_NB] = {
+        {FMKCPU_Enable_DMA1_Clock,      FMKCPU_Disable_DMA1_Clock},     // FMKCPU_RCC_CLK_DMA1
+        {FMKCPU_Enable_DMA2_Clock,      FMKCPU_Disable_DMA2_Clock},     // FMKCPU_RCC_CLK_DMA2
+        {FMKCPU_Enable_DMAMUX1_Clock,   FMKCPU_Disable_DMAMUX1_Clock},  // FMKCPU_RCC_CLK_DMAMUX1
+        {FMKCPU_Enable_CORDIC_Clock,    FMKCPU_Disable_CORDIC_Clock},   // FMKCPU_RCC_CLK_CORDIC
+        {FMKCPU_Enable_FMAC_Clock,      FMKCPU_Disable_FMAC_Clock},     // FMKCPU_RCC_CLK_FMAC
+        {FMKCPU_Enable_FLASH_Clock,     FMKCPU_Disable_FLASH_Clock},    // FMKCPU_RCC_CLK_FLASH
+        {FMKCPU_Enable_CRC_Clock,       FMKCPU_Disable_CRC_Clock},      // FMKCPU_RCC_CLK_CRC
+        {FMKCPU_Enable_GPIOG_Clock,     FMKCPU_Disable_GPIOG_Clock},    // FMKCPU_RCC_CLK_GPIOG
+        {FMKCPU_Enable_GPIOF_Clock,     FMKCPU_Disable_GPIOF_Clock},    // FMKCPU_RCC_CLK_GPIOF
+        {FMKCPU_Enable_GPIOE_Clock,     FMKCPU_Disable_GPIOE_Clock},    // FMKCPU_RCC_CLK_GPIOE
+        {FMKCPU_Enable_GPIOD_Clock,     FMKCPU_Disable_GPIOD_Clock},    // FMKCPU_RCC_CLK_GPIOD
+        {FMKCPU_Enable_GPIOC_Clock,     FMKCPU_Disable_GPIOC_Clock},    // FMKCPU_RCC_CLK_GPIOC
+        {FMKCPU_Enable_GPIOB_Clock,     FMKCPU_Disable_GPIOB_Clock},    // FMKCPU_RCC_CLK_GPIOB
+        {FMKCPU_Enable_GPIOA_Clock,     FMKCPU_Disable_GPIOA_Clock},    // FMKCPU_RCC_CLK_GPIOA
         {FMKCPU_Enable_ADC12_Clock,     FMKCPU_Disable_ADC12_Clock},    // FMKCPU_RCC_CLK_ADC12
         {FMKCPU_Enable_ADC345_Clock,    FMKCPU_Disable_ADC345_Clock},   // FMKCPU_RCC_CLK_ADC345
-        {FMKCPU_Enable_CORDIC_Clock,    FMKCPU_Disable_CORDIC_Clock},   // FMKCPU_RCC_CLK_CORDIC
-        {FMKCPU_Enable_CRC_Clock,       FMKCPU_Disable_CRC_Clock},      // FMKCPU_RCC_CLK_CRC
-        {FMKCPU_Enable_CRS_Clock,       FMKCPU_Disable_CRS_Clock},      // FMKCPU_RCC_CLK_CRS
         {FMKCPU_Enable_DAC1_Clock,      FMKCPU_Disable_DAC1_Clock},     // FMKCPU_RCC_CLK_DAC1
         {FMKCPU_Enable_DAC2_Clock,      FMKCPU_Disable_DAC2_Clock},     // FMKCPU_RCC_CLK_DAC2
         {FMKCPU_Enable_DAC3_Clock,      FMKCPU_Disable_DAC3_Clock},     // FMKCPU_RCC_CLK_DAC3
         {FMKCPU_Enable_DAC4_Clock,      FMKCPU_Disable_DAC4_Clock},     // FMKCPU_RCC_CLK_DAC4
-        {FMKCPU_Enable_DMA1_Clock,      FMKCPU_Disable_DMA1_Clock},     // FMKCPU_RCC_CLK_DMA1
-        {FMKCPU_Enable_DMA2_Clock,      FMKCPU_Disable_DMA2_Clock},     // FMKCPU_RCC_CLK_DMA2
-        {FMKCPU_Enable_DMAMUX1_Clock,   FMKCPU_Disable_DMAMUX1_Clock},  // FMKCPU_RCC_CLK_DMAMUX1
-        {FMKCPU_Enable_FDCAN_Clock,     FMKCPU_Disable_FDCAN_Clock},    // FMKCPU_RCC_CLK_FDCAN
-        {FMKCPU_Enable_FLASH_Clock,     FMKCPU_Disable_FLASH_Clock},    // FMKCPU_RCC_CLK_FLASH
-        {FMKCPU_Enable_FMAC_Clock,      FMKCPU_Disable_FMAC_Clock},     // FMKCPU_RCC_CLK_FMAC
-        {FMKCPU_Enable_FMC_Clock,       FMKCPU_Disable_FMC_Clock},      // FMKCPU_RCC_CLK_FMC
-        {FMKCPU_Enable_GPIOA_Clock,     FMKCPU_Disable_GPIOA_Clock},    // FMKCPU_RCC_CLK_GPIOA
-        {FMKCPU_Enable_GPIOB_Clock,     FMKCPU_Disable_GPIOB_Clock},    // FMKCPU_RCC_CLK_GPIOB
-        {FMKCPU_Enable_GPIOC_Clock,     FMKCPU_Disable_GPIOC_Clock},    // FMKCPU_RCC_CLK_GPIOC
-        {FMKCPU_Enable_GPIOD_Clock,     FMKCPU_Disable_GPIOD_Clock},    // FMKCPU_RCC_CLK_GPIOD
-        {FMKCPU_Enable_GPIOE_Clock,     FMKCPU_Disable_GPIOE_Clock},    // FMKCPU_RCC_CLK_GPIOE
-        {FMKCPU_Enable_GPIOF_Clock,     FMKCPU_Disable_GPIOF_Clock},    // FMKCPU_RCC_CLK_GPIOF
-        {FMKCPU_Enable_GPIOG_Clock,     FMKCPU_Disable_GPIOG_Clock},    // FMKCPU_RCC_CLK_GPIOG
-        {FMKCPU_Enable_HRTIM1_Clock,    FMKCPU_Disable_HRTIM1_Clock},   // FMKCPU_RCC_CLK_HRTIM1
-        {FMKCPU_Enable_I2C2_Clock,      FMKCPU_Disable_I2C2_Clock},     // FMKCPU_RCC_CLK_I2C2
-        {FMKCPU_Enable_I2C3_Clock,      FMKCPU_Disable_I2C3_Clock},     // FMKCPU_RCC_CLK_I2C3
-        {FMKCPU_Enable_LPTIM1_Clock,    FMKCPU_Disable_LPTIM1_Clock},   // FMKCPU_RCC_CLK_LPTIM1
-        {FMKCPU_Enable_PWR_Clock,       FMKCPU_Disable_PWR_Clock},      // FMKCPU_RCC_CLK_PWR
-        {FMKCPU_Enable_QSPI_Clock,      FMKCPU_Disable_QSPI_Clock},     // FMKCPU_RCC_CLK_QSPI
         {FMKCPU_Enable_RNG_Clock,       FMKCPU_Disable_RNG_Clock},      // FMKCPU_RCC_CLK_RNG
-        {FMKCPU_Enable_RTCAPB_Clock,    FMKCPU_Disable_RTCAPB_Clock},   // FMKCPU_RCC_CLK_RTCAPB
-        {FMKCPU_Enable_SAI1_Clock,      FMKCPU_Disable_SAI1_Clock},     // FMKCPU_RCC_CLK_SAI1
-        {FMKCPU_Enable_SPI1_Clock,      FMKCPU_Disable_SPI1_Clock},     // FMKCPU_RCC_CLK_SPI1
-        {FMKCPU_Enable_SPI2_Clock,      FMKCPU_Disable_SPI2_Clock},     // FMKCPU_RCC_CLK_SPI2
-        {FMKCPU_Enable_SPI3_Clock,      FMKCPU_Disable_SPI3_Clock},     // FMKCPU_RCC_CLK_SPI3
-        {FMKCPU_Enable_SPI4_Clock,      FMKCPU_Disable_SPI4_Clock},     // FMKCPU_RCC_CLK_SPI4
-        {FMKCPU_Enable_SYSCFG_Clock,    FMKCPU_Disable_SYSCFG_Clock},   // FMKCPU_RCC_CLK_SYSCFG
-        {FMKCPU_Enable_TIM1_Clock,      FMKCPU_Disable_TIM1_Clock},     // FMKCPU_RCC_CLK_TIM1
-        {FMKCPU_Enable_TIM15_Clock,     FMKCPU_Disable_TIM15_Clock},    // FMKCPU_RCC_CLK_TIM15
-        {FMKCPU_Enable_TIM16_Clock,     FMKCPU_Disable_TIM16_Clock},    // FMKCPU_RCC_CLK_TIM16
-        {FMKCPU_Enable_TIM17_Clock,     FMKCPU_Disable_TIM17_Clock},    // FMKCPU_RCC_CLK_TIM17
+        {FMKCPU_Enable_FMC_Clock,       FMKCPU_Disable_FMC_Clock},      // FMKCPU_RCC_CLK_FMC
+        {FMKCPU_Enable_QSPI_Clock,      FMKCPU_Disable_QSPI_Clock},     // FMKCPU_RCC_CLK_QSPI
         {FMKCPU_Enable_TIM2_Clock,      FMKCPU_Disable_TIM2_Clock},     // FMKCPU_RCC_CLK_TIM2
-        {FMKCPU_Enable_TIM20_Clock,     FMKCPU_Disable_TIM20_Clock},    // FMKCPU_RCC_CLK_TIM20
         {FMKCPU_Enable_TIM3_Clock,      FMKCPU_Disable_TIM3_Clock},     // FMKCPU_RCC_CLK_TIM3
         {FMKCPU_Enable_TIM4_Clock,      FMKCPU_Disable_TIM4_Clock},     // FMKCPU_RCC_CLK_TIM4
         {FMKCPU_Enable_TIM5_Clock,      FMKCPU_Disable_TIM5_Clock},     // FMKCPU_RCC_CLK_TIM5
         {FMKCPU_Enable_TIM6_Clock,      FMKCPU_Disable_TIM6_Clock},     // FMKCPU_RCC_CLK_TIM6
         {FMKCPU_Enable_TIM7_Clock,      FMKCPU_Disable_TIM7_Clock},     // FMKCPU_RCC_CLK_TIM7
-        {FMKCPU_Enable_TIM8_Clock,      FMKCPU_Disable_TIM8_Clock},     // FMKCPU_RCC_CLK_TIM8
-        {FMKCPU_Enable_UART4_Clock,     FMKCPU_Disable_UART4_Clock},    // FMKCPU_RCC_CLK_UART4
-        {FMKCPU_Enable_UART5_Clock,     FMKCPU_Disable_UART5_Clock},    // FMKCPU_RCC_CLK_UART5
-        {FMKCPU_Enable_UCPD1_Clock,     FMKCPU_Disable_UCPD1_Clock},    // FMKCPU_RCC_CLK_UCPD1
-        {FMKCPU_Enable_USART1_Clock,    FMKCPU_Disable_USART1_Clock},   // FMKCPU_RCC_CLK_USART1
+        {FMKCPU_Enable_CRS_Clock,       FMKCPU_Disable_CRS_Clock},      // FMKCPU_RCC_CLK_CRS
+        {FMKCPU_Enable_RTCAPB_Clock,    FMKCPU_Disable_RTCAPB_Clock},   // FMKCPU_RCC_CLK_RTCAPB
+        {FMKCPU_Enable_WWDG_Clock,      FMKCPU_Disable_WWDG_Clock},     // FMKCPU_RCC_CLK_WWDG
+        {FMKCPU_Enable_SPI2_Clock,      FMKCPU_Disable_SPI2_Clock},     // FMKCPU_RCC_CLK_SPI2
+        {FMKCPU_Enable_SPI3_Clock,      FMKCPU_Disable_SPI3_Clock},     // FMKCPU_RCC_CLK_SPI3
         {FMKCPU_Enable_USART2_Clock,    FMKCPU_Disable_USART2_Clock},   // FMKCPU_RCC_CLK_USART2
         {FMKCPU_Enable_USART3_Clock,    FMKCPU_Disable_USART3_Clock},   // FMKCPU_RCC_CLK_USART3
+        {FMKCPU_Enable_UART4_Clock,     FMKCPU_Disable_UART4_Clock},    // FMKCPU_RCC_CLK_UART4
+        {FMKCPU_Enable_UART5_Clock,     FMKCPU_Disable_UART5_Clock},    // FMKCPU_RCC_CLK_UART5
+        {FMKCPU_Enable_I2C2_Clock,      FMKCPU_Disable_I2C2_Clock},     // FMKCPU_RCC_CLK_I2C2
         {FMKCPU_Enable_USB_Clock,       FMKCPU_Disable_USB_Clock},      // FMKCPU_RCC_CLK_USB
-        {FMKCPU_Enable_WWDG_Clock,      FMKCPU_Disable_WWDG_Clock},     // FMKCPU_RCC_CLK_WWDG
+        {FMKCPU_Enable_FDCAN_Clock,     FMKCPU_Disable_FDCAN_Clock},    // FMKCPU_RCC_CLK_FDCAN
+        {FMKCPU_Enable_PWR_Clock,       FMKCPU_Disable_PWR_Clock},      // FMKCPU_RCC_CLK_PWR
+        {FMKCPU_Enable_I2C3_Clock,      FMKCPU_Disable_I2C3_Clock},     // FMKCPU_RCC_CLK_I2C3
+        {FMKCPU_Enable_LPTIM1_Clock,    FMKCPU_Disable_LPTIM1_Clock},   // FMKCPU_RCC_CLK_LPTIM1
+        {FMKCPU_Enable_UCPD1_Clock,     FMKCPU_Disable_UCPD1_Clock},    // FMKCPU_RCC_CLK_UCPD1
+        {FMKCPU_Enable_SYSCFG_Clock,    FMKCPU_Disable_SYSCFG_Clock},   // FMKCPU_RCC_CLK_SYSCFG
+        {FMKCPU_Enable_TIM1_Clock,      FMKCPU_Disable_TIM1_Clock},     // FMKCPU_RCC_CLK_TIM1
+        {FMKCPU_Enable_SPI1_Clock,      FMKCPU_Disable_SPI1_Clock},     // FMKCPU_RCC_CLK_SPI1
+        {FMKCPU_Enable_TIM8_Clock,      FMKCPU_Disable_TIM8_Clock},     // FMKCPU_RCC_CLK_TIM8
+        {FMKCPU_Enable_USART1_Clock,    FMKCPU_Disable_USART1_Clock},   // FMKCPU_RCC_CLK_USART1
+        {FMKCPU_Enable_SPI4_Clock,      FMKCPU_Disable_SPI4_Clock},     // FMKCPU_RCC_CLK_SPI4
+        {FMKCPU_Enable_TIM15_Clock,     FMKCPU_Disable_TIM15_Clock},    // FMKCPU_RCC_CLK_TIM15
+        {FMKCPU_Enable_TIM16_Clock,     FMKCPU_Disable_TIM16_Clock},    // FMKCPU_RCC_CLK_TIM16
+        {FMKCPU_Enable_TIM17_Clock,     FMKCPU_Disable_TIM17_Clock},    // FMKCPU_RCC_CLK_TIM17
+        {FMKCPU_Enable_TIM20_Clock,     FMKCPU_Disable_TIM20_Clock},    // FMKCPU_RCC_CLK_TIM20
+        {FMKCPU_Enable_SAI1_Clock,      FMKCPU_Disable_SAI1_Clock},     // FMKCPU_RCC_CLK_SAI1
+        {FMKCPU_Enable_HRTIM1_Clock,    FMKCPU_Disable_HRTIM1_Clock},   // FMKCPU_RCC_CLK_HRTIM1
     };
 
     const t_eFMKCPU_SysClkOsc c_FmkCpu_RccClockOscSrc_ae[FMKCPU_RCC_CLK_NB] = {
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMA1
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMA2
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMAMUX1
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_CORDIC
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_FMAC
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_FLASH
+        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_CRC
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOG
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOF
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOE
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOD
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOC
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOB
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOA
         FMKCPU_SYS_CLOCK_PLLP,            // FMKCPU_RCC_CLK_ADC12
         FMKCPU_SYS_CLOCK_PLLP,            // FMKCPU_RCC_CLK_ADC345
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_CORDIC
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_CRC
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_CRS
         FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_DAC1
         FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_DAC2
         FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_DAC3
         FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_DAC4
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMA1
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMA2
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_DMAMUX1
-        FMKCPU_SYS_CLOCK_PLLQ,            // FMKCPU_RCC_CLK_FDCAN
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_FLASH
-        FMKCPU_SYS_CLOCK_AHB1,            // FMKCPU_RCC_CLK_FMAC
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_FMC
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOA
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOB
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOC
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOD
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOE
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOF
-        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_GPIOG
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_HRTIM1
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_I2C2
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_I2C3
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_LPTIM1
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_PWR
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_QSPI
         FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_RNG
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_RTCAPB
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SAI1
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SPI1
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_SPI2
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_SPI3
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SPI4
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SYSCFG
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM1
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM15
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM16
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM17
+        FMKCPU_SYS_CLOCK_AHB2,            // FMKCPU_RCC_CLK_FMC
+        FMKCPU_SYS_CLOCK_PLLQ,            // FMKCPU_RCC_CLK_QSPI
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM2
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM20
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM3
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM4
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM5
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM6
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_TIM7
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM8
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UART4
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UART5
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UCPD1
-        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_USART1
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_CRS
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_RTCAPB
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_WWDG
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_SPI2
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_SPI3
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_USART2
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_USART3
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UART4
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UART5
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_I2C2
         FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_USB
-        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_WWDG
+        FMKCPU_SYS_CLOCK_PLLQ,            // FMKCPU_RCC_CLK_FDCAN
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_PWR
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_I2C3
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_LPTIM1
+        FMKCPU_SYS_CLOCK_APB1,            // FMKCPU_RCC_CLK_UCPD1
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SYSCFG
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM1
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SPI1
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM8
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_USART1
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SPI4
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM15
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM16
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM17
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_TIM20
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_SAI1
+        FMKCPU_SYS_CLOCK_APB2,            // FMKCPU_RCC_CLK_HRTIM1
     };
 
     /**< Variable to mapp every Dma Mux to a Rcc Clock */
