@@ -16,7 +16,6 @@
     #include "TypeCommon.h"
     #include "./FMKCDA_ConfigPublic.h"
     #include "./FMKCPU_ConfigPublic.h"
-    #include "FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -90,14 +89,12 @@
     typedef enum
     {
         FMKIO_INPUT_SIGDIG_1 = 0,                  /**< Reference to PC10 */
-        FMKIO_INPUT_SIGDIG_2,                        /**< Reference to PC11 */
-        FMKIO_INPUT_SIGDIG_3,                        /**< Reference to PC13 */
-        FMKIO_INPUT_SIGDIG_4,                        /**< Reference to PC14 */
-        FMKIO_INPUT_SIGDIG_5,                        /**< Reference to PC15 */
-        FMKIO_INPUT_SIGDIG_6,                        /**< Reference to PA0 */
-        FMKIO_INPUT_SIGDIG_7,                        /**< Reference to PA7 */
-        FMKIO_INPUT_SIGDIG_8,                        /**< Reference to PB10 */
-        FMKIO_INPUT_SIGDIG_9,                        /**< Reference to PB13 */
+        FMKIO_INPUT_SIGDIG_2,                        /**< Reference to PC13 */
+        FMKIO_INPUT_SIGDIG_3,                        /**< Reference to PC14 */
+        FMKIO_INPUT_SIGDIG_4,                        /**< Reference to PC15 */
+        FMKIO_INPUT_SIGDIG_5,                        /**< Reference to PA7 */
+        FMKIO_INPUT_SIGDIG_6,                        /**< Reference to PB10 */
+        FMKIO_INPUT_SIGDIG_7,                        /**< Reference to PB13 */
     
         FMKIO_INPUT_SIGDIG_NB,
     } t_eFMKIO_InDigSig;
@@ -145,6 +142,8 @@
     {
         FMKIO_INPUT_SIGEVNT_1 = 0,                  /**< Reference to PB3 */
         FMKIO_INPUT_SIGEVNT_2,                        /**< Reference to PB5 */
+        FMKIO_INPUT_SIGEVNT_3,                        /**< Reference to PA0 */
+        FMKIO_INPUT_SIGEVNT_4,                        /**< Reference to PC11 */
     
         FMKIO_INPUT_SIGEVNT_NB,
     } t_eFMKIO_InEvntSig;

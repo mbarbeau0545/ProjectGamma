@@ -303,7 +303,7 @@ const t_sFMKHRT_HrTimerCfg c_FmkHrt_HrTimCfg_as[FMKHRT_HIGH_RES_TIMER_NB] = {
         return;
     }
     /* CAUTION : Automatic generated code section for IRQ Handler: Stop */
-#endif // APPSYS_MODULE_FMKHRT_ENABLE
+    #endif // APPSYS_MODULE_FMKHRT_ENABLE
 #endif // FMKHRT_CONFIGPRIVATE_H_INCLUDED
     //************************************************************************************
     // End of File

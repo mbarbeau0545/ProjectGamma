@@ -138,7 +138,8 @@
         RC_WARNING_NOT_ALLOWED = 7,               /**< Not allowed to perform the requested operation */
         RC_WARNING_LIMIT_REACHED = 8,             /**< The operation cannot be done because a limit has been reached */
         RC_WARNING_WRONG_RESULT = 9,              /**< The operation has succeeded, but the result is incorrect */
-        RC_WARNING_MEM_FAILED = 10                /**< The operation to copy an element has failed */
+        RC_WARNING_MEM_FAILED = 10,                /**< The operation to copy an element has failed */
+        RC_WARNING_ALREADY_CONFIGURED = 11        /**< The operation has already been successfull */
     } t_eReturnCode;
     
     /**

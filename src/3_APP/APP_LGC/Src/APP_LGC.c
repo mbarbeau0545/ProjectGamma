@@ -259,7 +259,6 @@ t_eReturnCode APPLGC_Cyclic(void)
     }
     case STATE_CYCLIC_OPE:
     {
-
         Ret_e = s_APPLGC_Operational();
         break;
     }
@@ -394,40 +393,40 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 
     t_eReturnCode Ret_e;
     HAL_StatusTypeDef bspRet_e;
-    t_sFMKIO_PwmWaveformCfg pwmWaveForm = {
-        .deadTime_u32 = 0,
-        .frequency_f32 = 1000,
-        .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
-        .pullMode_e = FMKIO_PULL_MODE_DISABLE,
-        .spdMode_e = FMKIO_SPD_MODE_HIGH,
-    };
-    t_sFMKIO_PwmControlPrm pwmCtrl_s = {
-        .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
-                .rampCfg_ps = NULL,
-                .enablePulseSyncOpe_b = TRUE,
-    };
+    // t_sFMKIO_PwmWaveformCfg pwmWaveForm = {
+    //     .deadTime_u32 = 0,
+    //     .frequency_f32 = 2000,
+    //     .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
+    //     .pullMode_e = FMKIO_PULL_MODE_DISABLE,
+    //     .spdMode_e = FMKIO_SPD_MODE_HIGH,
+    // };
+    // t_sFMKIO_PwmControlPrm pwmCtrl_s = {
+    //     .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
+    //             .rampCfg_ps = NULL,
+    //             .enablePulseSyncOpe_b = TRUE,
+    // };
 
-    Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_7, pwmWaveForm, pwmCtrl_s, s_APPLGC_PulseFinished, NULL_FUNCTION);
-    if(Ret_e == RC_OK)
-    {
-        Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_8, pwmWaveForm, pwmCtrl_s, s_APPLGC_PulseFinished, NULL_FUNCTION);
-    }
-    /*t_sCL42T_MotorSigCfg motor_config = {
+    // Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_8, pwmWaveForm, pwmCtrl_s, s_APPLGC_PulseFinished, NULL_FUNCTION);
+    // if(Ret_e == RC_OK)
+    // {
+    //     Ret_e = FMKIO_Set_OutPwmSigCfg(FMKIO_OUTPUT_SIGPWM_7, pwmWaveForm, pwmCtrl_s, s_APPLGC_PulseFinished, NULL_FUNCTION);
+    // }
+    t_sCL42T_MotorSigCfg motor_config = {
         .DiagSignal_e = FMKIO_INPUT_SIGFREQ_1,
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_1,
         .StateSignal_e = FMKIO_OUTPUT_SIGDIG_2,
         .EndStopSigCW_s = {
             .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_1,
-            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .EndStopSigCCW_s = {
             .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_2,
-            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .PulseSigCfg_s = {
-            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_5,
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_7,
             .pwmWaveForm_s = {
                 .deadTime_u32 = 0,
                 .frequency_f32 = 1000,
@@ -438,17 +437,52 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
             .pwmCtrlPrm_s = {
                 .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
                 .rampCfg_ps = NULL,
+                .enablePulseSyncOpe_b = TRUE
             }
         }
 
     };
 
-    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+        t_sCL42T_MotorSigCfg motor2_config = {
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_2,
+        .DirSignal_e = FMKIO_OUTPUT_SIGDIG_3,
+        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_4,
+        .EndStopSigCW_s = {
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_3,
+            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .triggerEvnt_e = FMKIO_STC_RISING_EDGE,
+            .debuncValue_u16 = 0xFFFF,
+        },
+        .EndStopSigCCW_s = {
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_4,
+            .PullMode_e = FMKIO_PULL_MODE_DOWN,
+            .triggerEvnt_e = FMKIO_STC_RISING_EDGE,
+            .debuncValue_u16 = 0xFFFF,
+        },
+        .PulseSigCfg_s = {
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_8,
+            .pwmWaveForm_s = {
+                .deadTime_u32 = 0,
+                .frequency_f32 = 1000,
+                .polarity_e = FMKIO_SIGPWM_POLARITY_LOW,
+                .pullMode_e = FMKIO_PULL_MODE_DISABLE,
+                .spdMode_e = FMKIO_SPD_MODE_HIGH,
+            },
+            .pwmCtrlPrm_s = {
+                .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
+                .rampCfg_ps = NULL,
+                .enablePulseSyncOpe_b = TRUE
+            }
+        }
+    };
     
-    Ret_e = CL42T_AddMotorConfiguration(CL42T_MOTOR_1,
-                                        motor_config,
+    Ret_e = CL42T_AddMotorConfiguration(CL42T_MOTOR_1,motor_config, TRUE,
                                         s_APPLGC_MotorDiag,
-                                        s_APPLGC_PulseDropped);*/
+                                        s_APPLGC_PulseDropped);
+    Ret_e |= CL42T_AddMotorConfiguration(CL42T_MOTOR_2,motor2_config, TRUE,
+                                        s_APPLGC_MotorDiag,
+                                        s_APPLGC_PulseDropped);
+    Ret_e |= APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
     
     
 
@@ -462,7 +496,7 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    //Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
+    Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
     if(Ret_e < RC_OK)
     {
         ASSERT((t_uint16)Ret_e);
@@ -478,25 +512,30 @@ typedef enum
     APPLGC_MOTOR_STATE_SET_CMD,
     APPLGC_MOTOR_STATE_WAIT,
 } t_eAPPLGC_MotorSts;
+
+t_sint16 factorPulses = 1;
+t_sint16 g_factdir_u8 = 1;
 static t_eReturnCode s_APPLGC_Operational(void)
 {
+    static t_uint8 idxPulses_u8 = 0;
+    static t_bool setPerturb_b = FALSE;
     t_eReturnCode Ret_e = RC_OK; 
-    if(g_resetSrvState_b == (t_bool)TRUE)
-    {
-        g_resetSrvState_b = FALSE;
-        Ret_e = FMKIO_Set_OutPwmSigPulses(FMKIO_OUTPUT_SIGPWM_7, 1000, 500, 5000);
-
-        if(Ret_e == RC_OK)
-        {   
-            Ret_e = FMKIO_Set_OutPwmSigPulses(FMKIO_OUTPUT_SIGPWM_8, 1000, 500, 0);
-        }
-    }
-    /*t_uint16 mototbitSts_u16;
+    
+    // if(g_resetSrvState_b == TRUE)
+    // {
+    //     g_resetSrvState_b = FALSE;
+    //     Ret_e = FMKIO_Set_OutPwmSigPulses(FMKIO_OUTPUT_SIGPWM_7, 1000, 500, 500);  
+    //     Ret_e = FMKIO_Set_OutPwmSigPulses(FMKIO_OUTPUT_SIGPWM_8, 1000, 500, 500);  
+    // }
+    //Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_15, 500);
+    t_uint16 mototbitSts_u16;
+    t_uint16 nbcmd_ua16[6] = {200,500,100,400,200,1500};
+    t_uint16 nbcfreq_ua16[6] = {2000,5000,1000,4000,2000,850};
 
     
     t_sCL42T_SetMotorValue motorValue_s = {
         .frequency_u32 = 1000,
-        .nbPulses_s32  = 6000,
+        .nbPulses_s32  = 600,
     };
     t_float32 anaMeasure_f32;
     static t_eAPPLGC_MotorSts motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
@@ -504,19 +543,33 @@ static t_eReturnCode s_APPLGC_Operational(void)
     switch (motorSs_e)
     {
         case APPLGC_MOTOR_STATE_SET_CMD:
-            Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_1, motorValue_s);
-
-            if(Ret_e == RC_OK)
+            setPerturb_b = FALSE;
+            for ( ; (idxPulses_u8 < 6) && (Ret_e == RC_OK) ; )
             {
-                motorValue_s.nbPulses_s32 = 2000;
+                motorValue_s.nbPulses_s32 = factorPulses * nbcmd_ua16[idxPulses_u8] * g_factdir_u8;
+                motorValue_s.frequency_u32 = nbcfreq_ua16[idxPulses_u8];
                 Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_1, motorValue_s);
+                Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_2, motorValue_s);
+
+                if(Ret_e == RC_OK)
+                {
+                    idxPulses_u8++;
+                }
+
             }
-            if(Ret_e == RC_OK)
+
+            if((Ret_e == RC_OK) || (RC_WARNING_BUSY) || (Ret_e == RC_WARNING_LIMIT_REACHED))
             {
-                FMKSRL_LOG("CHange state waiting\r\n");
+                FMKSRL_LOG("[LGC] CHange state waiting\r\n");
                 motorSs_e = APPLGC_MOTOR_STATE_WAIT;
             }
-        break;
+
+            if(idxPulses_u8 >= 6)
+            {
+                idxPulses_u8 = 0;
+            }
+            FMKSRL_LOG("[LGC] Set command, retcode : %d\r\n", Ret_e);
+            break;
         case APPLGC_MOTOR_STATE_WAIT:
             Ret_e = CL42T_GetMotorInfo(CL42T_MOTOR_1, &mototbitSts_u16);
 
@@ -524,15 +577,26 @@ static t_eReturnCode s_APPLGC_Operational(void)
             {
                 if(GETBIT(mototbitSts_u16, CL42T_BITFIELD_MOTOR_ON) == BIT_IS_RESET_16B)
                 {
-                    FMKSRL_LOG("CHange state setcmd\r\n");
+                    FMKSRL_LOG("[LGC] Motor OFF, change state to setcmd\r\n");
+                    factorPulses *= (t_sint8)-1;
                     motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
+                }
+                else 
+                {
+                    if(setPerturb_b == FALSE)
+                    {
+                        CL42T_Test_SetPerturb(CL42T_MOTOR_1, FALSE);
+                        CL42T_Test_SetPerturb(CL42T_MOTOR_2, FALSE);
+                        FMKSRL_LOG("[LGC] : Set Perturbation\r\n");
+                        setPerturb_b = TRUE;
+                    }
                 }
             }
         break;
         default:
         break;
 
-    }*/
+    }
            /*t_uint8 idxAgent_u8;
         
         if(g_resetSrvState_b == (t_bool)True)
@@ -716,6 +780,7 @@ static void s_APPLGC_PulseDropped(t_eCL42T_MotorId f_MotorID_e,
                                     t_uint16 f_pulseDropped_u16, 
                                     t_eCL42T_MotorDirection f_direction_e)
 {
+    g_factdir_u8 *= -1;
     FMKSRL_LOG("Motor Id : %d, pulse dropped %d in dir %d\r\n", f_MotorID_e, f_pulseDropped_u16, f_direction_e);
 }
 
@@ -731,6 +796,7 @@ static void s_APPLGC_FastTask(void)
     t_eReturnCode Ret_e = RC_OK;
 
     Ret_e = CL42T_Cyclic();
+
 
     if(Ret_e < RC_OK)
     {

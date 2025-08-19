@@ -462,7 +462,7 @@ HAL_StatusTypeDef FMKTIM_HAL_TIM_Base_Stop(TIM_HandleTypeDef *htim, uint32_t Cha
  *********************************/
 HAL_StatusTypeDef FMKTIM_HAL_TIM_Base_Start_IT(TIM_HandleTypeDef *htim, uint32_t Channel)
 {UNUSED(Channel); 
-    return HAL_TIM_Base_Start(htim);
+    return HAL_TIM_Base_Start_IT(htim);
 }
 
 /*********************************

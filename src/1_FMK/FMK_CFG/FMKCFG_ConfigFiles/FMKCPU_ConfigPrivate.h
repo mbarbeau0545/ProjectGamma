@@ -393,17 +393,15 @@
 
     /**< Set the NVIC Priority for all NVIC_IRqn Priority */
     const t_eFMKCPU_NVICPriority c_FMKCPU_IRQNPriority_ae[FMKCPU_NVIC_NB] = {
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  WWDG_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  PVD_PVM_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_TAMP_LSECSS_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_WKUP_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FLASH_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RCC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI0_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI2_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI4_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC1_2_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC3_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC4_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC5_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP1_2_3_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP4_5_6_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP7_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  CORDIC_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  CRS_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel1_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel2_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel3_IRQn
@@ -411,89 +409,91 @@
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel5_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel6_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel7_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC1_2_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USB_HP_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USB_LP_IRQn
-        FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN1_IT0_IRQn
-        FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN1_IT1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI9_5_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM1_BRK_TIM15_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM1_UP_TIM16_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM1_TRG_COM_TIM17_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM1_CC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM2_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM4_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C1_EV_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C1_ER_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C2_EV_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C2_ER_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI2_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART2_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI15_10_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_Alarm_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USBWakeUp_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM8_BRK_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM8_UP_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM8_TRG_COM_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM8_CC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FMC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  LPTIM1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM5_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART4_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART5_IRQn
-        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM6_DAC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM7_DAC_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel8_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel1_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel2_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel3_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel4_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel5_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC4_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  ADC5_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UCPD1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP1_2_3_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP4_5_6_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  COMP7_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_Master_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIMA_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIMB_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIMC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIMD_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIME_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_FLT_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  HRTIM1_TIMF_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  CRS_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SAI1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM20_BRK_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM20_UP_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM20_TRG_COM_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  TIM20_CC_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FPU_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C4_EV_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C4_ER_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI4_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel6_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel7_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel8_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMAMUX_OVR_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI0_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI15_10_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI2_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI3_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI4_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  EXTI9_5_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN1_IT0_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN1_IT1_IRQn
         FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN2_IT0_IRQn
         FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN2_IT1_IRQn
         FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN3_IT0_IRQn
         FMKCPU_NVIC_PRIORITY_HIGH,                        //  FDCAN3_IT1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RNG_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  LPUART1_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C3_EV_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C3_ER_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMAMUX_OVR_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  QUADSPI_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA1_Channel8_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel6_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel7_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  DMA2_Channel8_IRQn
-        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  CORDIC_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FLASH_IRQn
         FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FMAC_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  FMC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  FPU_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_FLT_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_Master_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIMA_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIMB_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIMC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIMD_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIME_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  HRTIM1_TIMF_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C1_ER_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C1_EV_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C2_ER_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C2_EV_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C3_ER_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C3_EV_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C4_ER_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  I2C4_EV_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  LPTIM1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  LPUART1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  PVD_PVM_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  QUADSPI_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RCC_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RNG_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_Alarm_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_TAMP_LSECSS_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  RTC_WKUP_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SAI1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI2_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI3_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  SPI4_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM1_BRK_TIM15_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM1_CC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM1_TRG_COM_TIM17_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM1_UP_TIM16_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM2_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM20_BRK_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM20_CC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM20_TRG_COM_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM20_UP_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM3_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM4_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM5_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM6_DAC_IRQn
+        FMKCPU_NVIC_PRIORITY_LOW,                         //  TIM7_DAC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM8_BRK_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM8_CC_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM8_TRG_COM_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  TIM8_UP_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART4_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UART5_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  UCPD1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART1_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART2_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USART3_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USB_HP_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USB_LP_IRQn
+        FMKCPU_NVIC_PRIORITY_MEDIUM,                      //  USBWakeUp_IRQn
+        FMKCPU_NVIC_PRIORITY_HIGH,                        //  WWDG_IRQn
     };
 
     /**< Referencing all Enable/Disable Rcc clock function */

@@ -18,7 +18,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define CL42T_DEAD_TIME_TRANSITION ((t_uint16)500)
+    #define CL42T_DEAD_TIME_TRANSITION ((t_uint16)200)
 
     /**
      * @brief Define for CL42T Diagnotic Pulse

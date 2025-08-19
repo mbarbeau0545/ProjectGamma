@@ -145,38 +145,32 @@ t_eReturnCode FMKCPU_Get_BspIRQNType(t_eFMKCPU_IRQNType f_IRQN_e, IRQn_Type *f_b
         switch (f_IRQN_e)
         {
             /* CAUTION : Automatic generated code section for IRQNType switch case: Start */
-            case FMKCPU_NVIC_WWDG_IRQN:
-                *f_bspIRQN_pe = WWDG_IRQn;
+            case FMKCPU_NVIC_ADC1_2_IRQN:
+                *f_bspIRQN_pe = ADC1_2_IRQn;
                 break;
-            case FMKCPU_NVIC_PVD_PVM_IRQN:
-                *f_bspIRQN_pe = PVD_PVM_IRQn;
+            case FMKCPU_NVIC_ADC3_IRQN:
+                *f_bspIRQN_pe = ADC3_IRQn;
                 break;
-            case FMKCPU_NVIC_RTC_TAMP_LSECSS_IRQN:
-                *f_bspIRQN_pe = RTC_TAMP_LSECSS_IRQn;
+            case FMKCPU_NVIC_ADC4_IRQN:
+                *f_bspIRQN_pe = ADC4_IRQn;
                 break;
-            case FMKCPU_NVIC_RTC_WKUP_IRQN:
-                *f_bspIRQN_pe = RTC_WKUP_IRQn;
+            case FMKCPU_NVIC_ADC5_IRQN:
+                *f_bspIRQN_pe = ADC5_IRQn;
                 break;
-            case FMKCPU_NVIC_FLASH_IRQN:
-                *f_bspIRQN_pe = FLASH_IRQn;
+            case FMKCPU_NVIC_COMP1_2_3_IRQN:
+                *f_bspIRQN_pe = COMP1_2_3_IRQn;
                 break;
-            case FMKCPU_NVIC_RCC_IRQN:
-                *f_bspIRQN_pe = RCC_IRQn;
+            case FMKCPU_NVIC_COMP4_5_6_IRQN:
+                *f_bspIRQN_pe = COMP4_5_6_IRQn;
                 break;
-            case FMKCPU_NVIC_EXTI0_IRQN:
-                *f_bspIRQN_pe = EXTI0_IRQn;
+            case FMKCPU_NVIC_COMP7_IRQN:
+                *f_bspIRQN_pe = COMP7_IRQn;
                 break;
-            case FMKCPU_NVIC_EXTI1_IRQN:
-                *f_bspIRQN_pe = EXTI1_IRQn;
+            case FMKCPU_NVIC_CORDIC_IRQN:
+                *f_bspIRQN_pe = CORDIC_IRQn;
                 break;
-            case FMKCPU_NVIC_EXTI2_IRQN:
-                *f_bspIRQN_pe = EXTI2_IRQn;
-                break;
-            case FMKCPU_NVIC_EXTI3_IRQN:
-                *f_bspIRQN_pe = EXTI3_IRQn;
-                break;
-            case FMKCPU_NVIC_EXTI4_IRQN:
-                *f_bspIRQN_pe = EXTI4_IRQn;
+            case FMKCPU_NVIC_CRS_IRQN:
+                *f_bspIRQN_pe = CRS_IRQn;
                 break;
             case FMKCPU_NVIC_DMA1_CHANNEL1_IRQN:
                 *f_bspIRQN_pe = DMA1_Channel1_IRQn;
@@ -199,119 +193,8 @@ t_eReturnCode FMKCPU_Get_BspIRQNType(t_eFMKCPU_IRQNType f_IRQN_e, IRQn_Type *f_b
             case FMKCPU_NVIC_DMA1_CHANNEL7_IRQN:
                 *f_bspIRQN_pe = DMA1_Channel7_IRQn;
                 break;
-            case FMKCPU_NVIC_ADC1_2_IRQN:
-                *f_bspIRQN_pe = ADC1_2_IRQn;
-                break;
-            case FMKCPU_NVIC_USB_HP_IRQN:
-                *f_bspIRQN_pe = USB_HP_IRQn;
-                break;
-            case FMKCPU_NVIC_USB_LP_IRQN:
-                *f_bspIRQN_pe = USB_LP_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN1_IT0_IRQN:
-                *f_bspIRQN_pe = FDCAN1_IT0_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN1_IT1_IRQN:
-                *f_bspIRQN_pe = FDCAN1_IT1_IRQn;
-                break;
-            case FMKCPU_NVIC_EXTI9_5_IRQN:
-                *f_bspIRQN_pe = EXTI9_5_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN:
-                *f_bspIRQN_pe = TIM1_BRK_TIM15_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM1_UP_TIM16_IRQN:
-                *f_bspIRQN_pe = TIM1_UP_TIM16_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN:
-                *f_bspIRQN_pe = TIM1_TRG_COM_TIM17_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM1_CC_IRQN:
-                *f_bspIRQN_pe = TIM1_CC_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM2_IRQN:
-                *f_bspIRQN_pe = TIM2_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM3_IRQN:
-                *f_bspIRQN_pe = TIM3_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM4_IRQN:
-                *f_bspIRQN_pe = TIM4_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C1_EV_IRQN:
-                *f_bspIRQN_pe = I2C1_EV_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C1_ER_IRQN:
-                *f_bspIRQN_pe = I2C1_ER_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C2_EV_IRQN:
-                *f_bspIRQN_pe = I2C2_EV_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C2_ER_IRQN:
-                *f_bspIRQN_pe = I2C2_ER_IRQn;
-                break;
-            case FMKCPU_NVIC_SPI1_IRQN:
-                *f_bspIRQN_pe = SPI1_IRQn;
-                break;
-            case FMKCPU_NVIC_SPI2_IRQN:
-                *f_bspIRQN_pe = SPI2_IRQn;
-                break;
-            case FMKCPU_NVIC_USART1_IRQN:
-                *f_bspIRQN_pe = USART1_IRQn;
-                break;
-            case FMKCPU_NVIC_USART2_IRQN:
-                *f_bspIRQN_pe = USART2_IRQn;
-                break;
-            case FMKCPU_NVIC_USART3_IRQN:
-                *f_bspIRQN_pe = USART3_IRQn;
-                break;
-            case FMKCPU_NVIC_EXTI15_10_IRQN:
-                *f_bspIRQN_pe = EXTI15_10_IRQn;
-                break;
-            case FMKCPU_NVIC_RTC_ALARM_IRQN:
-                *f_bspIRQN_pe = RTC_Alarm_IRQn;
-                break;
-            case FMKCPU_NVIC_USBWAKEUP_IRQN:
-                *f_bspIRQN_pe = USBWakeUp_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM8_BRK_IRQN:
-                *f_bspIRQN_pe = TIM8_BRK_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM8_UP_IRQN:
-                *f_bspIRQN_pe = TIM8_UP_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM8_TRG_COM_IRQN:
-                *f_bspIRQN_pe = TIM8_TRG_COM_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM8_CC_IRQN:
-                *f_bspIRQN_pe = TIM8_CC_IRQn;
-                break;
-            case FMKCPU_NVIC_ADC3_IRQN:
-                *f_bspIRQN_pe = ADC3_IRQn;
-                break;
-            case FMKCPU_NVIC_FMC_IRQN:
-                *f_bspIRQN_pe = FMC_IRQn;
-                break;
-            case FMKCPU_NVIC_LPTIM1_IRQN:
-                *f_bspIRQN_pe = LPTIM1_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM5_IRQN:
-                *f_bspIRQN_pe = TIM5_IRQn;
-                break;
-            case FMKCPU_NVIC_SPI3_IRQN:
-                *f_bspIRQN_pe = SPI3_IRQn;
-                break;
-            case FMKCPU_NVIC_UART4_IRQN:
-                *f_bspIRQN_pe = UART4_IRQn;
-                break;
-            case FMKCPU_NVIC_UART5_IRQN:
-                *f_bspIRQN_pe = UART5_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM6_DAC_IRQN:
-                *f_bspIRQN_pe = TIM6_DAC_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM7_DAC_IRQN:
-                *f_bspIRQN_pe = TIM7_DAC_IRQn;
+            case FMKCPU_NVIC_DMA1_CHANNEL8_IRQN:
+                *f_bspIRQN_pe = DMA1_Channel8_IRQn;
                 break;
             case FMKCPU_NVIC_DMA2_CHANNEL1_IRQN:
                 *f_bspIRQN_pe = DMA2_Channel1_IRQn;
@@ -328,23 +211,71 @@ t_eReturnCode FMKCPU_Get_BspIRQNType(t_eFMKCPU_IRQNType f_IRQN_e, IRQn_Type *f_b
             case FMKCPU_NVIC_DMA2_CHANNEL5_IRQN:
                 *f_bspIRQN_pe = DMA2_Channel5_IRQn;
                 break;
-            case FMKCPU_NVIC_ADC4_IRQN:
-                *f_bspIRQN_pe = ADC4_IRQn;
+            case FMKCPU_NVIC_DMA2_CHANNEL6_IRQN:
+                *f_bspIRQN_pe = DMA2_Channel6_IRQn;
                 break;
-            case FMKCPU_NVIC_ADC5_IRQN:
-                *f_bspIRQN_pe = ADC5_IRQn;
+            case FMKCPU_NVIC_DMA2_CHANNEL7_IRQN:
+                *f_bspIRQN_pe = DMA2_Channel7_IRQn;
                 break;
-            case FMKCPU_NVIC_UCPD1_IRQN:
-                *f_bspIRQN_pe = UCPD1_IRQn;
+            case FMKCPU_NVIC_DMA2_CHANNEL8_IRQN:
+                *f_bspIRQN_pe = DMA2_Channel8_IRQn;
                 break;
-            case FMKCPU_NVIC_COMP1_2_3_IRQN:
-                *f_bspIRQN_pe = COMP1_2_3_IRQn;
+            case FMKCPU_NVIC_DMAMUX_OVR_IRQN:
+                *f_bspIRQN_pe = DMAMUX_OVR_IRQn;
                 break;
-            case FMKCPU_NVIC_COMP4_5_6_IRQN:
-                *f_bspIRQN_pe = COMP4_5_6_IRQn;
+            case FMKCPU_NVIC_EXTI0_IRQN:
+                *f_bspIRQN_pe = EXTI0_IRQn;
                 break;
-            case FMKCPU_NVIC_COMP7_IRQN:
-                *f_bspIRQN_pe = COMP7_IRQn;
+            case FMKCPU_NVIC_EXTI1_IRQN:
+                *f_bspIRQN_pe = EXTI1_IRQn;
+                break;
+            case FMKCPU_NVIC_EXTI15_10_IRQN:
+                *f_bspIRQN_pe = EXTI15_10_IRQn;
+                break;
+            case FMKCPU_NVIC_EXTI2_IRQN:
+                *f_bspIRQN_pe = EXTI2_IRQn;
+                break;
+            case FMKCPU_NVIC_EXTI3_IRQN:
+                *f_bspIRQN_pe = EXTI3_IRQn;
+                break;
+            case FMKCPU_NVIC_EXTI4_IRQN:
+                *f_bspIRQN_pe = EXTI4_IRQn;
+                break;
+            case FMKCPU_NVIC_EXTI9_5_IRQN:
+                *f_bspIRQN_pe = EXTI9_5_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN1_IT0_IRQN:
+                *f_bspIRQN_pe = FDCAN1_IT0_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN1_IT1_IRQN:
+                *f_bspIRQN_pe = FDCAN1_IT1_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN2_IT0_IRQN:
+                *f_bspIRQN_pe = FDCAN2_IT0_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN2_IT1_IRQN:
+                *f_bspIRQN_pe = FDCAN2_IT1_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN3_IT0_IRQN:
+                *f_bspIRQN_pe = FDCAN3_IT0_IRQn;
+                break;
+            case FMKCPU_NVIC_FDCAN3_IT1_IRQN:
+                *f_bspIRQN_pe = FDCAN3_IT1_IRQn;
+                break;
+            case FMKCPU_NVIC_FLASH_IRQN:
+                *f_bspIRQN_pe = FLASH_IRQn;
+                break;
+            case FMKCPU_NVIC_FMAC_IRQN:
+                *f_bspIRQN_pe = FMAC_IRQn;
+                break;
+            case FMKCPU_NVIC_FMC_IRQN:
+                *f_bspIRQN_pe = FMC_IRQn;
+                break;
+            case FMKCPU_NVIC_FPU_IRQN:
+                *f_bspIRQN_pe = FPU_IRQn;
+                break;
+            case FMKCPU_NVIC_HRTIM1_FLT_IRQN:
+                *f_bspIRQN_pe = HRTIM1_FLT_IRQn;
                 break;
             case FMKCPU_NVIC_HRTIM1_MASTER_IRQN:
                 *f_bspIRQN_pe = HRTIM1_Master_IRQn;
@@ -364,89 +295,158 @@ t_eReturnCode FMKCPU_Get_BspIRQNType(t_eFMKCPU_IRQNType f_IRQN_e, IRQn_Type *f_b
             case FMKCPU_NVIC_HRTIM1_TIME_IRQN:
                 *f_bspIRQN_pe = HRTIM1_TIME_IRQn;
                 break;
-            case FMKCPU_NVIC_HRTIM1_FLT_IRQN:
-                *f_bspIRQN_pe = HRTIM1_FLT_IRQn;
-                break;
             case FMKCPU_NVIC_HRTIM1_TIMF_IRQN:
                 *f_bspIRQN_pe = HRTIM1_TIMF_IRQn;
                 break;
-            case FMKCPU_NVIC_CRS_IRQN:
-                *f_bspIRQN_pe = CRS_IRQn;
+            case FMKCPU_NVIC_I2C1_ER_IRQN:
+                *f_bspIRQN_pe = I2C1_ER_IRQn;
                 break;
-            case FMKCPU_NVIC_SAI1_IRQN:
-                *f_bspIRQN_pe = SAI1_IRQn;
+            case FMKCPU_NVIC_I2C1_EV_IRQN:
+                *f_bspIRQN_pe = I2C1_EV_IRQn;
                 break;
-            case FMKCPU_NVIC_TIM20_BRK_IRQN:
-                *f_bspIRQN_pe = TIM20_BRK_IRQn;
+            case FMKCPU_NVIC_I2C2_ER_IRQN:
+                *f_bspIRQN_pe = I2C2_ER_IRQn;
                 break;
-            case FMKCPU_NVIC_TIM20_UP_IRQN:
-                *f_bspIRQN_pe = TIM20_UP_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM20_TRG_COM_IRQN:
-                *f_bspIRQN_pe = TIM20_TRG_COM_IRQn;
-                break;
-            case FMKCPU_NVIC_TIM20_CC_IRQN:
-                *f_bspIRQN_pe = TIM20_CC_IRQn;
-                break;
-            case FMKCPU_NVIC_FPU_IRQN:
-                *f_bspIRQN_pe = FPU_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C4_EV_IRQN:
-                *f_bspIRQN_pe = I2C4_EV_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C4_ER_IRQN:
-                *f_bspIRQN_pe = I2C4_ER_IRQn;
-                break;
-            case FMKCPU_NVIC_SPI4_IRQN:
-                *f_bspIRQN_pe = SPI4_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN2_IT0_IRQN:
-                *f_bspIRQN_pe = FDCAN2_IT0_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN2_IT1_IRQN:
-                *f_bspIRQN_pe = FDCAN2_IT1_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN3_IT0_IRQN:
-                *f_bspIRQN_pe = FDCAN3_IT0_IRQn;
-                break;
-            case FMKCPU_NVIC_FDCAN3_IT1_IRQN:
-                *f_bspIRQN_pe = FDCAN3_IT1_IRQn;
-                break;
-            case FMKCPU_NVIC_RNG_IRQN:
-                *f_bspIRQN_pe = RNG_IRQn;
-                break;
-            case FMKCPU_NVIC_LPUART1_IRQN:
-                *f_bspIRQN_pe = LPUART1_IRQn;
-                break;
-            case FMKCPU_NVIC_I2C3_EV_IRQN:
-                *f_bspIRQN_pe = I2C3_EV_IRQn;
+            case FMKCPU_NVIC_I2C2_EV_IRQN:
+                *f_bspIRQN_pe = I2C2_EV_IRQn;
                 break;
             case FMKCPU_NVIC_I2C3_ER_IRQN:
                 *f_bspIRQN_pe = I2C3_ER_IRQn;
                 break;
-            case FMKCPU_NVIC_DMAMUX_OVR_IRQN:
-                *f_bspIRQN_pe = DMAMUX_OVR_IRQn;
+            case FMKCPU_NVIC_I2C3_EV_IRQN:
+                *f_bspIRQN_pe = I2C3_EV_IRQn;
+                break;
+            case FMKCPU_NVIC_I2C4_ER_IRQN:
+                *f_bspIRQN_pe = I2C4_ER_IRQn;
+                break;
+            case FMKCPU_NVIC_I2C4_EV_IRQN:
+                *f_bspIRQN_pe = I2C4_EV_IRQn;
+                break;
+            case FMKCPU_NVIC_LPTIM1_IRQN:
+                *f_bspIRQN_pe = LPTIM1_IRQn;
+                break;
+            case FMKCPU_NVIC_LPUART1_IRQN:
+                *f_bspIRQN_pe = LPUART1_IRQn;
+                break;
+            case FMKCPU_NVIC_PVD_PVM_IRQN:
+                *f_bspIRQN_pe = PVD_PVM_IRQn;
                 break;
             case FMKCPU_NVIC_QUADSPI_IRQN:
                 *f_bspIRQN_pe = QUADSPI_IRQn;
                 break;
-            case FMKCPU_NVIC_DMA1_CHANNEL8_IRQN:
-                *f_bspIRQN_pe = DMA1_Channel8_IRQn;
+            case FMKCPU_NVIC_RCC_IRQN:
+                *f_bspIRQN_pe = RCC_IRQn;
                 break;
-            case FMKCPU_NVIC_DMA2_CHANNEL6_IRQN:
-                *f_bspIRQN_pe = DMA2_Channel6_IRQn;
+            case FMKCPU_NVIC_RNG_IRQN:
+                *f_bspIRQN_pe = RNG_IRQn;
                 break;
-            case FMKCPU_NVIC_DMA2_CHANNEL7_IRQN:
-                *f_bspIRQN_pe = DMA2_Channel7_IRQn;
+            case FMKCPU_NVIC_RTC_ALARM_IRQN:
+                *f_bspIRQN_pe = RTC_Alarm_IRQn;
                 break;
-            case FMKCPU_NVIC_DMA2_CHANNEL8_IRQN:
-                *f_bspIRQN_pe = DMA2_Channel8_IRQn;
+            case FMKCPU_NVIC_RTC_TAMP_LSECSS_IRQN:
+                *f_bspIRQN_pe = RTC_TAMP_LSECSS_IRQn;
                 break;
-            case FMKCPU_NVIC_CORDIC_IRQN:
-                *f_bspIRQN_pe = CORDIC_IRQn;
+            case FMKCPU_NVIC_RTC_WKUP_IRQN:
+                *f_bspIRQN_pe = RTC_WKUP_IRQn;
                 break;
-            case FMKCPU_NVIC_FMAC_IRQN:
-                *f_bspIRQN_pe = FMAC_IRQn;
+            case FMKCPU_NVIC_SAI1_IRQN:
+                *f_bspIRQN_pe = SAI1_IRQn;
+                break;
+            case FMKCPU_NVIC_SPI1_IRQN:
+                *f_bspIRQN_pe = SPI1_IRQn;
+                break;
+            case FMKCPU_NVIC_SPI2_IRQN:
+                *f_bspIRQN_pe = SPI2_IRQn;
+                break;
+            case FMKCPU_NVIC_SPI3_IRQN:
+                *f_bspIRQN_pe = SPI3_IRQn;
+                break;
+            case FMKCPU_NVIC_SPI4_IRQN:
+                *f_bspIRQN_pe = SPI4_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN:
+                *f_bspIRQN_pe = TIM1_BRK_TIM15_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM1_CC_IRQN:
+                *f_bspIRQN_pe = TIM1_CC_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN:
+                *f_bspIRQN_pe = TIM1_TRG_COM_TIM17_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM1_UP_TIM16_IRQN:
+                *f_bspIRQN_pe = TIM1_UP_TIM16_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM2_IRQN:
+                *f_bspIRQN_pe = TIM2_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM20_BRK_IRQN:
+                *f_bspIRQN_pe = TIM20_BRK_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM20_CC_IRQN:
+                *f_bspIRQN_pe = TIM20_CC_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM20_TRG_COM_IRQN:
+                *f_bspIRQN_pe = TIM20_TRG_COM_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM20_UP_IRQN:
+                *f_bspIRQN_pe = TIM20_UP_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM3_IRQN:
+                *f_bspIRQN_pe = TIM3_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM4_IRQN:
+                *f_bspIRQN_pe = TIM4_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM5_IRQN:
+                *f_bspIRQN_pe = TIM5_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM6_DAC_IRQN:
+                *f_bspIRQN_pe = TIM6_DAC_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM7_DAC_IRQN:
+                *f_bspIRQN_pe = TIM7_DAC_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM8_BRK_IRQN:
+                *f_bspIRQN_pe = TIM8_BRK_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM8_CC_IRQN:
+                *f_bspIRQN_pe = TIM8_CC_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM8_TRG_COM_IRQN:
+                *f_bspIRQN_pe = TIM8_TRG_COM_IRQn;
+                break;
+            case FMKCPU_NVIC_TIM8_UP_IRQN:
+                *f_bspIRQN_pe = TIM8_UP_IRQn;
+                break;
+            case FMKCPU_NVIC_UART4_IRQN:
+                *f_bspIRQN_pe = UART4_IRQn;
+                break;
+            case FMKCPU_NVIC_UART5_IRQN:
+                *f_bspIRQN_pe = UART5_IRQn;
+                break;
+            case FMKCPU_NVIC_UCPD1_IRQN:
+                *f_bspIRQN_pe = UCPD1_IRQn;
+                break;
+            case FMKCPU_NVIC_USART1_IRQN:
+                *f_bspIRQN_pe = USART1_IRQn;
+                break;
+            case FMKCPU_NVIC_USART2_IRQN:
+                *f_bspIRQN_pe = USART2_IRQn;
+                break;
+            case FMKCPU_NVIC_USART3_IRQN:
+                *f_bspIRQN_pe = USART3_IRQn;
+                break;
+            case FMKCPU_NVIC_USB_HP_IRQN:
+                *f_bspIRQN_pe = USB_HP_IRQn;
+                break;
+            case FMKCPU_NVIC_USB_LP_IRQN:
+                *f_bspIRQN_pe = USB_LP_IRQn;
+                break;
+            case FMKCPU_NVIC_USBWAKEUP_IRQN:
+                *f_bspIRQN_pe = USBWakeUp_IRQn;
+                break;
+            case FMKCPU_NVIC_WWDG_IRQN:
+                *f_bspIRQN_pe = WWDG_IRQn;
                 break;
             /* CAUTION : Automatic generated code section for IRQNType switch case: End */
             case FMKCPU_NVIC_NB:

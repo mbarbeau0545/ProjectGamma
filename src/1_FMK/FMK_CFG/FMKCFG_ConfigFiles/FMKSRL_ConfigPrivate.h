@@ -227,7 +227,7 @@
 
     //--------- Tx, Rx Buffer for Serial Line 2 ---------//
     t_uint8 g_SrlLine_2_RxBuffer_ua8[256];
-    t_uint8 g_SrlLine_2_TxBuffer_ua8[1024];
+    t_uint8 g_SrlLine_2_TxBuffer_ua8[2048];
 
     //--------- Tx, Rx Buffer for Serial Line 3 ---------//
     t_uint8 g_SrlLine_3_RxBuffer_ua8[0];
@@ -263,7 +263,7 @@
             .Rx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_RxBuffer_ua8[0]),
             .Rx_bufferSize_u16 = (t_uint16)256,
             .Tx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_TxBuffer_ua8[0]),
-            .Tx_bufferSize_u16 = (t_uint16)1024,
+            .Tx_bufferSize_u16 = (t_uint16)2048,
         },
         [FMKSRL_SERIAL_LINE_3] = {
             .c_clockPort_e = FMKCPU_RCC_CLK_USART3,
