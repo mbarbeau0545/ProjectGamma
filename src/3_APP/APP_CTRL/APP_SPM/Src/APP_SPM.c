@@ -45,8 +45,9 @@ typedef struct
 {
     t_uint8 status_u8;
     t_uint16 value_u16;
-    t_sAPPSPM_ItemPrmCfg * rawInfo_ps;
+    t_sAPPSPM_ItemPrmCfg * prmCfg_ps;
 } t_sAPPSPM_ItemPrmInfo;
+
 /* CAUTION : Automatic generated code section : Start */
 
 /* CAUTION : Automatic generated code section : End */
@@ -66,6 +67,7 @@ static t_sAPPSPM_ItemPrmInfo g_ItemPrmInfo_as[APPSPM_PRM_NB];
  * @brief Container for Module State Machine
  */
 static t_eCyclicModState g_APPSM_ModState_e = STATE_CYCLIC_CFG;
+
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
@@ -90,6 +92,12 @@ static t_eReturnCode s_APPSM_ConfigurationState(void);
 *
 */
 static t_eReturnCode s_APPSM_Operational(void);
+/**
+*
+*	@brief  Call driver cyclic function
+*
+*/
+static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_float32 f_value_f32);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -98,13 +106,13 @@ static t_eReturnCode s_APPSM_Operational(void);
  *********************************/
 t_eReturnCode APPSPM_Init(void)
 {
-    t_uint8 idxPrm_u8;
+    t_uint16 idxPrm_u16;
 
-    for(idxPrm_u8 = (t_uint8)0 ; idxPrm_u8 < APPSPM_PRM_NB ; idxPrm_u8++)
+    for(idxPrm_u16 = (t_uint8)0 ; idxPrm_u16 < APPSPM_PRM_NB ; idxPrm_u16++)
     {
-        SETBIT_8B(g_ItemPrmInfo_as[idxPrm_u8].status_u8, APPSPM_PRMSTATE_BIT_NO_OPE);
-        g_ItemPrmInfo_as[idxPrm_u8].value_u16 = (t_uint16)0;
-        g_ItemPrmInfo_as[idxPrm_u8].rawInfo_ps = (t_sAPPSPM_ItemPrmCfg *)(&c_AppSpm_ItemPrmInfo_as[idxPrm_u8]);
+        SETBIT_8B(g_ItemPrmInfo_as[idxPrm_u16].status_u8, APPSPM_PRMSTATE_BIT_NO_OPE);
+        g_ItemPrmInfo_as[idxPrm_u16].value_u16 = (t_uint16)0;
+        g_ItemPrmInfo_as[idxPrm_u16].prmCfg_ps = (t_sAPPSPM_ItemPrmCfg *)(&c_AppSpm_ItemPrmInfo_as[idxPrm_u16]);
     }
     return RC_OK;
 }
@@ -181,32 +189,6 @@ t_eReturnCode APPSPM_SetState(t_eCyclicModState f_State_e)
     g_APPSM_ModState_e = f_State_e;
     return RC_OK;
 }
-//********************************************************************************
-//                      Local functions - Implementation
-//********************************************************************************
-/*********************************
- * s_APPSM_ConfigurationState
- *********************************/
-static t_eReturnCode s_APPSM_ConfigurationState(void)
-{
-    t_uint8 idxParm_u8;
-
-    //---- for now, no EEPROM so we take the default value instead ----//
-    for(idxParm_u8 = (t_uint8)0 ; idxParm_u8 < APPSPM_PRM_NB ; idxParm_u8++)
-    {
-        g_ItemPrmInfo_as[idxParm_u8].value_u16 = g_ItemPrmInfo_as[idxParm_u8].rawInfo_ps->DefaultItemVal_u16;
-    }
-    
-    return RC_OK;
-}      
-
-/*********************************
- * s_APPSM_Operational
- *********************************/
-static t_eReturnCode s_APPSM_Operational(void)
-{
-    return RC_OK;
-}
 
 /*********************************
  * APPSPM_GetParam
@@ -256,15 +238,15 @@ t_eReturnCode APPSPM_SetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uint16 f_prmValue_
     {
         itemPrmInfo_ps = (t_sAPPSPM_ItemPrmInfo *)(&g_ItemPrmInfo_as[f_itemId_e]);
 
-        if((f_prmValue_u16 > itemPrmInfo_ps->rawInfo_ps->minItemVal_u16)
-        && (f_prmValue_u16 < itemPrmInfo_ps->rawInfo_ps->maxItemVal_u16))
+        if((f_prmValue_u16 > itemPrmInfo_ps->prmCfg_ps->minItemVal_u16)
+        && (f_prmValue_u16 < itemPrmInfo_ps->prmCfg_ps->maxItemVal_u16))
         {
             itemPrmInfo_ps->value_u16 = f_prmValue_u16;
             Ret_e = RC_OK;
         }
         else 
         {
-            Ret_e = RC_ERROR_PARAM_INVALID;
+            Ret_e = RC_WARNING_LIMIT_REACHED;
         }
     }
 
@@ -300,15 +282,82 @@ t_eReturnCode APPSPM_GetParamInfo(	t_eAPPSPM_ItemPrm f_itemId_e,
     {
         itemPrmInfo_ps = (t_sAPPSPM_ItemPrmInfo *)(&g_ItemPrmInfo_as[f_itemId_e]);
 
-        *f_prmDefaultValue_pu16 = itemPrmInfo_ps->rawInfo_ps->DefaultItemVal_u16;
-        *f_prmMaxValue_pu16 = itemPrmInfo_ps->rawInfo_ps->maxItemVal_u16;
-        *f_prmMinValue_pu16 = itemPrmInfo_ps->rawInfo_ps->minItemVal_u16;
+        *f_prmDefaultValue_pu16 = itemPrmInfo_ps->prmCfg_ps->DefaultItemVal_u16;
+        *f_prmMaxValue_pu16 = itemPrmInfo_ps->prmCfg_ps->maxItemVal_u16;
+        *f_prmMinValue_pu16 = itemPrmInfo_ps->prmCfg_ps->minItemVal_u16;
         Ret_e = RC_OK;
     }
 
     return Ret_e;
 }
 
+
+//********************************************************************************
+//                      Local functions - Implementation
+//********************************************************************************
+/*********************************
+ * s_APPSM_ConfigurationState
+ *********************************/
+static t_eReturnCode s_APPSM_ConfigurationState(void)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_uint8 idxParm_u8;
+
+    //---- for now, no EEPROM so we take the default value instead ----//
+    for(idxParm_u8 = (t_uint8)0 ; (idxParm_u8 < APPSPM_PRM_NB) && (Ret_e == RC_OK) ; idxParm_u8++)
+    {
+        g_ItemPrmInfo_as[idxParm_u8].value_u16 = g_ItemPrmInfo_as[idxParm_u8].prmCfg_ps->DefaultItemVal_u16;
+        if(c_AppSpm_ItemPrmInfo_as[idxParm_u8].signal_e < APPSIG_SIGNAL_NB)
+        {
+            Ret_e = APPSIG_AddRcvMsgCallback(   c_AppSpm_ItemPrmInfo_as[idxParm_u8].signal_e,
+                                                s_APPSPM_AppSigMsgRcvCallback);
+        }
+    }
+    
+    return Ret_e;
+}      
+
+/*********************************
+ * s_APPSM_Operational
+ *********************************/
+static t_eReturnCode s_APPSM_Operational(void)
+{  
+    return RC_OK;
+}
+
+/*********************************
+ * s_APPSPM_AppSigMsgRcvCallback
+ *********************************/
+static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_float32 f_value_f32)
+{
+    t_uint16 idxParam_u16;
+    t_bool msgInfoFound_b = FALSE;
+
+    if(f_prmSignal_e >= APPSIG_SIGNAL_NB)
+    {
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        for(idxParam_u16 = (t_uint16)0 ; 
+        (idxParam_u16 < (t_uint16)APPSPM_PRM_NB) && (msgInfoFound_b == FALSE) ; 
+        idxParam_u16++)
+        {
+            if(f_prmSignal_e == c_AppSpm_ItemPrmInfo_as[idxParam_u16].signal_e)
+            {
+                msgInfoFound_b = TRUE;
+                g_ItemPrmInfo_as[idxParam_u16].value_u16 = (t_uint16)f_value_f32;
+                //--- set flag for eeprom, once there will be one ----//
+            }
+        }
+        if(msgInfoFound_b == FALSE)
+        {
+            ASSERT((t_uint16)f_prmSignal_e);
+        }
+    }   
+
+    return;
+}
 #endif // APPSYS_MODULE_APP_SPM_ENABLE
 //************************************************************************************
 // End of File

@@ -41,12 +41,12 @@
     /**
      * @brief Buffer size for reception software queue.
      */
-    #define FMKFDCAN_RX_DATA_SIZE       (FMKFDCAN_DLC_8)
+    #define FMKFDCAN_RX_BUFFER_DATA_SIZE       (FMKFDCAN_DLC_8)
 
     /**
      * @brief Buffer size for transmission software queue.
      */
-    #define FMKFDCAN_TX_DATA_SIZE       (FMKFDCAN_DLC_8)
+    #define FMKFDCAN_TX_BUFFER_DATA_SIZE       (FMKFDCAN_DLC_8)
 
     /**
      * @brief Maximum number of RX event registrations.
@@ -188,7 +188,7 @@
     typedef struct __t_sFMKFDCAN_RxItemBuffer
     {
         FDCAN_RxHeaderTypeDef bspRxItem_s; /**< FDCAN BSP Rx header structure for frame details. */
-        t_uint8 data_ua8[FMKFDCAN_RX_DATA_SIZE];  /**< Data buffer for the received frame. */
+        t_uint8 data_ua8[FMKFDCAN_RX_BUFFER_DATA_SIZE];  /**< Data buffer for the received frame. */
     } t_sFMKFDCAN_RxItemBuffer;
 
     /**
@@ -197,7 +197,7 @@
     typedef struct 
     {
         FDCAN_TxHeaderTypeDef bspTxItem_s; /**< FDCAN BSP Tx header structure for frame details. */
-        t_uint8 data_ua8[FMKFDCAN_TX_DATA_SIZE];  /**< Data buffer for the frame to transmit. */
+        t_uint8 data_ua8[FMKFDCAN_TX_BUFFER_DATA_SIZE];  /**< Data buffer for the frame to transmit. */
     } t_sFMKFDCAN_TxItemBuffer;
 
     /**

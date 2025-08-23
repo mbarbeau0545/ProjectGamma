@@ -69,25 +69,151 @@
         }
     },
     "PARAMETERS": {
-        "MOTOR_X_KP": {
-            "id": "0",
-            "min": "0",
+        "MTR_PULSE_ITER_MAX": {
+            "id": "None",
+            "min": "1",
             "max": "65535",
-            "default": "0",
+            "default": "4000",
             "machine": 0
         },
-        "MOTOR_X_KI": {
-            "id": "1",
+        "MTR_XL_RAMP_CTRL_KFACTOR": {
+            "id": "None",
             "min": "0",
             "max": "65535",
-            "default": "0",
+            "default": "2",
             "machine": 0
         },
-        "MOTOR_X_KD": {
-            "id": "2",
+        "MTR_XL_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
             "min": "0",
             "max": "65535",
-            "default": "0",
+            "default": "65300",
+            "machine": 0
+        },
+        "MTR_XL_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "MTR_XL_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "MTR_XL_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "MTR_XR_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "MTR_XR_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "MTR_XR_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "MTR_XR_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "MTR_XR_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "MTR_Y_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "MTR_Y_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "MTR_Y_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "MTR_Y_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "MTR_Y_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "MTR_Z_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "MTR_Z_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "MTR_Z_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "MTR_Z_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "MTR_Z_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
             "machine": 0
         }
     },

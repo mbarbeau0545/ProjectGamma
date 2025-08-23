@@ -528,14 +528,14 @@ static t_eReturnCode s_APPLGC_Operational(void)
     //     Ret_e = FMKIO_Set_OutPwmSigPulses(FMKIO_OUTPUT_SIGPWM_8, 1000, 500, 500);  
     // }
     //Ret_e = FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_15, 500);
-    t_uint16 mototbitSts_u16;
-    t_uint16 nbcmd_ua16[6] = {200,500,100,400,200,1500};
+    /*t_uint16 mototbitSts_u16;
+    t_uint16 nbcmd_ua16[6] = {5,5,5,5,200,1500};
     t_uint16 nbcfreq_ua16[6] = {2000,5000,1000,4000,2000,850};
 
     
     t_sCL42T_SetMotorValue motorValue_s = {
-        .frequency_u32 = 1000,
-        .nbPulses_s32  = 600,
+        .frequency_u32 = 26000,
+        .nbPulses_s32  = 0,
     };
     t_float32 anaMeasure_f32;
     static t_eAPPLGC_MotorSts motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
@@ -547,7 +547,7 @@ static t_eReturnCode s_APPLGC_Operational(void)
             for ( ; (idxPulses_u8 < 6) && (Ret_e == RC_OK) ; )
             {
                 motorValue_s.nbPulses_s32 = factorPulses * nbcmd_ua16[idxPulses_u8] * g_factdir_u8;
-                motorValue_s.frequency_u32 = nbcfreq_ua16[idxPulses_u8];
+                //motorValue_s.frequency_u32 = nbcfreq_ua16[idxPulses_u8];
                 Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_1, motorValue_s);
                 Ret_e = CL42T_SetMotorSigValue(CL42T_MOTOR_2, motorValue_s);
 
@@ -581,16 +581,16 @@ static t_eReturnCode s_APPLGC_Operational(void)
                     factorPulses *= (t_sint8)-1;
                     motorSs_e = APPLGC_MOTOR_STATE_SET_CMD;
                 }
-                else 
-                {
-                    if(setPerturb_b == FALSE)
-                    {
-                        CL42T_Test_SetPerturb(CL42T_MOTOR_1, FALSE);
-                        CL42T_Test_SetPerturb(CL42T_MOTOR_2, FALSE);
-                        FMKSRL_LOG("[LGC] : Set Perturbation\r\n");
-                        setPerturb_b = TRUE;
-                    }
-                }
+                // else 
+                // {
+                //     if(setPerturb_b == FALSE)
+                //     {
+                //         CL42T_Test_SetPerturb(CL42T_MOTOR_1, FALSE);
+                //         CL42T_Test_SetPerturb(CL42T_MOTOR_2, FALSE);
+                //         FMKSRL_LOG("[LGC] : Set Perturbation\r\n");
+                //         setPerturb_b = TRUE;
+                //     }
+                // }
             }
         break;
         default:
