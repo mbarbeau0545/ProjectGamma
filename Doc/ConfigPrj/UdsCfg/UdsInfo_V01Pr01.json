@@ -1,5 +1,12 @@
 {
-    "SENSORS": {},
+    "SENSORS": {
+        "MTR_XL_POS": {
+            "id": "0",
+            "Unity": "RAW",
+            "default_state": "ENABLE",
+            "description": "Moteur X left position"
+        }
+    },
     "ACTUATORS": {},
     "DIAGNOSTIC": {
         "FMK_CFG_ERROR": {
@@ -69,147 +76,147 @@
         }
     },
     "PARAMETERS": {
-        "MTR_PULSE_ITER_MAX": {
+        "LGC_MTR_PULSE_ITER_MAX": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "4000",
             "machine": 0
         },
-        "MTR_XL_RAMP_CTRL_KFACTOR": {
+        "LGC_MTR_XL_RAMP_CTRL_KFACTOR": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "2",
             "machine": 0
         },
-        "MTR_XL_RAMP_CTRL_SLOP_SPEED": {
+        "LGC_MTR_XL_RAMP_CTRL_SLOP_SPEED": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "65300",
             "machine": 0
         },
-        "MTR_XL_RAMP_CTRL_TOTAL_STEP": {
+        "LGC_MTR_XL_RAMP_CTRL_TOTAL_STEP": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "50",
             "machine": 0
         },
-        "MTR_XL_SPEED_MAX": {
+        "LGC_MTR_XL_SPEED_MAX": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "26000",
             "machine": 0
         },
-        "MTR_XL_SPEED_MIN": {
+        "LGC_MTR_XL_SPEED_MIN": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "600",
             "machine": 0
         },
-        "MTR_XR_RAMP_CTRL_KFACTOR": {
+        "LGC_MTR_XR_RAMP_CTRL_KFACTOR": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "2",
             "machine": 0
         },
-        "MTR_XR_RAMP_CTRL_SLOP_SPEED": {
+        "LGC_MTR_XR_RAMP_CTRL_SLOP_SPEED": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "65300",
             "machine": 0
         },
-        "MTR_XR_RAMP_CTRL_TOTAL_STEP": {
+        "LGC_MTR_XR_RAMP_CTRL_TOTAL_STEP": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "50",
             "machine": 0
         },
-        "MTR_XR_SPEED_MAX": {
+        "LGC_MTR_XR_SPEED_MAX": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "26000",
             "machine": 0
         },
-        "MTR_XR_SPEED_MIN": {
+        "LGC_MTR_XR_SPEED_MIN": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "600",
             "machine": 0
         },
-        "MTR_Y_RAMP_CTRL_KFACTOR": {
+        "LGC_MTR_Y_RAMP_CTRL_KFACTOR": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "2",
             "machine": 0
         },
-        "MTR_Y_RAMP_CTRL_SLOP_SPEED": {
+        "LGC_MTR_Y_RAMP_CTRL_SLOP_SPEED": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "65300",
             "machine": 0
         },
-        "MTR_Y_RAMP_CTRL_TOTAL_STEP": {
+        "LGC_MTR_Y_RAMP_CTRL_TOTAL_STEP": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "50",
             "machine": 0
         },
-        "MTR_Y_SPEED_MAX": {
+        "LGC_MTR_Y_SPEED_MAX": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "26000",
             "machine": 0
         },
-        "MTR_Y_SPEED_MIN": {
+        "LGC_MTR_Y_SPEED_MIN": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "600",
             "machine": 0
         },
-        "MTR_Z_RAMP_CTRL_KFACTOR": {
+        "LGC_MTR_Z_RAMP_CTRL_KFACTOR": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "2",
             "machine": 0
         },
-        "MTR_Z_RAMP_CTRL_SLOP_SPEED": {
+        "LGC_MTR_Z_RAMP_CTRL_SLOP_SPEED": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "65300",
             "machine": 0
         },
-        "MTR_Z_RAMP_CTRL_TOTAL_STEP": {
+        "LGC_MTR_Z_RAMP_CTRL_TOTAL_STEP": {
             "id": "None",
             "min": "0",
             "max": "65535",
             "default": "50",
             "machine": 0
         },
-        "MTR_Z_SPEED_MAX": {
+        "LGC_MTR_Z_SPEED_MAX": {
             "id": "None",
             "min": "1",
             "max": "65535",
             "default": "26000",
             "machine": 0
         },
-        "MTR_Z_SPEED_MIN": {
+        "LGC_MTR_Z_SPEED_MIN": {
             "id": "None",
             "min": "1",
             "max": "65535",

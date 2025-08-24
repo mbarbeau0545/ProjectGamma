@@ -87,11 +87,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState *f_ActState_pe)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate *f_ActState_pe)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
@@ -103,11 +103,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState f_ActState_e)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate f_ActState_e)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html"><param name="Name" value="APP_ACT.c"></OBJECT>
   <UL>
@@ -127,11 +127,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState *f_ActState_pe)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate *f_ActState_pe)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
@@ -143,11 +143,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState f_ActState_e)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate f_ActState_e)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html"><param name="Name" value="APP_ACT.h"></OBJECT>
   <UL>
@@ -191,7 +191,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html"><param name="Name" value="APP_SNS.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a5f006ba704fbf1147ee5775a7de819b2"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_Sensors f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsInfo_ps)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a5f006ba704fbf1147ee5775a7de819b2"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsInfo_ps)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html"><param name="Name" value="APP_SNS.c"></OBJECT>
   <UL>
@@ -211,11 +211,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html"><param name="Name" value="APP_SNS.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a184928c19f263929c7c079ba75c929a4"><param name="Name" value="g_snsState_ae[APPSNS_SENSOR_NB]"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a184928c19f263929c7c079ba75c929a4"><param name="Name" value="g_snsState_ae[APPSNS_SNS_NB]"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html"><param name="Name" value="APP_SNS.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a57e36c7f0c72a3912598cdd33c0ea996"><param name="Name" value="s_APPSNS_ConvertingManagement(t_eAPPSNS_Sensors f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a57e36c7f0c72a3912598cdd33c0ea996"><param name="Name" value="s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
@@ -223,11 +223,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a71f385458006fe9f8be70457daf93c12"><param name="Name" value="APPSNS_Get_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState *f_SnsState_pe)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a71f385458006fe9f8be70457daf93c12"><param name="Name" value="APPSNS_Get_SensorState(t_eAPPSNS_SnsInterface f_Sns_e, t_eAPPSNS_SnsInterfacetate *f_SnsState_pe)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a3cd4c3b9670294a1f4303692197de0ba"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_Sensors f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a3cd4c3b9670294a1f4303692197de0ba"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
@@ -239,7 +239,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a33c24257b479cacfc364ec743c382de6"><param name="Name" value="APPSNS_Set_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState f_SnsState_e)"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a33c24257b479cacfc364ec743c382de6"><param name="Name" value="APPSNS_Set_SensorState(t_eAPPSNS_SnsInterface f_Sns_e, t_eAPPSNS_SnsInterfacetate f_SnsState_e)"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html"><param name="Name" value="APP_SNS.h"></OBJECT>
   <UL>
@@ -283,7 +283,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html"><param name="Name" value="APPACT_ConfigPrivate.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html#a0b1fa352b485874bfe113f9f46808336"><param name="Name" value="c_AppAct_SysDrv_apf[APPACT_DRIVER_NB]"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html#a0b1fa352b485874bfe113f9f46808336"><param name="Name" value="c_AppAct_SysDrvCfg_as[APPACT_DRIVER_NB]"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html"><param name="Name" value="APPACT_ConfigPrivate.h"></OBJECT>
   <UL>
@@ -351,11 +351,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html"><param name="Name" value="APPACT_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a249106e29c8af5b56ecd2b7fc294513c"><param name="Name" value="t_eAPPACT_Actuators"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a249106e29c8af5b56ecd2b7fc294513c"><param name="Name" value="t_eAPPACT_ActInterface"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html"><param name="Name" value="APPACT_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#acaba9fa47116e4d2a778f34a33e23531"><param name="Name" value="t_eAPPACT_ActuatorState"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#acaba9fa47116e4d2a778f34a33e23531"><param name="Name" value="t_eAPPACT_ActInterfacetate"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html"><param name="Name" value="APPACT_ConfigPublic.h"></OBJECT>
   <UL>
@@ -377,19 +377,19 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a28ae675d63e99773336b237126bf9deda8971a63b7cc69581024cf013b8cea4e0"><param name="Name" value="APPACT_DRIVER_STATE_DISABLE"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a28ae675d63e99773336b237126bf9deda03f836c63313c5df5afd5000d9f59edb"><param name="Name" value="APPACT_DRIVER_STATE_ENABLE"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a28ae675d63e99773336b237126bf9dedaa46fa472461c70c3705811e98f82a03f"><param name="Name" value="APPACT_DRIVER_STATE_NB"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState *f_ActState_pe)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate *f_ActState_pe)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APP_ACT.c"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState *f_ActState_pe)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APPACT_Get_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate *f_ActState_pe)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a86c8f4976d6bf107ce2c7cab6a6c7676"><param name="Name" value="APP_ACT.h"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APP_ACT.c"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APPACT_Get_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 *f_value_ps16)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#ac3c3a6866eca1fabc12abc00650e7091"><param name="Name" value="APP_ACT.h"></OBJECT>
   </UL>
@@ -409,19 +409,19 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a5cfacba204a44d9b72bf64af76906ed9"><param name="Name" value="APP_ACT.h"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState f_ActState_e)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate f_ActState_e)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APP_ACT.c"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_Actuators f_Actuator_e, t_eAPPACT_ActuatorState f_ActState_e)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APPACT_Set_ActuatorState(t_eAPPACT_ActInterface f_Actuator_e, t_eAPPACT_ActInterfacetate f_ActState_e)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#aaf41c0e2308165264b0ff82e73620848"><param name="Name" value="APP_ACT.h"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8c.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APP_ACT.c"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_Actuators f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APPACT_Set_ActValue(t_eAPPACT_ActInterface f_actuator_e, t_sint16 f_value_s16)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___a_c_t_8h.html#a78d0007181323467b3e677fab149c80b"><param name="Name" value="APP_ACT.h"></OBJECT>
   </UL>
@@ -626,15 +626,15 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html"><param name="Name" value="APPSNS_ConfigPrivate.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ad2298fd3bb17061c201bca2227ecade2"><param name="Name" value="c_AppSns_SnsMeasType_ae[APPSNS_SENSOR_NB]"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ad2298fd3bb17061c201bca2227ecade2"><param name="Name" value="c_AppSns_SnsMeasType_ae[APPSNS_SNS_NB]"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html"><param name="Name" value="APPSNS_ConfigPrivate.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ab9d2ba1dcb5eb69581a6c1ffd9b95951"><param name="Name" value="c_AppSns_SysDrv_apf[APPSNS_DRIVER_NB]"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ab9d2ba1dcb5eb69581a6c1ffd9b95951"><param name="Name" value="c_AppSns_SysDrv_as[APPSNS_DRIVER_NB]"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html"><param name="Name" value="APPSNS_ConfigPrivate.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#a73166754859d00b9368be62efdd415e0"><param name="Name" value="c_AppSns_SysSns_apf[APPSNS_SENSOR_NB]"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#a73166754859d00b9368be62efdd415e0"><param name="Name" value="c_AppSns_SysSns_as[APPSNS_SNS_NB]"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html"><param name="Name" value="APPSNS_ConfigPrivate.h"></OBJECT>
   <UL>
@@ -826,23 +826,23 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"><param name="Name" value="APPSNS_SENSOR_AIRTEMPERATURE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"><param name="Name" value="APPSNS_SNS_AIRTEMPERATURE"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"><param name="Name" value="APPSNS_SENSOR_NB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"><param name="Name" value="APPSNS_SNS_NB"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"><param name="Name" value="APPSNS_SENSOR_STATE_DISABLE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"><param name="Name" value="APPSNS_SNS_STATE_DISABLE"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"><param name="Name" value="APPSNS_SENSOR_STATE_ENABLE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"><param name="Name" value="APPSNS_SNS_STATE_ENABLE"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"><param name="Name" value="APPSNS_SENSOR_STATE_NB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"><param name="Name" value="APPSNS_SNS_STATE_NB"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
@@ -910,11 +910,11 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4"><param name="Name" value="t_eAPPSNS_Sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4"><param name="Name" value="t_eAPPSNS_SnsInterface"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897f"><param name="Name" value="t_eAPPSNS_SensorState"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897f"><param name="Name" value="t_eAPPSNS_SnsInterfacetate"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html"><param name="Name" value="APPSNS_ConfigPublic.h"></OBJECT>
   <UL>
@@ -953,9 +953,9 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#adb87bfb5b7f376c6626ee87ff7e1e924a589dd6ada7c10816389f2025e2a6295b"><param name="Name" value="APPSNS_FORCE_UNIT_NB"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#adb87bfb5b7f376c6626ee87ff7e1e924ad18b848f317a76bc7d01f531c1cb8c8d"><param name="Name" value="APPSNS_FORCE_UNIT_NEWTON"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#adb87bfb5b7f376c6626ee87ff7e1e924a59b88b2dfe80fc93d2d258074c4b0b1d"><param name="Name" value="APPSNS_FORCE_UNIT_POUND_FORCE"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a71f385458006fe9f8be70457daf93c12"><param name="Name" value="APPSNS_Get_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState *f_SnsState_pe)"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a5f006ba704fbf1147ee5775a7de819b2"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_Sensors f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsInfo_ps)"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a3cd4c3b9670294a1f4303692197de0ba"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_Sensors f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a71f385458006fe9f8be70457daf93c12"><param name="Name" value="APPSNS_Get_SensorState(t_eAPPSNS_SnsInterface f_Sns_e, t_eAPPSNS_SnsInterfacetate *f_SnsState_pe)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a5f006ba704fbf1147ee5775a7de819b2"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsInfo_ps)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a3cd4c3b9670294a1f4303692197de0ba"><param name="Name" value="APPSNS_Get_SnsValue(t_eAPPSNS_SnsInterface f_Sns_e, t_sAPPSNS_SnsValueInfo *f_SnsValue_ps16)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#ac60e8f775c95f4ab31699d9b1e97c81b"><param name="Name" value="APPSNS_GetState(t_eCyclicModState *f_State_pe)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#ac60e8f775c95f4ab31699d9b1e97c81b"><param name="Name" value="APP_SNS.c"></OBJECT>
@@ -986,12 +986,12 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#acee19629c33455bea9a135d3af4b4b4aa945a73599d0c006e9e8fa2f7253e855a"><param name="Name" value="APPSNS_PRESSURE_UNIT_NB"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#acee19629c33455bea9a135d3af4b4b4aa178f994b1280058d3c3698cba63d4d05"><param name="Name" value="APPSNS_PRESSURE_UNIT_PASCAL"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#acee19629c33455bea9a135d3af4b4b4aa05587235352d68ad5c3ec45f85140beb"><param name="Name" value="APPSNS_PRESSURE_UNIT_PSI"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"><param name="Name" value="APPSNS_SENSOR_AIRTEMPERATURE"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"><param name="Name" value="APPSNS_SENSOR_NB"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"><param name="Name" value="APPSNS_SENSOR_STATE_DISABLE"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"><param name="Name" value="APPSNS_SENSOR_STATE_ENABLE"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"><param name="Name" value="APPSNS_SENSOR_STATE_NB"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a33c24257b479cacfc364ec743c382de6"><param name="Name" value="APPSNS_Set_SensorState(t_eAPPSNS_Sensors f_Sns_e, t_eAPPSNS_SensorState f_SnsState_e)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"><param name="Name" value="APPSNS_SNS_AIRTEMPERATURE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"><param name="Name" value="APPSNS_SNS_NB"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"><param name="Name" value="APPSNS_SNS_STATE_DISABLE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"><param name="Name" value="APPSNS_SNS_STATE_ENABLE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"><param name="Name" value="APPSNS_SNS_STATE_NB"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8h.html#a33c24257b479cacfc364ec743c382de6"><param name="Name" value="APPSNS_Set_SensorState(t_eAPPSNS_SnsInterface f_Sns_e, t_eAPPSNS_SnsInterfacetate f_SnsState_e)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a9acb68fe8cd5a34d086d1692f04fe78b"><param name="Name" value="APPSNS_SetState(t_eCyclicModState f_State_e)"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a9acb68fe8cd5a34d086d1692f04fe78b"><param name="Name" value="APP_SNS.c"></OBJECT>
@@ -1230,10 +1230,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_l_i_b_q_u_e_u_e___queue_cfg.html#a5d949123d295d391ffa13a571029f801"><param name="Name" value="bufferHead_pv"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_l_i_b_q_u_e_u_e___queue_cfg.html#ad8cff6e372149afd4e49c856922efc59"><param name="Name" value="bufferSize_u8"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html#a646ac7cb44537e0e791720e9e56e9d91"><param name="Name" value="c_AppAct_SysAct_apf[APPACT_ACTUATOR_NB]"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html#a0b1fa352b485874bfe113f9f46808336"><param name="Name" value="c_AppAct_SysDrv_apf[APPACT_DRIVER_NB]"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ad2298fd3bb17061c201bca2227ecade2"><param name="Name" value="c_AppSns_SnsMeasType_ae[APPSNS_SENSOR_NB]"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ab9d2ba1dcb5eb69581a6c1ffd9b95951"><param name="Name" value="c_AppSns_SysDrv_apf[APPSNS_DRIVER_NB]"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#a73166754859d00b9368be62efdd415e0"><param name="Name" value="c_AppSns_SysSns_apf[APPSNS_SENSOR_NB]"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_private_8h.html#a0b1fa352b485874bfe113f9f46808336"><param name="Name" value="c_AppAct_SysDrvCfg_as[APPACT_DRIVER_NB]"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ad2298fd3bb17061c201bca2227ecade2"><param name="Name" value="c_AppSns_SnsMeasType_ae[APPSNS_SNS_NB]"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#ab9d2ba1dcb5eb69581a6c1ffd9b95951"><param name="Name" value="c_AppSns_SysDrv_as[APPSNS_DRIVER_NB]"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_private_8h.html#a73166754859d00b9368be62efdd415e0"><param name="Name" value="c_AppSns_SysSns_as[APPSNS_SNS_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_y_s___config_private_8h.html#a62abb39dafd96e62536c5bf36e4454c9"><param name="Name" value="c_AppSys_ModuleFunc_apf[APPSYS_MODULE_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k_i_o___config_private_8h.html#a04ff14451fbeea6a8f3a504fb025d1c6"><param name="Name" value="c_BspPinMapping_ua16[FMKIO_GPIO_PIN_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="struct____t__s_f_m_k_f_d_c_a_n___node_info.html#a42c57a275b589299e5527e5d2b19bb73"><param name="Name" value="c_Clock_e"></OBJECT>
@@ -8472,7 +8472,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___f_d_c_a_n_8c.html#a188458dd2bbb4d362bff037d145a996f"><param name="Name" value="g_RxSoftQueue_as[FMKFDCAN_NODE_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___s_e_r_i_a_l_8c.html#a217c0b643016197852ed4a4afe61e57e"><param name="Name" value="g_SerialInfo_s"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a273569a4240d0a9c787f814b87fe4505"><param name="Name" value="g_SnsDrvState_ae[APPSNS_DRIVER_NB]"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a184928c19f263929c7c079ba75c929a4"><param name="Name" value="g_snsState_ae[APPSNS_SENSOR_NB]"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a184928c19f263929c7c079ba75c929a4"><param name="Name" value="g_snsState_ae[APPSNS_SNS_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#aa15f5b1eb1bf935937bba1ace039be71"><param name="Name" value="g_SysClockValue_ua8[FMKCPU_SYS_CLOCK_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_p_u_8c.html#a69709e19397908c0ae4963a9adb5c8fe"><param name="Name" value="g_TimerInfo_as[FMKCPU_TIMER_NB]"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___f_d_c_a_n_8c.html#a305f807c8fb255eb1cdc80e354c1dd33"><param name="Name" value="g_TxSoftBuffer_as[FMKFDCAN_NODE_NB][FMKFDCAN_TX_SOFT_BUFF_SIZE]"></OBJECT>
@@ -8488,7 +8488,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a4f36f80ecb19743ffe881391fc2b9864"><param name="Name" value="GetValue_pcb"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a4f36f80ecb19743ffe881391fc2b9864"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a4f36f80ecb19743ffe881391fc2b9864"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_d_a_8c.html#af20a88180db1113be1e89266917d148b"><param name="Name" value="HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___c_d_a_8c.html#ad7e3dafc08886b97b9c9e23267645b9e"><param name="Name" value="HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)"></OBJECT>
@@ -8834,7 +8834,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_f_m_k_c_p_u___chnl_info.html#a66051a815653b3caf3dfbd176642b885"><param name="Name" value="RunMode_e"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_f_m_k_i_o___can_sig_cfg.html#a899ebb0bf762bda4dc53cafaa0b0deb6"><param name="Name" value="RxPin_s"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="struct____t__s_f_m_k_f_d_c_a_n___flag_soft.html#abc2bb7bc474ad8c46d8a233ce0f6ef88"><param name="Name" value="RxQueuePending_b"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a57e36c7f0c72a3912598cdd33c0ea996"><param name="Name" value="s_APPSNS_ConvertingManagement(t_eAPPSNS_Sensors f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p___s_n_s_8c.html#a57e36c7f0c72a3912598cdd33c0ea996"><param name="Name" value="s_APPSNS_ConvertingManagement(t_eAPPSNS_SnsInterface f_sns_e, t_sAPPSNS_SnsValueInfo *f_snsInfo_ps)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___s_e_r_i_a_l_8c.html#a27a925bcfb062fc7d05b1386c9e50d33"><param name="Name" value="s_FMKSRL_Init(void)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_safe_mem_8c.html"><param name="Name" value="SafeMem.c"></OBJECT>
   <UL>
@@ -8924,7 +8924,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a7ab2d023add644e476ada13c4926132a"><param name="Name" value="SetCfg_pcb"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a7ab2d023add644e476ada13c4926132a"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a7ab2d023add644e476ada13c4926132a"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_app_sys___sys_func.html#a9ba01e309361899c763b54cc6789ff67"><param name="Name" value="SetState_pcb"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_a_c_t___sys_act_func.html#a57f14e8e737d833630ecf486f4da9b30"><param name="Name" value="SetValue_pcb"></OBJECT>
@@ -8991,8 +8991,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___s_e_r_i_a_l_8c.html#a4f8af528880a2876a931475f36712f58"><param name="Name" value="t_cbFMKSRL_bspSerialDeInit(void *bspHandle)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_f_m_k___s_e_r_i_a_l_8c.html#a0f82767b2319b2e5129fa95398418538"><param name="Name" value="t_cbFMKSRL_bspSerialInit(void *bspHandle)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_type_common_8h.html#af0556422eb1ef9c94bb5d119f336756a"><param name="Name" value="t_char"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a249106e29c8af5b56ecd2b7fc294513c"><param name="Name" value="t_eAPPACT_Actuators"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#acaba9fa47116e4d2a778f34a33e23531"><param name="Name" value="t_eAPPACT_ActuatorState"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a249106e29c8af5b56ecd2b7fc294513c"><param name="Name" value="t_eAPPACT_ActInterface"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#acaba9fa47116e4d2a778f34a33e23531"><param name="Name" value="t_eAPPACT_ActInterfacetate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#acbbd75f05cc9f2c78d92811a1e1967e2"><param name="Name" value="t_eAPPACT_Drivers"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_a_c_t___config_public_8h.html#a28ae675d63e99773336b237126bf9ded"><param name="Name" value="t_eAPPACT_DriverState"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a907bd47ed4d2f46ff306850a083fed06"><param name="Name" value="t_eAPPSNS_AngleUnity"></OBJECT>
@@ -9003,8 +9003,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a76777e58d23ae6d705a5fdff6dca88d0"><param name="Name" value="t_eAPPSNS_FlowUnity"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#adb87bfb5b7f376c6626ee87ff7e1e924"><param name="Name" value="t_eAPPSNS_ForceUnity"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#acee19629c33455bea9a135d3af4b4b4a"><param name="Name" value="t_eAPPSNS_PressureUnity"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4"><param name="Name" value="t_eAPPSNS_Sensors"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897f"><param name="Name" value="t_eAPPSNS_SensorState"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a5fd39a5550ff50adf236b17d07e5d1a4"><param name="Name" value="t_eAPPSNS_SnsInterface"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#af7afd89244a58f698fc5ac71cbbc897f"><param name="Name" value="t_eAPPSNS_SnsInterfacetate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a4b2f12d7e5441f19c5c89bb067f10d68"><param name="Name" value="t_eAPPSNS_SnsMeasType"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a58581c1c1a864b119709737f99ccd5dd"><param name="Name" value="t_eAPPSNS_SpeedUnity"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_a_p_p_s_n_s___config_public_8h.html#a9f44f19624e051f2382c24b8d6d98e17"><param name="Name" value="t_eAPPSNS_TempUnity"></OBJECT>
@@ -9140,20 +9140,20 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_drv_func.html#a730c4ab3605f9a7c9cafe08dc658e313"><param name="Name" value="Init_pcb"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#ae5daedc19998812d82d95416ffc8d9fc"><param name="Name" value="FormatValSI_pcb"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a4f36f80ecb19743ffe881391fc2b9864"><param name="Name" value="GetValue_pcb"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a947ae38400bdbf4357d23475d6371506"><param name="Name" value="measTyp_e"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsFunc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html"><param name="Name" value="t_sAPPSNS_SysSnsCfg"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_a_p_p_s_n_s___sys_sns_func.html#a7ab2d023add644e476ada13c4926132a"><param name="Name" value="SetCfg_pcb"></OBJECT>
   </UL>

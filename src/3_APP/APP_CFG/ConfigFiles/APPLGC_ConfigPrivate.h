@@ -59,7 +59,7 @@
     /**
     * @brief Service Actuators Variable Mapping
     */
-    const t_eAPPACT_Actuators * c_AppLGc_SrvDepedencies_pae[APPLGC_SRV_NB] ={
+    const t_eAPPACT_ActInterface * c_AppLGc_SrvDepedencies_pae[APPLGC_SRV_NB] ={
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

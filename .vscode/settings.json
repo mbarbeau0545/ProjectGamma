@@ -97,7 +97,8 @@
     "fmksrl_configpublic.h": "c",
     "appsig_configprivate.h": "c",
     "app_sig.h": "c",
-    "unity.h": "c"
+    "unity.h": "c",
+    "appsns_spec_ecdr_xl.h": "c"
   },
   "stm32-for-vscode.armToolchainPath": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",

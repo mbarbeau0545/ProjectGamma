@@ -20,13 +20,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define APPLGC_APP_PROTOCOL_LEN_DATA ((t_uint8)9)
-    #define APPLGC_IDX_APP_DATA_START ((t_uint8)1)
-    #define APPLGC_APPUSER_COM_TIMEOUT ((t_uint32)1000)
-    #define APPLGC_APPUSER_ERR_RX ((t_uint16)0)
-    #define APPLGC_APPUSER_ERR_TX ((t_uint16)1)
 
-    #define APPLGC_SERIAL_LINE_APP FMKSRL_SERIAL_LINE_2
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -79,7 +73,6 @@
     {
         t_eAPPLGC_SrvHealth health_e;
         t_eAPPLGC_SrvState  state_e;
-        t_uAPPACT_SetValue  * actVal_pau;
     } t_sAPPLGC_ServiceInfo;
 
     /**

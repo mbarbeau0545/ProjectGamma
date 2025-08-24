@@ -45,22 +45,25 @@
     #define APPSYS_ITLINE_FASTTASK              FMKTIM_INTERRUPT_LINE_EVNT_1    /**< Timer Line use for FastTask */
     #define APPSYS_ELASPED_TIME_FASTTASK        ((t_uint32)5)                   /**< Fast Task every 5 ms */
     #define APPSYS_WATCHDOG_ENABLE              (FALSE)
+
+    ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
+    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (TRUE)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
-	/* CAUTION : Automatic generated code section for Enum: Start */
+    /* CAUTION : Automatic generated code section for Enum: Start */
 
-	/* CAUTION : Automatic generated code section for Enum: End */
+    /* CAUTION : Automatic generated code section for Enum: End */
 	//-----------------------------ENUM TYPES-----------------------------//
 
 
-	/* CAUTION : Automatic generated code section for Structure: Start */
+    /* CAUTION : Automatic generated code section for Structure: Start */
 
-	/* CAUTION : Automatic generated code section for Structure: End */
+    /* CAUTION : Automatic generated code section for Structure: End */
 	//-----------------------------STRUCT TYPES---------------------------//
-	/* CAUTION : Automatic generated code section : Start */
+    /* CAUTION : Automatic generated code section : Start */
 
-	/* CAUTION : Automatic generated code section : End */
+    /* CAUTION : Automatic generated code section : End */
 	//-----------------------------TYPEDEF TYPES---------------------------//
     /**
     *
@@ -136,6 +139,27 @@
         {APPLGC_Init,    APPLGC_Cyclic,     APPLGC_GetState,   APPLGC_SetState,      APPSIG_SIGNAL_APPLGC_MODSTATE},
     };
 
+
+    /* CAUTION : Automatic generated code section for Variable: Start */
+    ///@brief Machine Option Configuration
+    const t_uint8 c_AppSys_MachOptCfg_ua8[APPSYS_MACHINE_NB][APPSYS_OPT_ID_NB] = {
+        {APPSYS_OPT_SNS_ECDR_XL_NEMA17,                     APPSYS_OPT_SNS_ECDR_XR_NEMA17,                     APPSYS_OPT_SNS_ECDR_Y_NEMA17,                      APPSYS_OPT_SNS_ECDR_Z_NEMA17,                      APPSYS_OPT_ACT_MTR_XL_CL42T,                       APPSYS_OPT_ACT_MTR_XR_CL42T,                       APPSYS_OPT_ACT_MTR_Y_CL42T,                        APPSYS_OPT_ACT_MTR_Z_CL42T,                        },  // APPSYS_MACHINE_POC_1
+        {APPSYS_OPT_SNS_ECDR_XL_UNUSED,                     APPSYS_OPT_SNS_ECDR_XR_UNUSED,                     APPSYS_OPT_SNS_ECDR_Y_UNUSED,                      APPSYS_OPT_SNS_ECDR_Z_UNUSED,                      APPSYS_OPT_ACT_MTR_XL_CL42T,                       APPSYS_OPT_ACT_MTR_XR_CL42T,                       APPSYS_OPT_ACT_MTR_Y_CL42T,                        APPSYS_OPT_ACT_MTR_Z_CL42T,                        },  // APPSYS_MACHINE_POC_2
+    };
+
+    ///@brief Variable to get/set the machine configuration
+    const t_eAPPSPM_ItemPrm c_AppSys_SysOpt_ItemPrmID_ae[APPSYS_OPT_ID_NB] = {
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_XL,                    // APPSYS_OPT_ID_SNS_ECDR_XL
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_XR,                    // APPSYS_OPT_ID_SNS_ECDR_XR
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_Y,                     // APPSYS_OPT_ID_SNS_ECDR_Y
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_Z,                     // APPSYS_OPT_ID_SNS_ECDR_Z
+        APPSPM_PRM_SYS_OPT_ACT_MTR_XL,                     // APPSYS_OPT_ID_ACT_MTR_XL
+        APPSPM_PRM_SYS_OPT_ACT_MTR_XR,                     // APPSYS_OPT_ID_ACT_MTR_XR
+        APPSPM_PRM_SYS_OPT_ACT_MTR_Y,                      // APPSYS_OPT_ID_ACT_MTR_Y
+        APPSPM_PRM_SYS_OPT_ACT_MTR_Z,                      // APPSYS_OPT_ID_ACT_MTR_Z
+    };
+
+    /* CAUTION : Automatic generated code section for Variable: End */
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************

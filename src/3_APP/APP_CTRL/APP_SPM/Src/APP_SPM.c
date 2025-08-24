@@ -68,6 +68,8 @@ static t_sAPPSPM_ItemPrmInfo g_ItemPrmInfo_as[APPSPM_PRM_NB];
  */
 static t_eCyclicModState g_APPSM_ModState_e = STATE_CYCLIC_CFG;
 
+///@brief flag to know the parameter are load
+static t_bool g_FlagParamInit_b = (t_bool)FALSE;
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
@@ -205,7 +207,7 @@ t_eReturnCode APPSPM_GetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uint16 * f_prmValu
     {
         Ret_e = RC_ERROR_PTR_NULL;
     }
-    else if(g_APPSM_ModState_e != STATE_CYCLIC_OPE)
+    else if(g_FlagParamInit_b == (t_bool)FALSE)
     {
         Ret_e = RC_WARNING_BUSY;
     }
@@ -230,7 +232,7 @@ t_eReturnCode APPSPM_SetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uint16 f_prmValue_
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
     }
-    else if(g_APPSM_ModState_e != STATE_CYCLIC_OPE)
+    else if(g_FlagParamInit_b == (t_bool)FALSE)
     {
         Ret_e = RC_WARNING_BUSY;
     }
@@ -313,6 +315,8 @@ static t_eReturnCode s_APPSM_ConfigurationState(void)
                                                 s_APPSPM_AppSigMsgRcvCallback);
         }
     }
+
+    g_FlagParamInit_b = (t_bool)TRUE;
     
     return Ret_e;
 }      

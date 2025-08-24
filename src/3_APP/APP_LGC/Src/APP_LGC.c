@@ -71,7 +71,7 @@ static t_sAPPLGC_ServiceInfo g_srvFuncInfo_as[APPLGC_SRV_NB];
 /**
 * @brief Container for Sensors Values
 */
-//static t_float32 g_snsValues_af32[APPSNS_SENSOR_NB];
+//static t_float32 g_snsValues_af32[APPSNS_SNSITF_NB];
 static t_float32 g_snsValues_af32[2];
 
 /**
@@ -351,11 +351,11 @@ t_eReturnCode APPLGC_GetServiceHealth(t_eAPPLGC_SrvList f_service_e, t_eAPPLGC_S
 /*********************************
  * APPLGC_GetSnsValue
  *********************************/
-t_eReturnCode APPLGC_GetSnsValue(t_eAPPSNS_Sensors f_sensors_e, t_sint32 * f_snsValue_ps32)
+t_eReturnCode APPLGC_GetSnsValue(t_eAPPSNS_SnsInterface f_sensors_e, t_sint32 * f_snsValue_ps32)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    if(f_sensors_e >= APPSNS_SENSOR_NB)
+    if(f_sensors_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
         ASSERT((t_uint16)f_sensors_e);
@@ -476,13 +476,13 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
         }
     };
     
-    Ret_e = CL42T_AddMotorConfiguration(CL42T_MOTOR_1,motor_config, TRUE,
+    /*Ret_e = CL42T_AddMotorConfiguration(CL42T_MOTOR_1,motor_config, TRUE,
                                         s_APPLGC_MotorDiag,
                                         s_APPLGC_PulseDropped);
     Ret_e |= CL42T_AddMotorConfiguration(CL42T_MOTOR_2,motor2_config, TRUE,
                                         s_APPLGC_MotorDiag,
                                         s_APPLGC_PulseDropped);
-    Ret_e |= APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    Ret_e |= APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);**/
     
     
 
@@ -496,7 +496,7 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
+    //Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
     if(Ret_e < RC_OK)
     {
         ASSERT((t_uint16)Ret_e);
@@ -638,14 +638,14 @@ static t_eReturnCode s_APPLGC_GetSnsValues(void)
     t_sAPPSNS_SnsValueInfo snsInfo_s;
     t_uint8 idxSns_u8 = (t_uint8)0;
 
-    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SENSOR_NB) && (Ret_e == RC_OK) ; idxSns_u8++)
+    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e == RC_OK) ; idxSns_u8++)
     {
         //----- Reset Container values -----//
         snsInfo_s.isValueOK_b = (t_bool)False;
         snsInfo_s.rawValue_f32 = (t_float32)0.0;
         snsInfo_s.SnsValue_f32 = (t_float32)0.0;
 
-        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_Sensors)idxSns_u8, &snsInfo_s);
+        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &snsInfo_s);
 
         if((Ret_e == RC_OK)
         && (snsInfo_s.isValueOK_b == (t_bool)true))
@@ -666,20 +666,6 @@ static t_eReturnCode s_APPLGC_SetActValues(void)
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxSrv_u8 = (t_uint8)0;
     t_uint8 idxAct_u8 = (t_uint8)0;
-    t_eAPPACT_Actuators actuatorLabel_e;
-
-    //----- Loop on every Service -----//
-    for(idxSrv_u8 = (t_uint8)0 ; (idxSrv_u8 < APPLGC_SRV_NB) && (Ret_e == RC_OK) ; idxSrv_u8++)
-    {
-        //----- Loop on every Actuators For this Service -----//
-        for(idxAct_u8 = (t_uint8)0 ; idxAct_u8 < c_AppLGc_SrvActuatorsMax_ua8[idxSrv_u8] ; idxAct_u8++)
-        {
-            actuatorLabel_e = c_AppLGc_SrvDepedencies_pae[idxSrv_u8][idxAct_u8];
-
-            //Ret_e = APPACT_Set_ActValue(actuatorLabel_e, (t_uAPPACT_SetValue)g_srvFuncInfo_as[idxSrv_u8].actVal_pau[idxAct_u8]);
-
-        }
-    }
 
     return Ret_e;
 }
