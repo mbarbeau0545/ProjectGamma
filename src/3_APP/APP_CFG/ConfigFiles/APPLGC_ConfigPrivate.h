@@ -48,18 +48,7 @@
     * @brief Agent Configuration Function
     */
     const t_sAPPLGC_AgentFunc c_AppLGc_AgentFunc_apf[APPLGC_AGENT_NB] ={
-    };
-
-    /**
-    * @brief Service Max Actuators values 
-    */
-    const t_uint8 c_AppLGc_SrvActuatorsMax_ua8[APPLGC_SRV_NB] = {
-    };
-
-    /**
-    * @brief Service Actuators Variable Mapping
-    */
-    const t_eAPPACT_ActInterface * c_AppLGc_SrvDepedencies_pae[APPLGC_SRV_NB] ={
+        //{GANTRY_Init,                       GANTRY_Cyclic},// APPLGC_AGENT_GANTRY
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

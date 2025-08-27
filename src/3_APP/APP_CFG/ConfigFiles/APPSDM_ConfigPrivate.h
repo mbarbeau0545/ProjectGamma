@@ -70,6 +70,10 @@
     * @brief Diagnostic Item Configuration
     */
     t_cbAPPSDM_AppliedDiagStrategy * c_AppSdm_DiagStragies_apf[APPSDM_DIAG_STRAT_NB]= {
+        APPSDM_SPEC_DiagStrat_GANTRY_AXES_OFF,
+        APPSDM_SPEC_DiagStrat_GANTRY_AXE_X_OFF,
+        APPSDM_SPEC_DiagStrat_GANTRY_AXE_Y_OFF,
+        APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF,
     };
 
     /**
@@ -90,6 +94,10 @@
         {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
         {(t_uint16)5,                  (t_uint32)200,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
         {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
+        {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXES_OFF},// LGC_GTRY_OPE_ERROR
+        {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF},// LGC_GTRY_X_OPE_ERROR
+        {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Y_OFF},// LGC_GTRY_Y_OPE_ERROR
+        {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Z_OFF},// LGC_GTRY_Z_OPE_ERROR
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

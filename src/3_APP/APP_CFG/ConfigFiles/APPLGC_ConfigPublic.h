@@ -53,6 +53,9 @@
     */
     typedef enum ____t_eAPPLGC_SrvList
     {
+        APPLGC_SRV_GTRY_X = 0x00,
+        APPLGC_SRV_GTRY_Y,
+        APPLGC_SRV_GTRY_Z,
 
         APPLGC_SRV_NB,
     } t_eAPPLGC_SrvList;
@@ -61,6 +64,7 @@
     */
     typedef enum ____t_eAPPLGC_AgentList
     {
+        APPLGC_AGENT_GANTRY = 0x00,          // G�re la gestion du gantry
 
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;
@@ -92,31 +96,6 @@
     typedef t_eReturnCode (t_cbAPPLGC_AgentPeriodicTask)(   t_float32 *f_snsValues_paf32, 
                                                             t_sAPPLGC_ServiceInfo *f_SrvInfo_pas);
 
-    /**
-    *
-    *	@brief      Set the Service Init Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMInit)(void);
-    /**
-    *
-    *	@brief      Set the Service Cyclic Function
-    *
-    */
-   typedef t_eReturnCode (t_cbAPPLGC_FSMCyclic)(t_float32 *f_snsValues_paf32, 
-                                                t_sAPPLGC_ServiceInfo *f_SrvInfo_pas);
-    /**
-    *
-    *	@brief      Set the Service Enter Mode Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMEnterMode)(void);
-    /**
-    *
-    *	@brief      Set the Service Exit Mode Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMExitMode)(void);
 
     //-----------------------------STRUCT TYPES---------------------------//
     typedef struct 
@@ -125,13 +104,6 @@
         t_cbAPPLGC_AgentPeriodicTask * PeriodTask_pcb;
     } t_sAPPLGC_AgentFunc;
 
-    typedef struct 
-    {
-        t_cbAPPLGC_FSMInit * Init_pcb;
-        t_cbAPPLGC_FSMCyclic * Cyclic_pcb;
-        t_cbAPPLGC_FSMEnterMode * Enter_pcb;
-        t_cbAPPLGC_FSMExitMode * Exit_pcb;
-    } t_sAPPLGC_FSM_Func;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************

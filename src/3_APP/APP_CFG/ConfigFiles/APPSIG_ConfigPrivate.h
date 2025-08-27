@@ -56,6 +56,7 @@
     /* CAUTION : Automatic generated code section for Define: Start */
     ///@brief Serial Message Id
     #define APPSIG_SRL_ID_APPLICATIONINFO1                         ((t_uint32)0x10)
+    #define APPSIG_SRL_ID_CL42T_MOTORS_INFO                        ((t_uint32)0x80)
     #define APPSIG_SRL_ID_MTR_XL_RAMP_CTRL                         ((t_uint32)0x91)
     #define APPSIG_SRL_ID_MTR_XR_RAMP_CTRL                         ((t_uint32)0x92)
     #define APPSIG_SRL_ID_MTR_Y_RAMP_CTRL                          ((t_uint32)0x93)
@@ -147,23 +148,23 @@
         {(t_uint8)12,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_FASTTASKDURATION
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_PULSE_ITER_MAX
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLOP_SPEED
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_TOTAL_STEP
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLP_SPD
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_NB_STEP
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MAX
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MIN
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLOP_SPEED
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_TOTAL_STEP
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLP_SPD
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_NB_STEP
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MAX
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MIN
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLOP_SPEED
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_TOTAL_STEP
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLP_SPD
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_NB_STEP
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MAX
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MIN
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLOP_SPEED
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_TOTAL_STEP
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLP_SPD
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_NB_STEP
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MAX
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MIN
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_XL
@@ -171,6 +172,30 @@
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_Y
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_Z
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_MACHINE_ID
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_STATE
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_STATE
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_STATE
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_STATE
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_CW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_CW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_CW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_CW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_CCW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_CCW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_CCW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_CCW_ENDSTOP
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_DIRECTION
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_DIRECTION
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_DIRECTION
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_DIRECTION
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_DEADTIME
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_DEADTIME
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_DEADTIME
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_DEADTIME
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_HEALTH
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_HEALTH
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_HEALTH
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_HEALTH
     };
 
     ///@brief Variable for decoding ApplicationInfo1
@@ -192,35 +217,64 @@
     };
 
 
+    ///@brief Variable for decoding CL42T_MOTORS_INFO
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_CL42T_MOTORS_INFO_as[24] = {
+        {APPSIG_SIGNAL_CL42T_MTR_1_STATE,                       (t_uint8)0                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_2_STATE,                       (t_uint8)1                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_3_STATE,                       (t_uint8)2                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_4_STATE,                       (t_uint8)3                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_1_CW_ENDSTOP,                  (t_uint8)4                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_2_CW_ENDSTOP,                  (t_uint8)5                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_3_CW_ENDSTOP,                  (t_uint8)6                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_4_CW_ENDSTOP,                  (t_uint8)7                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_1_CCW_ENDSTOP,                 (t_uint8)8                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_2_CCW_ENDSTOP,                 (t_uint8)9                                             },
+        {APPSIG_SIGNAL_CL42T_MTR_3_CCW_ENDSTOP,                 (t_uint8)10                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_4_CCW_ENDSTOP,                 (t_uint8)11                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_1_DIRECTION,                   (t_uint8)12                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_2_DIRECTION,                   (t_uint8)13                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_3_DIRECTION,                   (t_uint8)14                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_4_DIRECTION,                   (t_uint8)15                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_1_DEADTIME,                    (t_uint8)16                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_2_DEADTIME,                    (t_uint8)17                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_3_DEADTIME,                    (t_uint8)18                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_4_DEADTIME,                    (t_uint8)19                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_4_HEALTH,                      (t_uint8)20                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_3_HEALTH,                      (t_uint8)24                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_2_HEALTH,                      (t_uint8)28                                            },
+        {APPSIG_SIGNAL_CL42T_MTR_1_HEALTH,                      (t_uint8)32                                            },
+    };
+
+
     ///@brief Variable for decoding MTR_XL_RAMP_CTRL
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_XL_RAMP_CTRL_as[3] = {
         {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLOP_SPEED,     (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_TOTAL_STEP,     (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLP_SPD,        (t_uint8)8                                             },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_NB_STEP,        (t_uint8)16                                            },
     };
 
 
     ///@brief Variable for decoding MTR_XR_RAMP_CTRL
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_XR_RAMP_CTRL_as[3] = {
         {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLOP_SPEED,     (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_TOTAL_STEP,     (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLP_SPD,        (t_uint8)8                                             },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_NB_STEP,        (t_uint8)16                                            },
     };
 
 
     ///@brief Variable for decoding MTR_Y_RAMP_CTRL
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_Y_RAMP_CTRL_as[3] = {
         {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_KFACTOR,         (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLOP_SPEED,      (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_TOTAL_STEP,      (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLP_SPD,         (t_uint8)8                                             },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_NB_STEP,         (t_uint8)16                                            },
     };
 
 
     ///@brief Variable for decoding MTR_Z_RAMP_CTRL
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_Z_RAMP_CTRL_as[3] = {
         {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_KFACTOR,         (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLOP_SPEED,      (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_TOTAL_STEP,      (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLP_SPD,         (t_uint8)8                                             },
+        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_NB_STEP,         (t_uint8)16                                            },
     };
 
 
@@ -252,6 +306,7 @@
     const t_sAPPSIG_MsgCfg c_AppSig_SrlMsgCfg_as[APPSIG_SRL_MSG_NB] = {
     //  Identifier                                          Direction                                                CyclicSend                                                 TimeOut                                                         Sig Cfg                                         nbSignal
         {APPSIG_SRL_ID_APPLICATIONINFO1,                         APPSIG_MSG_DIR_TX,                                      (t_uint16)500,                                          (t_uint16)0,                                            c_AppSig_Srl_ApplicationInfo1_as,                       (t_uint8)14}, // APPSIG_SRL_APPLICATIONINFO1
+        {APPSIG_SRL_ID_CL42T_MOTORS_INFO,                        APPSIG_MSG_DIR_TX,                                      (t_uint16)30,                                           (t_uint16)0,                                            c_AppSig_Srl_CL42T_MOTORS_INFO_as,                      (t_uint8)24}, // APPSIG_SRL_CL42T_MOTORS_INFO
         {APPSIG_SRL_ID_MTR_XL_RAMP_CTRL,                         APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_XL_RAMP_CTRL_as,                       (t_uint8)3}, // APPSIG_SRL_MTR_XL_RAMP_CTRL
         {APPSIG_SRL_ID_MTR_XR_RAMP_CTRL,                         APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_XR_RAMP_CTRL_as,                       (t_uint8)3}, // APPSIG_SRL_MTR_XR_RAMP_CTRL
         {APPSIG_SRL_ID_MTR_Y_RAMP_CTRL,                          APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_Y_RAMP_CTRL_as,                        (t_uint8)3}, // APPSIG_SRL_MTR_Y_RAMP_CTRL

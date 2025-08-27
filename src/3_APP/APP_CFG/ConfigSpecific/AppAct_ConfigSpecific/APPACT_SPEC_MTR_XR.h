@@ -1,16 +1,16 @@
 /*********************************************************************
- * @file        APPSPM_ConfigPrivate.h
- * @brief       System Paramters Managment.
+ * @file        TemplateName.h
+ * @brief       Template_BriefDescription.
  * @note        TemplateDetailsDescription.\n
  *
  * @author      xxxxxx
  * @date        jj/mm/yyyy
  * @version     1.0
  */
-  
-  
-#ifndef APPSPM_CONFIGPUBLIC_H_INCLUDED
-#define APPSPM_CONFIGPUBLIC_H_INCLUDED
+/* CAUTION : Automatic generated code section for ifndef: Start */
+#ifndef APPACT_SPEC_MTR_XR
+#define APPACT_SPEC_MTR_XR
+/* CAUTION : Automatic generated code section for ifndef: End */
 
 
 
@@ -19,7 +19,10 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    /* CAUTION : Automatic generated code section for Include: Start */
     #include "TypeCommon.h"
+    #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
+    /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -27,62 +30,20 @@
     // ********************************************************************
     // *                      Types
     // ********************************************************************
-    /* CAUTION : Automatic generated code section for Enum: Start */
-    /**
-    * @brief Enum for listong every parameter.
-    */
-    typedef enum
-    {
-        APPSPM_PRM_LGC_MTR_PULSE_ITER_MAX = 0,
-        APPSPM_PRM_LGC_MTR_XL_RAMP_CTRL_KFACTOR,
-        APPSPM_PRM_LGC_MTR_XL_RAMP_CTRL_SLOP_SPEED,
-        APPSPM_PRM_LGC_MTR_XL_RAMP_CTRL_NB_STEP,
-        APPSPM_PRM_LGC_MTR_XL_SPEED_MAX,
-        APPSPM_PRM_LGC_MTR_XL_SPEED_MIN,
-        APPSPM_PRM_LGC_MTR_XR_RAMP_CTRL_KFACTOR,
-        APPSPM_PRM_LGC_MTR_XR_RAMP_CTRL_SLOP_SPEED,
-        APPSPM_PRM_LGC_MTR_XR_RAMP_CTRL_NB_STEP,
-        APPSPM_PRM_LGC_MTR_XR_SPEED_MAX,
-        APPSPM_PRM_LGC_MTR_XR_SPEED_MIN,
-        APPSPM_PRM_LGC_MTR_Y_RAMP_CTRL_KFACTOR,
-        APPSPM_PRM_LGC_MTR_Y_RAMP_CTRL_SLOP_SPEED,
-        APPSPM_PRM_LGC_MTR_Y_RAMP_CTRL_NB_STEP,
-        APPSPM_PRM_LGC_MTR_Y_SPEED_MAX,
-        APPSPM_PRM_LGC_MTR_Y_SPEED_MIN,
-        APPSPM_PRM_LGC_MTR_Z_RAMP_CTRL_KFACTOR,
-        APPSPM_PRM_LGC_MTR_Z_RAMP_CTRL_SLOP_SPEED,
-        APPSPM_PRM_LGC_MTR_Z_RAMP_CTRL_NB_STEP,
-        APPSPM_PRM_LGC_MTR_Z_SPEED_MAX,
-        APPSPM_PRM_LGC_MTR_Z_SPEED_MIN,
-        APPSPM_PRM_SYS_OPT_SNS_ECDR_XL,
-        APPSPM_PRM_SYS_OPT_SNS_ECDR_XR,
-        APPSPM_PRM_SYS_OPT_SNS_ECDR_Y,
-        APPSPM_PRM_SYS_OPT_SNS_ECDR_Z,
-        APPSPM_PRM_SYS_MACHINE_ID,
-        APPSPM_PRM_SYS_OPT_ACT_MTR_XL,
-        APPSPM_PRM_SYS_OPT_ACT_MTR_XR,
-        APPSPM_PRM_SYS_OPT_ACT_MTR_Y,
-        APPSPM_PRM_SYS_OPT_ACT_MTR_Z,
-    
-        APPSPM_PRM_NB,
-    } t_eAPPSPM_ItemPrm;
+	/* CAUTION : Automatic generated code section for Enum: Start */
 
-    /* CAUTION : Automatic generated code section for Enum: End */
-
+	/* CAUTION : Automatic generated code section for Enum: End */
 	//-----------------------------ENUM TYPES-----------------------------//
+
 
 	/* CAUTION : Automatic generated code section for Structure: Start */
 
 	/* CAUTION : Automatic generated code section for Structure: End */
-
 	//-----------------------------STRUCT TYPES---------------------------//
 	/* CAUTION : Automatic generated code section : Start */
 
 	/* CAUTION : Automatic generated code section : End */
-
 	//-----------------------------TYPEDEF TYPES---------------------------//
-
-    
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************
@@ -91,11 +52,48 @@
     // *                      Variables
     // ********************************************************************
 
+
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: Start */
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetActCfg
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_XR_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
 
-#endif // APPSYS_CONFIGPUBLIC_H_INCLUDED           
+    /**
+    *
+    * @brief     @ref t_cbAppAct_GetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_GetValue(t_float32 *f_rawSigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_SetValue(t_float32 f_SigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_GetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_GetValue(t_float32 *f_rawSigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_SetValue(t_float32 f_SigValue_pf32);
+
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
+#endif            
 //************************************************************************************
 // End of File
 //************************************************************************************
@@ -106,8 +104,8 @@
  *	@note   
  *
  *
- *	@params[in] 
- *	@params[out]
+ *	@param[in] 
+ *	@param[out]
  *	 
  *
  *

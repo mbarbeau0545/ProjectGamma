@@ -22,6 +22,9 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
+    ///@brief Define for normalize return function of spec files
+    #define APPACT_MOTOR_ON ((t_float32)1.0f)
+    #define APPACT_MOTOR_OFF ((t_float32)0.0f)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -31,8 +34,10 @@
     */
     typedef enum
     {
-        APPACT_ACTITF_MTR_XL_PULSE = 0,       /**< Actuator Device MTR_XL, Interface PULSE, Moteur X Left Pulses */
-        APPACT_ACTITF_MTR_XL_SPEED,             /**< Actuator Device MTR_XL, Interface SPEED, Moteur X Left Speed */
+        APPACT_ACTITF_MTR_XL_PULSE = 0,       /**< Actuator Device MTR_XL, Interface PULSE, Moteur XL Left Pulses */
+        APPACT_ACTITF_MTR_XL_SPEED,             /**< Actuator Device MTR_XL, Interface SPEED, Moteur XL Left Speed */
+        APPACT_ACTITF_MTR_XR_PULSE,             /**< Actuator Device MTR_XR, Interface PULSE, Moteur XR Left Pulses */
+        APPACT_ACTITF_MTR_XR_SPEED,             /**< Actuator Device MTR_XR, Interface SPEED, Moteur XR Left Speed */
         APPACT_ACTITF_MTR_Y_PULSE,              /**< Actuator Device MTR_Y, Interface PULSE, Moteur Y Pulses */
         APPACT_ACTITF_MTR_Y_SPEED,              /**< Actuator Device MTR_Y, Interface SPEED, Moteur Y Speed */
         APPACT_ACTITF_MTR_Z_PULSE,              /**< Actuator Device MTR_Z, Interface PULSE, Moteur Z Pulses */
@@ -57,6 +62,7 @@
     typedef enum
     {
         APPACT_ACTDVC_MTR_XL = 0,
+        APPACT_ACTDVC_MTR_XR,
         APPACT_ACTDVC_MTR_Y,
         APPACT_ACTDVC_MTR_Z,
     
