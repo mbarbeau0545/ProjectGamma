@@ -98,7 +98,8 @@
     "appsig_configprivate.h": "c",
     "app_sig.h": "c",
     "unity.h": "c",
-    "appsns_spec_ecdr_xl.h": "c"
+    "appsns_spec_ecdr_xl.h": "c",
+    "appspm_configpublic.h": "c"
   },
   "stm32-for-vscode.armToolchainPath": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",
