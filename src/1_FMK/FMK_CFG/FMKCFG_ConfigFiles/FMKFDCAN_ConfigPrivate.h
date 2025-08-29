@@ -284,9 +284,9 @@
 
     const t_bool c_FmkCan_IsNodeActive[FMKFDCAN_NODE_NB] = {
         (t_bool)True,  // FMKFDCAN_NODE_1
-        (t_bool)False, // FMKFDCAN_NODE_2
+        FALSE, // FMKFDCAN_NODE_2
 #if defined(FMKCPU_STM32_ECU_FAMILY_G4)
-        (t_bool)False, // FMKFDCAN_NODE_3
+        FALSE, // FMKFDCAN_NODE_3
 #endif
     };
 

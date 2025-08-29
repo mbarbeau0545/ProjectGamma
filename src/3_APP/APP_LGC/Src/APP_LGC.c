@@ -447,7 +447,7 @@ static t_eReturnCode s_APPLGC_GetSnsValues(void)
     for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e == RC_OK) ; idxSns_u8++)
     {
         //----- Reset Container values -----//
-        snsInfo_s.isValueOK_b = (t_bool)False;
+        snsInfo_s.isValueOK_b = FALSE;
         snsInfo_s.rawValue_f32 = (t_float32)0.0;
         snsInfo_s.SnsValue_f32 = (t_float32)0.0;
 

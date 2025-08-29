@@ -53,7 +53,20 @@
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
-
+    /**
+     * @brief Function Init for Agent Gantry
+     *          of state  Machine
+     * ----------------------------------------------------------------------------
+     * @return ohters : @ref t_eReturnCode
+     */
+    t_eReturnCode GTRY_Init(void);
+    /**
+     * @brief Function Init for Agent Gantry
+     *          of state  Machine
+     * ----------------------------------------------------------------------------
+     * @return ohters : @ref t_eReturnCode
+     */
+    t_eReturnCode GTRY_PeriodicTask(void);
 #endif // APP_LGC_H_INCLUDED           
 //************************************************************************************
 // End of File

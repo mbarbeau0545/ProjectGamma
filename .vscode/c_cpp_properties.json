@@ -2,24 +2,24 @@
 // !!! WARNING !!! AUTO-GENERATED FILE!
 // PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
 // https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
-//
+//C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src
 {
     "configurations": [
         {
             "name": "PlatformIO",
             "includePath": [
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/include",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/src",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/0_Common",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/1_FMK",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/2_DRV",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/3_APP",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/include",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/0_Common",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/1_FMK",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/2_DRV",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/3_APP",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/Include",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/Device/ST/STM32G4xx/Include",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/STM32G4xx_HAL_Driver/Inc",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/STM32G4xx_HAL_Driver/Src",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/DSP/Include",
-                "D:/Project/Software/STM32/Gamma_fMotionPlanner/.pio/libdeps/nucleo_g474re/Unity/src",
+                "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src.pio/libdeps/nucleo_g474re/Unity/src",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/Common",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/hx8347d",
                 "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/mfxstm32l152",
@@ -59,18 +59,18 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/include",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/src",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/0_Common",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/1_FMK",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/2_DRV",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/src/3_APP",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/include",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/0_Common",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/1_FMK",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/2_DRV",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src/3_APP",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/Include",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/Device/ST/STM32G4xx/Include",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/STM32G4xx_HAL_Driver/Inc",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/STM32G4xx_HAL_Driver/Src",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/CMSIS/DSP/Include",
-                    "D:/Project/Software/STM32/Gamma_fMotionPlanner/.pio/libdeps/nucleo_g474re/Unity/src",
+                    "C:/PROJECT/0_SOFWTARE/0_M500/M500_Tester/2_Repo/ProjectGamma/src.pio/libdeps/nucleo_g474re/Unity/src",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/Common",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/hx8347d",
                     "C:/Users/mbarb/.platformio/packages/framework-stm32cubeg4/Drivers/BSP/Components/mfxstm32l152",

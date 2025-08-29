@@ -28,6 +28,14 @@
     ///@brief Fifo Buffer len define
     #define GTRY_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)50)
     #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)50)
+
+    ///@brief direction to go to the right spot for referencing 
+    #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)1)
+    #define GTRY_CALIB_DIR_AXE_Y                ((t_sint32)1)
+    #define GTRY_CALIB_DIR_AXE_Z                ((t_sint32)1)
+
+    ///@brief Number of iteration we can send 
+    #define GTRY_MTR_MAX_SEND_ITER              ((t_uint8)15)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -39,6 +47,9 @@
         GTRY_CALIB_ID_AXE_X = 0,       //---- Calibration of axe X ----//
         GTRY_CALIB_ID_AXE_Y,           //---- Calibration of axe Y ----//
         GTRY_CALIB_ID_AXE_Z,           //---- Calibration of axe Z ----//
+        GTRY_CALIB_ID_AXE_ALL,         //---- Calibration of all axes ----//
+
+        GTRY_CALIB_ID_AXE_NB
     } t_eGTRY_CalibAxeId;
 
     ///@brief Calibration Type List 
@@ -46,7 +57,20 @@
     {
         GTRY_CALIB_TYPE_ASYNC = 0,      //---- calibration will be made in async mode, axe X then Y and Z ----//
         GTRY_CALIB_TYPE_SYNC,           //---- calibration will be made in sync mode Axe X,Y,Z at the same time ----//
+
+        GTRY_CALIB_TYPE_NB,             //---- Calibration type number  ----//
     } t_eGTRY_CalibType;
+
+    ///@brief Enumeration of the type of sending iteration
+    enum 
+    {
+        GTRY_SEND_ITER_BLOCKING = 0,     //---- Iterations are send for all axes in sync ways, if a motor 
+                                            //      does not accept cmd anymore we do not try to send iter for others axes, we wait
+                                            //      the blocking one is available again ----//
+        GTRY_SEND_ITER_ASYNC,           //---- Iterations are send for all motor as soon as they can ----//                             
+
+        GTRY_SEN_ITER_NB
+    }
 
     ///@brief Command User Type
     typedef enum 
@@ -82,13 +106,14 @@
     ///@brief Mapping structure beetween gantry and application
     typedef struct 
     {
-        t_eAPPACT_ActInterface actIfMtrSts_e;       //---- Pulse/State actuators interface ----//
-        t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface -----//
+        t_eAPPACT_ActInterface actIfMtrPulse_e;       //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
+        t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
         t_eAPPSNS_SnsInterface snsIfEcdr_e;         //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
         t_eAPPSPM_ItemPrm prmPulsePerMm_e;          //---- Parameter to know the pulse per millimeter ----//
-        t_eAPPSPM_ItemPrm prmAxeLenght_e;           //---- Parameter for axe lenght -----//  
+        t_eAPPSPM_ItemPrm prmAxeLenght_e;           //---- Parameter for axe lenght -----//
+        t_eAPPSPM_ItemPrm prmMtrMinFreq_e;          //---- Motor Min frequency acceptable ----//
     } t_sGTRY_AxeAppCfg;
 
     ///@brief Structure to gather user command from AppSig 
