@@ -22,6 +22,7 @@
     #include "APP_LGC/Src/APP_LGC.h"
 
     #include "./GANTRY_ConfigPublic.h"
+    #include "./APP_CFG/ConfigSpecific/GANTRY_ConfigSpecific.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -70,7 +71,7 @@
         GTRY_SEND_ITER_ASYNC,           //---- Iterations are send for all motor as soon as they can ----//                             
 
         GTRY_SEN_ITER_NB
-    }
+    };
 
     ///@brief Command User Type
     typedef enum 
@@ -82,26 +83,6 @@
         GTRY_CMD_TYPE_ID_NB,
     } t_eGTRY_CmdTypeId;
 
-    ///@brief mapping between signals from appsig and cmd signal
-    typedef enum 
-    {
-        GTRY_CMD_SIG_POS_X = 0,
-        GTRY_CMD_SIG_POS_Y,
-        GTRY_CMD_SIG_POS_Z,
-
-        GTRY_CMD_SIG_POS_RAYON,
-        GTRY_CMD_SIG_POS_THETHA,
-        GTRY_CMD_SIG_POS_PHI,
-
-        GTRY_CMD_SIG_STEP_X,
-        GTRY_CMD_SIG_STEP_Y,
-        GTRY_CMD_SIG_STEP_Z,
-        GTRY_CMD_SIG_DIR_X,
-        GTRY_CMD_SIG_DIR_Y,
-        GTRY_CMD_SIG_DIR_Z,
-
-        GTRY_CMD_SIG_NB
-    } t_eGTRY_CmdSignals;
     //---------------------------STRUCTURE TYPES--------------------------//
     ///@brief Mapping structure beetween gantry and application
     typedef struct 
@@ -111,9 +92,6 @@
         t_eAPPSNS_SnsInterface snsIfEcdr_e;         //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
-        t_eAPPSPM_ItemPrm prmPulsePerMm_e;          //---- Parameter to know the pulse per millimeter ----//
-        t_eAPPSPM_ItemPrm prmAxeLenght_e;           //---- Parameter for axe lenght -----//
-        t_eAPPSPM_ItemPrm prmMtrMinFreq_e;          //---- Motor Min frequency acceptable ----//
     } t_sGTRY_AxeAppCfg;
 
     ///@brief Structure to gather user command from AppSig 
@@ -135,7 +113,7 @@
      * ----------------------------------------------------------------------------
      * @return @ref t_eReturnCode
      */
-    typedef t_eReturnCode (*t_cbGTRY_BuildCmdFunc)(t_float32 f_value);
+    typedef t_eReturnCode (*t_cbGTRY_BuildCmdFunc)(t_float32 f_value_af32[GTRY_CMD_SIG_NB], t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
 
     /// @brief Sig Cmd Group to handle signal command
     typedef struct
@@ -144,7 +122,7 @@
         t_uint8 nbsignals_u8;                   //---- Number of signal for the group -----//
         t_uint32 timeoutMs_u32;                 //---- Time out to set a entire command -----//
         t_cbGTRY_BuildCmdFunc buildFunc_pf;     //---- Function to build the cmd ----//
-    } t_sGTRY_SigGroup;
+    } t_sGTRY_SigGroupInfo;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */
@@ -165,11 +143,11 @@
     static const t_eAPPSIG_Signal c_GTRY_StepdirSigs_ae[] = {};
 
     ///@brief Information for Signals Groups 
-    const t_sGTRY_SigGroup c_GTRY_SigGroupInfo_as[GTRY_CMD_TYPE_ID_NB] = {
+    const t_sGTRY_SigGroupInfo c_GTRY_SigGroupInfo_as[GTRY_CMD_TYPE_ID_NB] = {
     //    signals from APPSIG        nbSignals    Timeout       function to build cmd
-        {c_GTRY_cartesianSigs_ae,       3,          100,        NULL_FUNCTION},
-        {c_GTRY_SphericSigs_ae,         3,          100,        NULL_FUNCTION},
-        {c_GTRY_StepdirSigs_ae,         3,          100,        NULL_FUNCTION},
+        {c_GTRY_cartesianSigs_ae,       3,          100,        GANTRY_SPEC_BuildCartesianCmd},
+        {c_GTRY_SphericSigs_ae,         3,          100,        GANTRY_SPEC_BuildSphericCmd},
+        {c_GTRY_StepdirSigs_ae,         6,          100,        GANTRY_SPEC_BuildStepCmd},
     }
     //********************************************************************************
     //                      Public functions - Prototyupes

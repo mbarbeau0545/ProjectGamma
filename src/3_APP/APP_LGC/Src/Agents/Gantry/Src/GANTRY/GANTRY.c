@@ -120,6 +120,9 @@ static t_sGTRY_MtrCmdIterPayload g_BufferCmdMtrIter_as[GTRY_PHYS_AXE_NB][GTRY_CM
 static t_bool g_FlagRcvPosCmd_b = FALSE;
 ///@brief At least one Iter Command is on the Queue
 static t_bool g_FlagIterCmdReady_b = FALSE;
+///@brief One Position cmd cannot be pushed inside PosQueue
+static t_bool g_FlagPosCmdPending_b = FALSE;
+static t_eGTRY_CmdTypeId g_cmdTypePending_e = GTRY_CMD_TYPE_ID_NB;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -294,7 +297,15 @@ static void s_GTRY_SigReceptionCallback(t_eAPPSIG_Signal f_signal_e, t_float32 f
  * ----------------------------------------------------------------------------
  * @return 
  */
-static void S_GTRY_CheckAndBuilCommand(t_uint32 f_currentTime_u32);
+static void S_GTRY_CheckAndBuilCommand(t_eGTRY_CmdTypeId f_cmdTypeID_e, t_uint32 f_currentTime_u32);
+/**
+ * @brief Iteration Algorithm Core
+ * ----------------------------------------------------------------------------
+ * @param[in] f_currentTime_u32 : Current Time
+ * ----------------------------------------------------------------------------
+ * @return 
+ */
+static t_eReturnCode s_GTRY_IterationAlgorithm(t_float32 f_posValues_af32[GTRY_PHYS_AXE_NB]);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -521,12 +532,12 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_Ops(t_eGTRY_CalibAxeId f_calibId_e)
         if(f_calibId_e == GTRY_CALIB_ID_AXE_ALL)
         {
             startAxeId_e = GTRY_CALIB_ID_AXE_X;
-            endAxeId_e = (GTRY_CALIB_ID_AXE_Z + 1)
+            endAxeId_e = (GTRY_CALIB_ID_AXE_Z + 1);
         }
         else 
         {
             startAxeId_e = f_calibId_e;
-            endAxeId_e = (startAxeId_e + 1)
+            endAxeId_e = (startAxeId_e + 1);
         }
         //---- 2- Initialisation of static  s_curIdxAxe_e ----//
         if(s_currAxeId_e == GTRY_CALIB_ID_AXE_NB)
@@ -595,20 +606,20 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsStop(t_eGTRY_PhysicalAxe f_PhysAx
         switch(f_PhysAxe_e)
         {
             case GTRY_PHYS_AXE_X:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
                 Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, 0.0f);
                 if(Ret_e == RC_OK)
                 {
-                    axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                    axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
                     Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, 0.0f);
                 }
             break;
-            case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+            case GTRY_PHYS_AXE_Y:
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
                 Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, 0.0f);
             break;
             case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
                 Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, 0.0f);
             break;
             case GTRY_PHYS_AXE_NB:
@@ -633,6 +644,9 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
     t_uint16 axeLenghtMm_u16 = 0;
     t_sint32 pulseToSend_s32 = 0;
     t_sint32 pulseFactor_s32;
+    t_eAPPSPM_ItemPrm pulseperMmID_e;
+    t_eAPPSPM_ItemPrm minSpeedID_e;
+    t_eAPPSPM_ItemPrm axeLenghtID_e;
 
     if(f_PhysAxe_e >= GTRY_PHYS_AXE_NB)
     {
@@ -647,15 +661,24 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
         {
             case GTRY_PHYS_AXE_X:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_X;
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_AXE_X_MIN_SPEED;
+                axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_X_LEN;
             break;
-            case GTRY_PHYS_AXE_Z:
+            case GTRY_PHYS_AXE_Y:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_Y;
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+                pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_AXE_Y_MIN_SPEED;
+                axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_Y_LEN;
             break;
             case GTRY_PHYS_AXE_Z:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_Z;
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+                pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_AXE_Z_MIN_SPEED;
+                axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_Z_LEN;
             break;
             case GTRY_PHYS_AXE_NB:
             default:
@@ -665,14 +688,14 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
         //---- 2- Parameter ----//
         if(Ret_e == RC_OK)
         {
-            Ret_e = APPSPM_GetParam(axeCfg_ps->prmPulsePerMm_e, &pulsePerMm_u16);
+            Ret_e = APPSPM_GetParam(pulsePerMm_u16, &pulsePerMm_u16);
             if(Ret_e == RC_OK)
             {
-                Ret_e = APPSPM_GetParam(axeCfg_ps->prmAxeLenght_e, &axeLenghtMm_u16)
+                Ret_e = APPSPM_GetParam(axeLenghtID_e, &axeLenghtMm_u16);
             }
             if(Ret_e == RC_OK)
             {
-                Ret_e = APPSPM_GetParam(axeCfg_ps->prmMtrMinFreq_e, &minMtrFreq_u16);
+                Ret_e = APPSPM_GetParam(minSpeedID_e, &minMtrFreq_u16);
             }
         }
         //---- 3- Compute and send the motor pulse to get to the reference point ----//
@@ -690,7 +713,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
             //---- for axe X get the XR also ----//
             if(f_PhysAxe_e == GTRY_PHYS_AXE_X)
             {
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
                 Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, pulseToSend_s32);
                 if(Ret_e == RC_OK)
                 {
@@ -725,13 +748,13 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
         switch(f_PhysAxe_e)
         {
             case GTRY_PHYS_AXE_X:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+            break;
+            case GTRY_PHYS_AXE_Y:
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
             break;
             case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
-            break;
-            case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
             break;
             case GTRY_PHYS_AXE_NB:
             default:
@@ -746,7 +769,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
             {
                 if(f_PhysAxe_e == GTRY_PHYS_AXE_X)
                 {
-                    axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                    axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
                     Ret_e = APPACT_GetActValue(axeCfg_ps->actIfSpeed_e, &actMtrXRStsVal_f32);
                     if(Ret_e == RC_OK)
                     {
@@ -855,16 +878,16 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpe_CmdCheck(void)
     t_uint16 axeZLenght_u16 = 0;
 
     //---- Get the parameter to know if the cmd is not out of range ----//
-    Ret_e = APPSPM_GetParam(c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL].prmAxeLenght_e,
+    Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_X_LEN,
                             &axeXLenght_u16);
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSPM_GetParam(c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y].prmAxeLenght_e,
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Y_LEN,
                                 &axeYLenght_u16);
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSPM_GetParam(c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z].prmAxeLenght_e,
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Z_LEN,
                                 &axeZLenght_u16);
     }
     if(Ret_e == RC_OK)
@@ -953,13 +976,25 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter(void)
 {
     t_eReturnCode Ret_e;
     t_float32 posCmdBuffer_af32[GTRY_PHYS_AXE_NB] = {0.0f, 0.0f, 0.0f};
+    t_uint32 currenTime_u32;
 
+    if(g_FlagPosCmdPending_b == TRUE)
+    {
+        FMKCPU_GetTick(&currenTime_u32);
+        S_GTRY_CheckAndBuilCommand(g_cmdTypePending_e, currenTime_u32); 
+    }
     Ret_e = LIBQUEUE_PopElement(&g_QueueCmdPosRcvMngmt_s,
                                         posCmdBuffer_af32,
                                         GTRTY_SIZEOF_ELEM_POSCMD_QUEUE);
     if(Ret_e == RC_OK)
     {
-        Ret_e = s_GTRY_IterAlgorithm(posCmdBuffer_af32);
+        Ret_e = s_GTRY_IterationAlgorithm(posCmdBuffer_af32);
+
+        if((Ret_e == RC_OK)
+        && (g_FlagIterCmdReady_b == FALSE))
+        {
+            g_FlagIterCmdReady_b = TRUE;
+        }
     }
 
     return Ret_e;
@@ -1001,7 +1036,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter(void)
             currPhysAxe_e++)
         {
             Ret_e = LIBQUEUE_PopElement(&g_QueueCmdIterMngmt_as[currPhysAxe_e],
-                                        cmdIter_s,
+                                        &cmdIter_s,
                                         GTRTY_SIZEOF_ELEM_ITERCMD_QUEUE);
             if(Ret_e == RC_OK)
             {
@@ -1068,6 +1103,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
 {
     t_eReturnCode Ret_e;
     t_sGTRY_AxeAppCfg * axeCfg_ps;
+    t_eAPPLGC_SrvHealth axeHealth_e;
 
     if(f_MtrCmdIter_ps == NULL)
     {
@@ -1075,41 +1111,84 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
         ASSERT((t_uint16)0);
     }
     else if(f_physAxeID_e >= GTRY_PHYS_AXE_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
     else
     {
         switch(f_physAxeID_e)
         {
             case GTRY_PHYS_AXE_X:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
-                if(Ret_e == RC_OK)
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+
+                Ret_e = APPLGC_GetServiceHealth(axeCfg_ps->lgcSrvID_e, &axeHealth_e);
+                if(Ret_e != RC_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    axeHealth_e = APPLGC_SRV_HEALTH_ERROR;
                 }
-                if(Ret_e == RC_OK)
+                if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
+                        axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                        if(Ret_e == RC_OK)
+                        {
+                            Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                        }
+                    }
+                }
+                else 
+                {
+                    Ret_e = RC_WARNING_BUSY;
+                }
+            break;
+            case GTRY_PHYS_AXE_Y:
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+
+                Ret_e = APPLGC_GetServiceHealth(axeCfg_ps->lgcSrvID_e, &axeHealth_e);
+                if(Ret_e != RC_OK)
+                {
+                    axeHealth_e = APPLGC_SRV_HEALTH_ERROR;
+                }
+                if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
+                {
                     Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
                     }
                 }
-            break;
-            case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
-                if(Ret_e == RC_OK)
+                else 
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    Ret_e = RC_WARNING_BUSY;
                 }
             break;
             case GTRY_PHYS_AXE_Z:
-                axeCfg_ps = c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
-                if(Ret_e == RC_OK)
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+
+                Ret_e = APPLGC_GetServiceHealth(axeCfg_ps->lgcSrvID_e, &axeHealth_e);
+                if(Ret_e != RC_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    axeHealth_e = APPLGC_SRV_HEALTH_ERROR;
+                }
+                if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
+                {
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    }
+                }
+                else 
+                {
+                    Ret_e = RC_WARNING_BUSY;
                 }
             break;
             case GTRY_PHYS_AXE_NB:
@@ -1130,9 +1209,9 @@ static void s_GTRY_SigReceptionCallback(t_eAPPSIG_Signal f_signal_e, t_float32 f
     t_eReturnCode Ret_e;
     t_uint32 currentTime_u32;
     t_eGTRY_CmdSignals currCmdSig_e;
+    t_eGTRY_CmdTypeId cmdIdType_e;
 
-    if((f_signal_e >= APPSIG_SIGNAL_NB)
-    || (f_sigVal_f32 == NULL))
+    if(f_signal_e >= APPSIG_SIGNAL_NB)
     {
         ASSERT((t_uint16)f_signal_e);
         Ret_e = RC_OK;
@@ -1147,41 +1226,53 @@ static void s_GTRY_SigReceptionCallback(t_eAPPSIG_Signal f_signal_e, t_float32 f
             {
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X:
                     currCmdSig_e = GTRY_CMD_SIG_POS_X;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_CARTESIAN;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y:
                     currCmdSig_e = GTRY_CMD_SIG_POS_Y;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_CARTESIAN;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z:  
                     currCmdSig_e = GTRY_CMD_SIG_POS_Z;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_CARTESIAN;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_RAYON:  
                     currCmdSig_e = GTRY_CMD_SIG_POS_RAYON;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_SPHERIC;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_THETHA:
                     currCmdSig_e = GTRY_CMD_SIG_POS_THETHA;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_SPHERIC;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_PHI:
                     currCmdSig_e = GTRY_CMD_SIG_POS_PHI;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_SPHERIC;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X:
                     currCmdSig_e = GTRY_CMD_SIG_STEP_X;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y:
                     currCmdSig_e = GTRY_CMD_SIG_STEP_Y;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z:
-                    currCmdSig_e = GTRY_CMD_SIG_STEP_Z
+                    currCmdSig_e = GTRY_CMD_SIG_STEP_Z;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X:
                     currCmdSig_e = GTRY_CMD_SIG_DIR_X;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y:
                     currCmdSig_e = GTRY_CMD_SIG_DIR_Y;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
                 case APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z:
                     currCmdSig_e = GTRY_CMD_SIG_DIR_Z;
+                    cmdIdType_e = GTRY_CMD_TYPE_ID_STEPS;
                 break;
-                default
+                default:
                     Ret_e = RC_WARNING_NO_OPERATION;
                     ASSERT((t_uint16)f_signal_e);
             }
@@ -1191,10 +1282,107 @@ static void s_GTRY_SigReceptionCallback(t_eAPPSIG_Signal f_signal_e, t_float32 f
             g_CmdSigInfo_as[currCmdSig_e].value_f32 = f_sigVal_f32;
             g_CmdSigInfo_as[currCmdSig_e].isRcv_b = TRUE;
             g_CmdSigInfo_as[currCmdSig_e].timeStamp_u32 = currentTime_u32;
-            Ret_e = S_GTRY_CheckAndBuilCommand(currentTime_u32);
+            S_GTRY_CheckAndBuilCommand(cmdIdType_e, currentTime_u32);
         }
     }
 
+    return;
+}
+
+/*********************************
+ * S_GTRY_CheckAndBuilCommand
+ *********************************/
+static void S_GTRY_CheckAndBuilCommand(t_eGTRY_CmdTypeId f_cmdTypeID_e, t_uint32 f_currentTime_u32)
+{
+    t_eReturnCode Ret_e;
+    t_bool allReceived_b = TRUE;
+    t_float32 sigGrpValues_af32[GTRY_CMD_SIG_NB];
+    t_bool expired_b = FALSE;
+    t_uint32 lastTime_u32 = f_currentTime_u32;
+    t_uint8 idxGrpSig_u8;
+    t_sGTRY_SigGroupInfo * grpInfo_ps;
+    t_sGTRY_cmdSigInfo * cmdSigInfo_ps;
+    t_eAPPSIG_Signal sigGrpList_e;
+
+    if(f_cmdTypeID_e >= GTRY_CMD_TYPE_ID_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else 
+    {
+        grpInfo_ps = &c_GTRY_SigGroupInfo_as[f_cmdTypeID_e];
+        for(idxGrpSig_u8 = 0 ; idxGrpSig_u8 < grpInfo_ps->nbsignals_u8 ; idxGrpSig_u8++)
+        {
+            sigGrpList_e = grpInfo_ps->signal_pe[idxGrpSig_u8];
+            cmdSigInfo_ps = &g_CmdSigInfo_as[sigGrpList_e]; 
+            if(cmdSigInfo_ps->isRcv_b == FALSE)
+            {
+                allReceived_b = FALSE;
+                break;
+            }
+            else 
+            {
+                if((f_currentTime_u32 - cmdSigInfo_ps->timeStamp_u32) > grpInfo_ps->timeoutMs_u32)
+                {
+                    expired_b = TRUE;
+                    break;
+                }
+                if(cmdSigInfo_ps->timeStamp_u32 < lastTime_u32)
+                {
+                    lastTime_u32 = cmdSigInfo_ps->timeStamp_u32;
+                }
+            }
+            
+        }
+        //--- 1- All is received ans we can now process to build the command ----//
+        if((allReceived_b == TRUE)
+        && (expired_b == FALSE))
+        {
+            (void)memset(sigGrpValues_af32, 0, (sizeof(t_float32) * GTRY_CMD_SIG_NB));   
+            for(idxGrpSig_u8 = 0 ; idxGrpSig_u8 < grpInfo_ps->nbsignals_u8 ; idxGrpSig_u8++)
+            {
+                sigGrpValues_af32[grpInfo_ps->signal_pe[idxGrpSig_u8]] = 
+                    g_CmdSigInfo_as[grpInfo_ps->signal_pe[idxGrpSig_u8]].value_f32;
+                g_CmdSigInfo_as[grpInfo_ps->signal_pe[idxGrpSig_u8]].isRcv_b = FALSE;
+            }
+
+            if(grpInfo_ps->buildFunc_pf != NULL_FUNCTION)
+            {
+                Ret_e = grpInfo_ps->buildFunc_pf(sigGrpValues_af32, &g_QueueCmdPosRcvMngmt_s);
+                if(Ret_e == RC_WARNING_LIMIT_REACHED)
+                {
+                    //---- set flag that cmd is pending ----//
+                    g_FlagPosCmdPending_b = TRUE;
+                    g_cmdTypePending_e = f_cmdTypeID_e;
+
+                }
+                else if(Ret_e == RC_OK)
+                {
+                    g_FlagPosCmdPending_b = FALSE;
+                    g_cmdTypePending_e = GTRY_CMD_TYPE_ID_NB;
+                    if(g_FlagRcvPosCmd_b == FALSE)
+                    {
+                        g_FlagRcvPosCmd_b = TRUE;
+                    }
+                }
+                else 
+                {
+                    ASSERT((t_uint16)Ret_e);
+                }
+            }
+        }
+        //--- 2- Timeout happened, we reset -----//
+        if(expired_b == TRUE)
+        {
+            ASSERT((t_uint16)0);
+            for(idxGrpSig_u8 = 0 ; idxGrpSig_u8 < grpInfo_ps->nbsignals_u8 ; idxGrpSig_u8++)
+            {
+                g_CmdSigInfo_as[grpInfo_ps->signal_pe[idxGrpSig_u8]].isRcv_b = FALSE;
+            }
+        }
+    }
+    
     return;
 }
 //************************************************************************************
