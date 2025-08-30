@@ -79,12 +79,7 @@ typedef enum
 
 /* CAUTION : Automatic generated code section for Structure: End */
 //-----------------------------STRUCT TYPES---------------------------//
-///@brief Command Iteration Payload
-typedef struct 
-{
-    t_sint32 pulses_s32;        //---- pulses to send to the motor ----//
-    t_float32 frequency_f32;    //---- frequency of the motor -----//
-} t_sGTRY_MtrCmdIterPayload;
+
 /* CAUTION : Automatic generated code section : Start */
 
 /* CAUTION : Automatic generated code section : End */
@@ -1114,6 +1109,13 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
         ASSERT((t_uint16)0);
+    }
+    else if(f_MtrCmdIter_ps->pulses_s32 == (t_sint32)0)
+    {
+        //---- we don't send no pulse iterations 
+        //      even if the algorithm compute so,
+        //      cause for drivers it means shutdown the motor ----// 
+        Ret_e = RC_OK;
     }
     else
     {

@@ -18,7 +18,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-
+    #define GTRY_MAX_ITERATION      ((t_sint32)50)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -47,7 +47,12 @@
         GTRY_PHYS_AXE_NB,                        //---- Gantry Physical Axe Number ----//
     } t_eGTRY_PhysicalAxe;
 
-    
+    ///@brief Command Iteration Payload
+    typedef struct 
+    {
+        t_sint32 pulses_s32;        //---- pulses to send to the motor ----//
+        t_float32 frequency_f32;    //---- frequency of the motor -----//
+    } t_sGTRY_MtrCmdIterPayload;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************

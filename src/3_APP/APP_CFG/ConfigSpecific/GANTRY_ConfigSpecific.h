@@ -82,11 +82,11 @@
     ///@brief Strucutre for information needed for iteration algorithm
     typedef struct 
     {
-        t_uint16 minPulses_u16;                         //---- Minimum of pulses per iteraitons ----//
-        t_eGTRY_AlgoComputeType computeType_e;          //---- Computaion type algorithm ----//
-        t_float32 MinFreq_af32[GTRY_PHYS_AXE_NB];       //---- Minimum Frequency for Axe X ----//
-        t_float32 MaxFreq_af32[GTRY_PHYS_AXE_NB];       //---- Maximum Frequency for Axe X ----//
-        t_float32 pulsePerMm_af32[GTRY_PHYS_AXE_NB];     //---- Pulse per Millimeter for Axe Z ----//
+        t_uint16 chunkSize_u16;                                 //---- chunk sizes per iteraitons ----//
+        t_float32 MinFreq_af32[GTRY_PHYS_AXE_NB];               //---- Minimum Frequency for Axes ----//
+        t_float32 MaxFreq_af32[GTRY_PHYS_AXE_NB];               //---- Maximum Frequency for Axes ----//
+        t_float32 pulsePerMm_af32[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
+        t_float32 cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_NB];    //---- Height to reach for the axe priority before others can move ----//
     } t_sGTRYSPEC_AlgoParameter;
 	/* CAUTION : Automatic generated code section : Start */
 
@@ -147,7 +147,8 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
+    t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType computeType_e,
+                                                t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
                                                 t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB],
                                                 t_float32 f_droppPulses_s32[GTRY_PHYS_AXE_NB],
                                                 t_float32 f_missPulses_af32[GTRY_PHYS_AXE_NB],
