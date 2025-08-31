@@ -27,12 +27,6 @@
     // ********************************************************************
     // *                      Types
     // ********************************************************************
-    typedef struct 
-    {
-        t_float32 posX_f32;     //---- Axe X position ----//
-        t_float32 posY_f32;     //---- Axe Y position ----//
-        t_float32 posZ_f32;     //---- Axe Z position ----//
-    } t_sGTRY_AxePosition;
 	/* CAUTION : Automatic generated code section for Enum: Start */
 
 	/* CAUTION : Automatic generated code section for Enum: End */
@@ -65,21 +59,27 @@
      * ----------------------------------------------------------------------------
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GTRY_Init(void);
+    t_eReturnCode GANTRY_Init(void);
     /**
      * @brief Function Init for Agent Gantry
      *          of state  Machine
      * ----------------------------------------------------------------------------
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GTRY_PeriodicTask(void);
+    t_eReturnCode GANTRY_PeriodicTask(void);
     /**
-     * @brief Function Init for Agent Gantry
-     *          of state  Machine
+     * @brief Function to get the position in mm
+     * @details Depending on the activation of encoder option
+     *          this function return either the exact current position 
+     *          of the axes if the ecdr for the axe is ope
+     *          Or the expected position after all iterations to reach 
+     *          the last cmd position will be made
+     * ----------------------------------------------------------------------------
+     * @param[in] f_currPos_af32 : Contianer for current position
      * ----------------------------------------------------------------------------
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GTRY_GetPosition(t_sGTRY_AxePosition * f_axePosps);
+    t_eReturnCode GTRY_GetPosition(t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB]);
 #endif // APP_LGC_H_INCLUDED           
 //************************************************************************************
 // End of File

@@ -90,10 +90,10 @@
         {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_TIM_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CDA_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)5000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // FMK_CPU_OPE_ERROR
-        {(t_uint16)5,                  (t_uint32)100,                FALSE,                FALSE,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
-        {(t_uint16)5,                  (t_uint32)100,                FALSE,                FALSE,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
-        {(t_uint16)5,                  (t_uint32)200,                FALSE,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
-        {(t_uint16)5,                  (t_uint32)100,                FALSE,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_CYCLIC_TIMEOUT
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // APP_FASTTASK_TIMEOUT
+        {(t_uint16)5,                  (t_uint32)200,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // UDS_COM_ERROR
+        {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
         {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXES_OFF},// LGC_GTRY_OPE_ERROR
         {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF},// LGC_GTRY_X_OPE_ERROR
         {(t_uint16)0,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Y_OFF},// LGC_GTRY_Y_OPE_ERROR

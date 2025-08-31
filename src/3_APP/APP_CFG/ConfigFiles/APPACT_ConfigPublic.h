@@ -23,8 +23,10 @@
     // *                      Defines
     // ********************************************************************
     ///@brief Define for normalize return function of spec files
-    #define APPACT_MOTOR_ON ((t_float32)1.0f)
-    #define APPACT_MOTOR_OFF ((t_float32)0.0f)
+    #define APPACT_MOTOR_STS_ON     ((t_float32)1.0f)
+    #define APPACT_MOTOR_STS_OFF    ((t_float32)0.0f)
+    #define APPACT_EMERGENCY_STOP   ((t_float32)0.5)
+    #define APPACT_SOFT_STOP        ((t_float32)0.0f)
 
     ///@brief define normalize direction of spec files 
     #define APPACT_DIRECTION_CW ((t_float32)0.0f)

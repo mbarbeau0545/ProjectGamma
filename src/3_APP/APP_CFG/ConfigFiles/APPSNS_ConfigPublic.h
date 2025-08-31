@@ -144,6 +144,7 @@
     {
         APPSNS_DISTANCE_UNIT_METER = 0x00,      /**< Distance in Meters (m) */
         APPSNS_DISTANCE_UNIT_CENTIMETER,        /**< Distance in Centimeters (cm) */
+        APPSNS_DISTANCE_UNIT_MILLIMETER,        /**< Distance in Millimeter (mm) */
         APPSNS_DISTANCE_UNIT_KILOMETER,         /**< Distance in Kilometers (km) */
         APPSNS_DISTANCE_UNIT_MILE,              /**< Distance in Miles (mi) */
 

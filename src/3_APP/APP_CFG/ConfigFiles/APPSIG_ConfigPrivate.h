@@ -57,13 +57,18 @@
     ///@brief Serial Message Id
     #define APPSIG_SRL_ID_APPLICATIONINFO1                         ((t_uint32)0x10)
     #define APPSIG_SRL_ID_CL42T_MOTORS_INFO                        ((t_uint32)0x80)
-    #define APPSIG_SRL_ID_MTR_XL_RAMP_CTRL                         ((t_uint32)0x91)
-    #define APPSIG_SRL_ID_MTR_XR_RAMP_CTRL                         ((t_uint32)0x92)
-    #define APPSIG_SRL_ID_MTR_Y_RAMP_CTRL                          ((t_uint32)0x93)
-    #define APPSIG_SRL_ID_MTR_Z_RAMP_CTRL                          ((t_uint32)0x94)
-    #define APPSIG_SRL_ID_MTR_SPEED_CFG1                           ((t_uint32)0x95)
-    #define APPSIG_SRL_ID_MTR_SPEED_CFG_2                          ((t_uint32)0x96)
-    #define APPSIG_SRL_ID_MTR_SPEED_CFG_3                          ((t_uint32)0x97)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_X_RAMP_CTRL                 ((t_uint32)0x91)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_Y_RAMP_CTRL                 ((t_uint32)0x93)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_Z_RAMP_CTRL                 ((t_uint32)0x94)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG1                  ((t_uint32)0x95)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG_2                 ((t_uint32)0x96)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG_3                 ((t_uint32)0x97)
+    #define APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_POSITION            ((t_uint32)0x70)
+    #define APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_SPHERIC             ((t_uint32)0x71)
+    #define APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_STEPS               ((t_uint32)0x72)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_1                     ((t_uint32)0x73)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_2                     ((t_uint32)0x74)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3                     ((t_uint32)0x75)
     ///@brief CAN Message Id
     /* CAUTION : Automatic generated code section for Define: End */
     
@@ -146,27 +151,22 @@
         {(t_uint8)3,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_APPSPM_MODSTATE
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CYCLIC_DURATION
         {(t_uint8)12,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_FASTTASKDURATION
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_PULSE_ITER_MAX
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLP_SPD
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_NB_STEP
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MAX
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MIN
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLP_SPD
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_NB_STEP
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MAX
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MIN
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLP_SPD
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_NB_STEP
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MAX
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MIN
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_KFACTOR
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLP_SPD
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_NB_STEP
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MAX
-        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MIN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_PULSE_ITER_MAX
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_KFACTOR
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_SLP_SPD
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_NB_STEP
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPEED_MAX
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPEED_MIN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_KFACTOR
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_SLP_SPD
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_NB_STEP
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPEED_MAX
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPEED_MIN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_KFACTOR
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_SLP_SPD
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_NB_STEP
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPEED_MAX
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPEED_MIN
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_XL
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_XR
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_SYS_OPT_SNS_ECDR_Y
@@ -196,6 +196,31 @@
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_HEALTH
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_HEALTH
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_4_HEALTH
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_RAYON
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_THETHA
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_PHI
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_ALGO_CPTE_TYPE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_MAX_PULSES
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_CALIB_TYPE
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_SENDITER_TYPE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_LEN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_LEN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_LEN
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_MIN_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_MIN_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_MIN_SPEED
     };
 
     ///@brief Variable for decoding ApplicationInfo1
@@ -246,59 +271,101 @@
     };
 
 
-    ///@brief Variable for decoding MTR_XL_RAMP_CTRL
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_XL_RAMP_CTRL_as[3] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_SLP_SPD,        (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_RAMP_CTRL_NB_STEP,        (t_uint8)16                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_X_RAMP_CTRL
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_X_RAMP_CTRL_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_SLP_SPD,        (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_NB_STEP,        (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_XR_RAMP_CTRL
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_XR_RAMP_CTRL_as[3] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_SLP_SPD,        (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_RAMP_CTRL_NB_STEP,        (t_uint8)16                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_Y_RAMP_CTRL
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_Y_RAMP_CTRL_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_SLP_SPD,        (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_NB_STEP,        (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_Y_RAMP_CTRL
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_Y_RAMP_CTRL_as[3] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_KFACTOR,         (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_SLP_SPD,         (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_RAMP_CTRL_NB_STEP,         (t_uint8)16                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_Z_RAMP_CTRL
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_Z_RAMP_CTRL_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_KFACTOR,        (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_SLP_SPD,        (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_NB_STEP,        (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_Z_RAMP_CTRL
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_Z_RAMP_CTRL_as[3] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_KFACTOR,         (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_SLP_SPD,         (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_RAMP_CTRL_NB_STEP,         (t_uint8)16                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_SPEED_CFG1
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG1_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_PULSE_ITER_MAX,             (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPEED_MAX,                (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPEED_MIN,                (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_SPEED_CFG1
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_SPEED_CFG1_as[4] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_PULSE_ITER_MAX,              (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MAX,                (t_uint8)16                                            },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XL_SPEED_MIN,                (t_uint8)24                                            },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MIN,                (t_uint8)32                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_SPEED_CFG_2
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG_2_as[2] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPEED_MIN,                (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPEED_MAX,                (t_uint8)16                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_SPEED_CFG_2
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_SPEED_CFG_2_as[3] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_XR_SPEED_MAX,                (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MIN,                 (t_uint8)8                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Y_SPEED_MAX,                 (t_uint8)16                                            },
+    ///@brief Variable for decoding PRM_LGC_GTRY_SPEED_CFG_3
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG_3_as[2] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPEED_MAX,                (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPEED_MIN,                (t_uint8)16                                            },
     };
 
 
-    ///@brief Variable for decoding MTR_SPEED_CFG_3
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_MTR_SPEED_CFG_3_as[2] = {
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MAX,                 (t_uint8)0                                             },
-        {APPSIG_SIGNAL_PRM_LGC_MTR_Z_SPEED_MIN,                 (t_uint8)8                                             },
+    ///@brief Variable for decoding PRM_LGC_LGC_GTRY_CMD_POSITION
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_POSITION_as[3] = {
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X,                  (t_uint8)0                                             },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y,                  (t_uint8)16                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z,                  (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding PRM_LGC_LGC_GTRY_CMD_SPHERIC
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_SPHERIC_as[3] = {
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_RAYON,              (t_uint8)0                                             },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_THETHA,             (t_uint8)16                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_PHI,                (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding PRM_LGC_LGC_GTRY_CMD_STEPS
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_STEPS_as[6] = {
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X,                 (t_uint8)0                                             },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y,                 (t_uint8)16                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z,                 (t_uint8)32                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X,                  (t_uint8)48                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y,                  (t_uint8)49                                            },
+        {APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z,                  (t_uint8)50                                            },
+    };
+
+
+    ///@brief Variable for decoding PRM_LGC_GTRY_PARAM_1
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as[4] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_ALGO_CPTE_TYPE,             (t_uint8)24                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_MAX_PULSES,                 (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_CALIB_TYPE,                 (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_SENDITER_TYPE,              (t_uint8)20                                            },
+    };
+
+
+    ///@brief Variable for decoding PRM_LGC_GTRY_PARAM_2
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_2_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM,         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM,         (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM,         (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding PRM_LGC_GTRY_PARAM_3
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_3_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_LEN,                  (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_LEN,                  (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_LEN,                  (t_uint8)32                                            },
     };
 
 
@@ -307,13 +374,18 @@
     //  Identifier                                          Direction                                                CyclicSend                                                 TimeOut                                                         Sig Cfg                                         nbSignal
         {APPSIG_SRL_ID_APPLICATIONINFO1,                         APPSIG_MSG_DIR_TX,                                      (t_uint16)500,                                          (t_uint16)0,                                            c_AppSig_Srl_ApplicationInfo1_as,                       (t_uint8)14}, // APPSIG_SRL_APPLICATIONINFO1
         {APPSIG_SRL_ID_CL42T_MOTORS_INFO,                        APPSIG_MSG_DIR_TX,                                      (t_uint16)30,                                           (t_uint16)0,                                            c_AppSig_Srl_CL42T_MOTORS_INFO_as,                      (t_uint8)24}, // APPSIG_SRL_CL42T_MOTORS_INFO
-        {APPSIG_SRL_ID_MTR_XL_RAMP_CTRL,                         APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_XL_RAMP_CTRL_as,                       (t_uint8)3}, // APPSIG_SRL_MTR_XL_RAMP_CTRL
-        {APPSIG_SRL_ID_MTR_XR_RAMP_CTRL,                         APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_XR_RAMP_CTRL_as,                       (t_uint8)3}, // APPSIG_SRL_MTR_XR_RAMP_CTRL
-        {APPSIG_SRL_ID_MTR_Y_RAMP_CTRL,                          APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_Y_RAMP_CTRL_as,                        (t_uint8)3}, // APPSIG_SRL_MTR_Y_RAMP_CTRL
-        {APPSIG_SRL_ID_MTR_Z_RAMP_CTRL,                          APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_Z_RAMP_CTRL_as,                        (t_uint8)3}, // APPSIG_SRL_MTR_Z_RAMP_CTRL
-        {APPSIG_SRL_ID_MTR_SPEED_CFG1,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_SPEED_CFG1_as,                         (t_uint8)4}, // APPSIG_SRL_MTR_SPEED_CFG1
-        {APPSIG_SRL_ID_MTR_SPEED_CFG_2,                          APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_SPEED_CFG_2_as,                        (t_uint8)3}, // APPSIG_SRL_MTR_SPEED_CFG_2
-        {APPSIG_SRL_ID_MTR_SPEED_CFG_3,                          APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_MTR_SPEED_CFG_3_as,                        (t_uint8)2}, // APPSIG_SRL_MTR_SPEED_CFG_3
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_X_RAMP_CTRL,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_X_RAMP_CTRL_as,               (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_X_RAMP_CTRL
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_Y_RAMP_CTRL,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_Y_RAMP_CTRL_as,               (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_Y_RAMP_CTRL
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_Z_RAMP_CTRL,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_Z_RAMP_CTRL_as,               (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_Z_RAMP_CTRL
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG1,                  APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG1_as,                (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_SPEED_CFG1
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG_2,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG_2_as,               (t_uint8)2}, // APPSIG_SRL_PRM_LGC_GTRY_SPEED_CFG_2
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_SPEED_CFG_3,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_SPEED_CFG_3_as,               (t_uint8)2}, // APPSIG_SRL_PRM_LGC_GTRY_SPEED_CFG_3
+        {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_POSITION,            APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_POSITION_as,          (t_uint8)3}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_POSITION
+        {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_SPHERIC,             APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_SPHERIC_as,           (t_uint8)3}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_SPHERIC
+        {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_STEPS,               APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_STEPS_as,             (t_uint8)6}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_STEPS
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_1,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as,                   (t_uint8)4}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_1
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_2,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_2_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_2
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_3_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_3
     };
 
     ///@brief CAN Message Information

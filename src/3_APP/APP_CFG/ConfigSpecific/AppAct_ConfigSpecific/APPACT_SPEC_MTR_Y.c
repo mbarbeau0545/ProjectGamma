@@ -198,10 +198,14 @@ t_eReturnCode APPACT_SPEC_MTR_Y_PULSE_SetValue(t_float32 f_SigValue_pf32)
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                 }
                 //--- if user wants to stop motor with pulse 0 don't mind the sync ----//
-                else if((f_SigValue_pf32 < (t_float32)0.5f)
-                &&      (f_SigValue_pf32 > (t_float32)(-0.5)))
+                //--- if user wants to stop motor with pulse 0 don't mind the sync ----//
+                else if(f_SigValue_pf32 == APPACT_SOFT_STOP)
                 {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF);
+                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, FALSE);
+                }
+                else if(f_SigValue_pf32 == APPACT_EMERGENCY_STOP)
+                {
+                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, TRUE);
                 }
             break;
             case APPSYS_OPT_ACT_MTR_Y_UNUSED:
@@ -268,14 +272,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32)
                     //---- even if ret_e != RC_OK, we reset the flag ----//
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
-                }
-                //--- if user wants to stop motor with pulse 0 don't mind the sync ----//
-                else if((f_SigValue_pf32 < (t_float32)0.5f)
-                &&      (f_SigValue_pf32 > (t_float32)(-0.5)))
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF);
-                }
-                
+                }                
             break;
             case APPSYS_OPT_ACT_MTR_Y_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -359,11 +356,11 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_GetMtrInfo(t_float32 * f_mtrValue_pf32)
         {
             if(GETBIT(mtrValue_u16, CL42T_BITFIELD_MOTOR_ON) == BIT_IS_SET_16B)
             {
-                *f_mtrValue_pf32 = APPACT_MOTOR_ON;
+                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ON;
             }
             else 
             {
-                *f_mtrValue_pf32 = APPACT_MOTOR_OFF;
+                *f_mtrValue_pf32 = APPACT_MOTOR_STS_OFF;
             }
         }
     }

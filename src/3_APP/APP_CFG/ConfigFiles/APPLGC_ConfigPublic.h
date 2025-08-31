@@ -64,7 +64,7 @@
     */
     typedef enum ____t_eAPPLGC_AgentList
     {
-        APPLGC_AGENT_GANTRY = 0x00,          // Gï¿½re la gestion du gantry
+        APPLGC_AGENT_GANTRY = 0x00,          // Gère la gestion du gantry
 
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;
@@ -93,8 +93,7 @@
     *   @param[in]  f_SrvInfo_pas     : All Services Infos.\n
     *
     */
-    typedef t_eReturnCode (t_cbAPPLGC_AgentPeriodicTask)(   t_float32 *f_snsValues_paf32, 
-                                                            t_sAPPLGC_ServiceInfo *f_SrvInfo_pas);
+    typedef t_eReturnCode (t_cbAPPLGC_AgentPeriodicTask)(void);
 
 
     //-----------------------------STRUCT TYPES---------------------------//

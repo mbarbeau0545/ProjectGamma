@@ -32,7 +32,8 @@
     ///@brief mapping between signals from appsig and cmd signal
     typedef enum 
     {
-        GTRY_CMD_SIG_POS_X = 0,
+        GTRY_CMD_SIG_HEAD = 0,
+        GTRY_CMD_SIG_POS_X = GTRY_CMD_SIG_HEAD,
         GTRY_CMD_SIG_POS_Y,
         GTRY_CMD_SIG_POS_Z,
 
@@ -79,7 +80,7 @@
 
 	/* CAUTION : Automatic generated code section for Structure: End */
 	//-----------------------------STRUCT TYPES---------------------------//
-    ///@brief Strucutre for information needed for iteration algorithm
+    //@brief Strucutre for information needed for iteration algorithm
     typedef struct 
     {
         t_uint16 chunkSize_u16;                                 //---- chunk sizes per iteraitons ----//
@@ -139,7 +140,7 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_AlgorithmInit(t_sGTRYSPEC_AlgoParameter f_Parameter_s);
+    t_eReturnCode GANTRY_SPEC_AlgorithmSetParam(t_sGTRYSPEC_AlgoParameter f_Parameter_s);
     /**
      * @brief This function handle the Safety state of State Machine
      * ----------------------------------------------------------------------------
@@ -147,14 +148,11 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType computeType_e,
+    t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeType_e,
                                                 t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
                                                 t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB],
-                                                t_float32 f_droppPulses_s32[GTRY_PHYS_AXE_NB],
                                                 t_float32 f_missPulses_af32[GTRY_PHYS_AXE_NB],
-                                                t_sLIBQUEUE_QueueCore * f_QueueIterCmdX_ps,
-                                                t_sLIBQUEUE_QueueCore * f_QueueIterCmdY_ps,
-                                                t_sLIBQUEUE_QueueCore * f_QueueIterCmdZ_ps);
+                                                t_sLIBQUEUE_QueueCore f_QueueIterCmd_as[GTRY_PHYS_AXE_NB]);
 #endif // APPSDM_CONFIGSPECIFIC_H_INCLUDED           
 //************************************************************************************
 // End of File

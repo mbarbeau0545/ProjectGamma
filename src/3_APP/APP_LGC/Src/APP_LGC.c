@@ -37,6 +37,12 @@
 // ********************************************************************
 // *                      Types
 // ********************************************************************
+/// @brief structure to get actuators value
+typedef struct 
+{
+    t_float32 value_f32;
+    t_bool isValueOK_b;
+} t_sAPPLGC_ActIfInfo;
 /* CAUTION : Automatic generated code section for Enum: Start */
 
 /* CAUTION : Automatic generated code section for Enum: End */
@@ -59,7 +65,6 @@
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
-RTC_HandleTypeDef g_rtcHandle_s;
 /**
 * @brief App Logic Module State
 */
@@ -71,15 +76,15 @@ static t_sAPPLGC_ServiceInfo g_srvFuncInfo_as[APPLGC_SRV_NB];
 /**
 * @brief Container for Sensors Values
 */
-//static t_float32 g_snsValues_af32[APPSNS_SNSITF_NB];
-static t_float32 g_snsValues_af32[2];
-
+///@brief sensors info
+static t_sAPPSNS_SnsValueInfo g_snsValues_as[APPSNS_SNSITF_NB];
+///@brief actuators info
+static t_sAPPLGC_ActIfInfo g_actValues_as[APPACT_ACTITF_NB];
 /**
 * @brief Flag to Reset Service State
 */
 static t_bool  g_resetSrvState_b = (t_bool)TRUE; 
 
-t_sSafeMem_BlockInfo g_SecBlockSnsValue_as[2];
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -121,17 +126,16 @@ static t_eReturnCode s_APPLGC_Operational(void);
 */
 static t_eReturnCode s_APPLGC_ConfigurationState(void);
 /**
+*	@brief      Get Sensors Values.\n
+*/
+static t_eReturnCode s_APPLGC_UpdateActValues(void);
+/**
 *
 *	@brief      Get Sensors Values.\n
 *
 */
 
-static t_eReturnCode s_APPLGC_GetSnsValues(void);
-/**
-*
-*	@brief      Set Actuators Values Depending on g_srvFuncInfo_as
-*/
-static t_eReturnCode s_APPLGC_SetActValues(void);
+static t_eReturnCode s_APPLGC_UpdateSnsValues(void);
 /**
 *
 *	@brief
@@ -140,14 +144,6 @@ static t_eReturnCode s_APPLGC_SetActValues(void);
 *
 */
 static t_eReturnCode s_APPLGC_ResetSrvState(void);
-/**
-*
-*	@brief
-*	@note   
-*
-*
-*/
-static t_eReturnCode s_APPLGC_SetActValues(void);
 /**
 *
 *	@brief
@@ -190,16 +186,7 @@ t_eReturnCode APPLGC_Init(void)
         g_srvFuncInfo_as[idxSrv_u8].state_e = APPLGC_SRV_STATE_NB;        
     }
 
-    //---- Set Agent Init -----//
-    for(idxAgent_u8 = (t_uint8)0 ; (idxAgent_u8 < APPLGC_AGENT_NB) && (Ret_e == RC_OK) ; idxAgent_u8++)
-    {
-        if(c_AppLGc_AgentFunc_apf[idxAgent_u8].init_pcb != NULL_FUNCTION)
-        {
-            Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_u8].init_pcb();
-        }
-    }
-
-    //Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
+    Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
 
     return Ret_e;
 }
@@ -334,26 +321,69 @@ t_eReturnCode APPLGC_GetServiceHealth(t_eAPPLGC_SrvList f_service_e, t_eAPPLGC_S
 /*********************************
  * APPLGC_GetSnsValue
  *********************************/
-t_eReturnCode APPLGC_GetSnsValue(t_eAPPSNS_SnsInterface f_sensors_e, t_sint32 * f_snsValue_ps32)
+t_eReturnCode APPLGC_GetSnsValue(t_eAPPSNS_SnsInterface f_snsIfID_e, t_float32 * f_snsValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    if(f_sensors_e >= APPSNS_SNSITF_NB)
+    if(f_snsIfID_e >= APPSNS_SNSITF_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
-        ASSERT((t_uint16)f_sensors_e);
+        ASSERT((t_uint16)f_snsIfID_e);
     }
-    if(f_snsValue_ps32 == (t_sint32 *)NULL)
+    if(f_snsValue_pf32 == NULL)
     {
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
     }
     if(Ret_e == RC_OK)
     {
-        *f_snsValue_ps32 = (t_sint32)g_snsValues_af32[f_sensors_e];
+        if(g_snsValues_as[f_snsIfID_e].isValueOK_b == TRUE)
+        {
+            *f_snsValue_pf32 = g_snsValues_as[f_snsIfID_e].SnsValue_f32;
+        }
+        else
+        {
+            *f_snsValue_pf32 = 0.0f;
+            Ret_e = RC_WARNING_WRONG_RESULT;
+        }
     }
 
     return Ret_e;
+}
+
+/*********************************
+ * APPLGC_GetActValue
+ *********************************/
+t_eReturnCode APPLGC_GetActValue(t_eAPPACT_ActInterface f_actIfID_e, t_float32 * f_actValue_pf32)
+{
+    {
+    t_eReturnCode Ret_e = RC_OK;
+
+    if(f_actIfID_e >= APPACT_ACTITF_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)f_actIfID_e);
+    }
+    if(f_actValue_pf32 == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    if(Ret_e == RC_OK)
+    {
+        if(g_actValues_as[f_actIfID_e].isValueOK_b == TRUE)
+        {
+            *f_actValue_pf32 = g_actValues_as[f_actIfID_e].value_f32;
+        }
+        else
+        {
+            *f_actValue_pf32 = 0.0f;
+            Ret_e = RC_WARNING_WRONG_RESULT;
+        }
+    }
+
+    return Ret_e;
+}
 }
 //********************************************************************************
 //                      Local functions - Implementation
@@ -376,10 +406,14 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    //Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
-    if(Ret_e < RC_OK)
+    for(t_sint32 idxAgent_s32 = 0 ; (idxAgent_s32 < APPLGC_AGENT_NB) && (Ret_e == RC_OK) ; idxAgent_s32++)
     {
-        ASSERT((t_uint16)Ret_e);
+        Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_s32].init_pcb();
+
+        if(Ret_e < RC_OK)
+        {
+            ASSERT((t_uint16)idxAgent_s32);
+        }
     }
 
     return Ret_e;
@@ -389,78 +423,95 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
-    static t_uint8 idxPulses_u8 = 0;
-    static t_bool setPerturb_b = FALSE;
-    static t_uint32 lastTime_u32 = 0;
-    static t_sint32 s_factor_s32 = -1;
-    t_uint32 currentTime_u32;
-    t_eReturnCode Ret_e = RC_OK; 
+    t_eReturnCode Ret_e;
 
-    t_float32 frequency_f32 = 1000;
-    t_sint32 pulses_s32 = 4000;
-    FMKCPU_GetTick(&currentTime_u32);
-    if((currentTime_u32 - lastTime_u32) > 1000)
+    //---- update service health ----//
+    if(g_resetSrvState_b == TRUE)
     {
-        pulses_s32 *= s_factor_s32;
-        lastTime_u32 = currentTime_u32;
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_PULSE, (t_float32)pulses_s32);
+        Ret_e = s_APPLGC_ResetSrvState();
         if(Ret_e == RC_OK)
         {
-            Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPEED, (t_float32)frequency_f32);
-        }
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XR_PULSE, (t_float32)pulses_s32);
-        if(Ret_e == RC_OK)
-        {
-            Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XR_SPEED, (t_float32)frequency_f32);
-        }
-
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Z_PULSE, (t_float32)pulses_s32);
-        if(Ret_e == RC_OK)
-        {
-            Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Z_SPEED, (t_float32)frequency_f32);
-        }
-        if(Ret_e == RC_OK)
-        {
-            
-            
-            s_factor_s32 *= (t_sint32)1;
-        }
-        else 
-        {
-            s_factor_s32 *= 1;
-            Ret_e = RC_WARNING_PENDING;
+            g_resetSrvState_b = FALSE;
         }
     }
-    
+    else 
+    {
+        Ret_e = RC_OK;
+    }
+    //---- update sensors value ----//
+    if(Ret_e >= RC_OK)
+    {
+        Ret_e = s_APPLGC_UpdateActValues();
+    }
+    //---- update sensors value ----//
+    if(Ret_e >= RC_OK)
+    {
+        Ret_e = s_APPLGC_UpdateSnsValues();
+    }
+    if(Ret_e >= RC_OK)
+    {
+        for(t_sint32 idxAgent_s32 = 0; idxAgent_s32 < APPLGC_AGENT_NB ; idxAgent_s32++)
+        {
+            Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_s32].PeriodTask_pcb();
+
+            if(Ret_e < RC_OK)
+            {
+                ASSERT((t_uint16)idxAgent_s32);
+            }
+        }
+    }
+
+
     
     return Ret_e;
 }
+
 /*********************************
- * s_APPLGC_GetSnsValues
+ * s_APPLGC_UpdateSnsValues
  *********************************/
-static t_eReturnCode s_APPLGC_GetSnsValues(void)
+static t_eReturnCode s_APPLGC_UpdateSnsValues(void)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_sAPPSNS_SnsValueInfo snsInfo_s;
     t_uint8 idxSns_u8 = (t_uint8)0;
 
-    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e == RC_OK) ; idxSns_u8++)
+    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e >= RC_OK) ; idxSns_u8++)
     {
         //----- Reset Container values -----//
-        snsInfo_s.isValueOK_b = FALSE;
-        snsInfo_s.rawValue_f32 = (t_float32)0.0;
-        snsInfo_s.SnsValue_f32 = (t_float32)0.0;
+        g_snsValues_as[idxSns_u8].rqstedUnity_u8 = c_APPLGC_SnsIfCompType_au8[idxSns_u8];
+        g_snsValues_as[idxSns_u8].isValueOK_b = FALSE;
+        g_snsValues_as[idxSns_u8].rawValue_f32 = (t_float32)0.0;
+        g_snsValues_as[idxSns_u8].SnsValue_f32 = (t_float32)0.0;
 
-        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &snsInfo_s);
+        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &g_snsValues_as[idxSns_u8]);
+    }
+    
+    return Ret_e;
+}
 
-        if((Ret_e == RC_OK)
-        && (snsInfo_s.isValueOK_b == (t_bool)true))
+/*********************************
+ * s_APPLGC_UpdateSnsValues
+ *********************************/
+static t_eReturnCode s_APPLGC_UpdateActValues(void)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_uint8 idxAct_u8 = (t_uint8)0;
+    t_float32 actValue_f32;
+
+    for(idxAct_u8 = (t_uint8)0 ; (idxAct_u8 < APPSNS_SNSITF_NB) && (Ret_e >= RC_OK) ; idxAct_u8++)
+    {
+        //----- Reset Container values -----//
+        actValue_f32 = 0.0f;
+
+        Ret_e = APPACT_GetActValue((t_eAPPACT_ActInterface)idxAct_u8, &actValue_f32);
+        if(Ret_e == RC_OK)
         {
-            g_snsValues_af32[idxSns_u8] = snsInfo_s.SnsValue_f32;
+            g_actValues_as[idxAct_u8].value_f32 = actValue_f32;
+            g_actValues_as[idxAct_u8].isValueOK_b = TRUE;
         }
-        else 
+        else
         {
-            g_snsValues_af32[idxSns_u8] = 0.0f;
+            g_actValues_as[idxAct_u8].value_f32 = 0.0f;
+            g_actValues_as[idxAct_u8].isValueOK_b = FALSE;
         }
     }
     
@@ -500,9 +551,8 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                                         t_uint16 f_debugInfo1_u16,
                                         t_uint16 f_debugInfo2_u16)
 {
-    t_eReturnCode Ret_e = RC_OK;
-
     // choose a way to communicate error
+    FMKSRL_LOG("Diagnostic Event Raise %d, status", f_item_e, f_reportState_e);
 
     return;
 }
