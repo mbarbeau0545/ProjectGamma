@@ -15,10 +15,10 @@
             "args": [],
             "stopAtEntry": false,
             "externalConsole": true,
-            "cwd": "d:/Project/Software/STM32/fModuleCan/src/2_APP/APP_LGC/Src",
-            "program": "d:/Project/Software/STM32/fModuleCan/src/2_APP/APP_LGC/Src/build/Debug/outDebug",
+            "cwd": "d:/Project/Software/STM32/Gamma_fMotionPlanner",
+            "program": "d:/Project/Software/STM32/Gamma_fMotionPlanner/build/Debug/outDebug",
             "MIMode": "gdb",
-            "miDebuggerPath": "gdb",
+            "miDebuggerPath": "C:/Users/mbarb/.platformio/packages/toolchain-gdbarmnoneeabi@1.70201.0/bin/arm-none-eabi-gcc.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

@@ -319,9 +319,9 @@ static t_eReturnCode s_APPSM_ConfigurationState(void)
     for(idxParm_e = 0 ; (idxParm_e < APPSPM_PRM_NB) && (Ret_e == RC_OK) ; idxParm_e++)
     {
         prmInfo_ps = &g_ItemPrmInfo_as[idxParm_e];
-        if(c_AppSpm_ItemPrmInfo_as[idxParm_e].signal_e < APPSIG_SIGNAL_NB)
+        if(prmInfo_ps->prmCfg_ps->signal_e < APPSIG_SIGNAL_NB)
         {
-            Ret_e = APPSIG_AddRcvMsgCallback(   c_AppSpm_ItemPrmInfo_as[idxParm_e].signal_e,
+            Ret_e = APPSIG_AddRcvMsgCallback(   prmInfo_ps->prmCfg_ps->signal_e,
                                                 s_APPSPM_AppSigMsgRcvCallback);
         }
 

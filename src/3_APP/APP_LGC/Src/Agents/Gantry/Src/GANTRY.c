@@ -58,6 +58,7 @@ typedef enum
     GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE = 0,     //----Fsm for calibration, sub state axe xxx -> stop axe ----//
     GTRY_FSM_PRDTSK_CALIB_OPE_MOVE_AXE,         //----Fsm for calibration, sub state axe xxx -> move axe ----//
     GTRY_FSM_PRDTSK_CALIB_OPE_WAIT_AXE,         //----Fsm for calibration, sub state axe xxx -> wait axe ----//
+    GTRY_FSM_PRDTSK_CALIB_OPE_OFFSET_AXE,       //----Fsm for calibration, sub state axe xxx -> wait axe ----//
 } t_eGTRY_FsmPrdTsk_CalibOpe;
 
 ///@brief Finite State Machine for Periodic Task Sub State Operational
@@ -79,7 +80,12 @@ typedef enum
 
 /* CAUTION : Automatic generated code section for Structure: End */
 //-----------------------------STRUCT TYPES---------------------------//
-
+///@brief calib waiting information 
+typedef struct 
+{
+    t_uint32 startWait_u32;         //---- store the Tick where we start to wait the axes to go to the setpoint ----//
+    t_uint32 maxTimeWait_u32;       //---- Store the amount of time this is suspicious that the axe has not reach the set point yet ----//
+} t_sGTRY_CalibWaitInfo;
 /* CAUTION : Automatic generated code section : Start */
 
 /* CAUTION : Automatic generated code section : End */
@@ -108,7 +114,7 @@ static t_float32 g_axeMissPulses_af32[GTRY_PHYS_AXE_NB];
 t_sGTRY_cmdSigInfo g_CmdSigInfo_as[GTRY_CMD_SIG_NB];
 
 ///@brief Finite State Machine Variables
-static t_eGTRY_FsmPeriodicTask g_Fsm_PrdcskSts_e;
+static t_eGTRY_FsmPeriodicTask g_Fsm_PrdcTskSts_e;
 static t_eGTRY_FsmPrdTsk_Calib g_Fsm_PrdTsk_CalibSts_e;
 static t_eGTRY_FsmPrdTsk_CalibOpe g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_NB];
 static  t_eGTRY_FsmPrdTsk_Ope g_Fsm_PrdTsk_OpeSts_e;
@@ -127,6 +133,12 @@ static t_bool g_FlagIterCmdReady_b = FALSE;
 ///@brief One Position cmd cannot be pushed inside PosQueue
 static t_bool g_FlagPosCmdPending_b = FALSE;
 static t_eGTRY_CmdTypeId g_cmdTypePending_e = GTRY_CMD_TYPE_ID_NB;
+
+///@brief Time Max to wait for the axe to go to the calibration point 
+static t_sGTRY_CalibWaitInfo g_CalibWaitTimeMax_ua32[GTRY_PHYS_AXE_NB];
+
+///@brief store the parameter in case we want to change it in runtime 
+static t_sGTRYSPEC_AlgoParameter g_algoParam_s;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -217,6 +229,18 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsStop(t_eGTRY_PhysicalAxe f_PhysAx
  * @return ohters : @ref t_eReturnCode
  */
 static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAxe_e);
+
+/**
+ * @brief This function handle the calibration Operationnal Movement 
+ *          state of State Machine
+ * ----------------------------------------------------------------------------
+ * @param[in] f_calibId_e : calibration axe Id
+ * ----------------------------------------------------------------------------
+ * @return RC_OK : The state finish, pass to new state from fsm
+ * @return RC_WARNNING_PENDING : The State is on going 
+ * @return ohters : @ref t_eReturnCode
+ */
+static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsOffset(t_eGTRY_PhysicalAxe f_PhysAxe_e);
 /**
  * @brief This function handle the Operation state of State Machine
  * ----------------------------------------------------------------------------
@@ -334,6 +358,31 @@ static t_eReturnCode s_GTRY_AlgoMngmt(  t_eGTRY_AlgoComputeType f_computeType_e,
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e);
+/**
+ * @brief Hard Stop for all Axes Motor
+ * @details This function Set an hard stop, means pin enable se to 1
+ *             to release torque on each axes, this function also check if action 
+ *              has to be made before hard stop motor
+ * 
+ * ----------------------------------------------------------------------------
+ * @param[in] f_idxAxe_e : axe to get informatio on
+ * ----------------------------------------------------------------------------
+ * @return @ref t_eReturnCode
+ */
+static t_eReturnCode s_GTRY_HardAxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e);
+/**
+ * @brief Hard Stop for all Axes Motor
+ * @details This function Set an hard stop, means pin enable se to 1
+ *             to release torque on each axes, this function also check if action 
+ *              has to be made before hard stop motor
+ * 
+ * ----------------------------------------------------------------------------
+ * @param[in] f_idxAxe_e : axe to get informatio on
+ * ----------------------------------------------------------------------------
+ * @return @ref t_eReturnCode
+ */
+static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e);
+
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -366,6 +415,8 @@ t_eReturnCode GANTRY_Init(void)
             g_DeltaPos_af32[idxAxe_e] = 0.0f;
             g_AxesPositionExpected_af32[idxAxe_e] = 0.0f;
             g_axeMissPulses_af32[idxAxe_e] = 0.0f;
+            g_CalibWaitTimeMax_ua32[idxAxe_e].maxTimeWait_u32 = 0;
+            g_CalibWaitTimeMax_ua32[idxAxe_e].startWait_u32 = 0;
         }
     }
     //---- init gantry signals information ---//
@@ -389,7 +440,7 @@ t_eReturnCode GANTRY_Init(void)
         Ret_e = LIBQUEUE_Create(&g_QueueCmdPosRcvMngmt_s, CmdPosFifoCfg_s);
     }
 
-    g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_CFG;
+    g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_CFG;
     g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_INIT;
     g_Fsm_PrdTsk_OpeSts_e = GTRY_FSM_PRDTSK_OPE_IDLE;
     g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_CMPTE_ITER;
@@ -437,8 +488,8 @@ t_eReturnCode  GTRY_GetPosition(t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB])
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
     }
-    else if((g_Fsm_PrdcskSts_e != GTRY_FSM_PRD_TSK_CALIB_AXE)
-    ||      (g_Fsm_PrdcskSts_e != GTRY_FSM_PRD_TSK_OPS))
+    else if((g_Fsm_PrdcTskSts_e != GTRY_FSM_PRD_TSK_CALIB_AXE)
+    ||      (g_Fsm_PrdcTskSts_e != GTRY_FSM_PRD_TSK_OPS))
     {
         Ret_e = RC_WARNING_BUSY;
     }
@@ -524,48 +575,48 @@ static t_eReturnCode s_GTRY_StateMachine(void)
 {
     t_eReturnCode Ret_e;
 
-    switch(g_Fsm_PrdcskSts_e)
+    switch(g_Fsm_PrdcTskSts_e)
     {
         case GTRY_FSM_PRD_TSK_CFG:
             Ret_e = s_GTRY_Fsm_PrdTsk_Configuration();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_CALIB_AXE;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_OPS;
                 g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_INIT;
             }
             else if(Ret_e < RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_ERROR;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_ERROR;
             }
         break;
         case GTRY_FSM_PRD_TSK_CALIB_AXE:
             Ret_e = s_GTRY_Fsm_PrdTsk_Calibration();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_OPS;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_OPS;
                 g_Fsm_PrdTsk_OpeSts_e = GTRY_FSM_PRDTSK_OPE_IDLE;
             }
             else if(Ret_e < RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
             }
         break;
         case GTRY_FSM_PRD_TSK_OPS:
             Ret_e = s_GTRY_Fsm_PrdTsk_Operational();
              if(Ret_e < RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
             }
         break;
         case GTRY_FSM_PRD_TSK_SAFETY:
             Ret_e = s_GTRY_Fsm_PrdTsk_Safety();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_CFG;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_CFG;
             }
             else if(Ret_e < RC_OK)
             {
-                g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_ERROR;
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_ERROR;
             }
         break;
         case GTRY_FSM_PRD_TSK_ERROR:
@@ -584,18 +635,83 @@ static t_eReturnCode s_GTRY_StateMachine(void)
  *********************************/
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
 {
-    g_Fsm_PrdcskSts_e = GTRY_FSM_PRD_TSK_CFG;
+    t_eReturnCode Ret_e;
+    t_eGTRY_PhysicalAxe idxAxe_e;
+    t_uAPPSPM_PrmValType prmValue_u;
+    //---- init the finit state machine ----//
+    g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_CFG;
     g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_INIT;
     g_Fsm_PrdTsk_OpeSts_e = GTRY_FSM_PRDTSK_OPE_IDLE;
     g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_CMPTE_ITER;
     g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_X] = GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
     g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_Y] = GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
     g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_Z] = GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
-    return RC_OK;
+
+    //----1- Enable axes Motor ----//
+    Ret_e = s_GTRY_EnableAxe(GTRY_PHYS_AXE_X);
+    Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Y);
+    Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
+
+    //----2- init the algo parameter ----//
+    if(Ret_e == RC_OK)
+    {
+        for(idxAxe_e = GTRY_PHYS_AXE_HEAD ; (idxAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK) ; idxAxe_e++)
+        {
+            prmValue_u.prmVal_u16 = 0u;
+            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MinFreq_ae[idxAxe_e], &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_algoParam_s.MinFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
+            }
+            if(Ret_e == RC_OK)
+            {
+                prmValue_u.prmVal_u16 = 0u;
+                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MaxFreq_ae[idxAxe_e], &prmValue_u);
+                if(Ret_e == RC_OK)
+                {
+                    g_algoParam_s.MaxFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
+                }
+            }
+            if(Ret_e == RC_OK)
+            {
+                prmValue_u.prmVal_f32 = 0.0f;
+                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.pulsePerMm_ae[idxAxe_e], &prmValue_u);
+                if(Ret_e == RC_OK)
+                {
+                    g_algoParam_s.pulsePerMm_af32[idxAxe_e] = prmValue_u.prmVal_f32;
+                }
+            }
+            if(Ret_e == RC_OK)
+            {
+                prmValue_u.prmVal_f32 = 0.0f;
+                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.cptPrio_SafeHeight_ae[idxAxe_e], &prmValue_u);
+                if(Ret_e == RC_OK)
+                {
+                    g_algoParam_s.cptPrio_SafeHeight_af32[idxAxe_e] = prmValue_u.prmVal_f32;
+                }
+            }
+        }
+        //----2- send the algo parameter ----//
+        if(Ret_e == RC_OK)
+        {
+            prmValue_u.prmVal_u16 = 0;
+            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.chunkSize_e, &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_algoParam_s.chunkSize_u16 = prmValue_u.prmVal_u16;
+            }
+        }
+        //---- 3- send the algo parameter ----//
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
+        }
+    }
+    return Ret_e;
 }
 
 /*********************************
- * s_GTRY_Fsm_PrdTsk_Configuration
+ * s_GTRY_Fsm_PrdTsk_Calibration
  *********************************/
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
 {   
@@ -647,6 +763,11 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_X] = 0.0f;
                 g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_AXE_Y;
             }
+            //---- problem occur in calibration, take too much time ----//
+            else if(Ret_e == RC_WARNING_LIMIT_REACHED)
+            {
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
+            }
         }
         break;
         case GTRY_FSM_PRDTSK_CALIB_AXE_Y:
@@ -657,6 +778,11 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
                 Ret_e = RC_WARNING_PENDING;
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_Y] = 0.0f;
                 g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_AXE_Z;
+            }
+            //---- problem occur in calibration, take too much time ----//
+            else if(Ret_e == RC_WARNING_LIMIT_REACHED)
+            {
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
             }
         }
         break;
@@ -669,6 +795,11 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_Z] = 0.0f;
                 g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_INIT;
             }
+            //---- problem occur in calibration, take too much time ----//
+            else if(Ret_e == RC_WARNING_LIMIT_REACHED)
+            {
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
+            }
             break;
         }
         case GTRY_FSM_PRDTSK_CALIB_AXE_ALL:
@@ -679,6 +810,11 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_X] = 0.0f;
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_Y] = 0.0f;
                 g_AxeComputePos_af32[GTRY_PHYS_AXE_Z] = 0.0f;
+            }
+            //---- problem occur in calibration, take too much time ----//
+            else if(Ret_e == RC_WARNING_LIMIT_REACHED)
+            {
+                g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_SAFETY;
             }
         }
         break;
@@ -748,10 +884,21 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_Ops(t_eGTRY_CalibAxeId f_calibId_e)
                 break;
                 case GTRY_FSM_PRDTSK_CALIB_OPE_WAIT_AXE:
                     Ret_e = s_GTRY_Fsm_PrdTskCalib_OpsWait(currAxeId_e);
-                    if(Ret_e != RC_OK)
+                    if(Ret_e == RC_OK)
                     {
+                        g_Fsm_PrdTsk_CalibOpeSts_ae[currAxeId_e] = GTRY_FSM_PRDTSK_CALIB_OPE_OFFSET_AXE;
                         Ret_e = RC_WARNING_PENDING;
                     }
+                break;
+                case GTRY_FSM_PRDTSK_CALIB_OPE_OFFSET_AXE:
+                    Ret_e = s_GTRY_Fsm_PrdTskCalib_OpsOffset(currAxeId_e);
+                    if(Ret_e == RC_OK)
+                    {
+                        g_Fsm_PrdTsk_CalibOpeSts_ae[currAxeId_e] = GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
+                    }
+                break;
+                default:
+                    Ret_e = RC_ERROR_WRONG_STATE;
                 break;
             }
         }
@@ -779,20 +926,20 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsStop(t_eGTRY_PhysicalAxe f_PhysAx
         {
             case GTRY_PHYS_AXE_X:
                 axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, APPACT_SOFT_STOP);
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, APPACT_SOFT_STOP);
                 if(Ret_e == RC_OK)
                 {
                     axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, APPACT_SOFT_STOP);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, APPACT_SOFT_STOP);
                 }
             break;
             case GTRY_PHYS_AXE_Y:
                 axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, APPACT_SOFT_STOP);
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, APPACT_SOFT_STOP);
             break;
             case GTRY_PHYS_AXE_Z:
                 axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, APPACT_SOFT_STOP);
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, APPACT_SOFT_STOP);
             break;
             case GTRY_PHYS_AXE_NB:
             default:
@@ -894,6 +1041,19 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
                 }
             }
         }
+        //---- 4- set the maxe time to wait ----//
+        if(Ret_e == RC_OK)
+        {
+            if(pulseToSend_s32 < (t_sint32)0)
+            {
+                pulseToSend_s32 = -pulseFactor_s32;
+            }
+            g_CalibWaitTimeMax_ua32[f_PhysAxe_e].maxTimeWait_u32 = pulseToSend_s32 
+                                                                    / (t_sint32)minMtrFreq_u.prmVal_u16 
+                                                                    * (t_sint32)1000; // ms
+            g_CalibWaitTimeMax_ua32[f_PhysAxe_e].maxTimeWait_u32 += 50; // add on additional time of 50 ms
+            FMKCPU_GetTick(&g_CalibWaitTimeMax_ua32[f_PhysAxe_e].startWait_u32);
+        }
     }
 
     return Ret_e;
@@ -908,6 +1068,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
     const t_sGTRY_AxeAppCfg * axeCfg_ps;
     t_float32 actMtrStsVal_f32 = 0.0f;
     t_float32 actMtrXRStsVal_f32 = 0.0f;
+    t_uint32 currentTime_u32;
 
     if(f_PhysAxe_e >= GTRY_PHYS_AXE_NB)
     {
@@ -916,6 +1077,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
     }
     else 
     {
+        FMKCPU_GetTick(&currentTime_u32);
         Ret_e = RC_OK;
         //---- 1- reach the right accessors axe ----//
         switch(f_PhysAxe_e)
@@ -948,8 +1110,10 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
                     {
                         //---- equality works here 'cause define are affect 
                         // to the variable and not compute ----//s
-                        if((actMtrStsVal_f32 != APPACT_MOTOR_STS_OFF)
-                        && (actMtrXRStsVal_f32 != APPACT_MOTOR_STS_OFF))
+                        if(((actMtrStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CW)
+                        && (actMtrStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CCW))
+                        || ((actMtrXRStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CW)
+                        && (actMtrXRStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CCW)))
                         {
                             Ret_e = RC_WARNING_PENDING;
                         }
@@ -958,14 +1122,103 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsWait(t_eGTRY_PhysicalAxe f_PhysAx
                 }
                 else 
                 {
-                    if(actMtrStsVal_f32 == APPACT_MOTOR_STS_ON)
+                    if(actMtrStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CW
+                    ||(actMtrStsVal_f32 != APPACT_MOTOR_STS_ENDSTOP_CCW))
                     {
                         Ret_e = RC_WARNING_PENDING;
                     }
                     // else Ret_e alredy RC_OK
                 }
+                if(Ret_e == RC_WARNING_PENDING) // means we waiting the motor to get to the calibration point
+                {
+                    if((currentTime_u32 - g_CalibWaitTimeMax_ua32[f_PhysAxe_e].startWait_u32)
+                        > g_CalibWaitTimeMax_ua32[f_PhysAxe_e].maxTimeWait_u32)
+                    {
+                        Ret_e = RC_WARNING_LIMIT_REACHED;
+                    }
+                }
             }
         }        
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_GTRY_Fsm_PrdTsk_Operational
+ *********************************/
+static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsOffset(t_eGTRY_PhysicalAxe f_PhysAxe_e)
+{
+    t_eReturnCode Ret_e;
+    const t_sGTRY_AxeAppCfg * axeCfg_ps;
+    t_eAPPSPM_ItemPrm calibPrm_e;
+    t_eAPPSPM_ItemPrm  pulsePerMmPrm_e;
+    t_eAPPSPM_ItemPrm  minFreq_e;
+    t_uAPPSPM_PrmValType offsetCalibVal_u = {.prmVal_f32 = 0.0f};
+    t_uAPPSPM_PrmValType pulsePerMmVal_u = {.prmVal_f32 = 0.0f};
+    t_uAPPSPM_PrmValType minFreqVal_u = {.prmVal_u16 = 0.0f};
+    t_sint32 pulseValue_s32;
+    t_sint32 gtryCalibDirOpposite_s32;
+
+    if(f_PhysAxe_e >= GTRY_PHYS_AXE_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else 
+    {
+        Ret_e = RC_OK;
+        //---- 1- reach the right accessors axe ----//
+        switch(f_PhysAxe_e)
+        {
+            case GTRY_PHYS_AXE_X:
+                gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_X;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_X_SPEED_MIN;
+                calibPrm_e = APPSPM_PRM_LGC_GTRY_X_CALIB_OFFSET;
+                pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM;
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+            break;
+            case GTRY_PHYS_AXE_Y:
+                gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_Y;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN;
+                calibPrm_e = APPSPM_PRM_LGC_GTRY_Y_CALIB_OFFSET;
+                pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM;
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+            break;
+            case GTRY_PHYS_AXE_Z:
+                gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_Z;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN;
+                calibPrm_e = APPSPM_PRM_LGC_GTRY_Z_CALIB_OFFSET;
+                pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM;
+                axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+            break;
+            case GTRY_PHYS_AXE_NB:
+            default:
+                Ret_e = RC_ERROR_WRONG_STATE;
+            break;
+        }
+        //---- 2- Get Motor State ----//
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = APPSPM_GetParam(calibPrm_e, &offsetCalibVal_u);
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = APPSPM_GetParam(pulsePerMmPrm_e, &pulsePerMmVal_u);
+            }
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = APPSPM_GetParam(minFreq_e, &minFreqVal_u);
+            }
+            if(Ret_e == RC_OK)
+            {
+                pulseValue_s32 = offsetCalibVal_u.prmVal_f32 * pulsePerMmVal_u.prmVal_f32 * gtryCalibDirOpposite_s32;
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)pulseValue_s32);
+                if(Ret_e == RC_OK)
+                {
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minFreqVal_u.prmVal_u16);
+                }
+            }
+        }
     }
 
     return Ret_e;
@@ -1299,7 +1552,17 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter(void)
  *********************************/
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Safety(void)
 {
-    return RC_OK;
+    t_eReturnCode Ret_e;
+    Ret_e = s_GTRY_HardAxeStop(GTRY_PHYS_AXE_X);
+    if(Ret_e >= RC_OK)
+    {
+        Ret_e = s_GTRY_HardAxeStop(GTRY_PHYS_AXE_Y);
+    }
+    if(Ret_e >= RC_OK)
+    {
+        Ret_e = s_GTRY_HardAxeStop(GTRY_PHYS_AXE_Z);
+    }
+    return Ret_e;
 }
 
 /*********************************
@@ -1467,7 +1730,7 @@ static void s_GTRY_SigReceptionCallback(t_eAPPSIG_Signal f_signal_e, t_float32 f
     {
         FMKCPU_GetTick(&currentTime_u32);
         Ret_e = RC_OK;
-        if(g_Fsm_PrdcskSts_e == GTRY_FSM_PRD_TSK_OPS)
+        if(g_Fsm_PrdcTskSts_e == GTRY_FSM_PRD_TSK_OPS)
         {
             switch(f_signal_e)
             {
@@ -1791,6 +2054,88 @@ static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e)
 
     //---- update delta ----//
     g_DeltaPos_af32[f_idxAxe_e] = g_AxeComputePos_af32[f_idxAxe_e] - g_axeCurrPos_af32[f_idxAxe_e];
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_GTRY_HardAxeStop static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e)
+ *********************************/
+static t_eReturnCode s_GTRY_HardAxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e)
+{
+    t_eReturnCode Ret_e;
+    const t_sGTRY_AxeAppCfg * appAxeCfg_ps;
+
+    if(f_idxAxe_e > GTRY_PHYS_AXE_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else 
+    {
+        switch(f_idxAxe_e)
+        {
+            case GTRY_PHYS_AXE_X:
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_HARD_STOP);
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                Ret_e |= APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_HARD_STOP);
+            break;
+            case GTRY_PHYS_AXE_Y:
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_HARD_STOP);
+            break;
+            case GTRY_PHYS_AXE_Z:
+            appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+            Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_HARD_STOP);
+            break;
+            case GTRY_PHYS_AXE_NB:
+            default:
+                Ret_e = RC_ERROR_WRONG_STATE;
+            break;
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_GTRY_EnableAxe 
+ *********************************/
+static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e)
+{
+    t_eReturnCode Ret_e;
+    const t_sGTRY_AxeAppCfg * appAxeCfg_ps;
+
+    if(f_idxAxe_e > GTRY_PHYS_AXE_NB)
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else 
+    {
+        switch(f_idxAxe_e)
+        {
+            case GTRY_PHYS_AXE_X:
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XL];
+                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_ENABLE_MOTOR);
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                Ret_e |= APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_ENABLE_MOTOR);
+            break;
+            case GTRY_PHYS_AXE_Y:
+                appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Y];
+                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_ENABLE_MOTOR);
+            break;
+            case GTRY_PHYS_AXE_Z:
+            appAxeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_Z];
+            Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, APPACT_ENABLE_MOTOR);
+            break;
+            case GTRY_PHYS_AXE_NB:
+            default:
+                Ret_e = RC_ERROR_WRONG_STATE;
+            break;
+        }
+    }
 
     return Ret_e;
 }

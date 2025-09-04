@@ -132,6 +132,16 @@
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPEED_MIN
     },
+    [APPSPM_PRM_LGC_GTRY_X_CALIB_OFFSET] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)5,
+        .factor_f32 = (t_float32)0.1,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_CALIB_OFFSET
+    },
     [APPSPM_PRM_LGC_GTRY_Y_RAMP_CTRL_KFACTOR] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
@@ -182,6 +192,16 @@
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPEED_MIN
     },
+    [APPSPM_PRM_LGC_GTRY_Y_CALIB_OFFSET] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)5,
+        .factor_f32 = (t_float32)0.1,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_CALIB_OFFSET
+    },
     [APPSPM_PRM_LGC_GTRY_Z_RAMP_CTRL_KFACTOR] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
@@ -231,6 +251,16 @@
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPEED_MIN
+    },
+    [APPSPM_PRM_LGC_GTRY_Z_CALIB_OFFSET] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)5,
+        .factor_f32 = (t_float32)0.1,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_CALIB_OFFSET
     },
     [APPSPM_PRM_SYS_OPT_SNS_ECDR_XL] = {
         .version_u8 = (t_uint8)1,

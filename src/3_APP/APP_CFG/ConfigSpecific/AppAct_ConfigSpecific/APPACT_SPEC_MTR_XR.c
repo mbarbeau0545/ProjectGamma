@@ -197,15 +197,6 @@ t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_SetValue(t_float32 f_SigValue_pf32)
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                 }
-                //--- if user wants to stop motor with pulse 0 don't mind the sync ----//
-                else if(f_SigValue_pf32 == APPACT_SOFT_STOP)
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, FALSE);
-                }
-                else if(f_SigValue_pf32 == APPACT_EMERGENCY_STOP)
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, TRUE);
-                }
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -259,20 +250,34 @@ t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_SetValue(t_float32 f_SigValue_pf32)
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XR_CL42T:
-                g_cl42tShadowCmd_s.frequency_u32 = f_SigValue_pf32;
-                g_cl42tShadowCmd_s.isFreqRcv_b = TRUE;
-                if(g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
+                if(f_SigValue_pf32 == APPACT_SOFT_STOP)
                 {
-                    cl42T_MtrVal_s.frequency_u32 = f_SigValue_pf32;
-                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
-
-                    Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
-                                                    cl42T_MtrVal_s);
-                    //---- even if ret_e != RC_OK, we reset the flag ----//
-                    g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
-                    g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
+                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, FALSE);
                 }
-                
+                else if(f_SigValue_pf32 == APPACT_HARD_STOP)
+                {
+                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, TRUE);
+                }
+                else if(f_SigValue_pf32 == APPACT_ENABLE_MOTOR)
+                {
+                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_ON, FALSE);
+                } 
+                else
+                {       
+                    g_cl42tShadowCmd_s.frequency_u32 = f_SigValue_pf32;
+                    g_cl42tShadowCmd_s.isFreqRcv_b = TRUE;
+                    if(g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
+                    {
+                        cl42T_MtrVal_s.frequency_u32 = f_SigValue_pf32;
+                        cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
+
+                        Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
+                                                        cl42T_MtrVal_s);
+                        //---- even if ret_e != RC_OK, we reset the flag ----//
+                        g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
+                        g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
+                    }
+                }
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -358,7 +363,15 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_GetMtrInfo(t_float32 * f_mtrValue_pf32)
             {
                 *f_mtrValue_pf32 = APPACT_MOTOR_STS_ON;
             }
-            else 
+            else if(GETBIT(mtrValue_u16, CL42T_BITFIELD_TRIG_ENDSTOP_CW) == BIT_IS_SET_16B)
+            {
+                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ENDSTOP_CW;
+            }
+            else if(GETBIT(mtrValue_u16, CL42T_BITFIELD_TRIG_ENDSTOP_CCW) == BIT_IS_SET_16B)
+            {
+                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ENDSTOP_CCW;
+            }
+            else
             {
                 *f_mtrValue_pf32 = APPACT_MOTOR_STS_OFF;
             }

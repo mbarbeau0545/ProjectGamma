@@ -87,9 +87,9 @@
     ///@brief Mapping structure beetween gantry and application
     typedef struct 
     {
-        t_eAPPACT_ActInterface actIfMtrPulse_e;       //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
+        t_eAPPACT_ActInterface actIfMtrPulse_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
         t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
-        t_eAPPSNS_SnsInterface snsIfEcdrPos_e;         //---- Encoder sensors interface ----//
+        t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
     } t_sGTRY_AxeAppCfg;
@@ -123,6 +123,16 @@
         t_uint32 timeoutMs_u32;                 //---- Time out to set a entire command -----//
         t_cbGTRY_BuildCmdFunc buildFunc_pf;     //---- Function to build the cmd ----//
     } t_sGTRY_SigGroupInfo;
+
+    ///@brief get the algo paramter more easily
+    typedef struct
+    {
+        t_eAPPSPM_ItemPrm chunkSize_e;                                 //---- chunk sizes per iteraitons ----//
+        t_eAPPSPM_ItemPrm MinFreq_ae[GTRY_PHYS_AXE_NB];               //---- Minimum Frequency for Axes ----//
+        t_eAPPSPM_ItemPrm MaxFreq_ae[GTRY_PHYS_AXE_NB];               //---- Maximum Frequency for Axes ----//
+        t_eAPPSPM_ItemPrm pulsePerMm_ae[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
+        t_eAPPSPM_ItemPrm cptPrio_SafeHeight_ae[GTRY_PHYS_AXE_NB];    //---- Height to reach for the axe priority before others can move ----//
+    } t_sGTRYSPEC_AlgoItemPrm;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */
@@ -164,7 +174,15 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Z_POS,
         }
     };
-
+    /// @brief Varialbe to store item to reach for algo aprameter
+    #warning(Safe Height has no Item Parameter)
+    const t_sGTRYSPEC_AlgoItemPrm c_GTRY_AlgoItemPrm_s = {
+        .chunkSize_e = APPSPM_PRM_LGC_GTRY_PULSE_ITER_MAX,
+        .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN},
+        .MaxFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Y_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Z_SPEED_MAX},
+        .pulsePerMm_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM},
+        .cptPrio_SafeHeight_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_LEN, APPSPM_PRM_LGC_GTRY_AXE_Y_LEN, APPSPM_PRM_LGC_GTRY_AXE_Z_LEN},
+    };
     ///@brief variable for signal group
     static const t_eAPPSIG_Signal c_GTRY_cartesianSigs_ae[] = {
         GTRY_CMD_SIG_POS_X,

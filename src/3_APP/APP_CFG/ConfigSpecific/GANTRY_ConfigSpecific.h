@@ -89,6 +89,7 @@
         t_float32 pulsePerMm_af32[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
         t_float32 cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_NB];    //---- Height to reach for the axe priority before others can move ----//
     } t_sGTRYSPEC_AlgoParameter;
+
 	/* CAUTION : Automatic generated code section : Start */
 
 	/* CAUTION : Automatic generated code section : End */

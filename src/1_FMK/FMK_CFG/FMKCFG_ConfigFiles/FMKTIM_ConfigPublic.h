@@ -104,12 +104,11 @@
         FMKTIM_INTERRUPT_LINE_IO_64,                       /**< General Purpose Timer, Reference to Timer 8 Channel 4 */
         FMKTIM_INTERRUPT_LINE_IO_71,                       /**< General Purpose Timer, Reference to Timer 15 Channel 1 */
         FMKTIM_INTERRUPT_LINE_IO_72,                       /**< General Purpose Timer, Reference to Timer 15 Channel 2 */
-        FMKTIM_INTERRUPT_LINE_IO_81,                       /**< General Purpose Timer, Reference to Timer 16 Channel 1 */
-        FMKTIM_INTERRUPT_LINE_IO_91,                       /**< General Purpose Timer, Reference to Timer 17 Channel 1 */
-        FMKTIM_INTERRUPT_LINE_IO_101,                      /**< General Purpose Timer, Reference to Timer 20 Channel 1 */
-        FMKTIM_INTERRUPT_LINE_IO_102,                      /**< General Purpose Timer, Reference to Timer 20 Channel 2 */
-        FMKTIM_INTERRUPT_LINE_IO_103,                      /**< General Purpose Timer, Reference to Timer 20 Channel 3 */
-        FMKTIM_INTERRUPT_LINE_IO_104,                      /**< General Purpose Timer, Reference to Timer 20 Channel 4 */
+        FMKTIM_INTERRUPT_LINE_IO_81,                       /**< General Purpose Timer, Reference to Timer 17 Channel 1 */
+        FMKTIM_INTERRUPT_LINE_IO_91,                       /**< General Purpose Timer, Reference to Timer 20 Channel 1 */
+        FMKTIM_INTERRUPT_LINE_IO_92,                       /**< General Purpose Timer, Reference to Timer 20 Channel 2 */
+        FMKTIM_INTERRUPT_LINE_IO_93,                       /**< General Purpose Timer, Reference to Timer 20 Channel 3 */
+        FMKTIM_INTERRUPT_LINE_IO_94,                       /**< General Purpose Timer, Reference to Timer 20 Channel 4 */
     
         FMKTIM_INTERRUPT_LINE_IO_NB,
     } t_eFMKTIM_InterruptLineIO;
@@ -120,6 +119,7 @@
     typedef enum
     {
         FMKTIM_INTERRUPT_LINE_EVNT_1 = 0,                  /**<  Reference to timer 7, CHANNEL_1 */
+        FMKTIM_INTERRUPT_LINE_EVNT_2,                        /**<  Reference to timer 16, CHANNEL_1 */
     
         FMKTIM_INTERRUPT_LINE_EVNT_NB,
     } t_eFMKTIM_InterruptLineEvnt;
