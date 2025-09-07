@@ -187,11 +187,11 @@
     /**< Variable for bsp_Gpio_Pin PWM output signal mapping */
     const t_sFMKIO_BspTimerSigCfg c_OutPwmSigBspMap_as[FMKIO_OUTPUT_SIGPWM_NB] = {
         //GPIO_name                     Pin_name                      alternate function            Interrupt Line                ItLineType                    
-        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_4},              GPIO_AF1_TIM16,                (t_uint8)FMKTIM_INTERRUPT_LINE_EVNT_2,                       FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_OUTPUT_SIGPWM_1,
+        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_4},              GPIO_AF1_TIM16,                (t_uint8)FMKTIM_INTERRUPT_LINE_IO_81,                        FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_OUTPUT_SIGPWM_1,
         {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_12},             GPIO_AF1_TIM5,                 (t_uint8)FMKTIM_INTERRUPT_LINE_IO_52,                        FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_OUTPUT_SIGPWM_2,
         {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_15},             GPIO_AF1_TIM15,                (t_uint8)FMKTIM_INTERRUPT_LINE_IO_72,                        FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_OUTPUT_SIGPWM_3,
         {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_7},              GPIO_AF4_TIM8,                 (t_uint8)FMKTIM_INTERRUPT_LINE_IO_62,                        FMKIO_ITLINE_TYPE_ADVTIM},    // FMKIO_OUTPUT_SIGPWM_4,
-        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_2},              GPIO_AF3_TIM20,                (t_uint8)FMKTIM_INTERRUPT_LINE_IO_91,                        FMKIO_ITLINE_TYPE_ADVTIM},    // FMKIO_OUTPUT_SIGPWM_5,
+        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_2},              GPIO_AF3_TIM20,                (t_uint8)FMKTIM_INTERRUPT_LINE_IO_101,                       FMKIO_ITLINE_TYPE_ADVTIM},    // FMKIO_OUTPUT_SIGPWM_5,
         {{FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_9},              GPIO_AF6_TIM1,                 (t_uint8)FMKTIM_INTERRUPT_LINE_IO_12,                        FMKIO_ITLINE_TYPE_ADVTIM},    // FMKIO_OUTPUT_SIGPWM_6,
         {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_2},              GPIO_AF2_TIM1,                 (t_uint8)FMKTIM_INTERRUPT_LINE_IO_13,                        FMKIO_ITLINE_TYPE_ADVTIM},    // FMKIO_OUTPUT_SIGPWM_7,
         {{FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_8},              GPIO_AF13_HRTIM1,              (t_uint8)FMKHRT_HR_LINE_1,                                   FMKIO_ITLINE_TYPE_HRTIM},    // FMKIO_OUTPUT_SIGPWM_8,

@@ -162,10 +162,11 @@ static void s_GTRY_SPEC_Algo_AdjustLastIter(t_uint16 f_nbIterMax_u16);
  * ----------------------------------------------------------------------------
  * @return void 
  */
-static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
-                                                      t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
-                                                      t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
-                                                      t_uint16 f_nbIterMax_u16);
+static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
+                                                        t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+                                                        t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
+                                                        t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
+                                                        t_uint16 f_nbIterMax_u16);
 /**
  * @brief This function handle the Safety state of State Machine
  * ----------------------------------------------------------------------------
@@ -448,10 +449,11 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     s_GTRY_SPEC_Algo_AdjustLastIter(nbIterMax_u16);
 
     //---- 7- Build iterations ----//
-    Ret_e = s_GTRY_SPEC_Algo_BuidlIterations(pulseTomake_au32,
-                                             pulseSigns_as32,
-                                             f_QueueIterCmd_as,
-                                             nbIterMax_u16);
+    Ret_e = s_GTRY_SPEC_Algo_BuidlIterations(   f_computeType_e,
+                                                pulseTomake_au32,
+                                                pulseSigns_as32,
+                                                f_QueueIterCmd_as,
+                                                nbIterMax_u16);
 
     return Ret_e;
 }
@@ -617,6 +619,12 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
                     if(pulseCmpte_u32 > 0xFFFF) 
                     {
                         pulseCmpte_u32 = 0xFFFF;
+                    }
+                    //---- make sure we're always have 2 iterations, one to put at maximum and the others
+                    //      at minium for a short amount of pulse
+                    if(pulseCmpte_u32 == f_pulseToMake_au32[f_AxeBurstFirst_e])
+                    {
+                        pulseCmpte_u32 = pulseCmpte_u32 * 0.9f;
                     }
                     g_IterCmd_au16[f_AxeBurstFirst_e][idxIter_s32] = (t_uint16)pulseCmpte_u32;
                     PulseDone_au32[f_AxeBurstFirst_e] += pulseCmpte_u32;
@@ -820,10 +828,11 @@ static void s_GTRY_SPEC_Algo_AdjustLastIter(t_uint16 f_nbIterMax_u16)
 /*********************************
  * s_GTRY_SPEC_Algo_BuidlIterations
  *********************************/
-static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
-                                                      t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
-                                                      t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
-                                                      t_uint16 f_nbIterMax_u16)
+static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
+                                                        t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+                                                        t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
+                                                        t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
+                                                        t_uint16 f_nbIterMax_u16)
 {
     t_eReturnCode Ret_e = RC_OK;
     t_eGTRY_PhysicalAxe domAxe_e;
@@ -833,14 +842,15 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(t_uint32 f_pulseToMake_au3
     s_GTRY_SPEC_GetDominantAxeInfo(f_pulseToMake_au32, &domAxe_e, &dominantPulses_u32);
     t_sGTRY_MtrCmdIterPayload mtrAxeCmd_s;
     t_uint8 mskPulseActivity_u8 = 0;
+    t_sint32 idxIter_s32;
 
 
     t_float32 totalTime_f32 = (g_param_s.MaxFreq_af32[domAxe_e] > 0.0f) ? 
                                ((t_float32)dominantPulses_u32 / g_param_s.MaxFreq_af32[domAxe_e]) : 0.0f;
 
-    for(t_sint32 idxIter_s32 = 0; idxIter_s32 < (t_sint32)f_nbIterMax_u16 && Ret_e == RC_OK; idxIter_s32++)
+    for(idxIter_s32 = 0; idxIter_s32 < (t_sint32)f_nbIterMax_u16 && Ret_e == RC_OK; idxIter_s32++)
     {
-        if(mskPulseActivity_u8 == (GTRY_PHYS_AXE_X | GTRY_PHYS_AXE_Y | GTRY_PHYS_AXE_Z))
+        if(mskPulseActivity_u8 == ((1 << GTRY_PHYS_AXE_X) | (1 << GTRY_PHYS_AXE_Y) | (1 << GTRY_PHYS_AXE_Z)))
         {
             break;
         }
@@ -864,8 +874,59 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(t_uint32 f_pulseToMake_au3
                 else if((idxIter_s32 < (t_sint32)(f_nbIterMax_u16 - 1))
                 && (totalTime_f32 > 0.0f))
                 {
-                    mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
-                    mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                    switch(f_computeType_e)
+                    {
+                        case GTRY_ALGO_COMPUTE_TYPE_BALANCED:
+                            mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                            mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                        break;
+                        case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
+                        case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
+                        case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
+                            mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                            mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                        break;
+                        //--- all iteration macimum and the last one for min freqc is deal in previously  ----//
+                        case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
+                            if(idxAxe_e == GTRY_PHYS_AXE_X)
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)g_param_s.MaxFreq_af32[idxAxe_e];
+                            }
+                            else 
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                            }
+                        break;
+                        case GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST:
+                            if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)g_param_s.MaxFreq_af32[idxAxe_e];
+                            }
+                            else 
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                            }
+                        break;
+                        case GTRY_ALGO_COMPUTE_TYPE_Z_BURSTFIRST:
+                            if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)g_param_s.MaxFreq_af32[idxAxe_e];
+                            }
+                            else 
+                            {
+                                mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                            }
+                        case GTRY_ALGO_COMPUTE_TYPE_NB:
+                        default:
+                            Ret_e = RC_ERROR_WRONG_STATE;
+                        break;                            
+                    }                    
                 }            
                 else 
                 {

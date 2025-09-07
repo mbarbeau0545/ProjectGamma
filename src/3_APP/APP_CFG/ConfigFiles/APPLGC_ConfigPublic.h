@@ -101,6 +101,7 @@
     {
         t_cbAPPLGC_AgentInit * init_pcb;
         t_cbAPPLGC_AgentPeriodicTask * PeriodTask_pcb;
+        t_uint32 initPeriodMs_u32;
     } t_sAPPLGC_AgentFunc;
 
     // ********************************************************************

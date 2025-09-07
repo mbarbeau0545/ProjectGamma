@@ -43,7 +43,7 @@
 #endif
     #define APPSYS_ELAPSED_TIME_CYCLIC          ((t_uint8)40)                   /**< Elapsed time (in ms) between cyclic function call*/
     #define APPSYS_ITLINE_FASTTASK              FMKTIM_INTERRUPT_LINE_EVNT_1    /**< Timer Line use for FastTask */
-    #define APPSYS_ELASPED_TIME_FASTTASK        ((t_uint32)5)                   /**< Fast Task every 5 ms */
+    #define APPSYS_ELASPED_TIME_FASTTASK        ((t_uint32)5)                   /**< Fast Task every 3 ms */
     #define APPSYS_WATCHDOG_ENABLE              (FALSE)
 
     ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
@@ -55,7 +55,6 @@
 
     /* CAUTION : Automatic generated code section for Enum: End */
 	//-----------------------------ENUM TYPES-----------------------------//
-
 
     /* CAUTION : Automatic generated code section for Structure: Start */
 

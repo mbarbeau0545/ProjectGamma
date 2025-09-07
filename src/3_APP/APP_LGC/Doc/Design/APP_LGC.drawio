@@ -166,7 +166,7 @@
         <mxCell id="s_ShhWTJK4wpaPDD9lwJ-3" value="static const t_sAPPLGC_AgentFunc&lt;div&gt;in configPrivate&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;fontSize=12;" parent="s_ShhWTJK4wpaPDD9lwJ-1" vertex="1">
           <mxGeometry width="499.99999999999994" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="s_ShhWTJK4wpaPDD9lwJ-4" value="&lt;div style=&quot;text-align: center; font-size: 12px;&quot;&gt;c_AppLgc_AgentFunc_apf[APPLGC_AGENT_NB]&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;fontSize=12;" parent="s_ShhWTJK4wpaPDD9lwJ-1" vertex="1">
+        <mxCell id="s_ShhWTJK4wpaPDD9lwJ-4" value="&lt;div style=&quot;text-align: center; font-size: 12px;&quot;&gt;c_AppLGc_AgentInfo_as[APPLGC_AGENT_NB]&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;fontColor=#000000;fontSize=12;" parent="s_ShhWTJK4wpaPDD9lwJ-1" vertex="1">
           <mxGeometry y="40" width="499.99999999999994" height="50" as="geometry" />
         </mxCell>
         <mxCell id="z645YFzpyVDNcPe7Nm5N-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="NY17Wq-Kty5airUErH0G-1" target="ntYxdvMAgjqX-uuz0u-9-5" edge="1">
@@ -628,7 +628,7 @@
         <mxCell id="lPpnxu_IXBZxd8ZpTsFm-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="4hiEqoZEBhIVs0ML-P-q-1" target="lPpnxu_IXBZxd8ZpTsFm-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4hiEqoZEBhIVs0ML-P-q-1" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Ret_e = c_AppLgc_AgentFunc_apf[idxAgent].periodicTask_pcb(&amp;amp;g_snsValue_af32, &amp;amp;g_srvInfo_as);&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+        <mxCell id="4hiEqoZEBhIVs0ML-P-q-1" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Ret_e = c_AppLGc_AgentInfo_as[idxAgent].periodicTask_pcb(&amp;amp;g_snsValue_af32, &amp;amp;g_srvInfo_as);&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="174.75" y="-610" width="478.5" height="40" as="geometry" />
         </mxCell>
         <mxCell id="lPpnxu_IXBZxd8ZpTsFm-1" value="Ret_e = APPLGC_GetSnsValues()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">

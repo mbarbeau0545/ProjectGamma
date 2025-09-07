@@ -62,7 +62,7 @@
     /**
     * @brief Agent Configuration Function
     */
-    const t_sAPPLGC_AgentFunc c_AppLGc_AgentFunc_apf[APPLGC_AGENT_NB] ={
+    const t_sAPPLGC_AgentFunc c_AppLGc_AgentInfo_as[APPLGC_AGENT_NB] ={
         {GANTRY_Init,                       GANTRY_PeriodicTask},// APPLGC_AGENT_GANTRY
     };
 

@@ -384,7 +384,7 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
     }
     else
     {
-        for(idxParam_u16 = (t_uint16)0 ; 
+        for(idxParam_u16 = (t_uint16)0 ;  
         (idxParam_u16 < (t_uint16)APPSPM_PRM_NB) && (msgInfoFound_b == FALSE) ; 
         idxParam_u16++)
         {

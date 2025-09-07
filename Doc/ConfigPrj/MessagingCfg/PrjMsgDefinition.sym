@@ -126,7 +126,7 @@ Sig=Cyclic_Duration 40
 [CL42T_MOTORS_INFO]
 ID=080h // SRL
 Len=8
-CycleTime=30
+CycleTime=10
 Sig=CL42T_MTR_1_STATE 0
 Sig=CL42T_MTR_2_STATE 1
 Sig=CL42T_MTR_3_STATE 2

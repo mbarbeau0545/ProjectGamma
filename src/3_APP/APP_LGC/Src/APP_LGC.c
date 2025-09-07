@@ -37,12 +37,22 @@
 // ********************************************************************
 // *                      Types
 // ********************************************************************
+
 /// @brief structure to get actuators value
 typedef struct 
 {
     t_float32 value_f32;
     t_bool isValueOK_b;
 } t_sAPPLGC_ActIfInfo;
+
+/// @brief Agent Ordonnancer Information
+typedef struct 
+{
+    t_uint32 prdTskMs_u32;          //---- Periodicity ask by the agent ----//
+    t_uint32 lastExecMs_u32;        //---- Last time the agent was executed -----//
+    t_bool isActive_b;
+    t_sAPPLGC_AgentFunc * AgCfg_ps;
+} t_sAPPLGC_AgentInfo;
 /* CAUTION : Automatic generated code section for Enum: Start */
 
 /* CAUTION : Automatic generated code section for Enum: End */
@@ -72,10 +82,8 @@ static t_eCyclicModState g_AppLgc_ModState_e = STATE_CYCLIC_CFG;
 /**
 * @brief Structure for Service Information 
 */
-static t_sAPPLGC_ServiceInfo g_srvFuncInfo_as[APPLGC_SRV_NB];
-/**
-* @brief Container for Sensors Values
-*/
+static t_sAPPLGC_ServiceInfo g_srvFuncInfo_as[APPLGC_SRV_NB]; 
+
 ///@brief sensors info
 static t_sAPPSNS_SnsValueInfo g_snsValues_as[APPSNS_SNSITF_NB];
 ///@brief actuators info
@@ -395,7 +403,9 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
     t_eReturnCode Ret_e;
-    Ret_e = RC_OK;
+
+    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    
     return Ret_e;
 }
 
@@ -408,13 +418,17 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 
     for(t_sint32 idxAgent_s32 = 0 ; (idxAgent_s32 < APPLGC_AGENT_NB) && (Ret_e == RC_OK) ; idxAgent_s32++)
     {
-        Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_s32].init_pcb();
+        Ret_e = c_AppLGc_AgentInfo_as[idxAgent_s32].init_pcb();
 
         if(Ret_e < RC_OK)
         {
             ASSERT((t_uint16)idxAgent_s32);
         }
     }
+    // if(Ret_e == RC_OK)
+    // {
+    //     Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
+    // }
 
     return Ret_e;
 }
@@ -452,7 +466,7 @@ static t_eReturnCode s_APPLGC_Operational(void)
     {
         for(t_sint32 idxAgent_s32 = 0; idxAgent_s32 < APPLGC_AGENT_NB ; idxAgent_s32++)
         {
-            Ret_e = c_AppLGc_AgentFunc_apf[idxAgent_s32].PeriodTask_pcb();
+            Ret_e = c_AppLGc_AgentInfo_as[idxAgent_s32].PeriodTask_pcb();
 
             if(Ret_e < RC_OK)
             {
@@ -551,13 +565,22 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                                         t_uint16 f_debugInfo1_u16,
                                         t_uint16 f_debugInfo2_u16)
 {
-    // choose a way to communicate error
-    FMKSRL_LOG("Diagnostic Event Raise %d, status", f_item_e, f_reportState_e);
+    FMKSRL_LOG("Diag Item %d, status : %d, debug1 : %d, debug2 : %d\r\n",
+                f_item_e,
+                f_reportState_e,
+                f_debugInfo1_u16,
+                f_debugInfo2_u16);
 
     return;
 }
 
-
+/*********************************
+ * s_APPLGC_FastTask
+ *********************************/
+static void s_APPLGC_FastTask(void)
+{
+    return;
+}
 //************************************************************************************
 // End of File
 //************************************************************************************

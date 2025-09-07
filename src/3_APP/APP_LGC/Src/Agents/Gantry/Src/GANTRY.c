@@ -139,6 +139,9 @@ static t_sGTRY_CalibWaitInfo g_CalibWaitTimeMax_ua32[GTRY_PHYS_AXE_NB];
 
 ///@brief store the parameter in case we want to change it in runtime 
 static t_sGTRYSPEC_AlgoParameter g_algoParam_s;
+
+///@brief Algo Computation Time 
+static t_uint32 g_algoComputeTime_u32 = (t_uint32)0;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -371,10 +374,7 @@ static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e);
  */
 static t_eReturnCode s_GTRY_HardAxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e);
 /**
- * @brief Hard Stop for all Axes Motor
- * @details This function Set an hard stop, means pin enable se to 1
- *             to release torque on each axes, this function also check if action 
- *              has to be made before hard stop motor
+ * @brief Enable the motor axes
  * 
  * ----------------------------------------------------------------------------
  * @param[in] f_idxAxe_e : axe to get informatio on
@@ -382,6 +382,13 @@ static t_eReturnCode s_GTRY_HardAxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e);
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e);
+/**
+ * @brief Get/ Update the parameter used for gantry algorithm
+ * 
+ * ----------------------------------------------------------------------------
+ * @return @ref t_eReturnCode
+ */
+static t_eReturnCode s_GTRY_UpdateAlgoParameters();
 
 //****************************************************************************
 //                      Public functions - Implementation
@@ -636,8 +643,8 @@ static t_eReturnCode s_GTRY_StateMachine(void)
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
 {
     t_eReturnCode Ret_e;
-    t_eGTRY_PhysicalAxe idxAxe_e;
-    t_uAPPSPM_PrmValType prmValue_u;
+    t_float32 bufferCmdPos_af32[GTRY_PHYS_AXE_NB];
+    
     //---- init the finit state machine ----//
     g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_CFG;
     g_Fsm_PrdTsk_CalibSts_e = GTRY_FSM_PRDTSK_CALIB_INIT;
@@ -652,61 +659,22 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
     Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Y);
     Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
 
-    //----2- init the algo parameter ----//
+    
+    //---- 2- Init the algo parameter ----//
+    Ret_e = s_GTRY_UpdateAlgoParameters();
+    //---- 3- send the algo parameter ----//
     if(Ret_e == RC_OK)
     {
-        for(idxAxe_e = GTRY_PHYS_AXE_HEAD ; (idxAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK) ; idxAxe_e++)
-        {
-            prmValue_u.prmVal_u16 = 0u;
-            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MinFreq_ae[idxAxe_e], &prmValue_u);
-            if(Ret_e == RC_OK)
-            {
-                g_algoParam_s.MinFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
-            }
-            if(Ret_e == RC_OK)
-            {
-                prmValue_u.prmVal_u16 = 0u;
-                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MaxFreq_ae[idxAxe_e], &prmValue_u);
-                if(Ret_e == RC_OK)
-                {
-                    g_algoParam_s.MaxFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
-                }
-            }
-            if(Ret_e == RC_OK)
-            {
-                prmValue_u.prmVal_f32 = 0.0f;
-                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.pulsePerMm_ae[idxAxe_e], &prmValue_u);
-                if(Ret_e == RC_OK)
-                {
-                    g_algoParam_s.pulsePerMm_af32[idxAxe_e] = prmValue_u.prmVal_f32;
-                }
-            }
-            if(Ret_e == RC_OK)
-            {
-                prmValue_u.prmVal_f32 = 0.0f;
-                Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.cptPrio_SafeHeight_ae[idxAxe_e], &prmValue_u);
-                if(Ret_e == RC_OK)
-                {
-                    g_algoParam_s.cptPrio_SafeHeight_af32[idxAxe_e] = prmValue_u.prmVal_f32;
-                }
-            }
-        }
-        //----2- send the algo parameter ----//
-        if(Ret_e == RC_OK)
-        {
-            prmValue_u.prmVal_u16 = 0;
-            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.chunkSize_e, &prmValue_u);
-            if(Ret_e == RC_OK)
-            {
-                g_algoParam_s.chunkSize_u16 = prmValue_u.prmVal_u16;
-            }
-        }
-        //---- 3- send the algo parameter ----//
-        if(Ret_e == RC_OK)
-        {
-            Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
-        }
+        Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
     }
+    
+    // bufferCmdPos_af32[GTRY_PHYS_AXE_X] = 450.F;
+    // bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = 450.F;
+    // bufferCmdPos_af32[GTRY_PHYS_AXE_Z] = 450.F;
+    // g_FlagRcvPosCmd_b = TRUE;
+    // Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
+    //                                 bufferCmdPos_af32,
+    //                                 sizeof(t_float32) * GTRY_PHYS_AXE_NB);
     return Ret_e;
 }
 
@@ -1244,8 +1212,8 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Operational(void)
             Ret_e = s_GTRY_Fsm_PrdTskOpe_CmdCheck();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_CMPTE_ITER;
                 g_Fsm_PrdTsk_OpeSts_e = GTRY_FSM_PRDTSK_OPE_CMD_PROCESS;
+                g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_CMPTE_ITER;
             }
             else if(Ret_e == RC_WARNING_NO_OPERATION)
             {
@@ -1424,6 +1392,14 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter(void)
                                 GTRTY_SIZEOF_ELEM_POSCMD_QUEUE);
     if(Ret_e == RC_OK)
     {
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = s_GTRY_UpdateAlgoParameters();
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
+            }
+        }
         Ret_e = s_GTRY_AlgoMngmt(computeAlgoType_u.prmVal_u16, posCmdBuffer_af32);
 
         if(Ret_e == RC_OK)
@@ -1483,7 +1459,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter(void)
             currPhysAxe_e = GTRY_PHYS_AXE_HEAD; // _X
         }
         for( /* currPhysAxe_e */ ; 
-            currPhysAxe_e < GTRY_PHYS_AXE_NB ; 
+            (currPhysAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK) ; 
             currPhysAxe_e++)
         {
             Ret_e = LIBQUEUE_PopElement(&g_QueueCmdIterMngmt_as[currPhysAxe_e],
@@ -1491,7 +1467,10 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter(void)
                                         GTRTY_SIZEOF_ELEM_ITERCMD_QUEUE);
             if(Ret_e == RC_OK)
             {
-                Ret_e = s_GTRY_SendMtrIteration(currPhysAxe_e, &cmdIter_s);
+                if(cmdIter_s.pulses_s32 != (t_sint32)0)
+                {
+                    Ret_e = s_GTRY_SendMtrIteration(currPhysAxe_e, &cmdIter_s);
+                }
                 if(Ret_e == RC_OK)
                 {
                     //---- delete the element ----//
@@ -1634,7 +1613,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                         Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, &pulsePerMm_u);
                         if(Ret_e == RC_OK)
                         {
-                            g_AxeComputePos_af32[GTRY_PHYS_AXE_X] += (t_float32)f_MtrCmdIter_ps->pulses_s32 * pulsePerMm_u.prmVal_f32;
+                            g_AxeComputePos_af32[GTRY_PHYS_AXE_X] += (t_float32)f_MtrCmdIter_ps->pulses_s32 / pulsePerMm_u.prmVal_f32;
                         }
                     }
                 }
@@ -1663,7 +1642,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                         Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, &pulsePerMm_u);
                         if(Ret_e == RC_OK)
                         {
-                            g_AxeComputePos_af32[GTRY_PHYS_AXE_Y] += (t_float32)f_MtrCmdIter_ps->pulses_s32 * pulsePerMm_u.prmVal_f32;
+                            g_AxeComputePos_af32[GTRY_PHYS_AXE_Y] += (t_float32)f_MtrCmdIter_ps->pulses_s32 / pulsePerMm_u.prmVal_f32;
                         }
                     }
                 }
@@ -1689,10 +1668,10 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                     }
                     if(Ret_e == RC_OK)
                     {
-                        Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, &pulsePerMm_u);
+                        Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM, &pulsePerMm_u);
                         if(Ret_e == RC_OK)
                         {
-                            g_AxeComputePos_af32[GTRY_PHYS_AXE_Z] += (t_float32)f_MtrCmdIter_ps->pulses_s32 * pulsePerMm_u.prmVal_f32;
+                            g_AxeComputePos_af32[GTRY_PHYS_AXE_Z] += (t_float32)f_MtrCmdIter_ps->pulses_s32 / pulsePerMm_u.prmVal_f32;
                         }
                     }
                 }
@@ -1905,12 +1884,17 @@ static t_eReturnCode s_GTRY_AlgoMngmt(  t_eGTRY_AlgoComputeType f_computeType_e,
                                         t_float32 f_posValues_af32[GTRY_PHYS_AXE_NB])
 {
     t_eReturnCode Ret_e;
+    t_uint32 startTime_u32;
+    t_uint32 endTime_u32;
 
+    FMKCPU_GetTick(&startTime_u32);
     Ret_e = GANTRY_SPEC_AlgorithmCompute(   f_computeType_e,
                                             f_posValues_af32,
                                             g_axeCurrPos_af32,
                                             g_axeMissPulses_af32,
                                             g_QueueCmdIterMngmt_as);
+    FMKCPU_GetTick(&endTime_u32);
+    g_algoComputeTime_u32 = (endTime_u32 - startTime_u32);
     return Ret_e;
 }
 
@@ -2134,6 +2118,66 @@ static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e)
             default:
                 Ret_e = RC_ERROR_WRONG_STATE;
             break;
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_GTRY_UpdateAlgoParameters 
+ *********************************/
+static t_eReturnCode s_GTRY_UpdateAlgoParameters(void)
+{
+    t_eReturnCode Ret_e;
+    t_eGTRY_PhysicalAxe idxAxe_e;
+    t_uAPPSPM_PrmValType prmValue_u;
+
+    //----1- init the algo parameter ----//
+    Ret_e = RC_OK;
+    for(idxAxe_e = GTRY_PHYS_AXE_HEAD ; (idxAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK) ; idxAxe_e++)
+    {
+        prmValue_u.prmVal_u16 = 0u;
+        Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MinFreq_ae[idxAxe_e], &prmValue_u);
+        if(Ret_e == RC_OK)
+        {
+            g_algoParam_s.MinFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
+        }
+        if(Ret_e == RC_OK)
+        {
+            prmValue_u.prmVal_u16 = 0u;
+            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.MaxFreq_ae[idxAxe_e], &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_algoParam_s.MaxFreq_af32[idxAxe_e] = (t_float32)prmValue_u.prmVal_u16;
+            }
+        }
+        if(Ret_e == RC_OK)
+        {
+            prmValue_u.prmVal_f32 = 0.0f;
+            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.pulsePerMm_ae[idxAxe_e], &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_algoParam_s.pulsePerMm_af32[idxAxe_e] = prmValue_u.prmVal_f32;
+            }
+        }
+        if(Ret_e == RC_OK)
+        {
+            prmValue_u.prmVal_f32 = 0.0f;
+            Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.cptPrio_SafeHeight_ae[idxAxe_e], &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_algoParam_s.cptPrio_SafeHeight_af32[idxAxe_e] = prmValue_u.prmVal_f32;
+            }
+        }
+    }
+    if(Ret_e == RC_OK)
+    {
+        prmValue_u.prmVal_u16 = 0;
+        Ret_e = APPSPM_GetParam(c_GTRY_AlgoItemPrm_s.chunkSize_e, &prmValue_u);
+        if(Ret_e == RC_OK)
+        {
+            g_algoParam_s.chunkSize_u16 = prmValue_u.prmVal_u16;
         }
     }
 

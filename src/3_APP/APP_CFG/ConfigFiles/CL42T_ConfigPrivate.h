@@ -46,7 +46,7 @@
     #define CL42T_IN_FREQ_SAMPLING      ((t_float32)0.5)
 
     ///@brief number of command we can get 
-    #define CL42T_CMD_QUEUE_SIZE ((t_uint8)10)
+    #define CL42T_CMD_QUEUE_SIZE ((t_uint8)20)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
