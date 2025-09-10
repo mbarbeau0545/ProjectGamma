@@ -50,8 +50,9 @@
     ///@brief Command Iteration Payload
     typedef struct 
     {
-        t_sint32 pulses_s32;        //---- pulses to send to the motor ----//
-        t_float32 frequency_f32;    //---- frequency of the motor -----//
+        t_sint32 pulses_s32;            //---- pulses to send to the motor ----//
+        t_float32 frequency_f32;        //---- frequency of the motor -----//
+        t_float32 triggerTimer_f32;     //---- What time relatively to the first iteration, this iteration should be send ----//
     } t_sGTRY_MtrCmdIterPayload;
     // ********************************************************************
     // *                      Prototypes

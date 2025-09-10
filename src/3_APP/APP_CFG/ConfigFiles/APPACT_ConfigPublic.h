@@ -46,12 +46,16 @@
     {
         APPACT_ACTITF_MTR_XL_PULSE = 0,       /**< Actuator Device MTR_XL, Interface PULSE, Moteur XL Left Pulses */
         APPACT_ACTITF_MTR_XL_SPEED,             /**< Actuator Device MTR_XL, Interface SPEED, Moteur XL Left Speed */
+        APPACT_ACTITF_MTR_XL_TRIGTIME,          /**< Actuator Device MTR_XL, Interface TRIGTIME, Moteur XL Left Trigger Time to plan sending pulse */
         APPACT_ACTITF_MTR_XR_PULSE,             /**< Actuator Device MTR_XR, Interface PULSE, Moteur XR Left Pulses */
         APPACT_ACTITF_MTR_XR_SPEED,             /**< Actuator Device MTR_XR, Interface SPEED, Moteur XR Left Speed */
+        APPACT_ACTITF_MTR_XR_TRIGTIME,          /**< Actuator Device MTR_XR, Interface TRIGTIME, Moteur XR RightTrigger Time to plan sending pulse */
         APPACT_ACTITF_MTR_Y_PULSE,              /**< Actuator Device MTR_Y, Interface PULSE, Moteur Y Pulses */
         APPACT_ACTITF_MTR_Y_SPEED,              /**< Actuator Device MTR_Y, Interface SPEED, Moteur Y Speed */
+        APPACT_ACTITF_MTR_Y_TRIGTIME,           /**< Actuator Device MTR_Y, Interface TRIGTIME, Moteur Y Trigger Time to plan sending pulse */
         APPACT_ACTITF_MTR_Z_PULSE,              /**< Actuator Device MTR_Z, Interface PULSE, Moteur Z Pulses */
         APPACT_ACTITF_MTR_Z_SPEED,              /**< Actuator Device MTR_Z, Interface SPEED, Moteur Z Speed */
+        APPACT_ACTITF_MTR_Z_TRIGTIME,           /**< Actuator Device MTR_Z, Interface TRIGTIME, Moteur Z Left Trigger Time to plan sending pulse */
     
         APPACT_ACTITF_NB,
     } t_eAPPACT_ActInterface;

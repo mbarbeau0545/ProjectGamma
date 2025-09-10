@@ -23,10 +23,14 @@
     /* CAUTION : Automatic generated code section for Include: Start */
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XL.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XL.h"
+    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XL.h"
+    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XR.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XR.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_XR.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Y.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Y.h"
+    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Y.h"
+    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Z.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Z.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_Z.h"
     /* CAUTION : Automatic generated code section for Include: End */
@@ -123,12 +127,16 @@
     const t_sAPPACT_SysActCfg c_AppAct_SysAct_as[APPACT_ACTITF_NB] = {
         {APPACT_ACTDVC_MTR_XL,                                        APPACT_SPEC_MTR_XL_PULSE_SetValue,                          APPACT_SPEC_MTR_XL_PULSE_GetValue,                          },//APPACT_ACTITF_MTR_XL_PULSE
         {APPACT_ACTDVC_MTR_XL,                                        APPACT_SPEC_MTR_XL_SPEED_SetValue,                          APPACT_SPEC_MTR_XL_SPEED_GetValue,                          },//APPACT_ACTITF_MTR_XL_SPEED
+        {APPACT_ACTDVC_MTR_XL,                                        APPACT_SPEC_MTR_XL_TRIGTIME_SetValue,                       APPACT_SPEC_MTR_XL_TRIGTIME_GetValue,                       },//APPACT_ACTITF_MTR_XL_TRIGTIME
         {APPACT_ACTDVC_MTR_XR,                                        APPACT_SPEC_MTR_XR_PULSE_SetValue,                          APPACT_SPEC_MTR_XR_PULSE_GetValue,                          },//APPACT_ACTITF_MTR_XR_PULSE
         {APPACT_ACTDVC_MTR_XR,                                        APPACT_SPEC_MTR_XR_SPEED_SetValue,                          APPACT_SPEC_MTR_XR_SPEED_GetValue,                          },//APPACT_ACTITF_MTR_XR_SPEED
+        {APPACT_ACTDVC_MTR_XR,                                        APPACT_SPEC_MTR_XR_TRIGTIME_SetValue,                       APPACT_SPEC_MTR_XR_TRIGTIME_GetValue,                       },//APPACT_ACTITF_MTR_XR_TRIGTIME
         {APPACT_ACTDVC_MTR_Y,                                         APPACT_SPEC_MTR_Y_PULSE_SetValue,                           APPACT_SPEC_MTR_Y_PULSE_GetValue,                           },//APPACT_ACTITF_MTR_Y_PULSE
         {APPACT_ACTDVC_MTR_Y,                                         APPACT_SPEC_MTR_Y_SPEED_SetValue,                           APPACT_SPEC_MTR_Y_SPEED_GetValue,                           },//APPACT_ACTITF_MTR_Y_SPEED
+        {APPACT_ACTDVC_MTR_Y,                                         APPACT_SPEC_MTR_Y_TRIGTIME_SetValue,                        APPACT_SPEC_MTR_Y_TRIGTIME_GetValue,                        },//APPACT_ACTITF_MTR_Y_TRIGTIME
         {APPACT_ACTDVC_MTR_Z,                                         APPACT_SPEC_MTR_Z_PULSE_SetValue,                           APPACT_SPEC_MTR_Z_PULSE_GetValue,                           },//APPACT_ACTITF_MTR_Z_PULSE
         {APPACT_ACTDVC_MTR_Z,                                         APPACT_SPEC_MTR_Z_SPEED_SetValue,                           APPACT_SPEC_MTR_Z_SPEED_GetValue,                           },//APPACT_ACTITF_MTR_Z_SPEED
+        {APPACT_ACTDVC_MTR_Z,                                         APPACT_SPEC_MTR_Z_TRIGTIME_SetValue,                        APPACT_SPEC_MTR_Z_TRIGTIME_GetValue,                        },//APPACT_ACTITF_MTR_Z_TRIGTIME
     };
 
     ///@brief Variable for system Actuators Device Ope Mngmt

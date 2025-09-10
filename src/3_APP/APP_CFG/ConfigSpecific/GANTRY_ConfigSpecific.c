@@ -56,7 +56,8 @@ static t_float32 g_axePulseRemain_af32[GTRY_PHYS_AXE_NB];
 static t_uint16 g_IterCmd_au16[GTRY_PHYS_AXE_NB][GTRY_MAX_ITERATION];
 ///@brief global variable to know when to start ditrib left pulse, use on several 
 ///         function which has no common proper way to get this parameter 
-static t_sint32 g_startDistribIdxITerCmd_s32 = (t_sint32)0;
+static t_uint16 g_startDistribIdxITerCmd_u16 = (t_sint32)0;
+static t_uint16 g_endIdxPulsePrio_u16 = (t_sint32)0;
 ///@brief know if param received 
 static t_bool g_AlgoPrmInit_b = False;
 //****************************************************************************
@@ -68,19 +69,20 @@ static t_bool g_AlgoPrmInit_b = False;
  * @return RC_OK : The state finish, pass to new state from fsm
  * @return void
  */
-static void GTRY_SPEC_Algo_ComputeSteps(t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
-                                        t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB],
-                                        t_float32 f_missPulses_af32[GTRY_PHYS_AXE_NB],
-                                        t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
-                                        t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB]);
+static void s_GTRY_SPEC_Algo_ComputeSteps(  t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
+                                            t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB],
+                                            t_float32 f_missPulses_af32[GTRY_PHYS_AXE_NB],
+                                            t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+                                            t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB]);
 /**
  * @brief This function handle the Safety state of State Machine
  * ----------------------------------------------------------------------------
  * @return RC_OK : The state finish, pass to new state from fsm
  * @return void
  */
-static void GTRY_SPEC_Algo_ComputeChunkCount(t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
-                                             t_uint16 * f_NbIterMax_pu16);
+static void s_GTRY_SPEC_Algo_ComputeChunkCount(   t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+                                                t_eGTRY_AlgoComputeType f_algoCpteType_e,
+                                                t_uint16 * f_NbIterMax_pu16);
 /**
  * @brief This function handle the Safety state of State Machine
   * ----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ static void GTRY_SPEC_Algo_ComputeChunkCount(t_uint32 f_pulseToMake_au32[GTRY_PH
  * ----------------------------------------------------------------------------d
  * @return void
  */
-static void GTRY_SPEC_Algo_DistribInitialPulse( t_eGTRY_AlgoComputeType f_computeType_e, 
+static void s_GTRY_SPEC_Algo_DistribInitialPulse( t_eGTRY_AlgoComputeType f_computeType_e, 
                                                 t_uint32 f_PulsesToMake_au32[GTRY_PHYS_AXE_NB],
                                                 t_uint16  f_NbIterMax_u16);
 /**
@@ -114,7 +116,7 @@ static void s_GTRY_SPEC_DistribInitPulse_Balanced(const t_uint32 f_pulseToMake_a
  * ----------------------------------------------------------------------------
  * @return void
  */
-static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+static void s_GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                     t_uint16 f_nbIterMax_u16,
                                                     t_eGTRY_PhysicalAxe f_AxeBurstFirst_e);
 /**
@@ -127,7 +129,7 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
  * ----------------------------------------------------------------------------
  * @return void
  */
-static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+static void s_GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                 t_uint16 f_nbIterMax_u16,
                                                 t_eGTRY_PhysicalAxe f_AxePriority_e);
 /**
@@ -140,7 +142,7 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
  * ----------------------------------------------------------------------------
  * @return void 
  */
-static void GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16);
+static void s_GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16);
 /**
  * @brief This function handle the Safety state of State Machine
  * ----------------------------------------------------------------------------
@@ -151,7 +153,8 @@ static void GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16);
  * ----------------------------------------------------------------------------
  * @return void 
  */
-static void s_GTRY_SPEC_Algo_AdjustLastIter(t_uint16 f_nbIterMax_u16);
+static void s_GTRY_SPEC_Algo_AdjustLastIter(t_eGTRY_AlgoComputeType f_computeType_e,
+                                            t_uint16 f_nbIterMax_u16);
 /**
  * @brief This function handle the Safety state of State Machine
  * ----------------------------------------------------------------------------
@@ -162,7 +165,7 @@ static void s_GTRY_SPEC_Algo_AdjustLastIter(t_uint16 f_nbIterMax_u16);
  * ----------------------------------------------------------------------------
  * @return void 
  */
-static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
+static t_eReturnCode s_GTRY_SPEC_Algo_BuildIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
                                                         t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                         t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
                                                         t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
@@ -174,13 +177,15 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
  * @param[in] f_factor_s32 : factor pulse
  * @param[in] f_nbPulses_u32 : Number of pulse 
  * @param[in] f_nbIter_u16 : Number of iterations to make
+ * @param[in] f_startIterIdx_u16 : start distribIdx
  * ----------------------------------------------------------------------------
  * @return void
  */
-static void GTRY_SPEC_DistribLastPulse( t_eGTRY_PhysicalAxe f_axe_e,
+static void s_GTRY_SPEC_DistribLastPulse( t_eGTRY_PhysicalAxe f_axe_e,
                                         t_sint32 f_factor_s32,
                                         t_uint32 f_nbPulses_u32,
-                                        t_uint16 f_nbIter_u16);
+                                        t_uint16 f_nbIter_u16,
+                                        t_uint16 f_startIterIdx_u16);
 /**
  * @brief This function handle the Safety state of State Machine
  * ----------------------------------------------------------------------------
@@ -407,16 +412,17 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     }
 
     Ret_e = RC_OK;
-    g_startDistribIdxITerCmd_s32 = (t_sint32)0;
+    g_startDistribIdxITerCmd_u16 = (t_sint32)0;
+    g_endIdxPulsePrio_u16 = (t_sint32)0;
     //---- 1- Compute steps and dominant axis ----//
-    GTRY_SPEC_Algo_ComputeSteps(f_targetPos_af32, 
+    s_GTRY_SPEC_Algo_ComputeSteps(f_targetPos_af32, 
                                 f_currPos_af32,
                                 f_missPulses_af32,
                                 pulseTomake_au32,
                                 pulseSigns_as32);
 
     //---- 2- Compute number of iterations ----//
-    GTRY_SPEC_Algo_ComputeChunkCount(pulseTomake_au32, &nbIterMax_u16);
+    s_GTRY_SPEC_Algo_ComputeChunkCount(pulseTomake_au32, f_computeType_e, &nbIterMax_u16);
 
     //---- 3- Check queues ----//
     LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_X], &QueueXLeft_u8);
@@ -436,20 +442,20 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     }
 
     //---- 4- Distribute pulses ----//
-    GTRY_SPEC_Algo_DistribInitialPulse(f_computeType_e, pulseTomake_au32, nbIterMax_u16);
+    s_GTRY_SPEC_Algo_DistribInitialPulse(f_computeType_e, pulseTomake_au32, nbIterMax_u16);
 
     //---- 5- Handle single iteration ----//
     if(nbIterMax_u16 == 1)
     {
         nbIterMax_u16 = 2;
-        GTRY_SPEC_Algo_SplitSingleIter(nbIterMax_u16);
+        s_GTRY_SPEC_Algo_SplitSingleIter(nbIterMax_u16);
     }
 
     //---- 6- Adjust last iteration ----//
-    s_GTRY_SPEC_Algo_AdjustLastIter(nbIterMax_u16);
+    s_GTRY_SPEC_Algo_AdjustLastIter(f_computeType_e, nbIterMax_u16);
 
     //---- 7- Build iterations ----//
-    Ret_e = s_GTRY_SPEC_Algo_BuidlIterations(   f_computeType_e,
+    Ret_e = s_GTRY_SPEC_Algo_BuildIterations(   f_computeType_e,
                                                 pulseTomake_au32,
                                                 pulseSigns_as32,
                                                 f_QueueIterCmd_as,
@@ -459,9 +465,9 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
 }
 
 /*********************************
- * GTRY_SPEC_Algo_ComputeSteps
+ * s_GTRY_SPEC_Algo_ComputeSteps
  *********************************/
-static void GTRY_SPEC_Algo_ComputeSteps(t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
+static void s_GTRY_SPEC_Algo_ComputeSteps(t_float32 f_targetPos_af32[GTRY_PHYS_AXE_NB],
                                         t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB],
                                         t_float32 f_missPulses_af32[GTRY_PHYS_AXE_NB],
                                         t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
@@ -504,22 +510,133 @@ static void GTRY_SPEC_Algo_ComputeSteps(t_float32 f_targetPos_af32[GTRY_PHYS_AXE
 }
 
 /*********************************
- * GTRY_SPEC_Algo_ComputeChunkCount
+ * s_GTRY_SPEC_Algo_ComputeChunkCount
  *********************************/
-static void GTRY_SPEC_Algo_ComputeChunkCount(t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
-                                             t_uint16 * f_NbIterMax_pu16)
+static void s_GTRY_SPEC_Algo_ComputeChunkCount(   t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+                                                t_eGTRY_AlgoComputeType f_algoCpteType_e,
+                                                t_uint16 * f_NbIterMax_pu16)
 {
     t_uint32 totalPulse_u32;
-    s_GTRY_SPEC_GetDominantAxeInfo(f_pulseToMake_au32, NULL, &totalPulse_u32);
+    t_uint32 prioAxetotalPulse_u32;
+    t_uint32 prioStep_u32;
+    t_eGTRY_PhysicalAxe axeDom_e = GTRY_PHYS_AXE_NB;
+    t_uint32 CpteTypepulseToMake_au32[GTRY_PHYS_AXE_NB] = {f_pulseToMake_au32[GTRY_PHYS_AXE_X], f_pulseToMake_au32[GTRY_PHYS_AXE_Y], f_pulseToMake_au32[GTRY_PHYS_AXE_Z]};
+    s_GTRY_SPEC_GetDominantAxeInfo(f_pulseToMake_au32, &axeDom_e, &totalPulse_u32);
     t_uint32 chunkSize_u32 = (t_uint32)g_param_s.chunkSize_u16;
 
-    *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+    switch(f_algoCpteType_e)
+    {
+        case GTRY_ALGO_COMPUTE_TYPE_BALANCED:
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
+            //---- in this compute type, X will not be the 
+            //      dominant axes because every pulses 
+            //  will be made in 1 or 2 iterations ----//
+            if(axeDom_e == GTRY_PHYS_AXE_X)
+            {
+                CpteTypepulseToMake_au32[GTRY_PHYS_AXE_X] = 0;
+                s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);
+                
+            }
+
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST:
+            //---- in this compute type, X will not be the 
+            //      dominant axes because every pulses 
+            //  will be made in 1 or 2 iterations ----//
+            if(axeDom_e == GTRY_PHYS_AXE_Y)
+            {
+                CpteTypepulseToMake_au32[GTRY_PHYS_AXE_Y] = 0;
+                s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);
+                
+            }
+            
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_Z_BURSTFIRST:
+            //---- in this compute type, X will not be the 
+            //      dominant axes because every pulses 
+            //  will be made in 1 or 2 iterations ----//
+            if(axeDom_e == GTRY_PHYS_AXE_Z)
+            {
+                CpteTypepulseToMake_au32[GTRY_PHYS_AXE_Z] = 0;
+                s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);
+                
+            }
+
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
+            prioStep_u32 = (t_uint32)(g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_X] 
+                                        * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_X]);
+            prioAxetotalPulse_u32 = totalPulse_u32;
+            //---- get the pulse to make after prio alone passed ----//
+            CpteTypepulseToMake_au32[GTRY_PHYS_AXE_X] = 0;
+            s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);          
+                
+            if(totalPulse_u32 > (prioAxetotalPulse_u32 - prioStep_u32))
+            {
+                totalPulse_u32 = prioStep_u32 + totalPulse_u32; 
+            }
+            else 
+            {
+                totalPulse_u32 = prioAxetotalPulse_u32;
+            }            
+     
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
+            prioStep_u32 = (t_uint32)(g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_Y] 
+                                        * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_Y]);
+            prioAxetotalPulse_u32 = totalPulse_u32;
+            //---- get the pulse to make after prio alone passed ----//
+            CpteTypepulseToMake_au32[GTRY_PHYS_AXE_Y] = 0;
+            s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);          
+                
+            if(totalPulse_u32 > (prioAxetotalPulse_u32 - prioStep_u32))
+            {
+                totalPulse_u32 = prioStep_u32 + totalPulse_u32; 
+            }
+            else 
+            {
+                totalPulse_u32 = prioAxetotalPulse_u32;
+            }            
+     
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
+            prioStep_u32 = (t_uint32)(g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_Z] 
+                                        * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_Z]);
+            prioAxetotalPulse_u32 = totalPulse_u32;
+            //---- get the pulse to make after prio alone passed ----//
+            CpteTypepulseToMake_au32[GTRY_PHYS_AXE_Z] = 0;
+            s_GTRY_SPEC_GetDominantAxeInfo(CpteTypepulseToMake_au32, &axeDom_e, &totalPulse_u32);          
+                
+            if(totalPulse_u32 > (prioAxetotalPulse_u32 - prioStep_u32))
+            {
+                totalPulse_u32 = prioStep_u32 + totalPulse_u32; 
+            }
+            else 
+            {
+                totalPulse_u32 = prioAxetotalPulse_u32;
+            }            
+     
+            *f_NbIterMax_pu16 = (t_uint16)((totalPulse_u32 + chunkSize_u32 - 1) / chunkSize_u32);
+        break;
+        case GTRY_ALGO_COMPUTE_TYPE_NB:
+        default:
+            ASSERT((t_uint16)0);
+    }
+
+    
 }
 
 /*********************************
- * GTRY_SPEC_Algo_DistribInitialPulse
+ * s_GTRY_SPEC_Algo_DistribInitialPulse
  *********************************/
-static void GTRY_SPEC_Algo_DistribInitialPulse(t_eGTRY_AlgoComputeType f_computeType_e,
+static void s_GTRY_SPEC_Algo_DistribInitialPulse(t_eGTRY_AlgoComputeType f_computeType_e,
                                                t_uint32 f_PulsesToMake_au32[GTRY_PHYS_AXE_NB],
                                                t_uint16 f_NbIterMax_u16)
 {
@@ -529,22 +646,22 @@ static void GTRY_SPEC_Algo_DistribInitialPulse(t_eGTRY_AlgoComputeType f_compute
             s_GTRY_SPEC_DistribInitPulse_Balanced(f_PulsesToMake_au32, f_NbIterMax_u16);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
-            GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_X);
+            s_GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_X);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST:
-            GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Y);
+            s_GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Y);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_Z_BURSTFIRST:
-            GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Z);
+            s_GTRY_SPEC_DistribInitPulse_BurstFirst(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Z);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
-            GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_X);
+            s_GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_X);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
-            GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Y);
+            s_GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Y);
             break;
         case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
-            GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Z);
+            s_GTRY_SPEC_DistribInitPulse_Priority(f_PulsesToMake_au32, f_NbIterMax_u16, GTRY_PHYS_AXE_Z);
             break;
         default:
             ASSERT((t_uint16)f_computeType_e);
@@ -586,7 +703,7 @@ static void s_GTRY_SPEC_DistribInitPulse_Balanced(const t_uint32 f_pulseToMake_a
                 correction_s32 = -correction_s32;
             }
 
-            GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrection_s32, (t_uint32)correction_s32, f_nbIterMax_u16);
+            s_GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrection_s32, (t_uint32)correction_s32, f_nbIterMax_u16, 0u);
         }
     }
 
@@ -594,9 +711,9 @@ static void s_GTRY_SPEC_DistribInitPulse_Balanced(const t_uint32 f_pulseToMake_a
 }
 
 /*********************************
- * GTRY_SPEC_DistribInitPulse_BurstFirst
+ * s_GTRY_SPEC_DistribInitPulse_BurstFirst
  *********************************/
-static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+static void s_GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                     t_uint16 f_nbIterMax_u16,
                                                     t_eGTRY_PhysicalAxe f_AxeBurstFirst_e)
 {
@@ -604,7 +721,10 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
     t_uint32 PulseDone_au32[GTRY_PHYS_AXE_NB] = {0,0,0};
     t_uint32 domAxeTotalPulse_u32;
     t_bool isStartDistribChange_b = False;
-    s_GTRY_SPEC_GetDominantAxeInfo(f_pulseToMake_au32, NULL, &domAxeTotalPulse_u32);
+    t_uint32 newPulseToMake_ua32[GTRY_PHYS_AXE_NB] = {f_pulseToMake_au32[GTRY_PHYS_AXE_X], f_pulseToMake_au32[GTRY_PHYS_AXE_Y], f_pulseToMake_au32[GTRY_PHYS_AXE_Z]};
+    newPulseToMake_ua32[f_AxeBurstFirst_e] = 0;
+
+    s_GTRY_SPEC_GetDominantAxeInfo(newPulseToMake_ua32, NULL, &domAxeTotalPulse_u32);
 
     for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
     {
@@ -616,13 +736,16 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
                 if(PulseDone_au32[f_AxeBurstFirst_e] < f_pulseToMake_au32[f_AxeBurstFirst_e])
                 {
                     pulseCmpte_u32 = (f_pulseToMake_au32[f_AxeBurstFirst_e] - PulseDone_au32[f_AxeBurstFirst_e]);
-                    if(pulseCmpte_u32 > 0xFFFF) 
+                    if(pulseCmpte_u32 > 0xEA60) // 60000, leave a range in case we have to add some pulse
                     {
-                        pulseCmpte_u32 = 0xFFFF;
+                        pulseCmpte_u32 = 0xEA60 ;
                     }
                     //---- make sure we're always have 2 iterations, one to put at maximum and the others
-                    //      at minium for a short amount of pulse
-                    if(pulseCmpte_u32 == f_pulseToMake_au32[f_AxeBurstFirst_e])
+                    //      at minimum for a short amount of pulse
+                    //      if the number of iteration is 1, the SplitIteration will deal with it 
+                    //      but if > 1 the function is not called ----//
+                    if((pulseCmpte_u32 == f_pulseToMake_au32[f_AxeBurstFirst_e])
+                    && (f_nbIterMax_u16 > 1))
                     {
                         pulseCmpte_u32 = pulseCmpte_u32 * 0.9f;
                     }
@@ -634,7 +757,8 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
                     if(isStartDistribChange_b == False)
                     {
                         isStartDistribChange_b = True;
-                        g_startDistribIdxITerCmd_s32 = idxIter_s32;
+                        g_startDistribIdxITerCmd_u16 = (t_uint16)idxIter_s32;
+                        g_endIdxPulsePrio_u16 = (t_uint16)idxIter_s32;
                     }
                     g_IterCmd_au16[f_AxeBurstFirst_e][idxIter_s32] = 0;
                 }
@@ -642,12 +766,22 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
             else
             {
                 pulseCmpte_u32 = ((f_pulseToMake_au32[idxAxe_e] * (t_uint32)g_param_s.chunkSize_u16) / domAxeTotalPulse_u32);
+                if(PulseDone_au32[idxAxe_e] + pulseCmpte_u32 > f_pulseToMake_au32[idxAxe_e])
+                {
+                    pulseCmpte_u32 = f_pulseToMake_au32[idxAxe_e] - PulseDone_au32[idxAxe_e];
+                }
                 g_IterCmd_au16[idxAxe_e][idxIter_s32] = (t_uint16)pulseCmpte_u32;
                 PulseDone_au32[idxAxe_e] += pulseCmpte_u32;
             }
         }
     }
-
+    //--- it means we only have one iteration, but we're about to get both 
+    //      'cause we splitting itteration ----//
+    if((g_endIdxPulsePrio_u16 == (t_uint16)0)
+    && (isStartDistribChange_b == FALSE))
+    {
+        g_endIdxPulsePrio_u16 = 2;
+    }
     // Correction
     for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
     {
@@ -656,7 +790,7 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
         {
             t_sint32 factorCorrect_s32 = (correction_s32 > 0) ? 1 : -1;
             if(factorCorrect_s32 < 0) correction_s32 = -correction_s32;
-            GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrect_s32, (t_uint32)correction_s32, f_nbIterMax_u16);
+            s_GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrect_s32, (t_uint32)correction_s32, f_nbIterMax_u16, 0u);
         }
     }
 
@@ -664,9 +798,9 @@ static void GTRY_SPEC_DistribInitPulse_BurstFirst(  const t_uint32 f_pulseToMake
 }
 
 /*********************************
- * GTRY_SPEC_DistribInitPulse_Priority
+ * s_GTRY_SPEC_DistribInitPulse_Priority
  *********************************/
-static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
+static void s_GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                 t_uint16 f_nbIterMax_u16,
                                                 t_eGTRY_PhysicalAxe f_AxePriority_e)
 {
@@ -675,6 +809,7 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
     t_uint32 pulseToMakeAfterPrioDone_u32[GTRY_PHYS_AXE_NB] = {0,0,0};
     t_uint32 domAxeTotalPulse_u32;
     t_bool isStartDistribChange_b = False;
+    t_bool updateChunk_b = FALSE;
     t_uint32 heightTarget_u32 = (t_uint32)g_param_s.cptPrio_SafeHeight_af32[f_AxePriority_e];
     t_uint32 stepToReachTarget_u32 = (t_uint32)((t_float32)heightTarget_u32 * g_param_s.pulsePerMm_af32[f_AxePriority_e]);
 
@@ -711,27 +846,54 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
             //---- upsate distrib start idx ----//
             if(isStartDistribChange_b == False)
             {
-                isStartDistribChange_b = True;
-                g_startDistribIdxITerCmd_s32 = idxIter_s32;
-                //---- create a last iteration for ramp signal for the priority axes ----//
+                t_uint16 lastPulse_u16;
+                
+                //---- create a last iteration for ramp signal for the priority axes, that is not too long  ----//
                 if(idxIter_s32 != (t_uint32)(f_nbIterMax_u16 - 1))
                 {
-                    t_uint16 lastPulse_u16 = (t_uint16)(0.15f * g_param_s.MinFreq_af32[f_AxePriority_e]);
-                    if(g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] > lastPulse_u16)
+                    
+                    if((PulseDone_au32[f_AxePriority_e] == f_pulseToMake_au32[f_AxePriority_e]))
                     {
-                        g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] = g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] - lastPulse_u16;
-                        PulseDone_au32[f_AxePriority_e] -= lastPulse_u16;
+                        lastPulse_u16 = (t_uint16)(0.15f * g_param_s.MinFreq_af32[f_AxePriority_e]);
+                        if(g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] > lastPulse_u16)
+                        {
+                            isStartDistribChange_b = True;
+                            //--- else less that way ----//
+                            if(idxIter_s32 > (t_sint32)2)
+                            {
+                                s_GTRY_SPEC_DistribLastPulse(f_AxePriority_e,     
+                                    (t_sint32)1, 
+                                    (t_uint32)(g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] - lastPulse_u16),
+                                    (t_uint16)(idxIter_s32 - 2),
+                                    (t_uint16)0);
+                                    
+                            }
+                            else
+                            {
+                                g_IterCmd_au16[f_AxePriority_e][0] += (g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] - lastPulse_u16);
+                            }
+
+                            g_IterCmd_au16[f_AxePriority_e][(idxIter_s32 - 1)] = lastPulse_u16;
+                        }
+
+                        g_endIdxPulsePrio_u16 = (t_uint16)idxIter_s32;
                     }
-                    //--- else less that ways ----//
                 }
-                //--- update the domainant axis now that we finish the prio axe ----//
-                for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
+                if(updateChunk_b == FALSE)
                 {
-                    pulseToMakeAfterPrioDone_u32[idxAxe_e] = f_pulseToMake_au32[idxAxe_e] - PulseDone_au32[idxAxe_e];
+                    g_startDistribIdxITerCmd_u16 = (t_sint32)idxIter_s32;
+                    updateChunk_b = TRUE;
+                    //--- update the domainant axis now that we finish the prio axe ----//
+                    for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
+                    {
+                        pulseToMakeAfterPrioDone_u32[idxAxe_e] = f_pulseToMake_au32[idxAxe_e] - PulseDone_au32[idxAxe_e];
+
+                    }
+                    s_GTRY_SPEC_GetDominantAxeInfo(pulseToMakeAfterPrioDone_u32,
+                                                    NULL,
+                                                    &domAxeTotalPulse_u32);
                 }
-                s_GTRY_SPEC_GetDominantAxeInfo(pulseToMakeAfterPrioDone_u32,
-                                                NULL,
-                                                &domAxeTotalPulse_u32);
+                
             }
             for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
             {
@@ -753,11 +915,23 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
                     pulseAxeCmpte_u16 = (t_uint16)(f_pulseToMake_au32[idxAxe_e] - PulseDone_au32[idxAxe_e]);
                 }
                 g_IterCmd_au16[idxAxe_e][idxIter_s32] = pulseAxeCmpte_u16;
-                PulseDone_au32[idxAxe_e] += pulseAxeCmpte_u16;
+                PulseDone_au32[idxAxe_e] += pulseAxeCmpte_u16;                
             }
         }
     }
-
+    if((g_endIdxPulsePrio_u16 == (t_sint32)0)
+    && (isStartDistribChange_b == FALSE))
+    {
+        if(f_nbIterMax_u16 > 1)
+        {
+            g_endIdxPulsePrio_u16 = f_nbIterMax_u16;
+        }
+        //--- function split will wplit in two iteration
+        else 
+        {
+            g_endIdxPulsePrio_u16 = 2;
+        }
+    }
     // Correction
     for(idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
     {
@@ -766,7 +940,7 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
         {
             t_sint32 factorCorrect_s32 = (correction_s32 > 0) ? 1 : -1;
             if(factorCorrect_s32 < 0) correction_s32 = -correction_s32;
-            GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrect_s32, (t_uint32)correction_s32, f_nbIterMax_u16);
+            s_GTRY_SPEC_DistribLastPulse(idxAxe_e, factorCorrect_s32, (t_uint32)correction_s32, f_nbIterMax_u16, g_startDistribIdxITerCmd_u16);
         }
     }
 
@@ -774,9 +948,9 @@ static void GTRY_SPEC_DistribInitPulse_Priority(const t_uint32 f_pulseToMake_au3
 }
 
 /*********************************
- * GTRY_SPEC_Algo_SplitSingleIter
+ * s_GTRY_SPEC_Algo_SplitSingleIter
  *********************************/
-static void GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16)
+static void s_GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16)
 {
     if(f_nbIterMax_u16 != 2)
     {
@@ -797,38 +971,247 @@ static void GTRY_SPEC_Algo_SplitSingleIter(t_uint16 f_nbIterMax_u16)
 /*********************************
  * s_GTRY_SPEC_Algo_AdjustLastIter
  *********************************/
-static void s_GTRY_SPEC_Algo_AdjustLastIter(t_uint16 f_nbIterMax_u16)
+static void s_GTRY_SPEC_Algo_AdjustLastIter(t_eGTRY_AlgoComputeType f_computeType_e,
+                                            t_uint16 f_nbIterMax_u16)
 {
     t_uint16 smallerPulse_u16 = 0xFFFF;
+    t_uint16 pulseLastIter_u16 = 0;
 
     // Find smallest pulse on last iteration
     for(t_eGTRY_PhysicalAxe idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
     {
-        t_uint16 pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
-        if(pulseLastIter_u16 < smallerPulse_u16)
+        switch(f_computeType_e)
+        {
+            case GTRY_ALGO_COMPUTE_TYPE_BALANCED:
+                pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_X)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Z_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_X)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1];
+                }
+                else 
+                {
+                    pulseLastIter_u16 = g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1];
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_NB:
+            default:
+                ASSERT((t_uint16)0);
+            break;
+        }
+        if((pulseLastIter_u16 < smallerPulse_u16)
+        && (smallerPulse_u16 > (t_uint16)0))
         {
             smallerPulse_u16 = pulseLastIter_u16;
         }
+
+        if(smallerPulse_u16 == 0xFFFF)
+        {
+            ASSERT((t_uint16)0);
+            smallerPulse_u16 = 1;
+        }
+        
+        
     }
 
     // Distribute remaining
     for(t_eGTRY_PhysicalAxe idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
-    {
-        if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+    { 
+        switch(f_computeType_e)
         {
-            t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
-            g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
-            GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1));
-        }
+            case GTRY_ALGO_COMPUTE_TYPE_BALANCED:
+                if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                {
+                    t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                    g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                    s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0u);
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_X)
+                {
+                    if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (g_endIdxPulsePrio_u16 - 1), 0u);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                {
+                    if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, g_endIdxPulsePrio_u16, 0u);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Z_BURSTFIRST:
+                if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                {
+                    if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, g_endIdxPulsePrio_u16, 0u);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0u);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_X)
+                {
+                    if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0u);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), g_startDistribIdxITerCmd_u16);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                {
+                    if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0u);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), g_startDistribIdxITerCmd_u16);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
+                if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                {
+                   if(g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][g_endIdxPulsePrio_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), 0);
+                    }
+                }
+                else 
+                {
+                    if(g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] != smallerPulse_u16)
+                    {
+                        t_uint32 diffPulses_u32 = (t_uint32)g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] - smallerPulse_u16;
+                        g_IterCmd_au16[idxAxe_e][f_nbIterMax_u16 - 1] = smallerPulse_u16;
+                        s_GTRY_SPEC_DistribLastPulse(idxAxe_e, 1, diffPulses_u32, (f_nbIterMax_u16 - (t_uint16)1), g_startDistribIdxITerCmd_u16);
+                    }
+                }
+            break;
+            case GTRY_ALGO_COMPUTE_TYPE_NB:
+            default:
+                ASSERT((t_uint16)0);
+            break;
+        }        
     }
 
     return;
 }
 
 /*********************************
- * s_GTRY_SPEC_Algo_BuidlIterations
+ * s_GTRY_SPEC_Algo_BuildIterations
  *********************************/
-static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
+static t_eReturnCode s_GTRY_SPEC_Algo_BuildIterations(  t_eGTRY_AlgoComputeType f_computeType_e,
                                                         t_uint32 f_pulseToMake_au32[GTRY_PHYS_AXE_NB],
                                                         t_sint32 f_pulseSigns_as32[GTRY_PHYS_AXE_NB],
                                                         t_sLIBQUEUE_QueueCore f_QueueAxeMngmt_as[GTRY_PHYS_AXE_NB],
@@ -837,14 +1220,15 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
     t_eReturnCode Ret_e = RC_OK;
     t_eGTRY_PhysicalAxe domAxe_e;
     t_uint32 dominantPulses_u32;
+    t_float32 pulseSafeHeight_f32 = 0.0f;
+    t_bool distribFirstPulseForOtherAxes_b[GTRY_PHYS_AXE_NB] = {FALSE, FALSE, FALSE};
     t_uint32 PulseDone_au32[GTRY_PHYS_AXE_NB] = {0,0,0};
-    t_bool iterCmdFinish_ab[GTRY_PHYS_AXE_NB] = {False, False, false};
+    t_bool iterCmdFinish_ab[GTRY_PHYS_AXE_NB] = {FALSE, FALSE, FALSE};
+    t_float32 PulseDuration_af32[GTRY_PHYS_AXE_NB] = {0.0f, 0.0f, 0.0f};
     s_GTRY_SPEC_GetDominantAxeInfo(f_pulseToMake_au32, &domAxe_e, &dominantPulses_u32);
     t_sGTRY_MtrCmdIterPayload mtrAxeCmd_s;
     t_uint8 mskPulseActivity_u8 = 0;
     t_sint32 idxIter_s32;
-
-
     t_float32 totalTime_f32 = (g_param_s.MaxFreq_af32[domAxe_e] > 0.0f) ? 
                                ((t_float32)dominantPulses_u32 / g_param_s.MaxFreq_af32[domAxe_e]) : 0.0f;
 
@@ -856,11 +1240,15 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
         }
         for(t_eGTRY_PhysicalAxe idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
         {
+            mtrAxeCmd_s.frequency_f32 = 0.0f;
+            mtrAxeCmd_s.pulses_s32 = 0;
+            mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
             PulseDone_au32[idxAxe_e] += g_IterCmd_au16[idxAxe_e][idxIter_s32];
             if(iterCmdFinish_ab[idxAxe_e] == True)
             {
                 mtrAxeCmd_s.pulses_s32 = (t_sint32)0;
                 mtrAxeCmd_s.frequency_f32 = g_param_s.MinFreq_af32[idxAxe_e]; 
+                mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
             }
             else 
             {
@@ -870,6 +1258,7 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
                     mskPulseActivity_u8 |= idxAxe_e;
                     mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
                     mtrAxeCmd_s.frequency_f32 = g_param_s.MinFreq_af32[idxAxe_e]; 
+                    mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
                 }
                 else if((idxIter_s32 < (t_sint32)(f_nbIterMax_u16 - 1))
                 && (totalTime_f32 > 0.0f))
@@ -879,18 +1268,119 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
                         case GTRY_ALGO_COMPUTE_TYPE_BALANCED:
                             mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
                             mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+                            mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
                         break;
                         case GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY:
+                            mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                            mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+
+                            pulseSafeHeight_f32 = g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_X] * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_X];
+                            if((t_float32)PulseDone_au32[GTRY_PHYS_AXE_X] < pulseSafeHeight_f32)
+                            {
+                                //--- if idxAxe = X send ASAP, if others there are no pulses so we don't case ----//
+                                mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                            }
+                            else 
+                            {
+                                //---- still sand ASAP for X -----//
+                                if(idxAxe_e == GTRY_PHYS_AXE_X)
+                                {
+                                    mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                                }
+                                else 
+                                {
+                                    //---- first iteration non null for other axes has to start now ---//
+                                    if((distribFirstPulseForOtherAxes_b[idxAxe_e] == FALSE)
+                                    && (mtrAxeCmd_s.pulses_s32 != (t_sint32)0))
+                                    {
+                                        distribFirstPulseForOtherAxes_b[idxAxe_e] = TRUE;
+                                        mtrAxeCmd_s.triggerTimer_f32 = PulseDuration_af32[GTRY_PHYS_AXE_X];
+                                    }
+                                    else 
+                                    {
+                                        //---- ASAP now ----//
+                                        mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
+                                    }
+                                        
+                                }
+                            }
+                        break;
                         case GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY:
+                            mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                            mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+
+                            pulseSafeHeight_f32 = g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_X] * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_X];
+                            if((t_float32)PulseDone_au32[GTRY_PHYS_AXE_Y] < pulseSafeHeight_f32)
+                            {
+                                //--- if idxAxe = X send ASAP, if others there are no pulses so we don't case ----//
+                                mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                            }
+                            else 
+                            {
+                                //---- still sand ASAP for Y -----//
+                                if(idxAxe_e == GTRY_PHYS_AXE_Y)
+                                {
+                                    mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                                }
+                                else 
+                                {
+                                    //---- first iteration non null for other axes has to start now ---//
+                                    if((distribFirstPulseForOtherAxes_b[idxAxe_e] == FALSE)
+                                    && (mtrAxeCmd_s.pulses_s32 != (t_sint32)0))
+                                    {
+                                        distribFirstPulseForOtherAxes_b[idxAxe_e] = TRUE;
+                                        mtrAxeCmd_s.triggerTimer_f32 = PulseDuration_af32[GTRY_PHYS_AXE_X];
+                                    }
+                                    else 
+                                    {
+                                        //---- ASAP now ----//
+                                        mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
+                                    }
+                                        
+                                }
+                            }
+                        break;
                         case GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY:
                             mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
                             mtrAxeCmd_s.frequency_f32 = (t_float32)f_pulseToMake_au32[idxAxe_e] / totalTime_f32;
+
+                            pulseSafeHeight_f32 = g_param_s.cptPrio_SafeHeight_af32[GTRY_PHYS_AXE_Z] * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_Z];
+                            if((t_float32)PulseDone_au32[GTRY_PHYS_AXE_Z] < pulseSafeHeight_f32)
+                            {
+                                //--- if idxAxe = X send ASAP, if others there are no pulses so we don't case ----//
+                                mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                            }
+                            else 
+                            {
+                                //---- still sand ASAP for X -----//
+                                if(idxAxe_e == GTRY_PHYS_AXE_Z)
+                                {
+                                    mtrAxeCmd_s.triggerTimer_f32 = 0.0f; // send all ASAP
+                                }
+                                else 
+                                {
+                                    //---- first iteration non null for other axes has to start now ---//
+                                    if((distribFirstPulseForOtherAxes_b[idxAxe_e] == FALSE)
+                                    && (mtrAxeCmd_s.pulses_s32 != (t_sint32)0))
+                                    {
+                                        distribFirstPulseForOtherAxes_b[idxAxe_e] = TRUE;
+                                        mtrAxeCmd_s.triggerTimer_f32 = PulseDuration_af32[GTRY_PHYS_AXE_Z];
+                                    }
+                                    else 
+                                    {
+                                        //---- ASAP now ----//
+                                        mtrAxeCmd_s.triggerTimer_f32 = 0.0f;
+                                    }
+                                        
+                                }
+                            }
                         break;
                         //--- all iteration macimum and the last one for min freqc is deal in previously  ----//
                         case GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST:
                             if(idxAxe_e == GTRY_PHYS_AXE_X)
                             {
                                 mtrAxeCmd_s.pulses_s32 = (t_sint32)g_IterCmd_au16[idxAxe_e][idxIter_s32] * f_pulseSigns_as32[idxAxe_e];
+                                //---- all pulses at max speed ----//
                                 mtrAxeCmd_s.frequency_f32 = (t_float32)g_param_s.MaxFreq_af32[idxAxe_e];
                             }
                             else 
@@ -940,12 +1430,13 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
                 mtrAxeCmd_s.frequency_f32 = g_param_s.MaxFreq_af32[idxAxe_e];
             }
             else if(mtrAxeCmd_s.frequency_f32 < g_param_s.MinFreq_af32[idxAxe_e])
-            {   
+            {
                 mtrAxeCmd_s.frequency_f32 = g_param_s.MinFreq_af32[idxAxe_e];
             }
 
             Ret_e = LIBQUEUE_WriteElement(&f_QueueAxeMngmt_as[idxAxe_e], &mtrAxeCmd_s, sizeof(t_sGTRY_MtrCmdIterPayload));
-            g_IterCmd_au16[idxAxe_e][idxIter_s32] = (t_uint16)0;
+            PulseDuration_af32[idxAxe_e] += (t_float32)mtrAxeCmd_s.pulses_s32 / mtrAxeCmd_s.frequency_f32 * 1000.0f; // ms
+            //g_IterCmd_au16[idxAxe_e][idxIter_s32] = (t_uint16)0;
         }
     }
     for(t_eGTRY_PhysicalAxe idxAxe_e = GTRY_PHYS_AXE_HEAD; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
@@ -959,19 +1450,24 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuidlIterations(  t_eGTRY_AlgoComputeType 
 }
 
 /*********************************
- * GTRY_SPEC_DistribLastPulse
+ * s_GTRY_SPEC_DistribLastPulse
  *********************************/
-static void GTRY_SPEC_DistribLastPulse( t_eGTRY_PhysicalAxe f_axe_e,
+static void s_GTRY_SPEC_DistribLastPulse( t_eGTRY_PhysicalAxe f_axe_e,
                                         t_sint32 f_factor_s32,
                                         t_uint32 f_nbPulses_u32,
-                                        t_uint16 f_nbIter_u16)
+                                        t_uint16 f_nbIter_u16,
+                                        t_uint16 f_startIterIdx_u16)
 {
-    t_float32 meanDistribPulse_f32 = (t_float32)f_nbPulses_u32 / (t_float32)(f_nbIter_u16 - (t_uint16)g_startDistribIdxITerCmd_s32);
-    t_uint32 leftDistribPulse_u32 = f_nbPulses_u32 - (t_uint32)meanDistribPulse_f32 * (t_uint32)(f_nbIter_u16 - (t_uint16)g_startDistribIdxITerCmd_s32);
+    t_float32 meanDistribPulse_f32 = (f_nbIter_u16 - f_startIterIdx_u16) > 0 ? 
+                                                                        (t_float32)f_nbPulses_u32 / (t_float32)(f_nbIter_u16 - (t_uint16)f_startIterIdx_u16)  
+                                                                        : f_nbPulses_u32;
+    t_uint32 leftDistribPulse_u32 = (f_nbIter_u16 - f_startIterIdx_u16) > 0 ? 
+                                                                        f_nbPulses_u32 - (t_uint32)meanDistribPulse_f32 * (t_uint32)(f_nbIter_u16 - (t_uint16)f_startIterIdx_u16)
+                                                                        : (t_uint32)0;
     t_sint16 incrementVal_s16;
     t_sint32 idxIterCmd_s32;
 
-    for(t_sint32 loopIter_s32 = g_startDistribIdxITerCmd_s32; loopIter_s32 < (t_sint32)f_nbIter_u16; loopIter_s32++)
+    for(t_sint32 loopIter_s32 = f_startIterIdx_u16; loopIter_s32 < (t_sint32)f_nbIter_u16; loopIter_s32++)
     {
         incrementVal_s16 = (t_sint16)(f_factor_s32 * meanDistribPulse_f32);
         idxIterCmd_s32 = loopIter_s32 % (t_sint32)f_nbIter_u16;
@@ -987,7 +1483,7 @@ static void GTRY_SPEC_DistribLastPulse( t_eGTRY_PhysicalAxe f_axe_e,
     }
     for(t_uint32 loopLeftPulse_u32 = 0; loopLeftPulse_u32 < leftDistribPulse_u32; loopLeftPulse_u32++)
     {
-        idxIterCmd_s32 = loopLeftPulse_u32 % ((t_sint32)f_nbIter_u16 - g_startDistribIdxITerCmd_s32) + g_startDistribIdxITerCmd_s32;
+        idxIterCmd_s32 = loopLeftPulse_u32 % ((t_sint32)f_nbIter_u16 - f_startIterIdx_u16) + f_startIterIdx_u16;
         incrementVal_s16 = (t_sint16)f_factor_s32;
         if(incrementVal_s16 > (t_sint16)0)
         {
@@ -1031,7 +1527,6 @@ static void s_GTRY_SPEC_GetDominantAxeInfo( const t_uint32 f_pulseToMake_au32[GT
     {
         *f_totalPulse_pu32 = totalPulse_u32;
     }
-        
 
     return;
 }

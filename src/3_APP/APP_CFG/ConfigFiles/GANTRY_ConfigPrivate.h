@@ -28,7 +28,7 @@
     // ********************************************************************
     ///@brief Fifo Buffer len define
     #define GTRY_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)120) // must be divided by 3, 40 cmd 
-    #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)50)
+    #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
 
     ///@brief direction to go to the right spot for referencing 
     #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)1)
@@ -89,6 +89,7 @@
     {
         t_eAPPACT_ActInterface actIfMtrPulse_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
         t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
+        t_eAPPACT_ActInterface actIfTimTrig_e;       //---- Trigger Timer Actuator interface -----//
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
@@ -149,6 +150,7 @@
         [GTRY_AXE_HANDLE_XL] = {
             .actIfMtrPulse_e = APPACT_ACTITF_MTR_XL_PULSE,
             .actIfSpeed_e = APPACT_ACTITF_MTR_XL_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRIGTIME,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XL_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL
@@ -156,6 +158,7 @@
         [GTRY_AXE_HANDLE_XR] = {
             .actIfMtrPulse_e = APPACT_ACTITF_MTR_XR_PULSE,
             .actIfSpeed_e = APPACT_ACTITF_MTR_XR_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRIGTIME,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XR_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR
@@ -163,6 +166,7 @@
         [GTRY_AXE_HANDLE_Y] = {
             .actIfMtrPulse_e = APPACT_ACTITF_MTR_Y_PULSE,
             .actIfSpeed_e = APPACT_ACTITF_MTR_Y_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRIGTIME,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Y,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Y_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y
@@ -170,6 +174,7 @@
         [GTRY_AXE_HANDLE_Z] = {
             .actIfMtrPulse_e = APPACT_ACTITF_MTR_Z_PULSE,
             .actIfSpeed_e = APPACT_ACTITF_MTR_Z_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRIGTIME,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Z,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Z_POS,
         }
@@ -181,7 +186,7 @@
         .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN},
         .MaxFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Y_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Z_SPEED_MAX},
         .pulsePerMm_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM},
-        .cptPrio_SafeHeight_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_LEN, APPSPM_PRM_LGC_GTRY_AXE_Y_LEN, APPSPM_PRM_LGC_GTRY_AXE_Z_LEN},
+        .cptPrio_SafeHeight_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT},
     };
     ///@brief variable for signal group
     static const t_eAPPSIG_Signal c_GTRY_cartesianSigs_ae[] = {

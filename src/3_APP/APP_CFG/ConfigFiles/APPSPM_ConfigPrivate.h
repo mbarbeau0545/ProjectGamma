@@ -442,6 +442,36 @@
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
         .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_LEN
     },
+    [APPSPM_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)150.0,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT
+    },
+    [APPSPM_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)150.0,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT
+    },
+    [APPSPM_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)150.0,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT
+    },
     };
 
 

@@ -70,6 +70,7 @@
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_2                     ((t_uint32)0x74)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3                     ((t_uint32)0x75)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4                     ((t_uint32)0x76)
+    #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT           ((t_uint32)0x77)
     ///@brief CAN Message Id
     /* CAUTION : Automatic generated code section for Define: End */
     
@@ -210,7 +211,6 @@
         {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y
         {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_ALGO_CPTE_TYPE
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_MAX_PULSES
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_CALIB_TYPE
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_SENDITER_TYPE
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM
@@ -225,6 +225,9 @@
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_X_CALIB_OFFSET
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Y_CALIB_OFFSET
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_Z_CALIB_OFFSET
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1.0f,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT
     };
 
     ///@brief Variable for decoding ApplicationInfo1
@@ -349,9 +352,8 @@
 
 
     ///@brief Variable for decoding PRM_LGC_GTRY_PARAM_1
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as[4] = {
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as[3] = {
         {APPSIG_SIGNAL_PRM_LGC_GTRY_ALGO_CPTE_TYPE,             (t_uint8)24                                            },
-        {APPSIG_SIGNAL_PRM_LGC_GTRY_MAX_PULSES,                 (t_uint8)0                                             },
         {APPSIG_SIGNAL_PRM_LGC_GTRY_CALIB_TYPE,                 (t_uint8)16                                            },
         {APPSIG_SIGNAL_PRM_LGC_GTRY_SENDITER_TYPE,              (t_uint8)20                                            },
     };
@@ -381,6 +383,14 @@
     };
 
 
+    ///@brief Variable for decoding PRM_LGC_GTRY_PARAM_SAFE_HEIGHT
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT_as[3] = {
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT,          (t_uint8)0                                             },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT,          (t_uint8)16                                            },
+        {APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT,          (t_uint8)32                                            },
+    };
+
+
     ///@brief Serial Message Information
     const t_sAPPSIG_MsgCfg c_AppSig_SrlMsgCfg_as[APPSIG_SRL_MSG_NB] = {
     //  Identifier                                          Direction                                                CyclicSend                                                 TimeOut                                                         Sig Cfg                                         nbSignal
@@ -395,10 +405,11 @@
         {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_POSITION,            APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_POSITION_as,          (t_uint8)3}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_POSITION
         {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_SPHERIC,             APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_SPHERIC_as,           (t_uint8)3}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_SPHERIC
         {APPSIG_SRL_ID_PRM_LGC_LGC_GTRY_CMD_STEPS,               APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_LGC_GTRY_CMD_STEPS_as,             (t_uint8)6}, // APPSIG_SRL_PRM_LGC_LGC_GTRY_CMD_STEPS
-        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_1,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as,                   (t_uint8)4}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_1
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_1,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_1_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_1
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_2,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_2_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_2
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_3_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_3
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_4_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_4
+        {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT,           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT_as,         (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT
     };
 
     ///@brief CAN Message Information

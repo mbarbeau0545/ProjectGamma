@@ -139,9 +139,12 @@ static t_sGTRY_CalibWaitInfo g_CalibWaitTimeMax_ua32[GTRY_PHYS_AXE_NB];
 
 ///@brief store the parameter in case we want to change it in runtime 
 static t_sGTRYSPEC_AlgoParameter g_algoParam_s;
-
+static t_eGTRY_AlgoComputeType g_AlgoCpteType_e;
 ///@brief Algo Computation Time 
-static t_uint32 g_algoComputeTime_u32 = (t_uint32)0;
+static t_uint32 g_algoComputeTime_u32 = 0u;
+
+/// @brief To know where we start to send a iteration plan, for absolute timing planner 
+static t_uint32 g_startSendIter_u32 = 0u;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -643,7 +646,6 @@ static t_eReturnCode s_GTRY_StateMachine(void)
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
 {
     t_eReturnCode Ret_e;
-    t_float32 bufferCmdPos_af32[GTRY_PHYS_AXE_NB];
     
     //---- init the finit state machine ----//
     g_Fsm_PrdcTskSts_e = GTRY_FSM_PRD_TSK_CFG;
@@ -668,6 +670,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
         Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
     }
     
+    // t_float32 bufferCmdPos_af32[GTRY_PHYS_AXE_NB];
     // bufferCmdPos_af32[GTRY_PHYS_AXE_X] = 450.F;
     // bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = 450.F;
     // bufferCmdPos_af32[GTRY_PHYS_AXE_Z] = 450.F;
@@ -996,6 +999,10 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
             {
                 Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minMtrFreq_u.prmVal_u16);
             }
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, 0.0f);
+            }
 
             //---- for axe X get the XR also ----//
             if((f_PhysAxe_e == GTRY_PHYS_AXE_X)
@@ -1006,6 +1013,10 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
                 if(Ret_e == RC_OK)
                 {
                     Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minMtrFreq_u.prmVal_u16);
+                }
+                if(Ret_e == RC_OK)
+                {
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, 0.0f);
                 }
             }
         }
@@ -1185,6 +1196,23 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsOffset(t_eGTRY_PhysicalAxe f_Phys
                 {
                     Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minFreqVal_u.prmVal_u16);
                 }
+                if(Ret_e == RC_OK)
+                {
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, 0.0f);
+                }
+                if(f_PhysAxe_e == GTRY_PHYS_AXE_X)
+                {
+                    axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)pulseValue_s32);
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minFreqVal_u.prmVal_u16);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, 0.0f);
+                    }
+                }
             }
         }
     }
@@ -1345,6 +1373,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpe_CmdProcess(void)
             Ret_e = s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter();
             if(Ret_e == RC_OK)
             {
+                FMKCPU_GetTick(&g_startSendIter_u32);
                 g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_SEND_ITERS;
             }
         break;
@@ -1352,6 +1381,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpe_CmdProcess(void)
             Ret_e = s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter();
             if(Ret_e == RC_OK)
             {
+                g_startSendIter_u32 = 0u;
                 g_Fsm_PrdTsk_OpeCmdPrcssSts_e = GTRY_FSM_PRDTSK_OPE_CMDPRCSS_CMPTE_ITER;
             }
         break;
@@ -1369,7 +1399,6 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpe_CmdProcess(void)
 static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter(void)
 {
     t_eReturnCode Ret_e;
-    t_uAPPSPM_PrmValType computeAlgoType_u = {.prmVal_u16 = 0};
     t_float32 posCmdBuffer_af32[GTRY_PHYS_AXE_NB] = {0.0f, 0.0f, 0.0f};
     t_uint32 currenTime_u32;
 
@@ -1380,13 +1409,6 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter(void)
         g_FlagPosCmdPending_b = FALSE;
     }
 
-    Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_ALGO_CPTE_TYPE, 
-                            &computeAlgoType_u);
-    if(Ret_e != RC_OK)
-    {
-        ASSERT((t_uint16)Ret_e);
-        computeAlgoType_u.prmVal_u16 = (t_uint16)GTRY_ALGO_COMPUTE_TYPE_BALANCED;
-    } 
     Ret_e = LIBQUEUE_PopElement(&g_QueueCmdPosRcvMngmt_s,
                                 posCmdBuffer_af32,
                                 GTRTY_SIZEOF_ELEM_POSCMD_QUEUE);
@@ -1400,7 +1422,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_ComputeIter(void)
                 Ret_e = GANTRY_SPEC_AlgorithmSetParam(g_algoParam_s);
             }
         }
-        Ret_e = s_GTRY_AlgoMngmt(computeAlgoType_u.prmVal_u16, posCmdBuffer_af32);
+        Ret_e = s_GTRY_AlgoMngmt(g_AlgoCpteType_e, posCmdBuffer_af32);
 
         if(Ret_e == RC_OK)
         {
@@ -1469,6 +1491,8 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskOpeCmdPrcss_SendIter(void)
             {
                 if(cmdIter_s.pulses_s32 != (t_sint32)0)
                 {
+                    //---- set the absolute timing ----//
+                    cmdIter_s.triggerTimer_f32 = (t_uint32)cmdIter_s.triggerTimer_f32 + g_startSendIter_u32;
                     Ret_e = s_GTRY_SendMtrIteration(currPhysAxe_e, &cmdIter_s);
                 }
                 if(Ret_e == RC_OK)
@@ -1600,11 +1624,19 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                     }
                     if(Ret_e == RC_OK)
                     {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, f_MtrCmdIter_ps->triggerTimer_f32);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
                         axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
                         if(Ret_e == RC_OK)
                         {
                             Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                        }
+                        if(Ret_e == RC_OK)
+                        {
+                            Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, f_MtrCmdIter_ps->triggerTimer_f32);
                         }
                     }
                     //--- update compute position ----//
@@ -1639,6 +1671,10 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                     }
                     if(Ret_e == RC_OK)
                     {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, f_MtrCmdIter_ps->triggerTimer_f32);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
                         Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, &pulsePerMm_u);
                         if(Ret_e == RC_OK)
                         {
@@ -1665,6 +1701,10 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfTimTrig_e, f_MtrCmdIter_ps->triggerTimer_f32);
                     }
                     if(Ret_e == RC_OK)
                     {
@@ -2178,6 +2218,13 @@ static t_eReturnCode s_GTRY_UpdateAlgoParameters(void)
         if(Ret_e == RC_OK)
         {
             g_algoParam_s.chunkSize_u16 = prmValue_u.prmVal_u16;
+
+            prmValue_u.prmVal_u16 = 0;
+            Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_ALGO_CPTE_TYPE, &prmValue_u);
+            if(Ret_e == RC_OK)
+            {
+                g_AlgoCpteType_e = prmValue_u.prmVal_u16;
+            }
         }
     }
 

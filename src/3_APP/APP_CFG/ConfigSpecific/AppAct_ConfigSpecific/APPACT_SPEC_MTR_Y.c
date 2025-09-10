@@ -49,9 +49,11 @@
 typedef struct 
 {
     t_sint32 nbPulses_s32;
-    t_uint32 frequency_u32;
+    t_uint32 frequency_f32;
+    t_uint32 trigTimer_u32;
     t_bool isPulsesRcv_b;
     t_bool isFreqRcv_b;
+    t_bool isTrigTimerRcv_b;
 } t_sAPPACT_SPEC_CL42T_ShadowCmd;
 /* CAUTION : Automatic generated code section : Start */
 
@@ -120,6 +122,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriv
                     *f_drvUsed_pe = APPACT_DRV_CL42T;
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
+                    g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
                     g_doppPulses_s32 = (t_sint32)0;
                 }
             break;
@@ -186,16 +189,19 @@ t_eReturnCode APPACT_SPEC_MTR_Y_PULSE_SetValue(t_float32 f_SigValue_pf32)
             case APPSYS_OPT_ACT_MTR_Y_CL42T:
                 g_cl42tShadowCmd_s.nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
                 g_cl42tShadowCmd_s.isPulsesRcv_b = TRUE;
-                if(g_cl42tShadowCmd_s.isFreqRcv_b == TRUE)
+                if((g_cl42tShadowCmd_s.isFreqRcv_b == TRUE)
+                && (g_cl42tShadowCmd_s.isTrigTimerRcv_b == TRUE))
                 {
-                    cl42T_MtrVal_s.frequency_u32 = g_cl42tShadowCmd_s.frequency_u32;
-                    cl42T_MtrVal_s.nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
+                    cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
+                    cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
+                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
 
                     Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
                                                     cl42T_MtrVal_s);
                     //---- even if ret_e != RC_OK, we reset the flag ----//
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
+                    g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
                 }
             break;
             case APPSYS_OPT_ACT_MTR_Y_UNUSED:
@@ -264,11 +270,13 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32)
                 } 
                 else
                 {       
-                    g_cl42tShadowCmd_s.frequency_u32 = f_SigValue_pf32;
+                    g_cl42tShadowCmd_s.frequency_f32 = f_SigValue_pf32;
                     g_cl42tShadowCmd_s.isFreqRcv_b = TRUE;
-                    if(g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
+                    if((g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
+                    && g_cl42tShadowCmd_s.isTrigTimerRcv_b == TRUE)
                     {
-                        cl42T_MtrVal_s.frequency_u32 = f_SigValue_pf32;
+                        cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
+                        cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
                         cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
 
                         Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
@@ -276,6 +284,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32)
                         //---- even if ret_e != RC_OK, we reset the flag ----//
                         g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                         g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
+                        g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
                     }
                 }
             break;
@@ -283,6 +292,74 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32)
                 Ret_e = RC_WARNING_NO_OPERATION;
             break;
             case APPSYS_OPT_ACT_MTR_Y_NB:
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+            break;
+        }
+
+
+    return Ret_e;
+}
+
+/******************************************
+* APPACT_SPEC_MTR_Y_TRIGTIME_GetValue
+******************************************/
+t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    //    Your code for MTR_XL_GetIfValue here
+    switch(g_MtrXL_OptCfg_e)
+        {
+            case APPSYS_OPT_ACT_MTR_XL_CL42T:
+                *f_rawSigValue_pf32 = 0.0f;
+                Ret_e = RC_WARNING_NO_OPERATION;
+            break;
+            case APPSYS_OPT_ACT_MTR_XL_UNUSED:
+                *f_rawSigValue_pf32 = 0.0f;
+                Ret_e = RC_WARNING_NO_OPERATION;
+            break;
+            case APPSYS_OPT_ACT_MTR_XL_NB:
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+            break;
+        }
+
+
+    return Ret_e;
+}
+
+/******************************************
+* APPACT_SPEC_MTR_Y_TRIGTIME_SetValue
+******************************************/
+t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_SetValue(t_float32 f_SigValue_pf32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_sCL42T_SetMotorValue cl42T_MtrVal_s;
+    //    Your code for MTR_XL_SetIfValue here
+    switch(g_MtrXL_OptCfg_e)
+        {
+            case APPSYS_OPT_ACT_MTR_XL_CL42T:
+                g_cl42tShadowCmd_s.trigTimer_u32 = (t_uint32)f_SigValue_pf32;   
+                if((g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
+                && g_cl42tShadowCmd_s.isFreqRcv_b == TRUE)
+                {
+                    cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
+                    cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
+                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
+
+                    Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
+                                                    cl42T_MtrVal_s);
+                    //---- even if ret_e != RC_OK, we reset the flag ----//
+                    g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
+                    g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
+                    g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
+                }
+                
+            break;
+            case APPSYS_OPT_ACT_MTR_XL_UNUSED:
+                Ret_e = RC_WARNING_NO_OPERATION;
+            break;
+            case APPSYS_OPT_ACT_MTR_XL_NB:
             default:
                 Ret_e = RC_ERROR_PARAM_INVALID;
             break;

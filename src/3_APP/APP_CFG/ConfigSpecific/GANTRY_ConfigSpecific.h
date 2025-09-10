@@ -57,11 +57,14 @@
         GTRY_ALGO_COMPUTE_TYPE_BALANCED = 0,        //---- Algorithm Compuution 
                                                     //      will be repart the same amount of pulse for each axes ----//
         GTRY_ALGO_COMPUTE_TYPE_X_PRIORITY,          //---- Algorithm Computation will be based on X axe priority, which means X axes has to reach a certain position 
-                                                    //          before allowed others to move ----//
+                                                    //          before allowed others to move, 
+                                                    //          This algo only works if nbTotalPulse for dominant axe > chunkSize else same has balanced  ----//
         GTRY_ALGO_COMPUTE_TYPE_Y_PRIORITY,          //---- Algorithm Computation will be based on Y axe priority, which means Y axes has to reach a certain position 
-                                                    //          before allowed others to move ----//
+                                                    //          before allowed others to move, 
+                                                    //          This algo only works if nbTotalPulse for dominant axe > chunkSize, else same has balanced ----//
         GTRY_ALGO_COMPUTE_TYPE_Z_PRIORITY,          //---- Algorithm Computation will be based on Z axe priority, which means Z axes has to reach a certain position 
-                                                    //          before allowed others to move ----//
+                                                    //          before allowed others to move,
+                                                    //          This algo only works if nbTotalPulse for dominant axe > chunkSize, else same has balanced ----//
         GTRY_ALGO_COMPUTE_TYPE_X_BURSTFIRST,        //---- Algorithm Computation will be based on X axe getting all the pulses in the first iteraions (or the firsts if > 0xFFFF)
                                                     //          before others axes get pulses -----//
         GTRY_ALGO_COMPUTE_TYPE_Y_BURSTFIRST,        //---- Algorithm Computation will be based on X axe getting all the pulses in the first iteraions (or the firsts if > 0xFFFF)
