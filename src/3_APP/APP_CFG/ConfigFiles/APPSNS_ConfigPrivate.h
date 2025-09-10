@@ -20,6 +20,7 @@
     // ********************************************************************
     #include "./APPSNS_ConfigPublic.h"
     #include "APP_CTRL/APP_SPM/Src/APP_SPM.h"
+    #include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
     /* CAUTION : Automatic generated code section for Include: Start */
     #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_XL.h"
     #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_XL.h"
@@ -108,6 +109,7 @@
         t_eAPPSNS_SnsMeasType          measTyp_e;
         t_cbAppSns_GetSigValue       * GetValue_pcb;           /**< Reference to "get value" function */
         t_cbAppSns_FormatValSI       * FormatValSI_pcb;        /**< Reference to convert signal function */ 
+        t_eAPPSIG_Signal               SigDebug_e;             /**< Debug signal mapping */
     } t_sAPPSNS_SysSnsCfg;
 
     ///@brief Structure to store needed functions for a driver
@@ -129,14 +131,14 @@
     /* CAUTION : Automatic generated code section for Variable: Start */
     ///@brief Variable for System Sensors Interface Ope Mngmt Info
     const t_sAPPSNS_SysSnsCfg c_AppSns_SysSns_as[APPSNS_SNSITF_NB] = {
-        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XL_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XL_POS_FormatValue},                        //APPSNS_SNSITF_ECDR_XL_POS
-        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XL_SPEED_FormatValue},                      //APPSNS_SNSITF_ECDR_XL_SPEED
-        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XR_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XR_POS_FormatValue},                        //APPSNS_SNSITF_ECDR_XR_POS
-        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XR_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XR_SPEED_FormatValue},                      //APPSNS_SNSITF_ECDR_XR_SPEED
-        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Y_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Y_POS_FormatValue},                         //APPSNS_SNSITF_ECDR_Y_POS
-        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Y_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Y_SPEED_FormatValue},                       //APPSNS_SNSITF_ECDR_Y_SPEED
-        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Z_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Z_POS_FormatValue},                         //APPSNS_SNSITF_ECDR_Z_POS
-        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Z_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Z_SPEED_FormatValue},                       //APPSNS_SNSITF_ECDR_Z_SPEED
+        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XL_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XL_POS_FormatValue,                        APPSIG_SIGNAL_SNS_SNSITF_ECDR_XL_POS},//APPSNS_SNSITF_ECDR_XL_POS
+        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XL_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_SNSITF_ECDR_XL_SPEED},//APPSNS_SNSITF_ECDR_XL_SPEED
+        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XR_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XR_POS_FormatValue,                        APPSIG_SIGNAL_SNS_SNSITF_ECDR_XR_POS},//APPSNS_SNSITF_ECDR_XR_POS
+        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XR_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XR_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_SNSITF_ECDR_XR_SPEED},//APPSNS_SNSITF_ECDR_XR_SPEED
+        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Y_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Y_POS_FormatValue,                         APPSIG_SIGNAL_SNS_SNSITF_ECDR_Y_POS},//APPSNS_SNSITF_ECDR_Y_POS
+        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Y_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Y_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_SNSITF_ECDR_Y_SPEED},//APPSNS_SNSITF_ECDR_Y_SPEED
+        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Z_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Z_POS_FormatValue,                         APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_POS},//APPSNS_SNSITF_ECDR_Z_POS
+        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Z_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Z_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_SPEED},//APPSNS_SNSITF_ECDR_Z_SPEED
     };
 
     ///@brief Variable for system Sensors Device Ope Mngmt

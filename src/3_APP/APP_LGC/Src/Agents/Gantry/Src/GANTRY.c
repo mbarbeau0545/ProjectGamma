@@ -392,6 +392,13 @@ static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e);
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_GTRY_UpdateAlgoParameters();
+/**
+ * @brief Update Signal for debugging process
+ * 
+ * ----------------------------------------------------------------------------
+ * @return @ref t_eReturnCode
+ */
+static void s_GTRYDebugRoutine();
 
 //****************************************************************************
 //                      Public functions - Implementation
@@ -474,11 +481,14 @@ t_eReturnCode GANTRY_PeriodicTask(void)
     //---- 2- Update Current position ----//
     Ret_e = s_GTRY_UpdatePosition();
 
-    //---- 2- Call State Machine ----//
+    //---- 3- Call State Machine ----//
     if(Ret_e == RC_OK)
     {
         Ret_e = s_GTRY_StateMachine();
     }
+
+    //---- 4- Debug Routine ----//
+    s_GTRYDebugRoutine();
     return Ret_e;
 }
 
@@ -2229,6 +2239,63 @@ static t_eReturnCode s_GTRY_UpdateAlgoParameters(void)
     }
 
     return Ret_e;
+}
+
+/*********************************
+ * s_GTRYDebugRoutine 
+ *********************************/
+static void s_GTRYDebugRoutine()
+{
+    t_eReturnCode Ret_e;
+
+    ///---- 1- Fsm Variable ----//
+    Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PERIODIC_TASK, (t_float32)g_Fsm_PrdcTskSts_e);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB, (t_float32)g_Fsm_PrdTsk_CalibSts_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB_OPE_AXE_X, (t_float32)g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_X]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB_OPE_AXE_Y, (t_float32)g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_Y]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB_OPE_AXE_Z, (t_float32)g_Fsm_PrdTsk_CalibOpeSts_ae[GTRY_PHYS_AXE_Z]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_OPE, (t_float32)g_Fsm_PrdTsk_OpeSts_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_FSM_PRDTSK_OPE_CMD_PROCESS, (t_float32)g_Fsm_PrdTsk_OpeCmdPrcssSts_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_X_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_X]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_Y_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Y]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_Z_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Z]);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_ALGO_COMPUTE_TIME, (t_float32)g_algoComputeTime_u32);
+    }
+    if(Ret_e < RC_OK)
+    {
+        ASSERT((t_uint16)0);
+    }
+
+    return;
 }
 //************************************************************************************
 // End of File
