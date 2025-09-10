@@ -1019,7 +1019,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
             && (Ret_e == RC_OK))
             {
                 axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
-                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, pulseToSend_s32);
+                Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)pulseToSend_s32);
                 if(Ret_e == RC_OK)
                 {
                     Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, (t_float32)minMtrFreq_u.prmVal_u16);
@@ -1627,7 +1627,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_MtrCmdIter_ps->pulses_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
@@ -1639,7 +1639,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                     if(Ret_e == RC_OK)
                     {
                         axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
-                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_MtrCmdIter_ps->pulses_s32);
                         if(Ret_e == RC_OK)
                         {
                             Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
@@ -1674,7 +1674,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_MtrCmdIter_ps->pulses_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);
@@ -1707,7 +1707,7 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, f_MtrCmdIter_ps->pulses_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_MtrCmdIter_ps->pulses_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_MtrCmdIter_ps->frequency_f32);

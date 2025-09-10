@@ -29,6 +29,9 @@
 // ********************************************************************
 ///@brief ENable motor XL Dead Time
 #define APPACT_SPEC_MOTOR_XL_ENABLE_DEADTIME TRUE
+
+///@brief Positive direction for Y
+#define APPACT_SPEC_MOTOR_Y_DIR_POS ((t_sint32)1)
 /* CAUTION : Automatic generated code section for Include: Start */
 
 /* CAUTION : Automatic generated code section for Include: End */
@@ -194,7 +197,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_PULSE_SetValue(t_float32 f_SigValue_pf32)
                 {
                     cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
                     cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
+                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_Y_DIR_POS;
 
                     Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
                                                     cl42T_MtrVal_s);
@@ -277,7 +280,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32)
                     {
                         cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
                         cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                        cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
+                        cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_Y_DIR_POS;
 
                         Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
                                                         cl42T_MtrVal_s);
@@ -345,7 +348,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_SetValue(t_float32 f_SigValue_pf32)
                 {
                     cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
                     cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32;
+                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_Y_DIR_POS;
 
                     Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
                                                     cl42T_MtrVal_s);
