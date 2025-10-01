@@ -77,8 +77,18 @@
     #define APPSIG_SRL_ID_APPACT_DEBUG_2                           ((t_uint32)0x14)
     #define APPSIG_SRL_ID_APPACT_DEBUG_3                           ((t_uint32)0x15)
     #define APPSIG_SRL_ID_APPACT_DEBUG_4                           ((t_uint32)0x16)
-    #define APPSIG_SRL_ID_GTRY_DEBUG_POSITION                      ((t_uint32)0x17)
-    #define APPSIG_SRL_ID_GTRY_DEBUG_FSM                           ((t_uint32)0x18)
+    #define APPSIG_SRL_ID_GTRY_DEBUG_POSITION                      ((t_uint32)0x82)
+    #define APPSIG_SRL_ID_GTRY_DEBUG_FSM                           ((t_uint32)0x81)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_1                       ((t_uint32)0x27)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_2                       ((t_uint32)0x18)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_3                       ((t_uint32)0x19)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_4                       ((t_uint32)0x20)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_5                       ((t_uint32)0x21)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_6                       ((t_uint32)0x22)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_7                       ((t_uint32)0x23)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_8                       ((t_uint32)0x24)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_9                       ((t_uint32)0x25)
+    #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_10                      ((t_uint32)0x26)
     ///@brief CAN Message Id
     /* CAUTION : Automatic generated code section for Define: End */
     
@@ -256,6 +266,46 @@
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_PULSE
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_SPEED
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_TRIGTIME
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_1
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_2
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_3
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_4
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_5
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_6
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_7
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_8
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_9
+        {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_10
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_1_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_2_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_3_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_4_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_5_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_6_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_7_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_8_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_9_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_10_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_1_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_2_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_3_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_4_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_5_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_6_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_7_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_8_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_9_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_10_INFO_2
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_1
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_2
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_3
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_4
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_5
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_6
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_7
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_8
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_9
+        {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_10
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_GTRY_FSM_PERIODIC_TASK
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_GTRY_FSM_PRDTSK_CALIB_OPE_AXE_X
@@ -502,6 +552,96 @@
     };
 
 
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_1
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_1_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_1,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_1,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_1_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_1_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_2
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_2_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_2,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_2,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_2_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_2_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_3
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_3_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_3,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_3,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_3_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_3_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_4
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_4_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_4,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_4,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_4_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_4_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_5
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_5_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_5,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_5,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_5_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_5_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_6
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_6_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_6,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_6,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_6_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_6_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_7
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_7_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_7,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_7,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_7_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_7_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_8
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_8_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_8,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_8,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_8_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_8_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_9
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_9_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_9,                         (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_9,                   (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_9_INFO_1,                  (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_9_INFO_2,                  (t_uint8)24                                            },
+    };
+
+
+    ///@brief Variable for decoding APPSDM_DIAG_ITEM_10
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSDM_DIAG_ITEM_10_as[4] = {
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_10,                        (t_uint8)0                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_STATE_10,                  (t_uint8)40                                            },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_10_INFO_1,                 (t_uint8)8                                             },
+        {APPSIG_SIGNAL_SDM_DIAG_ITEM_10_INFO_2,                 (t_uint8)24                                            },
+    };
+
+
     ///@brief Serial Message Information
     const t_sAPPSIG_MsgCfg c_AppSig_SrlMsgCfg_as[APPSIG_SRL_MSG_NB] = {
     //  Identifier                                          Direction                                                CyclicSend                                                 TimeOut                                                         Sig Cfg                                         nbSignal
@@ -529,6 +669,16 @@
         {APPSIG_SRL_ID_APPACT_DEBUG_4,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_4_as,                         (t_uint8)1}, // APPSIG_SRL_APPACT_DEBUG_4
         {APPSIG_SRL_ID_GTRY_DEBUG_POSITION,                      APPSIG_MSG_DIR_TX,                                      (t_uint16)30,                                           (t_uint16)0,                                            c_AppSig_Srl_GTRY_DEBUG_POSITION_as,                    (t_uint8)4}, // APPSIG_SRL_GTRY_DEBUG_POSITION
         {APPSIG_SRL_ID_GTRY_DEBUG_FSM,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_GTRY_DEBUG_FSM_as,                         (t_uint8)7}, // APPSIG_SRL_GTRY_DEBUG_FSM
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_1,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_1_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_1
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_2,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_2_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_2
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_3,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_3_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_3
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_4,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_4_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_4
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_5,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_5_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_5
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_6,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_6_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_6
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_7,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_7_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_7
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_8,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_8_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_8
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_9,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_9_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_9
+        {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_10,                      APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_10_as,                    (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_10
     };
 
     ///@brief CAN Message Information

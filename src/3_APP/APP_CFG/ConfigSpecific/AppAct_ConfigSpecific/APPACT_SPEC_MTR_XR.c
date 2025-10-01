@@ -21,8 +21,7 @@
 /* CAUTION : Automatic generated code section for Include: End */
 #include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
 #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
-#include "CL42T/Src/CL42T.h"
-#include "APP_CTRL/APP_SDM/Src/APP_SDM.h"
+#include "APPACT_ConfigSpecific.h"
 
 // ********************************************************************
 // *                      Defines
@@ -48,16 +47,6 @@
 
 /* CAUTION : Automatic generated code section for Structure: End */
 //-----------------------------STRUCT TYPES---------------------------//
-///@brief structure to send the iteration for CL42T (required)
-typedef struct 
-{
-    t_sint32 nbPulses_s32;
-    t_uint32 frequency_f32;
-    t_uint32 trigTimer_u32;
-    t_bool isPulsesRcv_b;
-    t_bool isFreqRcv_b;
-    t_bool isTrigTimerRcv_b;
-} t_sAPPACT_SPEC_CL42T_ShadowCmd;
 /* CAUTION : Automatic generated code section : Start */
 
 /* CAUTION : Automatic generated code section : End */
@@ -69,12 +58,12 @@ typedef struct
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
-const static t_eCL42T_MotorId c_MtrXL_CL42T_Id = CL42T_MOTOR_2;
+const static t_eCL42T_MotorId c_MtrXR_CL42T_Id = CL42T_MOTOR_2;
 
 static t_eAPPSYS_OptActMtrXl g_MtrXL_OptCfg_e = APPSYS_OPT_ACT_MTR_XR_NB;
 
 static t_sAPPACT_SPEC_CL42T_ShadowCmd g_cl42tShadowCmd_s;
-static t_sint32 g_doppPulses_s32;
+static t_sint32 g_droppPulses_s32;
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
@@ -82,10 +71,6 @@ static t_sint32 g_doppPulses_s32;
  * @brief Set CL42T Motor Configuration 
  */
 static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void);
-/**
- * @brief Set CL42T Motor Configuration 
- */
-static t_eReturnCode s_APPACT_SPEC_CL42T_GetMtrInfo(t_float32 * f_mtrValue_pf32);
 /**
  * @brief Set CL42T Healh 
  */
@@ -126,7 +111,7 @@ t_eReturnCode APPACT_SPEC_MTR_XR_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDri
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
-                    g_doppPulses_s32 = (t_sint32)0;
+                    g_droppPulses_s32 = (t_sint32)0;
                 }
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
@@ -159,7 +144,8 @@ t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_GetValue(t_float32 *f_rawSigValue_pf32)
         {
             case APPSYS_OPT_ACT_MTR_XR_CL42T:
                 //---- We give the pulses that has been dropped ----//
-                *f_rawSigValue_pf32 = (t_float32)g_doppPulses_s32;
+                *f_rawSigValue_pf32 = (t_float32)g_droppPulses_s32;
+                g_droppPulses_s32 = 0;
                 Ret_e = RC_OK;
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
@@ -176,36 +162,21 @@ t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_GetValue(t_float32 *f_rawSigValue_pf32)
     return Ret_e;
 }
 
-
-
 /******************************************
 * APPACT_SPEC_MTR_XR_PULSE_SetValue
 ******************************************/
 t_eReturnCode APPACT_SPEC_MTR_XR_PULSE_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_sCL42T_SetMotorValue cl42T_MtrVal_s;
     //    Your code for MTR_XL_SetIfValue here
 
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XR_CL42T:
-                g_cl42tShadowCmd_s.nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
-                g_cl42tShadowCmd_s.isPulsesRcv_b = TRUE;
-                if((g_cl42tShadowCmd_s.isFreqRcv_b == TRUE)
-                && (g_cl42tShadowCmd_s.isTrigTimerRcv_b == TRUE))
-                {
-                    cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
-                    cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_XR_DIR;
-
-                    Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
-                                                    cl42T_MtrVal_s);
-                    //---- even if ret_e != RC_OK, we reset the flag ----//
-                    g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
-                    g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
-                    g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
-                }
+                Ret_e = APPACT_SPEC_CL42T_Pulse_SetValue(f_SigValue_pf32, 
+                                                        c_MtrXR_CL42T_Id,
+                                                        APPACT_SPEC_MOTOR_XR_DIR,
+                                                        &g_cl42tShadowCmd_s);
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -231,7 +202,8 @@ t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_GetValue(t_float32 *f_rawSigValue_pf32)
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XR_CL42T:
-                Ret_e = s_APPACT_SPEC_CL42T_GetMtrInfo(f_rawSigValue_pf32);
+                Ret_e = APPACT_SPEC_CL42T_Speed_GetValue(   f_rawSigValue_pf32,
+                                                            c_MtrXR_CL42T_Id);
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -254,42 +226,14 @@ t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_GetValue(t_float32 *f_rawSigValue_pf32)
 t_eReturnCode APPACT_SPEC_MTR_XR_SPEED_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_sCL42T_SetMotorValue cl42T_MtrVal_s;
     //    Your code for MTR_XL_SetIfValue here
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XR_CL42T:
-                if(f_SigValue_pf32 == APPACT_SOFT_STOP)
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, FALSE);
-                }
-                else if(f_SigValue_pf32 == APPACT_HARD_STOP)
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_OFF, TRUE);
-                }
-                else if(f_SigValue_pf32 == APPACT_ENABLE_MOTOR)
-                {
-                    Ret_e = CL42T_SetMotorState(c_MtrXL_CL42T_Id, CL42T_MOTOR_STATE_ON, FALSE);
-                } 
-                else
-                {       
-                     g_cl42tShadowCmd_s.frequency_f32 = f_SigValue_pf32;
-                    g_cl42tShadowCmd_s.isFreqRcv_b = TRUE;
-                    if((g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
-                    && g_cl42tShadowCmd_s.isTrigTimerRcv_b == TRUE)
-                    {
-                        cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
-                        cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                        cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_XR_DIR;
-
-                        Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
-                                                        cl42T_MtrVal_s);
-                        //---- even if ret_e != RC_OK, we reset the flag ----//
-                        g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
-                        g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
-                        g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
-                    }
-                }
+                Ret_e = APPACT_SPEC_CL42T_Speed_SetValue(   f_SigValue_pf32,
+                                                            c_MtrXR_CL42T_Id,
+                                                            APPACT_SPEC_MOTOR_XR_DIR,
+                                                            &g_cl42tShadowCmd_s);
             break;
             case APPSYS_OPT_ACT_MTR_XR_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -337,27 +281,14 @@ t_eReturnCode APPACT_SPEC_MTR_XR_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32
 t_eReturnCode APPACT_SPEC_MTR_XR_TRIGTIME_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_sCL42T_SetMotorValue cl42T_MtrVal_s;
     //    Your code for MTR_XL_SetIfValue here
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
-                g_cl42tShadowCmd_s.trigTimer_u32 = (t_uint32)f_SigValue_pf32;   
-                if((g_cl42tShadowCmd_s.isPulsesRcv_b == TRUE)
-                && g_cl42tShadowCmd_s.isFreqRcv_b == TRUE)
-                {
-                    cl42T_MtrVal_s.triggerTimer_u32 = g_cl42tShadowCmd_s.trigTimer_u32;
-                    cl42T_MtrVal_s.frequency_f32 = g_cl42tShadowCmd_s.frequency_f32;
-                    cl42T_MtrVal_s.nbPulses_s32 = g_cl42tShadowCmd_s.nbPulses_s32 * APPACT_SPEC_MOTOR_XR_DIR;
-
-                    Ret_e = CL42T_SetMotorSigValue( c_MtrXL_CL42T_Id,
-                                                    cl42T_MtrVal_s);
-                    //---- even if ret_e != RC_OK, we reset the flag ----//
-                    g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
-                    g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
-                    g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
-                }
-                
+                Ret_e = APPACT_SPEC_CL42T_TrigTime_SetValue(f_SigValue_pf32,
+                                                            c_MtrXR_CL42T_Id,
+                                                            APPACT_SPEC_MOTOR_XR_DIR,
+                                                            &g_cl42tShadowCmd_s);                
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -414,50 +345,11 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
         }
     };
 
-    Ret_e  = CL42T_AddMotorConfiguration(   c_MtrXL_CL42T_Id,
+    Ret_e  = CL42T_AddMotorConfiguration(   c_MtrXR_CL42T_Id,
                                             motorConfig, 
                                             APPACT_SPEC_MOTOR_XL_ENABLE_DEADTIME,
                                             s_APPACT_SPEC_CL42T_HealthCallback,
                                             s_APPACT_SPEC_CL42T_PulseDroppedCallback);
-    return Ret_e;
-}
-
-/*********************************
- * s_APPACT_SPEC_CL42T_GetMtrInfo
- *********************************/
-static t_eReturnCode s_APPACT_SPEC_CL42T_GetMtrInfo(t_float32 * f_mtrValue_pf32)
-{
-    t_eReturnCode Ret_e;
-    t_uint16 mtrValue_u16;
-
-    if(f_mtrValue_pf32 == (t_float32 *)NULL)
-    {
-        Ret_e = RC_ERROR_PTR_NULL;
-    }
-    else 
-    {
-        Ret_e = CL42T_GetMotorInfo(c_MtrXL_CL42T_Id, &mtrValue_u16);
-        if(Ret_e == RC_OK)
-        {
-            if(GETBIT(mtrValue_u16, CL42T_BITFIELD_MOTOR_ON) == BIT_IS_SET_16B)
-            {
-                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ON;
-            }
-            else if(GETBIT(mtrValue_u16, CL42T_BITFIELD_TRIG_ENDSTOP_CW) == BIT_IS_SET_16B)
-            {
-                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ENDSTOP_CW;
-            }
-            else if(GETBIT(mtrValue_u16, CL42T_BITFIELD_TRIG_ENDSTOP_CCW) == BIT_IS_SET_16B)
-            {
-                *f_mtrValue_pf32 = APPACT_MOTOR_STS_ENDSTOP_CCW;
-            }
-            else
-            {
-                *f_mtrValue_pf32 = APPACT_MOTOR_STS_OFF;
-            }
-        }
-    }
-
     return Ret_e;
 }
 /*********************************
@@ -465,47 +357,15 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_GetMtrInfo(t_float32 * f_mtrValue_pf32)
  *********************************/
 static void s_APPACT_SPEC_CL42T_HealthCallback(t_eCL42T_MotorId f_MotorID_e, t_eCL42T_DiagError f_defaultInfo_e)
 {
-    t_bool emitDiag_b = FALSE;
-    if(f_MotorID_e != c_MtrXL_CL42T_Id)
+    if(f_MotorID_e != c_MtrXR_CL42T_Id)
     {
         ASSERT((t_uint16)f_MotorID_e);
     }
     else 
     {
-        switch(f_defaultInfo_e)
-        {           
-            case CL42T_DIAGNOSTIC_PRESENTS:
-            case CL42T_DIAGNOSTIC_OVER_CURRENT:
-            case CL42T_DIAGNOSTIC_OVER_VOLTAGE:
-            case CL42T_DIAGNOSTIC_CHIP_ERROR:
-            case CL42T_DIAGNOSTIC_LOCK_MOTOR_SHAFT:
-            case CL42T_DIAGNOSTIC_AUTO_TUNNING:
-            case CL42T_DIAGNOSTIC_EEPROM:
-            case CL42T_DIAGNOSTIC_POSITION:
-            case CL42T_DIAGNOSTIC_PCB_BOARD:
-            case CL42T_DIAGNOSTIC_PULSE_INFINITE:
-                emitDiag_b = TRUE;
-            break;
-            case CL42T_DIAGNOSTIC_SIGNAL_PULSE:
-            case CL42T_DIAGNOSTIC_OK:
-            case CL42T_DIAGNOSTIC_SIGNAL_FREQ:
-            default:
-            break;
-        }
-        if(emitDiag_b == TRUE)
-        {
-            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF,
-                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                    f_defaultInfo_e,
-                                    (t_uint16)0);
-        }
-        else 
-        {
-            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF,
-                                    APPSDM_DIAG_ITEM_REPORT_PASS,
-                                    f_defaultInfo_e,
-                                    (t_uint16)0);
-        }
+        APPACT_SPEC_CL42T_Diagnostic(   f_defaultInfo_e,
+                                        c_MtrXR_CL42T_Id,
+                                        APPSDM_DIAG_ITEM_LGC_GTRY_X_OPE_ERROR);
     }
 
     return;
@@ -518,7 +378,7 @@ static void s_APPACT_SPEC_CL42T_PulseDroppedCallback(t_eCL42T_MotorId f_MotorID_
                                                      t_uint16 f_pulseDropped_u16, 
                                                      t_eCL42T_MotorDirection f_direction_e)
 {
-    if(f_MotorID_e != c_MtrXL_CL42T_Id)
+    if(f_MotorID_e != c_MtrXR_CL42T_Id)
     {
         ASSERT((t_uint16)f_MotorID_e);
     }
@@ -530,11 +390,11 @@ static void s_APPACT_SPEC_CL42T_PulseDroppedCallback(t_eCL42T_MotorId f_MotorID_
     {
         if(f_direction_e == CL42T_MOTOR_DIRECTION_CCW)
         {
-            g_doppPulses_s32 -= f_pulseDropped_u16;
+            g_droppPulses_s32 -= f_pulseDropped_u16;
         }
         else 
         {
-            g_doppPulses_s32 += (f_pulseDropped_u16);
+            g_droppPulses_s32 += (t_sint32)(f_pulseDropped_u16);
         }
     }
 

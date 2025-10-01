@@ -184,7 +184,6 @@ static void s_APPLGC_FastTask(void);
 t_eReturnCode APPLGC_Init(void)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_uint8 idxAgent_u8 = (t_uint8)0; 
     t_uint8 idxSrv_u8 = (t_uint8)0;
 
     //----- Set Service Init -----//

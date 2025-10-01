@@ -28,7 +28,7 @@
 int main(void)
 {
     // code running once
-        APPSYS_Init();
+    APPSYS_Init();
 
     while (True)
     {

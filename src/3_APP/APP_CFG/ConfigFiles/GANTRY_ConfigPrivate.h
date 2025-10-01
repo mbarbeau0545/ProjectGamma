@@ -180,7 +180,6 @@
         }
     };
     /// @brief Varialbe to store item to reach for algo aprameter
-    #warning(Safe Height has no Item Parameter)
     const t_sGTRYSPEC_AlgoItemPrm c_GTRY_AlgoItemPrm_s = {
         .chunkSize_e = APPSPM_PRM_LGC_GTRY_PULSE_ITER_MAX,
         .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN},
