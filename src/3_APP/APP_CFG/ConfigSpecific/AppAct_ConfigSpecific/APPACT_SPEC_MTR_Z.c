@@ -107,6 +107,7 @@ t_eReturnCode APPACT_SPEC_MTR_Z_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriv
                 if(Ret_e == RC_OK)
                 {
                     *f_drvUsed_pe = APPACT_DRV_CL42T;
+                    g_cl42tShadowCmd_s.lastCmdSet_u32 = 0;
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
@@ -260,7 +261,7 @@ t_eReturnCode APPACT_SPEC_MTR_Z_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
                 *f_rawSigValue_pf32 = 0.0f;
-                Ret_e = RC_WARNING_NO_OPERATION;
+                Ret_e = RC_OK;
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 *f_rawSigValue_pf32 = 0.0f;
@@ -340,7 +341,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .pwmCtrlPrm_s = {
                 .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
                 .rampCfg_ps = NULL,
-                .enablePulseSyncOpe_b = TRUE
+                .enablePulseSyncOpe_b = FALSE
             }
         }
     };

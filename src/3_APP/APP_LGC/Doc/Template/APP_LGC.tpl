@@ -91,7 +91,7 @@ static t_sAPPLGC_ActIfInfo g_actValues_as[APPACT_ACTITF_NB];
 /**
 * @brief Flag to Reset Service State
 */
-static t_bool  g_resetSrvState_b = (t_bool)FALSE; 
+static t_bool  g_resetSrvState_b = (t_bool)TRUE; 
 
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */

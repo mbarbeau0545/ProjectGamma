@@ -110,6 +110,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriv
                     g_cl42tShadowCmd_s.isPulsesRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isFreqRcv_b = FALSE;
                     g_cl42tShadowCmd_s.isTrigTimerRcv_b = FALSE;
+                    g_cl42tShadowCmd_s.lastCmdSet_u32 = 0;
                     g_droppPulses_s32 = (t_sint32)0;
                 }
             break;
@@ -260,7 +261,7 @@ t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
                 *f_rawSigValue_pf32 = 0.0f;
-                Ret_e = RC_WARNING_NO_OPERATION;
+                Ret_e = RC_OK;
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 *f_rawSigValue_pf32 = 0.0f;

@@ -17,6 +17,7 @@
 // *                      Includes
 // ********************************************************************
 #include "./APPACT_ConfigSpecific.h"
+#include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
 #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
 // ********************************************************************
 // *                      Defines
@@ -46,7 +47,16 @@
 //********************************************************************************
 //                      Local functions - Prototypes
 //********************************************************************************
-
+/**
+ * @brief This function Check that all three information (pulse, speed, trigTime)
+ *          are received in the same cyclic, else erase previous value
+ * ----------------------------------------------------------------------------
+ * @param[in] f_MotorId_e : Motor ID
+ * @param[in] f_shadowCmd_ps : POintor to information about command
+ * ----------------------------------------------------------------------------
+ * @return 
+ */
+static void s_APPACT_SPEC_CL42T_CheckTimeValidity(t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -83,7 +93,9 @@ t_eReturnCode APPACT_SPEC_CL42T_Speed_SetValue( t_float32 f_SigValue_pf32,
             Ret_e = CL42T_SetMotorState(f_MotorId_e, CL42T_MOTOR_STATE_ON, FALSE);
         }
         else
-        {       
+        {
+            s_APPACT_SPEC_CL42T_CheckTimeValidity(f_shadowCmd_ps);
+            FMKCPU_GetTick(&f_shadowCmd_ps->lastCmdSet_u32);
             f_shadowCmd_ps->frequency_f32 = f_SigValue_pf32;
             f_shadowCmd_ps->isFreqRcv_b = TRUE;
 
@@ -100,6 +112,9 @@ t_eReturnCode APPACT_SPEC_CL42T_Speed_SetValue( t_float32 f_SigValue_pf32,
                 f_shadowCmd_ps->isFreqRcv_b = FALSE;
                 f_shadowCmd_ps->isPulsesRcv_b = FALSE;
                 f_shadowCmd_ps->isTrigTimerRcv_b = FALSE;
+                f_shadowCmd_ps->frequency_f32 = 0.0f;
+                f_shadowCmd_ps->trigTimer_u32 = 0;
+                f_shadowCmd_ps->nbPulses_s32 = 0;
             }
             else 
             {
@@ -128,7 +143,11 @@ t_eReturnCode APPACT_SPEC_CL42T_TrigTime_SetValue(  t_float32 f_SigValue_pf32,
     }
     else
     {
-        f_shadowCmd_ps->trigTimer_u32 = (t_uint32)f_SigValue_pf32;   
+        s_APPACT_SPEC_CL42T_CheckTimeValidity(f_shadowCmd_ps);
+        FMKCPU_GetTick(&f_shadowCmd_ps->lastCmdSet_u32);
+        f_shadowCmd_ps->trigTimer_u32 = (t_uint32)f_SigValue_pf32;
+        f_shadowCmd_ps->isTrigTimerRcv_b = TRUE;
+
         if((f_shadowCmd_ps->isPulsesRcv_b == TRUE)
         && (f_shadowCmd_ps->isFreqRcv_b == TRUE))
         {
@@ -142,6 +161,9 @@ t_eReturnCode APPACT_SPEC_CL42T_TrigTime_SetValue(  t_float32 f_SigValue_pf32,
             f_shadowCmd_ps->isFreqRcv_b = FALSE;
             f_shadowCmd_ps->isPulsesRcv_b = FALSE;
             f_shadowCmd_ps->isTrigTimerRcv_b = FALSE;
+            f_shadowCmd_ps->frequency_f32 = 0.0f;
+            f_shadowCmd_ps->trigTimer_u32 = 0;
+            f_shadowCmd_ps->nbPulses_s32 = 0;
         }
         else 
         {
@@ -169,6 +191,8 @@ t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32,
     }
     else
     {
+        s_APPACT_SPEC_CL42T_CheckTimeValidity(f_shadowCmd_ps);
+        FMKCPU_GetTick(&f_shadowCmd_ps->lastCmdSet_u32);
         f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
         f_shadowCmd_ps->isPulsesRcv_b = TRUE;
 
@@ -185,6 +209,9 @@ t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32,
             f_shadowCmd_ps->isFreqRcv_b = FALSE;
             f_shadowCmd_ps->isPulsesRcv_b = FALSE;
             f_shadowCmd_ps->isTrigTimerRcv_b = FALSE;
+            f_shadowCmd_ps->frequency_f32 = 0.0f;
+            f_shadowCmd_ps->trigTimer_u32 = 0;
+            f_shadowCmd_ps->nbPulses_s32 = 0;
         }
         else 
         {
@@ -257,12 +284,13 @@ void APPACT_SPEC_CL42T_Diagnostic(  t_eCL42T_DiagError f_defaultInfo_e,
         case CL42T_DIAGNOSTIC_POSITION:
         case CL42T_DIAGNOSTIC_PCB_BOARD:
         case CL42T_DIAGNOSTIC_PULSE_INFINITE:
+        case CL42T_DIAGNOSTIC_SIGNAL_PULSE:
+        case CL42T_DIAGNOSTIC_SIGNAL_FREQ:
             emitDiag_b = TRUE;
         break;
-        case CL42T_DIAGNOSTIC_SIGNAL_PULSE:
         case CL42T_DIAGNOSTIC_OK:
-        case CL42T_DIAGNOSTIC_SIGNAL_FREQ:
         default:
+            
         break;
     }
     if(emitDiag_b == TRUE)
@@ -278,6 +306,38 @@ void APPACT_SPEC_CL42T_Diagnostic(  t_eCL42T_DiagError f_defaultInfo_e,
                                 APPSDM_DIAG_ITEM_REPORT_PASS,
                                 f_defaultInfo_e,
                                 (t_uint16)0);
+    }
+
+    return;
+}
+
+//********************************************************************************
+//                      Local functions - Implementation
+//********************************************************************************
+/******************************************
+* s_APPACT_SPEC_CL42T_CheckTimeValidity
+******************************************/
+static void s_APPACT_SPEC_CL42T_CheckTimeValidity(t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps)
+{
+    t_uint32 currentTime_u32 = 0;
+
+    if(f_shadowCmd_ps == NULL)
+    {
+        ASSERT((t_uint16)0);
+    }
+    else 
+    {
+        FMKCPU_GetTick(&currentTime_u32);
+        //---- Check time validity, if not ok erase value and reset flag ----//
+        if((currentTime_u32 - f_shadowCmd_ps->lastCmdSet_u32) > (t_uint32)APPSYS_ELAPSED_TIME_CYCLIC)
+        {
+            f_shadowCmd_ps->frequency_f32 = 0.0f;
+            f_shadowCmd_ps->nbPulses_s32 = 0;
+            f_shadowCmd_ps->trigTimer_u32 = 0;
+            f_shadowCmd_ps->isFreqRcv_b = FALSE;
+            f_shadowCmd_ps->isPulsesRcv_b = FALSE;
+            f_shadowCmd_ps->isTrigTimerRcv_b = FALSE;
+        }
     }
 
     return;

@@ -71,12 +71,16 @@
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3                     ((t_uint32)0x75)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4                     ((t_uint32)0x76)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT           ((t_uint32)0x77)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_5                           ((t_uint32)0xf5)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_6                           ((t_uint32)0xf6)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_7                           ((t_uint32)0xf7)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_8                           ((t_uint32)0xf8)
     #define APPSIG_SRL_ID_APPSNS_DEBUG_1                           ((t_uint32)0x11)
     #define APPSIG_SRL_ID_APPSNS_DEBUG_2                           ((t_uint32)0x12)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_1                           ((t_uint32)0x13)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_2                           ((t_uint32)0x14)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_3                           ((t_uint32)0x15)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_4                           ((t_uint32)0x16)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_1                           ((t_uint32)0xf0)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_2                           ((t_uint32)0xf1)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_3                           ((t_uint32)0xf3)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_4                           ((t_uint32)0xf4)
     #define APPSIG_SRL_ID_GTRY_DEBUG_POSITION                      ((t_uint32)0x82)
     #define APPSIG_SRL_ID_GTRY_DEBUG_FSM                           ((t_uint32)0x81)
     #define APPSIG_SRL_ID_APPSDM_DIAG_ITEM_1                       ((t_uint32)0x27)
@@ -254,18 +258,42 @@
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SNS_SNSITF_ECDR_Y_SPEED
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_POS
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_SPEED
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_PULSE
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_SPEED
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_TRIGTIME
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_PULSE
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_SPEED
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_TRIGTIME
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_PULSE
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_SPEED
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_TRIGTIME
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_PULSE
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_SPEED
-        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XL_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XL_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XL_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XR_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XR_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XR_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Y_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Y_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Y_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Z_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Z_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Z_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XL_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XL_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XL_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XR_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XR_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XR_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Y_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Y_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Y_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Z_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Z_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Z_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_TRIGTIME
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_PULSE
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_SPEED
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_TRIGTIME
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_1
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_2
         {(t_uint8)8,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint16)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ITEM_3
@@ -480,6 +508,38 @@
     };
 
 
+    ///@brief Variable for decoding APPACT_DEBUG_5
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_5_as[3] = {
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_PULSE,            (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_SPEED,            (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_TRIGTIME,         (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding APPACT_DEBUG_6
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_6_as[3] = {
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_PULSE,            (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_SPEED,            (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_TRIGTIME,         (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding APPACT_DEBUG_7
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_7_as[3] = {
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_PULSE,             (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_SPEED,             (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_TRIGTIME,          (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding APPACT_DEBUG_8
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_8_as[3] = {
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_PULSE,             (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_SPEED,             (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_TRIGTIME,          (t_uint8)32                                            },
+    };
+
+
     ///@brief Variable for decoding APPSNS_DEBUG_1
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPSNS_DEBUG_1_as[4] = {
         {APPSIG_SIGNAL_SNS_SNSITF_ECDR_XL_POS,                  (t_uint8)0                                             },
@@ -500,34 +560,37 @@
 
     ///@brief Variable for decoding APPACT_DEBUG_1
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_1_as[4] = {
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_PULSE,                 (t_uint8)0                                             },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_SPEED,                 (t_uint8)16                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XL_TRIGTIME,              (t_uint8)32                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_PULSE,                 (t_uint8)48                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XL_PULSE,             (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XL_SPEED,             (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XL_PULSE,             (t_uint8)32                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XL_SPEED,             (t_uint8)48                                            },
     };
 
 
     ///@brief Variable for decoding APPACT_DEBUG_2
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_2_as[4] = {
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_SPEED,                 (t_uint8)0                                             },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_PULSE,                 (t_uint8)16                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_XR_TRIGTIME,              (t_uint8)32                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_PULSE,                  (t_uint8)48                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XR_PULSE,             (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_XR_SPEED,             (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XR_PULSE,             (t_uint8)32                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_XR_SPEED,             (t_uint8)48                                            },
     };
 
 
     ///@brief Variable for decoding APPACT_DEBUG_3
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_3_as[4] = {
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_SPEED,                  (t_uint8)0                                             },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Y_TRIGTIME,               (t_uint8)16                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_PULSE,                  (t_uint8)32                                            },
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_SPEED,                  (t_uint8)48                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Y_PULSE,              (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Y_SPEED,              (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Y_PULSE,              (t_uint8)32                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Y_SPEED,              (t_uint8)48                                            },
     };
 
 
     ///@brief Variable for decoding APPACT_DEBUG_4
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_4_as[1] = {
-        {APPSIG_SIGNAL_ACT_ACTITF_MTR_Z_TRIGTIME,               (t_uint8)0                                             },
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_4_as[4] = {
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Z_PULSE,              (t_uint8)0                                             },
+        {APPSIG_SIGNAL_ACT_ACTITF_SET_MTR_Z_SPEED,              (t_uint8)16                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Z_PULSE,              (t_uint8)32                                            },
+        {APPSIG_SIGNAL_ACT_ACTITF_GET_MTR_Z_SPEED,              (t_uint8)48                                            },
     };
 
 
@@ -661,12 +724,16 @@
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_3_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_3
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_4_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_4
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT,           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT_as,         (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT
+        {APPSIG_SRL_ID_APPACT_DEBUG_5,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_5_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_5
+        {APPSIG_SRL_ID_APPACT_DEBUG_6,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_6_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_6
+        {APPSIG_SRL_ID_APPACT_DEBUG_7,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_7_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_7
+        {APPSIG_SRL_ID_APPACT_DEBUG_8,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_8_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_8
         {APPSIG_SRL_ID_APPSNS_DEBUG_1,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPSNS_DEBUG_1_as,                         (t_uint8)4}, // APPSIG_SRL_APPSNS_DEBUG_1
         {APPSIG_SRL_ID_APPSNS_DEBUG_2,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPSNS_DEBUG_2_as,                         (t_uint8)4}, // APPSIG_SRL_APPSNS_DEBUG_2
         {APPSIG_SRL_ID_APPACT_DEBUG_1,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_1_as,                         (t_uint8)4}, // APPSIG_SRL_APPACT_DEBUG_1
         {APPSIG_SRL_ID_APPACT_DEBUG_2,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_2_as,                         (t_uint8)4}, // APPSIG_SRL_APPACT_DEBUG_2
         {APPSIG_SRL_ID_APPACT_DEBUG_3,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_3_as,                         (t_uint8)4}, // APPSIG_SRL_APPACT_DEBUG_3
-        {APPSIG_SRL_ID_APPACT_DEBUG_4,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_4_as,                         (t_uint8)1}, // APPSIG_SRL_APPACT_DEBUG_4
+        {APPSIG_SRL_ID_APPACT_DEBUG_4,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_4_as,                         (t_uint8)4}, // APPSIG_SRL_APPACT_DEBUG_4
         {APPSIG_SRL_ID_GTRY_DEBUG_POSITION,                      APPSIG_MSG_DIR_TX,                                      (t_uint16)30,                                           (t_uint16)0,                                            c_AppSig_Srl_GTRY_DEBUG_POSITION_as,                    (t_uint8)4}, // APPSIG_SRL_GTRY_DEBUG_POSITION
         {APPSIG_SRL_ID_GTRY_DEBUG_FSM,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_GTRY_DEBUG_FSM_as,                         (t_uint8)7}, // APPSIG_SRL_GTRY_DEBUG_FSM
         {APPSIG_SRL_ID_APPSDM_DIAG_ITEM_1,                       APPSIG_MSG_DIR_TX,                                      (t_uint16)1000,                                         (t_uint16)0,                                            c_AppSig_Srl_APPSDM_DIAG_ITEM_1_as,                     (t_uint8)4}, // APPSIG_SRL_APPSDM_DIAG_ITEM_1

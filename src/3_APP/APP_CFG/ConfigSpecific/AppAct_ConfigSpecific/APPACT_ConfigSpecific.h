@@ -39,12 +39,13 @@
     ///@brief structure to send the iteration for CL42T (required)
     typedef struct 
     {
-        t_sint32 nbPulses_s32;
-        t_uint32 frequency_f32;
-        t_uint32 trigTimer_u32;
-        t_bool isPulsesRcv_b;
-        t_bool isFreqRcv_b;
-        t_bool isTrigTimerRcv_b;
+        t_sint32 nbPulses_s32;              //---- NbPulse to send ----//
+        t_uint32 frequency_f32;             //---- speed of pulses in Hz ----//
+        t_uint32 trigTimer_u32;             //---- Trigger time, when to send pulse to hardware driver ----//
+        t_uint32 lastCmdSet_u32;             //---- All Cmd has to reveived from APPACT in a interval of APPSYS_ELAPSED_TIME_CYCLIC / 2 ----//
+        t_bool isPulsesRcv_b;               //---- Flag pulse receive ----//
+        t_bool isFreqRcv_b;                 //---- Flag speed receive ----//
+        t_bool isTrigTimerRcv_b;            //---- Flag trigTime receive ----//
     } t_sAPPACT_SPEC_CL42T_ShadowCmd;
 	/* CAUTION : Automatic generated code section for Structure: Start */
 
