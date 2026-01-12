@@ -882,6 +882,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_Ops(t_eGTRY_CalibAxeId f_calibId_e)
                 break;
                 case GTRY_FSM_PRDTSK_CALIB_OPE_WAIT_AXE:
                     Ret_e = s_GTRY_Fsm_PrdTskCalib_OpsWait(currAxeId_e);
+                    #warning(return limit_reach not treated)
                     if(Ret_e == RC_OK)
                     {
                         g_Fsm_PrdTsk_CalibOpeSts_ae[currAxeId_e] = GTRY_FSM_PRDTSK_CALIB_OPE_OFFSET_AXE;
