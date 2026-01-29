@@ -416,6 +416,12 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
+    //---- enable axes ----//
+    Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPEED, APPACT_ENABLE_MOTOR);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Y_SPEED, APPACT_ENABLE_MOTOR);
+    }
     // if(Ret_e == RC_OK)
     // {
     //     Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
@@ -430,20 +436,13 @@ static t_eReturnCode s_APPLGC_Operational(void)
 {
 
     t_eReturnCode Ret_e;
-    t_uint8 data_u8[8] = {0,1,2,3,4,5,6,7};
-    t_sFMKFDCAN_TxItem txItem_s = {
-        .BitRate_e = FMKFDCAN_BITRATE_SWITCH_OFF,
-        .frameFormat_e = FMKFDCAN_FRAME_FORMAT_CLASSIC,
-        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
-        .ItemId_s.Identifier_u32 = 0x18FF999,
-        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
-        .CanMsg_s.Direction_e = FMKFDCAN_NODE_DIRECTION_TX,
-        .CanMsg_s.Dlc_e = FMKFDCAN_DLC_8,
-        .CanMsg_s.data_pu8 = data_u8
 
-    };
+    Ret_e = s_APPLGC_UpdateSnsValues();
 
-    Ret_e = FMKFDCAN_SendTxItem(FMKFDCAN_NODE_1, txItem_s);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = s_APPLGC_UpdateActValues();
+    }
     return Ret_e;
 }
 
@@ -464,6 +463,11 @@ static t_eReturnCode s_APPLGC_UpdateSnsValues(void)
         g_snsValues_as[idxSns_u8].SnsValue_f32 = (t_float32)0.0;
 
         Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &g_snsValues_as[idxSns_u8]);
+
+        if(Ret_e < RC_OK)
+        {
+            ASSERT((t_uint16)Ret_e);
+        }
     }
     
     return Ret_e;
@@ -478,7 +482,7 @@ static t_eReturnCode s_APPLGC_UpdateActValues(void)
     t_uint8 idxAct_u8 = (t_uint8)0;
     t_float32 actValue_f32;
 
-    for(idxAct_u8 = (t_uint8)0 ; (idxAct_u8 < APPSNS_SNSITF_NB) && (Ret_e >= RC_OK) ; idxAct_u8++)
+    for(idxAct_u8 = (t_uint8)0 ; (idxAct_u8 < APPACT_ACTITF_NB) && (Ret_e >= RC_OK) ; idxAct_u8++)
     {
         //----- Reset Container values -----//
         actValue_f32 = 0.0f;
@@ -491,6 +495,10 @@ static t_eReturnCode s_APPLGC_UpdateActValues(void)
         }
         else
         {
+            if(Ret_e < RC_OK)
+            {
+                ASSERT((t_uint16)Ret_e);
+            }
             g_actValues_as[idxAct_u8].value_f32 = 0.0f;
             g_actValues_as[idxAct_u8].isValueOK_b = FALSE;
         }

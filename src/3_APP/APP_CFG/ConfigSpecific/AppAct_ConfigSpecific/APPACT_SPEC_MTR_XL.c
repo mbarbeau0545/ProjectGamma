@@ -319,7 +319,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
     t_sCL42T_MotorSigCfg motorConfig = {
         .DiagSignal_e = FMKIO_INPUT_SIGFREQ_2,
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_2,
-        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_6,
+        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_5,
         .EndStopSigCW_s = {
             .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_3,
             .PullMode_e = FMKIO_PULL_MODE_UP,

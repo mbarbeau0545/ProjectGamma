@@ -316,9 +316,9 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
     t_eReturnCode Ret_e;
 
     t_sCL42T_MotorSigCfg motorConfig = {
-        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_1,
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_4,
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_1,
-        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_7,
+        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_8,
         .EndStopSigCW_s = {
             .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_1,
             .PullMode_e = FMKIO_PULL_MODE_UP,
@@ -330,7 +330,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .PulseSigCfg_s = {
-            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_6,
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_5,
             .pwmWaveForm_s = {
                 .deadTime_u32 = 0,
                 .frequency_f32 = 1000,

@@ -71,10 +71,10 @@
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3                     ((t_uint32)0x75)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4                     ((t_uint32)0x76)
     #define APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT           ((t_uint32)0x77)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_5                           ((t_uint32)0xf5)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_6                           ((t_uint32)0xf6)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_7                           ((t_uint32)0xf7)
-    #define APPSIG_SRL_ID_APPACT_DEBUG_8                           ((t_uint32)0xf8)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_XL                 ((t_uint32)0xf5)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_XR                 ((t_uint32)0xf6)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_Y                  ((t_uint32)0xf7)
+    #define APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_Z                  ((t_uint32)0xf8)
     #define APPSIG_SRL_ID_APPSNS_DEBUG_1                           ((t_uint32)0x11)
     #define APPSIG_SRL_ID_APPSNS_DEBUG_2                           ((t_uint32)0x12)
     #define APPSIG_SRL_ID_APPACT_DEBUG_1                           ((t_uint32)0xf0)
@@ -508,32 +508,32 @@
     };
 
 
-    ///@brief Variable for decoding APPACT_DEBUG_5
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_5_as[3] = {
+    ///@brief Variable for decoding APPACT_DEBUG_CTRL_MTR_XL
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_XL_as[3] = {
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_PULSE,            (t_uint8)0                                             },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_SPEED,            (t_uint8)16                                            },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XL_TRIGTIME,         (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding APPACT_DEBUG_6
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_6_as[3] = {
+    ///@brief Variable for decoding APPACT_DEBUG_CTRL_MTR_XR
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_XR_as[3] = {
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_PULSE,            (t_uint8)0                                             },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_SPEED,            (t_uint8)16                                            },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_XR_TRIGTIME,         (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding APPACT_DEBUG_7
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_7_as[3] = {
+    ///@brief Variable for decoding APPACT_DEBUG_CTRL_MTR_Y
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_Y_as[3] = {
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_PULSE,             (t_uint8)0                                             },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_SPEED,             (t_uint8)16                                            },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Y_TRIGTIME,          (t_uint8)32                                            },
     };
 
 
-    ///@brief Variable for decoding APPACT_DEBUG_8
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_8_as[3] = {
+    ///@brief Variable for decoding APPACT_DEBUG_CTRL_MTR_Z
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_Z_as[3] = {
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_PULSE,             (t_uint8)0                                             },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_SPEED,             (t_uint8)16                                            },
         {APPSIG_SIGNAL_ACT_ACTITF_CTRL_MTR_Z_TRIGTIME,          (t_uint8)32                                            },
@@ -724,10 +724,10 @@
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_3,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_3_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_3
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_4,                     APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_4_as,                   (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_4
         {APPSIG_SRL_ID_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT,           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT_as,         (t_uint8)3}, // APPSIG_SRL_PRM_LGC_GTRY_PARAM_SAFE_HEIGHT
-        {APPSIG_SRL_ID_APPACT_DEBUG_5,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_5_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_5
-        {APPSIG_SRL_ID_APPACT_DEBUG_6,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_6_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_6
-        {APPSIG_SRL_ID_APPACT_DEBUG_7,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_7_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_7
-        {APPSIG_SRL_ID_APPACT_DEBUG_8,                           APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_8_as,                         (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_8
+        {APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_XL,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_XL_as,               (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_CTRL_MTR_XL
+        {APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_XR,                 APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_XR_as,               (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_CTRL_MTR_XR
+        {APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_Y,                  APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_Y_as,                (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_CTRL_MTR_Y
+        {APPSIG_SRL_ID_APPACT_DEBUG_CTRL_MTR_Z,                  APPSIG_MSG_DIR_RX,                                      (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Srl_APPACT_DEBUG_CTRL_MTR_Z_as,                (t_uint8)3}, // APPSIG_SRL_APPACT_DEBUG_CTRL_MTR_Z
         {APPSIG_SRL_ID_APPSNS_DEBUG_1,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPSNS_DEBUG_1_as,                         (t_uint8)4}, // APPSIG_SRL_APPSNS_DEBUG_1
         {APPSIG_SRL_ID_APPSNS_DEBUG_2,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPSNS_DEBUG_2_as,                         (t_uint8)4}, // APPSIG_SRL_APPSNS_DEBUG_2
         {APPSIG_SRL_ID_APPACT_DEBUG_1,                           APPSIG_MSG_DIR_TX,                                      (t_uint16)50,                                           (t_uint16)0,                                            c_AppSig_Srl_APPACT_DEBUG_1_as,                         (t_uint8)4}, // APPSIG_SRL_APPACT_DEBUG_1

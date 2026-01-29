@@ -154,8 +154,8 @@
         //GPIO_name                     Pin_name                      alternate function            Interrupt Line                ItLineType                    
         {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_6},              GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_41,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_1,
         {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_7},              GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_42,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_2,
-        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_9},              GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_43,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_3,
-        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_10},             GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_44,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_4,
+        {{FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_15},             GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_43,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_3,
+        {{FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_14},             GPIO_AF2_TIM4,                 FMKTIM_INTERRUPT_LINE_IO_44,                                 FMKIO_ITLINE_TYPE_BSCTIM},    // FMKIO_INPUT_SIGFREQ_4,
     };
 
     /**< Variable for bsp_Gpio_Pin frequency input signal mapping */
@@ -177,11 +177,11 @@
         {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_11},   // FMKIO_OUTPUT_SIGDIG_1,
         {FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_11},   // FMKIO_OUTPUT_SIGDIG_2,
         {FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_12},   // FMKIO_OUTPUT_SIGDIG_3,
-        {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_8},    // FMKIO_OUTPUT_SIGDIG_4,
-        {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_3},    // FMKIO_OUTPUT_SIGDIG_5,
-        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_0},    // FMKIO_OUTPUT_SIGDIG_6,
-        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_1},    // FMKIO_OUTPUT_SIGDIG_7,
-        {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_13},   // FMKIO_OUTPUT_SIGDIG_8,
+        {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_3},    // FMKIO_OUTPUT_SIGDIG_4,
+        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_0},    // FMKIO_OUTPUT_SIGDIG_5,
+        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_1},    // FMKIO_OUTPUT_SIGDIG_6,
+        {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_13},   // FMKIO_OUTPUT_SIGDIG_7,
+        {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_13},   // FMKIO_OUTPUT_SIGDIG_8,
     };
 
     /**< Variable for bsp_Gpio_Pin PWM output signal mapping */
@@ -209,7 +209,7 @@
     /**< Variable for RxTx Reference for Can Node */
     const t_sFMKIO_RxTxComCfg c_FmkIo_CanSigCfg_as[FMKIO_COM_SIGNAL_CAN_NB] ={
         // Rx Gpio Port                        Rx Pin                       Tx Gpio Port                      Tx Pin                    Alternate Function
-        {{FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_11},             {FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_12},             GPIO_AF9_FDCAN1}, // FMKIO_COM_SIGNAL_CAN_1
+        {{FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_11},             {FMKIO_GPIO_PORT_F,             FMKIO_GPIO_PIN_12},             GPIO_AF9_FDCAN1}, // FMKIO_COM_SIGNAL_CAN_1
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_14},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_15},             GPIO_AF9_FDCAN2}, // FMKIO_COM_SIGNAL_CAN_2
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_13},             {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_12},             GPIO_AF11_FDCAN3}, // FMKIO_COM_SIGNAL_CAN_3
     };
@@ -218,7 +218,7 @@
         // Rx Gpio Port                        Rx Pin                       Tx Gpio Port                      Tx Pin                    Alternate Function
         {{FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_5},              {FMKIO_GPIO_PORT_C,             FMKIO_GPIO_PIN_4},             GPIO_AF7_USART1}, // FMKIO_COM_SIGNAL_SERIAL_1
         {{FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_3},              {FMKIO_GPIO_PORT_A,             FMKIO_GPIO_PIN_2},             GPIO_AF7_USART2}, // FMKIO_COM_SIGNAL_SERIAL_2
-        {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_5},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_6},             GPIO_AF7_USART3}, // FMKIO_COM_SIGNAL_SERIAL_3
+        {{FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_8},              {FMKIO_GPIO_PORT_B,             FMKIO_GPIO_PIN_9},             GPIO_AF7_USART3}, // FMKIO_COM_SIGNAL_SERIAL_3
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_7},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_8},             GPIO_AF14_UART4}, // FMKIO_COM_SIGNAL_SERIAL_4
         {{FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_9},              {FMKIO_GPIO_PORT_G,             FMKIO_GPIO_PIN_10},            GPIO_AF8_UART5}, // FMKIO_COM_SIGNAL_SERIAL_5
     };

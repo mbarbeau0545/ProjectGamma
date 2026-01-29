@@ -115,8 +115,8 @@
     {
         FMKIO_INPUT_SIGFREQ_1 = 0,                  /**< Reference to PB6, TIMER_4 CHANNEL_1 */
         FMKIO_INPUT_SIGFREQ_2,                        /**< Reference to PB7, TIMER_4 CHANNEL_2 */
-        FMKIO_INPUT_SIGFREQ_3,                        /**< Reference to PB9, TIMER_4 CHANNEL_3 */
-        FMKIO_INPUT_SIGFREQ_4,                        /**< Reference to PB10, TIMER_4 CHANNEL_4 */
+        FMKIO_INPUT_SIGFREQ_3,                        /**< Reference to PF15, TIMER_4 CHANNEL_3 */
+        FMKIO_INPUT_SIGFREQ_4,                        /**< Reference to PF14, TIMER_4 CHANNEL_4 */
     
         FMKIO_INPUT_SIGFREQ_NB,
     } t_eFMKIO_InFreqSig;
@@ -156,11 +156,11 @@
         FMKIO_OUTPUT_SIGDIG_1 = 0,                  /**< Reference to PB11 */
         FMKIO_OUTPUT_SIGDIG_2,                        /**< Reference to PA11 */
         FMKIO_OUTPUT_SIGDIG_3,                        /**< Reference to PA12 */
-        FMKIO_OUTPUT_SIGDIG_4,                        /**< Reference to PB8 */
-        FMKIO_OUTPUT_SIGDIG_5,                        /**< Reference to PC3 */
-        FMKIO_OUTPUT_SIGDIG_6,                        /**< Reference to PF0 */
-        FMKIO_OUTPUT_SIGDIG_7,                        /**< Reference to PF1 */
-        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PB13 */
+        FMKIO_OUTPUT_SIGDIG_4,                        /**< Reference to PC3 */
+        FMKIO_OUTPUT_SIGDIG_5,                        /**< Reference to PF0 */
+        FMKIO_OUTPUT_SIGDIG_6,                        /**< Reference to PF1 */
+        FMKIO_OUTPUT_SIGDIG_7,                        /**< Reference to PB13 */
+        FMKIO_OUTPUT_SIGDIG_8,                        /**< Reference to PF13 */
     
         FMKIO_OUTPUT_SIGDIG_NB,
     } t_eFMKIO_OutDigSig;
@@ -211,7 +211,7 @@
     {
         FMKIO_COM_SIGNAL_SERIAL_1 = 0,                  /**< Rx -> PC5, Tx -> PC4, Reference to Serial PIN_5 */
         FMKIO_COM_SIGNAL_SERIAL_2,                        /**< Rx -> PA3, Tx -> PA2, Reference to Serial PIN_3 */
-        FMKIO_COM_SIGNAL_SERIAL_3,                        /**< Rx -> PG5, Tx -> PG6, Reference to Serial PIN_5 */
+        FMKIO_COM_SIGNAL_SERIAL_3,                        /**< Rx -> PB8, Tx -> PB9, Reference to Serial PIN_8 */
         FMKIO_COM_SIGNAL_SERIAL_4,                        /**< Rx -> PG7, Tx -> PG8, Reference to Serial PIN_7 */
         FMKIO_COM_SIGNAL_SERIAL_5,                        /**< Rx -> PG9, Tx -> PG10, Reference to Serial PIN_9 */
     

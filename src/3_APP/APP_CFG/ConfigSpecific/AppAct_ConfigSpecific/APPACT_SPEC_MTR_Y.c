@@ -317,9 +317,9 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
     t_eReturnCode Ret_e;
 
     t_sCL42T_MotorSigCfg motorConfig = {
-        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_3,
-        .DirSignal_e = FMKIO_OUTPUT_SIGDIG_8,
-        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_5,
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_1,
+        .DirSignal_e = FMKIO_OUTPUT_SIGDIG_7,
+        .StateSignal_e = FMKIO_OUTPUT_SIGDIG_4,
         .EndStopSigCW_s = {
             .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_5,
             .PullMode_e = FMKIO_PULL_MODE_UP,
@@ -331,7 +331,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .PulseSigCfg_s = {
-            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_5,
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_6,
             .pwmWaveForm_s = {
                 .deadTime_u32 = 0,
                 .frequency_f32 = 1000,
@@ -342,7 +342,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .pwmCtrlPrm_s = {
                 .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
                 .rampCfg_ps = NULL,
-                .enablePulseSyncOpe_b = FALSE
+                .enablePulseSyncOpe_b = TRUE,
             }
         }
     };
