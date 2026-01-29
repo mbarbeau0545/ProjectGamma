@@ -27,9 +27,11 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    // flag automatic generate code
-    #define FMKCPU_STM32_ECU_FAMILY_G ((t_uint8)1)
-    //#define FMKCPU_STM32_ECU_FAMILY_F ((t_uint8)0)
+    /* CAUTION : Automatic generated code section for Ecu Family: Start */
+    #define FMKCPU_STM32_ECU_FAMILY_G4
+    /* CAUTION : Automatic generated code section for Ecu Family: End */
+
+
     
     #define FMKCPU_WWDG_RESET_CFG  FMKCPU_WWDG_RESET_100MS /**< default watchdogs configuration */
 
@@ -47,6 +49,7 @@
     /**< Clock Core System Frequency Speed */
     typedef enum
     {
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
         FMKCPU_CORE_CLOCK_SPEED_8MHZ = 0x0U,    /**< Core CLock Speed Run at 8Mhz */
         FMKCPU_CORE_CLOCK_SPEED_16MHZ,          /**< Core CLock Speed Run at 16Mhz */
         FMKCPU_CORE_CLOCK_SPEED_32MHZ,          /**< Core CLock Speed Run at 32Mhz */
@@ -57,8 +60,14 @@
         FMKCPU_CORE_CLOCK_SPEED_96MHZ,          /**< Core CLock Speed Run at 96Mhz */
         FMKCPU_CORE_CLOCK_SPEED_128MHZ,         /**< Core CLock Speed Run at 132Mhz */
         FMKCPU_CORE_CLOCK_SPEED_160MHZ,         /**< Core CLock Speed Run at 160Mhz */
+#elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+        FMKCPU_CORE_CLOCK_SPEED_100MHZ = 0U,     /** Core Clock Speed Run at 100 MHz */
+        FMKCPU_CORE_CLOCK_SPEED_200MHZ,          /** Core Clock Speed Run at 200 MHz */
+        FMKCPU_CORE_CLOCK_SPEED_400MHZ,          /** Core Clock Speed Run at 400 MHz */
+        FMKCPU_CORE_CLOCK_SPEED_480MHZ,          /** Core Clock Speed Run at 480 MHz */
+#endif
 
-        FMKCPU_CORE_CLOCK_SPEED_NB,             /**< Core CLock Speed Run Number */
+        FMKCPU_CORE_CLOCK_SPEED_NB,                  /**< Core CLock Speed Run Number */
         FMKCPU_CORE_CLOCK_SPEED_UNKNOWN,             /**< Core CLock Speed Run Number */
     } t_eFMKCPU_CoreClockSpeed;
 
@@ -246,17 +255,15 @@
     */
     typedef enum
     {
-        FMKCPU_NVIC_WWDG_IRQN = 0,          /**< Reference to HAL nvic WWDG_IRQn */
-        FMKCPU_NVIC_PVD_PVM_IRQN,             /**< Reference to HAL nvic PVD_PVM_IRQn */
-        FMKCPU_NVIC_RTC_TAMP_LSECSS_IRQN,     /**< Reference to HAL nvic RTC_TAMP_LSECSS_IRQn */
-        FMKCPU_NVIC_RTC_WKUP_IRQN,            /**< Reference to HAL nvic RTC_WKUP_IRQn */
-        FMKCPU_NVIC_FLASH_IRQN,               /**< Reference to HAL nvic FLASH_IRQn */
-        FMKCPU_NVIC_RCC_IRQN,                 /**< Reference to HAL nvic RCC_IRQn */
-        FMKCPU_NVIC_EXTI0_IRQN,               /**< Reference to HAL nvic EXTI0_IRQn */
-        FMKCPU_NVIC_EXTI1_IRQN,               /**< Reference to HAL nvic EXTI1_IRQn */
-        FMKCPU_NVIC_EXTI2_IRQN,               /**< Reference to HAL nvic EXTI2_IRQn */
-        FMKCPU_NVIC_EXTI3_IRQN,               /**< Reference to HAL nvic EXTI3_IRQn */
-        FMKCPU_NVIC_EXTI4_IRQN,               /**< Reference to HAL nvic EXTI4_IRQn */
+        FMKCPU_NVIC_ADC1_2_IRQN = 0,        /**< Reference to HAL nvic ADC1_2_IRQn */
+        FMKCPU_NVIC_ADC3_IRQN,                /**< Reference to HAL nvic ADC3_IRQn */
+        FMKCPU_NVIC_ADC4_IRQN,                /**< Reference to HAL nvic ADC4_IRQn */
+        FMKCPU_NVIC_ADC5_IRQN,                /**< Reference to HAL nvic ADC5_IRQn */
+        FMKCPU_NVIC_COMP1_2_3_IRQN,           /**< Reference to HAL nvic COMP1_2_3_IRQn */
+        FMKCPU_NVIC_COMP4_5_6_IRQN,           /**< Reference to HAL nvic COMP4_5_6_IRQn */
+        FMKCPU_NVIC_COMP7_IRQN,               /**< Reference to HAL nvic COMP7_IRQn */
+        FMKCPU_NVIC_CORDIC_IRQN,              /**< Reference to HAL nvic CORDIC_IRQn */
+        FMKCPU_NVIC_CRS_IRQN,                 /**< Reference to HAL nvic CRS_IRQn */
         FMKCPU_NVIC_DMA1_CHANNEL1_IRQN,       /**< Reference to HAL nvic DMA1_Channel1_IRQn */
         FMKCPU_NVIC_DMA1_CHANNEL2_IRQN,       /**< Reference to HAL nvic DMA1_Channel2_IRQn */
         FMKCPU_NVIC_DMA1_CHANNEL3_IRQN,       /**< Reference to HAL nvic DMA1_Channel3_IRQn */
@@ -264,89 +271,91 @@
         FMKCPU_NVIC_DMA1_CHANNEL5_IRQN,       /**< Reference to HAL nvic DMA1_Channel5_IRQn */
         FMKCPU_NVIC_DMA1_CHANNEL6_IRQN,       /**< Reference to HAL nvic DMA1_Channel6_IRQn */
         FMKCPU_NVIC_DMA1_CHANNEL7_IRQN,       /**< Reference to HAL nvic DMA1_Channel7_IRQn */
-        FMKCPU_NVIC_ADC1_2_IRQN,              /**< Reference to HAL nvic ADC1_2_IRQn */
-        FMKCPU_NVIC_USB_HP_IRQN,              /**< Reference to HAL nvic USB_HP_IRQn */
-        FMKCPU_NVIC_USB_LP_IRQN,              /**< Reference to HAL nvic USB_LP_IRQn */
-        FMKCPU_NVIC_FDCAN1_IT0_IRQN,          /**< Reference to HAL nvic FDCAN1_IT0_IRQn */
-        FMKCPU_NVIC_FDCAN1_IT1_IRQN,          /**< Reference to HAL nvic FDCAN1_IT1_IRQn */
-        FMKCPU_NVIC_EXTI9_5_IRQN,             /**< Reference to HAL nvic EXTI9_5_IRQn */
-        FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN,      /**< Reference to HAL nvic TIM1_BRK_TIM15_IRQn */
-        FMKCPU_NVIC_TIM1_UP_TIM16_IRQN,       /**< Reference to HAL nvic TIM1_UP_TIM16_IRQn */
-        FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN,  /**< Reference to HAL nvic TIM1_TRG_COM_TIM17_IRQn */
-        FMKCPU_NVIC_TIM1_CC_IRQN,             /**< Reference to HAL nvic TIM1_CC_IRQn */
-        FMKCPU_NVIC_TIM2_IRQN,                /**< Reference to HAL nvic TIM2_IRQn */
-        FMKCPU_NVIC_TIM3_IRQN,                /**< Reference to HAL nvic TIM3_IRQn */
-        FMKCPU_NVIC_TIM4_IRQN,                /**< Reference to HAL nvic TIM4_IRQn */
-        FMKCPU_NVIC_I2C1_EV_IRQN,             /**< Reference to HAL nvic I2C1_EV_IRQn */
-        FMKCPU_NVIC_I2C1_ER_IRQN,             /**< Reference to HAL nvic I2C1_ER_IRQn */
-        FMKCPU_NVIC_I2C2_EV_IRQN,             /**< Reference to HAL nvic I2C2_EV_IRQn */
-        FMKCPU_NVIC_I2C2_ER_IRQN,             /**< Reference to HAL nvic I2C2_ER_IRQn */
-        FMKCPU_NVIC_SPI1_IRQN,                /**< Reference to HAL nvic SPI1_IRQn */
-        FMKCPU_NVIC_SPI2_IRQN,                /**< Reference to HAL nvic SPI2_IRQn */
-        FMKCPU_NVIC_USART1_IRQN,              /**< Reference to HAL nvic USART1_IRQn */
-        FMKCPU_NVIC_USART2_IRQN,              /**< Reference to HAL nvic USART2_IRQn */
-        FMKCPU_NVIC_USART3_IRQN,              /**< Reference to HAL nvic USART3_IRQn */
-        FMKCPU_NVIC_EXTI15_10_IRQN,           /**< Reference to HAL nvic EXTI15_10_IRQn */
-        FMKCPU_NVIC_RTC_ALARM_IRQN,           /**< Reference to HAL nvic RTC_Alarm_IRQn */
-        FMKCPU_NVIC_USBWAKEUP_IRQN,           /**< Reference to HAL nvic USBWakeUp_IRQn */
-        FMKCPU_NVIC_TIM8_BRK_IRQN,            /**< Reference to HAL nvic TIM8_BRK_IRQn */
-        FMKCPU_NVIC_TIM8_UP_IRQN,             /**< Reference to HAL nvic TIM8_UP_IRQn */
-        FMKCPU_NVIC_TIM8_TRG_COM_IRQN,        /**< Reference to HAL nvic TIM8_TRG_COM_IRQn */
-        FMKCPU_NVIC_TIM8_CC_IRQN,             /**< Reference to HAL nvic TIM8_CC_IRQn */
-        FMKCPU_NVIC_ADC3_IRQN,                /**< Reference to HAL nvic ADC3_IRQn */
-        FMKCPU_NVIC_FMC_IRQN,                 /**< Reference to HAL nvic FMC_IRQn */
-        FMKCPU_NVIC_LPTIM1_IRQN,              /**< Reference to HAL nvic LPTIM1_IRQn */
-        FMKCPU_NVIC_TIM5_IRQN,                /**< Reference to HAL nvic TIM5_IRQn */
-        FMKCPU_NVIC_SPI3_IRQN,                /**< Reference to HAL nvic SPI3_IRQn */
-        FMKCPU_NVIC_UART4_IRQN,               /**< Reference to HAL nvic UART4_IRQn */
-        FMKCPU_NVIC_UART5_IRQN,               /**< Reference to HAL nvic UART5_IRQn */
-        FMKCPU_NVIC_TIM6_DAC_IRQN,            /**< Reference to HAL nvic TIM6_DAC_IRQn */
-        FMKCPU_NVIC_TIM7_DAC_IRQN,            /**< Reference to HAL nvic TIM7_DAC_IRQn */
+        FMKCPU_NVIC_DMA1_CHANNEL8_IRQN,       /**< Reference to HAL nvic DMA1_Channel8_IRQn */
         FMKCPU_NVIC_DMA2_CHANNEL1_IRQN,       /**< Reference to HAL nvic DMA2_Channel1_IRQn */
         FMKCPU_NVIC_DMA2_CHANNEL2_IRQN,       /**< Reference to HAL nvic DMA2_Channel2_IRQn */
         FMKCPU_NVIC_DMA2_CHANNEL3_IRQN,       /**< Reference to HAL nvic DMA2_Channel3_IRQn */
         FMKCPU_NVIC_DMA2_CHANNEL4_IRQN,       /**< Reference to HAL nvic DMA2_Channel4_IRQn */
         FMKCPU_NVIC_DMA2_CHANNEL5_IRQN,       /**< Reference to HAL nvic DMA2_Channel5_IRQn */
-        FMKCPU_NVIC_ADC4_IRQN,                /**< Reference to HAL nvic ADC4_IRQn */
-        FMKCPU_NVIC_ADC5_IRQN,                /**< Reference to HAL nvic ADC5_IRQn */
-        FMKCPU_NVIC_UCPD1_IRQN,               /**< Reference to HAL nvic UCPD1_IRQn */
-        FMKCPU_NVIC_COMP1_2_3_IRQN,           /**< Reference to HAL nvic COMP1_2_3_IRQn */
-        FMKCPU_NVIC_COMP4_5_6_IRQN,           /**< Reference to HAL nvic COMP4_5_6_IRQn */
-        FMKCPU_NVIC_COMP7_IRQN,               /**< Reference to HAL nvic COMP7_IRQn */
+        FMKCPU_NVIC_DMA2_CHANNEL6_IRQN,       /**< Reference to HAL nvic DMA2_Channel6_IRQn */
+        FMKCPU_NVIC_DMA2_CHANNEL7_IRQN,       /**< Reference to HAL nvic DMA2_Channel7_IRQn */
+        FMKCPU_NVIC_DMA2_CHANNEL8_IRQN,       /**< Reference to HAL nvic DMA2_Channel8_IRQn */
+        FMKCPU_NVIC_DMAMUX_OVR_IRQN,          /**< Reference to HAL nvic DMAMUX_OVR_IRQn */
+        FMKCPU_NVIC_EXTI0_IRQN,               /**< Reference to HAL nvic EXTI0_IRQn */
+        FMKCPU_NVIC_EXTI1_IRQN,               /**< Reference to HAL nvic EXTI1_IRQn */
+        FMKCPU_NVIC_EXTI15_10_IRQN,           /**< Reference to HAL nvic EXTI15_10_IRQn */
+        FMKCPU_NVIC_EXTI2_IRQN,               /**< Reference to HAL nvic EXTI2_IRQn */
+        FMKCPU_NVIC_EXTI3_IRQN,               /**< Reference to HAL nvic EXTI3_IRQn */
+        FMKCPU_NVIC_EXTI4_IRQN,               /**< Reference to HAL nvic EXTI4_IRQn */
+        FMKCPU_NVIC_EXTI9_5_IRQN,             /**< Reference to HAL nvic EXTI9_5_IRQn */
+        FMKCPU_NVIC_FDCAN1_IT0_IRQN,          /**< Reference to HAL nvic FDCAN1_IT0_IRQn */
+        FMKCPU_NVIC_FDCAN1_IT1_IRQN,          /**< Reference to HAL nvic FDCAN1_IT1_IRQn */
+        FMKCPU_NVIC_FDCAN2_IT0_IRQN,          /**< Reference to HAL nvic FDCAN2_IT0_IRQn */
+        FMKCPU_NVIC_FDCAN2_IT1_IRQN,          /**< Reference to HAL nvic FDCAN2_IT1_IRQn */
+        FMKCPU_NVIC_FDCAN3_IT0_IRQN,          /**< Reference to HAL nvic FDCAN3_IT0_IRQn */
+        FMKCPU_NVIC_FDCAN3_IT1_IRQN,          /**< Reference to HAL nvic FDCAN3_IT1_IRQn */
+        FMKCPU_NVIC_FLASH_IRQN,               /**< Reference to HAL nvic FLASH_IRQn */
+        FMKCPU_NVIC_FMAC_IRQN,                /**< Reference to HAL nvic FMAC_IRQn */
+        FMKCPU_NVIC_FMC_IRQN,                 /**< Reference to HAL nvic FMC_IRQn */
+        FMKCPU_NVIC_FPU_IRQN,                 /**< Reference to HAL nvic FPU_IRQn */
+        FMKCPU_NVIC_HRTIM1_FLT_IRQN,          /**< Reference to HAL nvic HRTIM1_FLT_IRQn */
         FMKCPU_NVIC_HRTIM1_MASTER_IRQN,       /**< Reference to HAL nvic HRTIM1_Master_IRQn */
         FMKCPU_NVIC_HRTIM1_TIMA_IRQN,         /**< Reference to HAL nvic HRTIM1_TIMA_IRQn */
         FMKCPU_NVIC_HRTIM1_TIMB_IRQN,         /**< Reference to HAL nvic HRTIM1_TIMB_IRQn */
         FMKCPU_NVIC_HRTIM1_TIMC_IRQN,         /**< Reference to HAL nvic HRTIM1_TIMC_IRQn */
         FMKCPU_NVIC_HRTIM1_TIMD_IRQN,         /**< Reference to HAL nvic HRTIM1_TIMD_IRQn */
         FMKCPU_NVIC_HRTIM1_TIME_IRQN,         /**< Reference to HAL nvic HRTIM1_TIME_IRQn */
-        FMKCPU_NVIC_HRTIM1_FLT_IRQN,          /**< Reference to HAL nvic HRTIM1_FLT_IRQn */
         FMKCPU_NVIC_HRTIM1_TIMF_IRQN,         /**< Reference to HAL nvic HRTIM1_TIMF_IRQn */
-        FMKCPU_NVIC_CRS_IRQN,                 /**< Reference to HAL nvic CRS_IRQn */
-        FMKCPU_NVIC_SAI1_IRQN,                /**< Reference to HAL nvic SAI1_IRQn */
-        FMKCPU_NVIC_TIM20_BRK_IRQN,           /**< Reference to HAL nvic TIM20_BRK_IRQn */
-        FMKCPU_NVIC_TIM20_UP_IRQN,            /**< Reference to HAL nvic TIM20_UP_IRQn */
-        FMKCPU_NVIC_TIM20_TRG_COM_IRQN,       /**< Reference to HAL nvic TIM20_TRG_COM_IRQn */
-        FMKCPU_NVIC_TIM20_CC_IRQN,            /**< Reference to HAL nvic TIM20_CC_IRQn */
-        FMKCPU_NVIC_FPU_IRQN,                 /**< Reference to HAL nvic FPU_IRQn */
-        FMKCPU_NVIC_I2C4_EV_IRQN,             /**< Reference to HAL nvic I2C4_EV_IRQn */
-        FMKCPU_NVIC_I2C4_ER_IRQN,             /**< Reference to HAL nvic I2C4_ER_IRQn */
-        FMKCPU_NVIC_SPI4_IRQN,                /**< Reference to HAL nvic SPI4_IRQn */
-        FMKCPU_NVIC_FDCAN2_IT0_IRQN,          /**< Reference to HAL nvic FDCAN2_IT0_IRQn */
-        FMKCPU_NVIC_FDCAN2_IT1_IRQN,          /**< Reference to HAL nvic FDCAN2_IT1_IRQn */
-        FMKCPU_NVIC_FDCAN3_IT0_IRQN,          /**< Reference to HAL nvic FDCAN3_IT0_IRQn */
-        FMKCPU_NVIC_FDCAN3_IT1_IRQN,          /**< Reference to HAL nvic FDCAN3_IT1_IRQn */
-        FMKCPU_NVIC_RNG_IRQN,                 /**< Reference to HAL nvic RNG_IRQn */
-        FMKCPU_NVIC_LPUART1_IRQN,             /**< Reference to HAL nvic LPUART1_IRQn */
-        FMKCPU_NVIC_I2C3_EV_IRQN,             /**< Reference to HAL nvic I2C3_EV_IRQn */
+        FMKCPU_NVIC_I2C1_ER_IRQN,             /**< Reference to HAL nvic I2C1_ER_IRQn */
+        FMKCPU_NVIC_I2C1_EV_IRQN,             /**< Reference to HAL nvic I2C1_EV_IRQn */
+        FMKCPU_NVIC_I2C2_ER_IRQN,             /**< Reference to HAL nvic I2C2_ER_IRQn */
+        FMKCPU_NVIC_I2C2_EV_IRQN,             /**< Reference to HAL nvic I2C2_EV_IRQn */
         FMKCPU_NVIC_I2C3_ER_IRQN,             /**< Reference to HAL nvic I2C3_ER_IRQn */
-        FMKCPU_NVIC_DMAMUX_OVR_IRQN,          /**< Reference to HAL nvic DMAMUX_OVR_IRQn */
+        FMKCPU_NVIC_I2C3_EV_IRQN,             /**< Reference to HAL nvic I2C3_EV_IRQn */
+        FMKCPU_NVIC_I2C4_ER_IRQN,             /**< Reference to HAL nvic I2C4_ER_IRQn */
+        FMKCPU_NVIC_I2C4_EV_IRQN,             /**< Reference to HAL nvic I2C4_EV_IRQn */
+        FMKCPU_NVIC_LPTIM1_IRQN,              /**< Reference to HAL nvic LPTIM1_IRQn */
+        FMKCPU_NVIC_LPUART1_IRQN,             /**< Reference to HAL nvic LPUART1_IRQn */
+        FMKCPU_NVIC_PVD_PVM_IRQN,             /**< Reference to HAL nvic PVD_PVM_IRQn */
         FMKCPU_NVIC_QUADSPI_IRQN,             /**< Reference to HAL nvic QUADSPI_IRQn */
-        FMKCPU_NVIC_DMA1_CHANNEL8_IRQN,       /**< Reference to HAL nvic DMA1_Channel8_IRQn */
-        FMKCPU_NVIC_DMA2_CHANNEL6_IRQN,       /**< Reference to HAL nvic DMA2_Channel6_IRQn */
-        FMKCPU_NVIC_DMA2_CHANNEL7_IRQN,       /**< Reference to HAL nvic DMA2_Channel7_IRQn */
-        FMKCPU_NVIC_DMA2_CHANNEL8_IRQN,       /**< Reference to HAL nvic DMA2_Channel8_IRQn */
-        FMKCPU_NVIC_CORDIC_IRQN,              /**< Reference to HAL nvic CORDIC_IRQn */
-        FMKCPU_NVIC_FMAC_IRQN,                /**< Reference to HAL nvic FMAC_IRQn */
+        FMKCPU_NVIC_RCC_IRQN,                 /**< Reference to HAL nvic RCC_IRQn */
+        FMKCPU_NVIC_RNG_IRQN,                 /**< Reference to HAL nvic RNG_IRQn */
+        FMKCPU_NVIC_RTC_ALARM_IRQN,           /**< Reference to HAL nvic RTC_Alarm_IRQn */
+        FMKCPU_NVIC_RTC_TAMP_LSECSS_IRQN,     /**< Reference to HAL nvic RTC_TAMP_LSECSS_IRQn */
+        FMKCPU_NVIC_RTC_WKUP_IRQN,            /**< Reference to HAL nvic RTC_WKUP_IRQn */
+        FMKCPU_NVIC_SAI1_IRQN,                /**< Reference to HAL nvic SAI1_IRQn */
+        FMKCPU_NVIC_SPI1_IRQN,                /**< Reference to HAL nvic SPI1_IRQn */
+        FMKCPU_NVIC_SPI2_IRQN,                /**< Reference to HAL nvic SPI2_IRQn */
+        FMKCPU_NVIC_SPI3_IRQN,                /**< Reference to HAL nvic SPI3_IRQn */
+        FMKCPU_NVIC_SPI4_IRQN,                /**< Reference to HAL nvic SPI4_IRQn */
+        FMKCPU_NVIC_TIM1_BRK_TIM15_IRQN,      /**< Reference to HAL nvic TIM1_BRK_TIM15_IRQn */
+        FMKCPU_NVIC_TIM1_CC_IRQN,             /**< Reference to HAL nvic TIM1_CC_IRQn */
+        FMKCPU_NVIC_TIM1_TRG_COM_TIM17_IRQN,  /**< Reference to HAL nvic TIM1_TRG_COM_TIM17_IRQn */
+        FMKCPU_NVIC_TIM1_UP_TIM16_IRQN,       /**< Reference to HAL nvic TIM1_UP_TIM16_IRQn */
+        FMKCPU_NVIC_TIM2_IRQN,                /**< Reference to HAL nvic TIM2_IRQn */
+        FMKCPU_NVIC_TIM20_BRK_IRQN,           /**< Reference to HAL nvic TIM20_BRK_IRQn */
+        FMKCPU_NVIC_TIM20_CC_IRQN,            /**< Reference to HAL nvic TIM20_CC_IRQn */
+        FMKCPU_NVIC_TIM20_TRG_COM_IRQN,       /**< Reference to HAL nvic TIM20_TRG_COM_IRQn */
+        FMKCPU_NVIC_TIM20_UP_IRQN,            /**< Reference to HAL nvic TIM20_UP_IRQn */
+        FMKCPU_NVIC_TIM3_IRQN,                /**< Reference to HAL nvic TIM3_IRQn */
+        FMKCPU_NVIC_TIM4_IRQN,                /**< Reference to HAL nvic TIM4_IRQn */
+        FMKCPU_NVIC_TIM5_IRQN,                /**< Reference to HAL nvic TIM5_IRQn */
+        FMKCPU_NVIC_TIM6_DAC_IRQN,            /**< Reference to HAL nvic TIM6_DAC_IRQn */
+        FMKCPU_NVIC_TIM7_DAC_IRQN,            /**< Reference to HAL nvic TIM7_DAC_IRQn */
+        FMKCPU_NVIC_TIM8_BRK_IRQN,            /**< Reference to HAL nvic TIM8_BRK_IRQn */
+        FMKCPU_NVIC_TIM8_CC_IRQN,             /**< Reference to HAL nvic TIM8_CC_IRQn */
+        FMKCPU_NVIC_TIM8_TRG_COM_IRQN,        /**< Reference to HAL nvic TIM8_TRG_COM_IRQn */
+        FMKCPU_NVIC_TIM8_UP_IRQN,             /**< Reference to HAL nvic TIM8_UP_IRQn */
+        FMKCPU_NVIC_UART4_IRQN,               /**< Reference to HAL nvic UART4_IRQn */
+        FMKCPU_NVIC_UART5_IRQN,               /**< Reference to HAL nvic UART5_IRQn */
+        FMKCPU_NVIC_UCPD1_IRQN,               /**< Reference to HAL nvic UCPD1_IRQn */
+        FMKCPU_NVIC_USART1_IRQN,              /**< Reference to HAL nvic USART1_IRQn */
+        FMKCPU_NVIC_USART2_IRQN,              /**< Reference to HAL nvic USART2_IRQn */
+        FMKCPU_NVIC_USART3_IRQN,              /**< Reference to HAL nvic USART3_IRQn */
+        FMKCPU_NVIC_USB_HP_IRQN,              /**< Reference to HAL nvic USB_HP_IRQn */
+        FMKCPU_NVIC_USB_LP_IRQN,              /**< Reference to HAL nvic USB_LP_IRQn */
+        FMKCPU_NVIC_USBWAKEUP_IRQN,           /**< Reference to HAL nvic USBWakeUp_IRQn */
+        FMKCPU_NVIC_WWDG_IRQN,                /**< Reference to HAL nvic WWDG_IRQn */
     
         FMKCPU_NVIC_NB,
     } t_eFMKCPU_IRQNType;
@@ -425,6 +434,57 @@
         SPI_HandleTypeDef   spiHandle_s;
         TIM_HandleTypeDef   timHandle_s;
     } t_uFMKCPU_DmaHandleType;
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
+    ///@brief Enum for the number of PLL (other than PLL1 ), so for G4 None
+    typedef enum 
+    {
+        FMKCPU_SYS_OSC_PLL_NB = 0U
+    } t_eFMKCPU_SysOscPllList;
+    typedef struct 
+    {
+        t_uint32 PLLM_Divider_u32;
+        t_uint32 PPLN_Multplier_u32;
+        t_uint32 PLLR_Divider_u32;
+        t_uint32 PLLQ_Divider_u32;
+        t_uint32 PLLP_Divider_u32;
+    } t_sFMKCPU_PllOscCfg;
+
+    typedef struct 
+    {
+        t_uint32 AHB_Divider_u32;
+        t_uint32 APB1_Divider_u32;
+        t_uint32 APB2_Divider_u32;
+    } t_sFMKCPU_SysOscCfg;
+#elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+    ///@brief Enum for the number of PLL (other than PLL1 )
+    typedef enum 
+    {  
+        FMKCPU_SYS_OSC_PLL_2 = 0U,
+        FMKCPU_SYS_OSC_PLL_3,
+
+        FMKCPU_SYS_OSC_PLL_NB
+    } t_eFMKCPU_SysOscPllList;
+    typedef struct 
+    {
+        t_uint32 PLLM_Divider_u32;
+        t_uint32 PPLN_Multplier_u32;
+        t_uint32 PLLR_Divider_u32;
+        t_uint32 PLLQ_Divider_u32;
+        t_uint32 PLLP_Divider_u32;
+        t_uint32 PLL_RGE_Range_u32;
+        t_uint32 PLL_VCOSEL_u32;
+        t_uint32 PLL_FRACN_u32;
+    } t_sFMKCPU_PllOscCfg;
+    typedef struct 
+    {
+        t_uint32 SysClk_Divider_u32;
+        t_uint32 AHB_Divider_u32;
+        t_uint32 APB1_Divider_u32;
+        t_uint32 APB2_Divider_u32;
+        t_uint32 APB3_Divider_u32;
+        t_uint32 APB4_Divider_u32;
+    } t_sFMKCPU_SysOscCfg;
+#endif
 
     //-----------------------------STRUCT TYPES---------------------------//
     // ********************************************************************

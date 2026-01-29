@@ -1,5 +1,5 @@
 /*********************************************************************
- * @file        APPSYS_ConfigPublic.h
+ * @file        TemplateName.h
  * @brief       Template_BriefDescription.
  * @note        TemplateDetailsDescription.\n
  *
@@ -7,9 +7,10 @@
  * @date        jj/mm/yyyy
  * @version     1.0
  */
-  
-#ifndef APPSYS_CONFIGPUBLIC_H_INCLUDED
-#define APPSYS_CONFIGPUBLIC_H_INCLUDED
+/* CAUTION : Automatic generated code section for ifndef: Start */
+#ifndef APPACT_SPEC_MTR_Y
+#define APPACT_SPEC_MTR_Y
+/* CAUTION : Automatic generated code section for ifndef: End */
 
 
 
@@ -18,24 +19,14 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    /* CAUTION : Automatic generated code section for Include: Start */
     #include "TypeCommon.h"
-    #include "string.h"
+    #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
+    /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define BASE_PATH "src\\"
-    #define SHORTEN_PATH(path) (strstr(path, BASE_PATH) ? strstr(path, BASE_PATH) : path)
 
-    ///@brief Optional Module
-    #define APPSYS_MODULE_FMKCAN_ENABLE
-    #define APPSYS_MODULE_FMKSRL_ENABLE
-    #define APPSYS_MODULE_APPLGC_ENABLE
-    #define APPSYS_MODULE_APP_SPM_ENABLE
-
-    #define APPSYS_ELAPSED_TIME_CYCLIC ((t_uint8)40)     /**< Elapsed time (in ms) between cyclic function call*/
-    #define APPSYS_ITLINE_FASTTASK FMKTIM_INTERRUPT_LINE_EVNT_1 /**< Timer Line use for FastTask */
-    #define APPSYS_ELASPED_TIME_FASTTASK ((t_uint32)5)  /**< Fast Task every 5 ms */
-    
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -43,31 +34,7 @@
 
 	/* CAUTION : Automatic generated code section for Enum: End */
 	//-----------------------------ENUM TYPES-----------------------------//
-    // Flag automatic generate code
-    /**< enum for module list */
-    typedef enum
-    {
-        APPSYS_MODULE_FMK_CPU = 0,
-        APPSYS_MODULE_FMK_TIM,
-        APPSYS_MODULE_FMK_HRT,
-        APPSYS_MODULE_FMK_CDA,
-        APPSYS_MODULE_FMK_IO,
-#ifdef APPSYS_MODULE_FMKCAN_ENABLE
-        APPSYS_MODULE_FMK_CAN,
-#endif // APPSYS_MODULE_FMKCAN_ENABLE
 
-#ifdef APPSYS_MODULE_FMKSRL_ENABLE
-        APPSYS_MODULE_FMK_SERIAL,
-#endif // APPSYS_MODULE_FMKSRL_ENABLE
-        APPSYS_MODULE_APP_SDM,
-        APPSYS_MODULE_APP_SPM,
-        APPSYS_MODULE_APP_SIG,
-        APPSYS_MODULE_APP_SNS,
-        APPSYS_MODULE_APP_ACT,
-        APPSYS_MODULE_APP_LGC,
-
-        APPSYS_MODULE_NB
-    } t_eAppSys_ModuleList;
 
 	/* CAUTION : Automatic generated code section for Structure: Start */
 
@@ -77,8 +44,6 @@
 
 	/* CAUTION : Automatic generated code section : End */
 	//-----------------------------TYPEDEF TYPES---------------------------//
-
-    
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************
@@ -87,11 +52,60 @@
     // *                      Variables
     // ********************************************************************
 
+
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: Start */
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetActCfg
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
 
-#endif // APPSYS_CONFIGPUBLIC_H_INCLUDED           
+    /**
+    *
+    * @brief     @ref t_cbAppAct_GetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_PULSE_GetValue(t_float32 *f_rawSigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_PULSE_SetValue(t_float32 f_SigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_GetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_GetValue(t_float32 *f_rawSigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_SPEED_SetValue(t_float32 f_SigValue_pf32);
+            /**
+    *
+    * @brief     @ref t_cbAppAct_GetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32);
+
+    /**
+    *
+    * @brief     @ref t_cbAppAct_SetIfValue
+    *
+    */
+    t_eReturnCode APPACT_SPEC_MTR_Y_TRIGTIME_SetValue(t_float32 f_SigValue_pf32);
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
+#endif            
 //************************************************************************************
 // End of File
 //************************************************************************************
@@ -102,8 +116,8 @@
  *	@note   
  *
  *
- *	@params[in] 
- *	@params[out]
+ *	@param[in] 
+ *	@param[out]
  *	 
  *
  *

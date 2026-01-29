@@ -19,7 +19,7 @@
     // *                      Includes
     // ********************************************************************
     
-    #include "stm32g4xx_hal.h"
+    #include "./FMKCPU_ConfigPublic.h"
     #include "./FMKCDA_ConfigPublic.h"
     // ********************************************************************
     // *                      Defines
@@ -41,7 +41,7 @@
     /* CAUTION : Automatic generated code section for ADC channels number: End */
 
     #define FMKCDA_TIME_BTWN_DIAG_MS ((t_uint16)100)   /**< Time between diagnostic for adc & dac channel in cyclic ope mode*/
-    #define FMKCDA_OVR_CONVERSION_MS ((t_uint32)500)    /**< Delay after considering there is no conversion in circular mode  */
+    #define FMKCDA_OVR_CONVERSION_MS ((t_uint32)100)    /**< Delay after considering there is no conversion in circular mode  */
     #define FMKCDA_CYCLIC_CALIB      ((t_uint16)2000)   /**< Time between we get the Vref for calibration */
 
     ///@brief max number of conversion in a cyclic adc conversion

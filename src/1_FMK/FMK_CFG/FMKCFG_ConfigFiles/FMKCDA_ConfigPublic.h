@@ -18,13 +18,18 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
-    
+    #include "./FMKCPU_ConfigPublic.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
     ///@brief Voltage multiplier to get the actual voltage since it's devided 
-    #define FMKCDA_ADC_VBAT_MULTPIPLIER         ((t_uint8)3)
-
+    #if defined(FMKCPU_STM32_ECU_FAMILY_G4)
+        #define FMKCDA_ADC_VBAT_MULTPIPLIER         ((t_uint8)3)
+    #elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+        #define FMKCDA_ADC_VBAT_MULTPIPLIER         ((t_uint8)4)
+    #else
+        #error "FMKCDA_ADC_VBAT_MULTPIPLIER non défini : définir FMKCPU_STM32_ECU_FAMILY_G4 ou H7"
+    #endif
     ///@brief calibration constant 
     #define FMKCDA_ADC_CALIB_VREF           ((t_float32)3.0f)
     #define FMKCDA_ADC_RESOLUTION           ((t_uint16)4095) // since we use 12 bits adc

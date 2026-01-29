@@ -17,8 +17,7 @@
 
 	// ********************************************************************
 	// *                      Includes
-	// ********************************************************************
-    #ifdef APPSYS_MODULE_APP_SPM_ENABLE
+	// *******************************************************************
 	#include "TypeCommon.h"
 	#include "APP_CFG/ConfigFiles/APPSPM_ConfigPublic.h"
 	// ********************************************************************
@@ -85,7 +84,7 @@
    *
    *   @retval RC_OK                             @ref RC_OK
    */
-	t_eReturnCode APPSPM_GetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uint16 * f_prmValue_pu16);
+	t_eReturnCode APPSPM_GetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uAPPSPM_PrmValType * f_prmValue_pu);
     /** 
     *	@brief Set the Parameter value
     *
@@ -94,7 +93,7 @@
     *
     *   @retval RC_OK                             @ref RC_OK
     */
-	t_eReturnCode APPSPM_SetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uint16 f_prmValue_u16);
+	t_eReturnCode APPSPM_SetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uAPPSPM_PrmValType f_prmVal_u);
     /**
      *
      *	@brief Get the Parameter Information
@@ -105,10 +104,9 @@
     *   @retval RC_OK                             @ref RC_OK
     */
 	t_eReturnCode APPSPM_GetParamInfo(	t_eAPPSPM_ItemPrm f_itemId_e, 
-                                        t_uint16 * f_prmMinValue_pu16,
-                                        t_uint16 * f_prmMaxValue_pu16,
-                                        t_uint16 * f_prmDefaultValue_pu16);
-    #endif // APPSYS_MODULE_APP_SPM_ENABLE
+                                        t_float32 * f_prmMinValue_pf32,
+                                        t_float32 * f_prmMaxValue_pf32,
+                                        t_float32 * f_prmDefaultValue_pf32);
 #endif // FILE_CONFIGPRIVATE_H_INCLUDED           
 //************************************************************************************
 // End of File

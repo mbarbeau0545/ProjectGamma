@@ -18,7 +18,7 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
-    #include "FMK_CFG/FMKCFG_ConfigFiles/FMKCPU_ConfigPublic.h"
+    #include "./FMKCPU_ConfigPublic.h"
     #include "TypeCommon.h"
     #include "Constant.h"
     
@@ -33,14 +33,18 @@
     #define FMKTIM_ARR_HIGH_LIMIT_16BIT ((t_uint32)0xFFFE)     // 65534
     #define FMKTIM_ARR_LOW_LIMIT_32BIT  ((t_uint32)0xB2D05E00) // 3_000_000_000
     #define FMKTIM_ARR_HIGH_LIMIT_32BIT ((t_uint32)0xFFFFFFFE) // 4_294_967_295
-    #define FMKTIM_WWDG_RESET_CFG  FMKTIM_WWDG_RESET_100MS /**< default watchdogs configuration */
+
+    ///@brief for a 16 bits timer is the min frequency allowed, PSC & ARR > 0xFFFF
+    #define FMKTIM_TIMER_MIN_FREQ_ALLOWED    ((t_float32)0.5)
 
     /**
     * @brief This define return True if the timer is a 32 Bits timers
     */
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4) |defined(FMKCPU_STM32_ECU_FAMILY_H7)
     #define FMKTIM_IS_32B_TIMER(f_timClock_e) \
         ((f_timClock_e) == FMKCPU_RCC_CLK_TIM2 ||\
          (f_timClock_e) == FMKCPU_RCC_CLK_TIM5)
+#endif
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -115,8 +119,7 @@
     */
     typedef enum
     {
-        FMKTIM_INTERRUPT_LINE_EVNT_1 = 0,                  /**< Event Purpose Timer, Reference to Timer 6 Channel 1 */
-        FMKTIM_INTERRUPT_LINE_EVNT_2,                        /**< Event Purpose Timer, Reference to Timer 7 Channel 1 */
+        FMKTIM_INTERRUPT_LINE_EVNT_1 = 0,                  /**<  Reference to timer 7, CHANNEL_1 */
     
         FMKTIM_INTERRUPT_LINE_EVNT_NB,
     } t_eFMKTIM_InterruptLineEvnt;

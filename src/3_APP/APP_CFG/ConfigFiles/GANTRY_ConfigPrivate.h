@@ -1,0 +1,252 @@
+/**
+ * @file        CL42T_ConfigPrivate.h
+ * @brief       Driver Module for Driver CL42T.
+ * @note        TemplateDetailsDescription.\n
+ *
+ * @author      mba
+ * @date        21/01/2025
+ * @version     1.0
+ */
+  
+#ifndef GANTRY_CONFIGPRIVATE_H_INCLUDED
+#define GANTRY_CONFIGPRIVATE_H_INCLUDED
+
+    // ********************************************************************
+    // *                      Includes
+    // ********************************************************************
+    #include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
+    #include "APP_CTRL/APP_SPM/Src/APP_SPM.h"
+    #include "APP_CTRL/APP_SNS/Src/APP_SNS.h"
+    #include "APP_CTRL/APP_ACT/Src/APP_ACT.h"
+    #include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
+    #include "APP_LGC/Src/APP_LGC.h"
+
+    #include "./GANTRY_ConfigPublic.h"
+    #include "./APP_CFG/ConfigSpecific/GANTRY_ConfigSpecific.h"
+    // ********************************************************************
+    // *                      Defines
+    // ********************************************************************
+    ///@brief Fifo Buffer len define
+    #define GTRY_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)120) // must be divided by 3, 40 cmd 
+    #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
+
+    ///@brief direction to go to the right spot for referencing 
+    #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)1)
+    #define GTRY_CALIB_DIR_AXE_Y                ((t_sint32)1)
+    #define GTRY_CALIB_DIR_AXE_Z                ((t_sint32)1)
+
+    ///@brief Number of iteration we can send 
+    #define GTRY_MTR_MAX_SEND_ITER              ((t_uint8)15)
+    // ********************************************************************
+    // *                      Types
+    // ********************************************************************
+
+    //-----------------------------ENUM TYPES-----------------------------//
+    ///@brief Axe Calibration List
+    typedef enum 
+    {
+        GTRY_CALIB_ID_AXE_X = 0,       //---- Calibration of axe X ----//
+        GTRY_CALIB_ID_AXE_Y,           //---- Calibration of axe Y ----//
+        GTRY_CALIB_ID_AXE_Z,           //---- Calibration of axe Z ----//
+        GTRY_CALIB_ID_AXE_ALL,         //---- Calibration of all axes ----//
+
+        GTRY_CALIB_ID_AXE_NB
+    } t_eGTRY_CalibAxeId;
+
+    ///@brief Calibration Type List 
+    typedef enum 
+    {
+        GTRY_CALIB_TYPE_ASYNC = 0,      //---- calibration will be made in async mode, axe X then Y and Z ----//
+        GTRY_CALIB_TYPE_SYNC,           //---- calibration will be made in sync mode Axe X,Y,Z at the same time ----//
+
+        GTRY_CALIB_TYPE_NB,             //---- Calibration type number  ----//
+    } t_eGTRY_CalibType;
+
+    ///@brief Enumeration of the type of sending iteration
+    typedef enum 
+    {
+        GTRY_SEND_ITER_BLOCKING = 0,     //---- Iterations are send for all axes in sync ways, if a motor 
+                                            //      does not accept cmd anymore we do not try to send iter for others axes, we wait
+                                            //      the blocking one is available again ----//
+        GTRY_SEND_ITER_ASYNC,           //---- Iterations are send for all motor as soon as they can ----//                             
+
+        GTRY_SEN_ITER_NB
+    } t_eGTRY_SendIterType;
+
+    ///@brief Command User Type
+    typedef enum 
+    {
+        GTRY_CMD_TYPE_ID_CARTESIAN = 0,     //---- Command Type Identifier for Carthesian coordinate ---//
+        GTRY_CMD_TYPE_ID_SPHERIC,           //---- Command Type Identifier for Spheric coordinate ----//
+        GTRY_CMD_TYPE_ID_STEPS,             //---- Command Type Identifier for steps for each axes ----//
+
+        GTRY_CMD_TYPE_ID_NB,
+    } t_eGTRY_CmdTypeId;
+
+    //---------------------------STRUCTURE TYPES--------------------------//
+    ///@brief Mapping structure beetween gantry and application
+    typedef struct 
+    {
+        t_eAPPACT_ActInterface actIfMtrPulse_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
+        t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
+        t_eAPPACT_ActInterface actIfTimTrig_e;       //---- Trigger Timer Actuator interface -----//
+        t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
+        t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
+        t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
+    } t_sGTRY_AxeAppCfg;
+
+    ///@brief Structure to gather user command from AppSig 
+    typedef struct 
+    {
+        t_float32 value_f32;
+        t_bool isRcv_b;
+        t_uint32 timeStamp_u32;
+    } t_sGTRY_cmdSigInfo;
+    /* CAUTION : Automatic generated code section for Enum: Start */
+
+    /* CAUTION : Automatic generated code section for Enum: End */
+   
+    //----------------------------- TYPES---------------------------//
+    /**
+     * @brief Function typedef to build command from cartesian pos, spheric pos etc 
+     * ----------------------------------------------------------------------------
+     * @param[in] f_value : value to compute
+     * ----------------------------------------------------------------------------
+     * @return @ref t_eReturnCode
+     */
+    typedef t_eReturnCode (*t_cbGTRY_BuildCmdFunc)(t_float32 f_value_af32[GTRY_CMD_SIG_NB], t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
+
+    /// @brief Sig Cmd Group to handle signal command
+    typedef struct
+    {
+        const t_eAPPSIG_Signal *signal_pe;    //---- pointor to a list of signals for the group -----//
+        t_uint8 nbsignals_u8;                   //---- Number of signal for the group -----//
+        t_uint32 timeoutMs_u32;                 //---- Time out to set a entire command -----//
+        t_cbGTRY_BuildCmdFunc buildFunc_pf;     //---- Function to build the cmd ----//
+    } t_sGTRY_SigGroupInfo;
+
+    ///@brief get the algo paramter more easily
+    typedef struct
+    {
+        t_eAPPSPM_ItemPrm chunkSize_e;                                 //---- chunk sizes per iteraitons ----//
+        t_eAPPSPM_ItemPrm MinFreq_ae[GTRY_PHYS_AXE_NB];               //---- Minimum Frequency for Axes ----//
+        t_eAPPSPM_ItemPrm MaxFreq_ae[GTRY_PHYS_AXE_NB];               //---- Maximum Frequency for Axes ----//
+        t_eAPPSPM_ItemPrm pulsePerMm_ae[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
+        t_eAPPSPM_ItemPrm cptPrio_SafeHeight_ae[GTRY_PHYS_AXE_NB];    //---- Height to reach for the axe priority before others can move ----//
+    } t_sGTRYSPEC_AlgoItemPrm;
+    /* CAUTION : Automatic generated code section for Structure: Start */
+
+    /* CAUTION : Automatic generated code section for Structure: End */
+
+    // ********************************************************************
+    // *                      Prototypes
+    // ********************************************************************
+        
+    // ********************************************************************
+    // *                      Variables
+    // ********************************************************************
+    ///@brief variable for application mapping
+    const t_sGTRY_AxeAppCfg c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_NB] = {
+        [GTRY_AXE_HANDLE_XL] = {
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XL_PULSE,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_XL_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRIGTIME,
+            .lgcSrvID_e = APPLGC_SRV_GTRY_X,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XL_POS,
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL
+        },
+        [GTRY_AXE_HANDLE_XR] = {
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XR_PULSE,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_XR_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRIGTIME,
+            .lgcSrvID_e = APPLGC_SRV_GTRY_X,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XR_POS,
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR
+        },
+        [GTRY_AXE_HANDLE_Y] = {
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Y_PULSE,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_Y_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRIGTIME,
+            .lgcSrvID_e = APPLGC_SRV_GTRY_Y,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Y_POS,
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y
+        },
+        [GTRY_AXE_HANDLE_Z] = {
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Z_PULSE,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_Z_SPEED,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRIGTIME,
+            .lgcSrvID_e = APPLGC_SRV_GTRY_Z,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Z_POS,
+        }
+    };
+    /// @brief Varialbe to store item to reach for algo aprameter
+    const t_sGTRYSPEC_AlgoItemPrm c_GTRY_AlgoItemPrm_s = {
+        .chunkSize_e = APPSPM_PRM_LGC_GTRY_PULSE_ITER_MAX,
+        .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN},
+        .MaxFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Y_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Z_SPEED_MAX},
+        .pulsePerMm_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM},
+        .cptPrio_SafeHeight_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT},
+    };
+    ///@brief variable for signal group
+    static const t_eAPPSIG_Signal c_GTRY_cartesianSigs_ae[] = {
+        GTRY_CMD_SIG_POS_X,
+        GTRY_CMD_SIG_POS_Y,
+        GTRY_CMD_SIG_POS_Z,
+    };
+    static const t_eAPPSIG_Signal c_GTRY_SphericSigs_ae[] = {
+        GTRY_CMD_SIG_POS_RAYON,
+        GTRY_CMD_SIG_POS_THETHA,
+        GTRY_CMD_SIG_POS_PHI,
+    };
+    static const t_eAPPSIG_Signal c_GTRY_StepdirSigs_ae[] = {
+        GTRY_CMD_SIG_STEP_X,
+        GTRY_CMD_SIG_STEP_Y,
+        GTRY_CMD_SIG_STEP_Z,
+        GTRY_CMD_SIG_DIR_X,
+        GTRY_CMD_SIG_DIR_Y,
+        GTRY_CMD_SIG_DIR_Z,
+    };
+
+    ///@brief Information for Signals Groups 
+    const t_sGTRY_SigGroupInfo c_GTRY_SigGroupInfo_as[GTRY_CMD_TYPE_ID_NB] = {
+    //    signals from APPSIG        nbSignals    Timeout       function to build cmd
+        {c_GTRY_cartesianSigs_ae,       3,          100,        GANTRY_SPEC_BuildCartesianCmd},
+        {c_GTRY_SphericSigs_ae,         3,          100,        GANTRY_SPEC_BuildSphericCmd},
+        {c_GTRY_StepdirSigs_ae,         6,          100,        GANTRY_SPEC_BuildStepCmd},
+    };
+
+    ///@brief signal from APPSIG we want to reach
+    const t_eAPPSIG_Signal c_GTRY_AppSIgSignalsList_ae[GTRY_CMD_SIG_NB] = {
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X,// GTRY_CMD_SIG_POS_X
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y,// GTRY_CMD_SIG_POS_Y
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z,// GTRY_CMD_SIG_POS_Z
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_RAYON,// GTRY_CMD_SIG_POS_RAYON
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_THETHA,// GTRY_CMD_SIG_POS_THETHA
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_PHI,// GTRY_CMD_SIG_POS_PHI
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X,// GTRY_CMD_SIG_STEP_X
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y,// GTRY_CMD_SIG_STEP_Y
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z,// GTRY_CMD_SIG_STEP_Z
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X,// GTRY_CMD_SIG_DIR_X
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y,// GTRY_CMD_SIG_DIR_Y
+        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z,// GTRY_CMD_SIG_DIR_Z
+    };
+    //********************************************************************************
+    //                      Public functions - Prototyupes
+    //********************************************************************************
+    
+#endif // GANTRY_CONFIGPRIVATE_H_INCLUDED
+//************************************************************************************
+// End of File
+//************************************************************************************
+
+/**
+ *	@brief
+ *	@note   
+ *
+ *
+ *	@param[in] 
+ *	@param[in]
+ *	 
+ *
+ *
+ */

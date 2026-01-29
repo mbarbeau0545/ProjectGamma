@@ -1,63 +1,226 @@
 {
-    "SENSORS": {},
+    "SENSORS": {
+        "MTR_XL_POS": {
+            "id": "0",
+            "Unity": "RAW",
+            "default_state": "ENABLE",
+            "description": "Moteur X left position"
+        }
+    },
     "ACTUATORS": {},
     "DIAGNOSTIC": {
         "FMK_CFG_ERROR": {
             "id": "0",
             "debug_Info_1": "Enum Module from t_eAppSys_ModuleList",
-            "debug_Info_2": "Line module "
+            "debug_Info_2": "module error"
         },
-        "FMK_OPE_ERROR": {
+        "FMK_CPU_TEMP_OUT_OF_RANGE": {
             "id": "1",
+            "debug_Info_1": "temperature of the cpu ",
+            "debug_Info_2": "None"
+        },
+        "FMK_SUPPLY_VOLTAGE_OUT_OF_RANGE": {
+            "id": "2",
+            "debug_Info_1": "Voltage of the cpu * 10",
+            "debug_Info_2": "None"
+        },
+        "FMK_FDCAN_OPE_ERROR": {
+            "id": "3",
+            "debug_Info_1": "General Error = 0, Fifo Rx Error = 1, Fifo Tx Error = 2",
+            "debug_Info_2": "Error from t_eFMKFDCAN_NodeStatus"
+        },
+        "FMK_SRL_OPE_ERROR": {
+            "id": "4",
             "debug_Info_1": "Enum Module from t_eAppSys_ModuleList",
-            "debug_Info_2": "Line module "
+            "debug_Info_2": "error from t_eFMKSRL_LineHealth"
+        },
+        "FMK_HRT_OPE_ERROR": {
+            "id": "5",
+            "debug_Info_1": "High Resolution instance",
+            "debug_Info_2": "error from HAL_HRTIM_StateTypeDef"
+        },
+        "FMK_TIM_OPE_ERROR": {
+            "id": "6",
+            "debug_Info_1": "Enum Module from t_eAppSys_ModuleList",
+            "debug_Info_2": "module  error "
+        },
+        "FMK_CDA_OPE_ERROR": {
+            "id": "7",
+            "debug_Info_1": "Idx Adc",
+            "debug_Info_2": "error from t_eFMKCDA_AdcErrState"
+        },
+        "FMK_CPU_OPE_ERROR": {
+            "id": "8",
+            "debug_Info_1": "[0:7] - Dma channel, [8:15] - Dma controller",
+            "debug_Info_2": "error from t_eFMKCPU_DmaChnlErr"
         },
         "APP_CYCLIC_TIMEOUT": {
-            "id": "2",
+            "id": "9",
             "debug_Info_1": "Time out Difference Strong Bit",
             "debug_Info_2": "Time out Difference Low Bit"
         },
         "APP_FASTTASK_TIMEOUT": {
-            "id": "3",
+            "id": "10",
             "debug_Info_1": "Time out Difference Strong Bit",
             "debug_Info_2": "Time out Difference Low Bit"
         },
         "UDS_COM_ERROR": {
-            "id": "4",
+            "id": "11",
             "debug_Info_1": "Info Errror",
             "debug_Info_2": "None"
         },
         "APPSIG_MSG_TIMEOUT": {
-            "id": "5",
+            "id": "12",
             "debug_Info_1": "idx of the message",
             "debug_Info_2": "type of the message"
-        },
-        "FMKCAN_FIFO_ERROR": {
-            "id": "6",
-            "debug_Info_1": "Fifo Rx = 0, Fifo Tx = 1",
-            "debug_Info_2": "ErrorCode"
         }
     },
     "PARAMETERS": {
-        "MOTOR_X_KP": {
-            "id": "0",
-            "min": "0",
+        "LGC_MTR_PULSE_ITER_MAX": {
+            "id": "None",
+            "min": "1",
             "max": "65535",
-            "default": "0",
+            "default": "4000",
             "machine": 0
         },
-        "MOTOR_X_KI": {
-            "id": "1",
+        "LGC_MTR_XL_RAMP_CTRL_KFACTOR": {
+            "id": "None",
             "min": "0",
             "max": "65535",
-            "default": "0",
+            "default": "2",
             "machine": 0
         },
-        "MOTOR_X_KD": {
-            "id": "2",
+        "LGC_MTR_XL_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
             "min": "0",
             "max": "65535",
-            "default": "0",
+            "default": "65300",
+            "machine": 0
+        },
+        "LGC_MTR_XL_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "LGC_MTR_XL_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "LGC_MTR_XL_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "LGC_MTR_XR_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "LGC_MTR_XR_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "LGC_MTR_XR_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "LGC_MTR_XR_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "LGC_MTR_XR_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "LGC_MTR_Y_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "LGC_MTR_Y_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "LGC_MTR_Y_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "LGC_MTR_Y_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "LGC_MTR_Y_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
+            "machine": 0
+        },
+        "LGC_MTR_Z_RAMP_CTRL_KFACTOR": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "2",
+            "machine": 0
+        },
+        "LGC_MTR_Z_RAMP_CTRL_SLOP_SPEED": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "65300",
+            "machine": 0
+        },
+        "LGC_MTR_Z_RAMP_CTRL_TOTAL_STEP": {
+            "id": "None",
+            "min": "0",
+            "max": "65535",
+            "default": "50",
+            "machine": 0
+        },
+        "LGC_MTR_Z_SPEED_MAX": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "26000",
+            "machine": 0
+        },
+        "LGC_MTR_Z_SPEED_MIN": {
+            "id": "None",
+            "min": "1",
+            "max": "65535",
+            "default": "600",
             "machine": 0
         }
     },

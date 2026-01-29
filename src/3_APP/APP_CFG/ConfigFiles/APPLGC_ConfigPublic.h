@@ -20,13 +20,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define APPLGC_APP_PROTOCOL_LEN_DATA ((t_uint8)9)
-    #define APPLGC_IDX_APP_DATA_START ((t_uint8)1)
-    #define APPLGC_APPUSER_COM_TIMEOUT ((t_uint32)1000)
-    #define APPLGC_APPUSER_ERR_RX ((t_uint16)0)
-    #define APPLGC_APPUSER_ERR_TX ((t_uint16)1)
 
-    #define APPLGC_SERIAL_LINE_APP FMKSRL_SERIAL_LINE_2
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -59,6 +53,9 @@
     */
     typedef enum ____t_eAPPLGC_SrvList
     {
+        APPLGC_SRV_GTRY_X = 0x00,
+        APPLGC_SRV_GTRY_Y,
+        APPLGC_SRV_GTRY_Z,
 
         APPLGC_SRV_NB,
     } t_eAPPLGC_SrvList;
@@ -67,6 +64,7 @@
     */
     typedef enum ____t_eAPPLGC_AgentList
     {
+        APPLGC_AGENT_GANTRY = 0x00,          // Gère la gestion du gantry
 
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;
@@ -79,7 +77,6 @@
     {
         t_eAPPLGC_SrvHealth health_e;
         t_eAPPLGC_SrvState  state_e;
-        t_uAPPACT_SetValue  * actVal_pau;
     } t_sAPPLGC_ServiceInfo;
 
     /**
@@ -96,49 +93,17 @@
     *   @param[in]  f_SrvInfo_pas     : All Services Infos.\n
     *
     */
-    typedef t_eReturnCode (t_cbAPPLGC_AgentPeriodicTask)(   t_float32 *f_snsValues_paf32, 
-                                                            t_sAPPLGC_ServiceInfo *f_SrvInfo_pas);
+    typedef t_eReturnCode (t_cbAPPLGC_AgentPeriodicTask)(void);
 
-    /**
-    *
-    *	@brief      Set the Service Init Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMInit)(void);
-    /**
-    *
-    *	@brief      Set the Service Cyclic Function
-    *
-    */
-   typedef t_eReturnCode (t_cbAPPLGC_FSMCyclic)(t_float32 *f_snsValues_paf32, 
-                                                t_sAPPLGC_ServiceInfo *f_SrvInfo_pas);
-    /**
-    *
-    *	@brief      Set the Service Enter Mode Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMEnterMode)(void);
-    /**
-    *
-    *	@brief      Set the Service Exit Mode Function
-    *
-    */
-    typedef t_eReturnCode (t_cbAPPLGC_FSMExitMode)(void);
 
     //-----------------------------STRUCT TYPES---------------------------//
     typedef struct 
     {
         t_cbAPPLGC_AgentInit * init_pcb;
         t_cbAPPLGC_AgentPeriodicTask * PeriodTask_pcb;
+        t_uint32 initPeriodMs_u32;
     } t_sAPPLGC_AgentFunc;
 
-    typedef struct 
-    {
-        t_cbAPPLGC_FSMInit * Init_pcb;
-        t_cbAPPLGC_FSMCyclic * Cyclic_pcb;
-        t_cbAPPLGC_FSMEnterMode * Enter_pcb;
-        t_cbAPPLGC_FSMExitMode * Exit_pcb;
-    } t_sAPPLGC_FSM_Func;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************

@@ -172,7 +172,9 @@ t_eReturnCode FMKCDA_ConvertRawInterSnsValue(t_eFMKCDA_AdcInternSns f_AdcInternS
                 *f_snsAnaMeasure_pf32 *= FMKCDA_ADC_VOLT_PROMILLE;
             break;
             case FMKCDA_ADC_INTERN_TS_CAL1:
+#ifdef FMKCPU_STM32_ECU_FAMILY_G4
             case FMKCDA_ADC_INTERN_TS_CAL2:
+#endif
             {
                 //---- calibration value has to be without dimension ----//
                 measCalibrate_f32 = f_rawAnaMeasure_f32 * (f_calibValue_f32 / FMKCDA_ADC_CALIB_VREF);

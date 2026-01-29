@@ -16,6 +16,10 @@
     // ********************************************************************
     #include "./APPLGC_ConfigPublic.h"
     #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
+    #include "APP_CFG/ConfigFiles/APPSNS_ConfigPublic.h"
+
+    //---- agent include ----//
+    #include "APP_LGC/Src/Agents/Gantry/Src/GANTRY.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -43,23 +47,23 @@
     // ********************************************************************
     // *                      Variables
     // ********************************************************************
+    ///@brief Sensors Computaion type 
+    const t_uint8 c_APPLGC_SnsIfCompType_au8[APPSNS_SNSITF_NB] = {
+        APPSNS_DISTANCE_UNIT_MILLIMETER,// APPSNS_SNSITF_ECDR_XL_POS
+        APPSNS_ANGULARSPD_DEGREE_PER_SEC,// APPSNS_SNSITF_ECDR_XL_SPEED
+        APPSNS_DISTANCE_UNIT_MILLIMETER,// APPSNS_SNSITF_ECDR_XR_POS
+        APPSNS_ANGULARSPD_DEGREE_PER_SEC,// APPSNS_SNSITF_ECDR_XR_SPEED
+        APPSNS_DISTANCE_UNIT_MILLIMETER,// APPSNS_SNSITF_ECDR_Y_POS
+        APPSNS_ANGULARSPD_DEGREE_PER_SEC,// APPSNS_SNSITF_ECDR_Y_SPEED
+        APPSNS_DISTANCE_UNIT_MILLIMETER,// APPSNS_SNSITF_ECDR_Z_POS
+        APPSNS_ANGULARSPD_DEGREE_PER_SEC,// APPSNS_SNSITF_ECDR_Z_SPEED
+    };
     /* CAUTION : Automatic generated code section for Variable: Start */
     /**
     * @brief Agent Configuration Function
     */
-    const t_sAPPLGC_AgentFunc c_AppLGc_AgentFunc_apf[APPLGC_AGENT_NB] ={
-    };
-
-    /**
-    * @brief Service Max Actuators values 
-    */
-    const t_uint8 c_AppLGc_SrvActuatorsMax_ua8[APPLGC_SRV_NB] = {
-    };
-
-    /**
-    * @brief Service Actuators Variable Mapping
-    */
-    const t_eAPPACT_Actuators * c_AppLGc_SrvDepedencies_pae[APPLGC_SRV_NB] ={
+    const t_sAPPLGC_AgentFunc c_AppLGc_AgentInfo_as[APPLGC_AGENT_NB] ={
+        {GANTRY_Init,                       GANTRY_PeriodicTask},// APPLGC_AGENT_GANTRY
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

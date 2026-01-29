@@ -154,7 +154,7 @@ static t_eCyclicModState g_AppUds_ModState_e = STATE_CYCLIC_CFG;
  * 
  * @brief Container to know when a client is trying to connect to the UDS Server
  */
-static t_bool g_reqClientCo_b = (t_bool)False;
+static t_bool g_reqClientCo_b = FALSE;
 /**
  * 
  * @brief Container to get information about the state of the reception
@@ -509,7 +509,7 @@ static t_eReturnCode s_APPUDS_AuthentificationMngmt(void)
                     if(subRet_e == RC_OK)
                     {
                         Ret_e = RC_WARNING_WRONG_RESULT;
-                        g_reqClientCo_b = (t_bool)False;
+                        g_reqClientCo_b = FALSE;
                     }
                 }
             }
@@ -519,7 +519,7 @@ static t_eReturnCode s_APPUDS_AuthentificationMngmt(void)
                 if(subRet_e == RC_OK)
                 {
                     Ret_e = RC_WARNING_WRONG_RESULT;
-                    g_reqClientCo_b = (t_bool)False;
+                    g_reqClientCo_b = FALSE;
                 }
             }
             
@@ -566,7 +566,7 @@ static t_eReturnCode s_APPUDS_AuthentificationMngmt(void)
                 else 
                 {
                     s_FsmAuthState_e = APPUDS_FSM_AUTH_CHECK_CLIENT;
-                    g_reqClientCo_b = (t_bool)False;
+                    g_reqClientCo_b = FALSE;
                     Ret_e = RC_WARNING_LIMIT_REACHED;
                 }
             }
@@ -846,7 +846,7 @@ static void s_APPUDS_ClientRcvCallback( t_uint8 * f_rxData_pu8,
             //          to a client trying to connect to the server ----//
             //---- we don't check all 'caus eit's in the interruption, go fast ----//
             if((g_RxBuffer_ua8[0] == (t_uint8)(APPUDS_ID_FIRST_FRAME_DATA_0))
-            && (g_reqClientCo_b == (t_bool)False))
+            && (g_reqClientCo_b == FALSE))
             {
                 g_reqClientCo_b = (t_bool)True;
             }

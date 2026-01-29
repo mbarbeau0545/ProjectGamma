@@ -62,6 +62,26 @@
     //                      Public functions - Prototyupe
     //********************************************************************************
     /* CAUTION : Automatic generated code section for Diag Strategy Function Declaration: Start */
+    /**
+    * @brief Stratefy Function : Disable All Mouvement From Gantry
+    */
+    void APPSDM_SPEC_DiagStrat_GANTRY_AXES_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
+    /**
+    * @brief Stratefy Function : Disable Axe X Mouvement From Gantry
+    */
+    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_X_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
+    /**
+    * @brief Stratefy Function : Disable Axe Y Mouvement From Gantry
+    */
+    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Y_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
+    /**
+    * @brief Stratefy Function : Disable Axe Z Mouvement From Gantry
+    */
+    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
     /* CAUTION : Automatic generated code section for Diag Strategy Function Declaration: End */
    
 

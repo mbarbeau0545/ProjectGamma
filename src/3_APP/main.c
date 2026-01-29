@@ -35,6 +35,7 @@ int main(void)
         // code running every APPSYS_ELAPSED_TIME_CYCLIC ms
         APPSYS_Cyclic();
     }
+        
     return 0;
 }
 //************************************************************************************

@@ -77,7 +77,7 @@
     *  @retval RC_ERROR_ALREADY_CONFIGURED       @ref RC_ERROR_ALREADY_CONFIGURED
     *  @retval RC_ERROR_NOT_ALLOWED              @ref RC_ERROR_NOT_ALLOWED
     */                                           
-    t_eReturnCode FMKCPU_SetPeriphClockCfg(t_eFMKCPU_ClockPort f_clockPort_e);
+    t_eReturnCode FMKCPU_SetPeriphClockCfg(t_sFMKCPU_PllOscCfg ** f_PllOtherCfg_pas);
     /**
     *
     *	@brief    Set the Periph Clock Configuration

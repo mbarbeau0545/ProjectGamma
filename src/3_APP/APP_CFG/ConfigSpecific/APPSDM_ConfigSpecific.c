@@ -65,6 +65,86 @@ t_eReturnCode s_APPSDM_SPEC_GetHealthFromStratOpe(t_eAPPSDM_DiagStratOpe f_strat
 //                      Public functions - Implementation
 //****************************************************************************
 /* CAUTION : Automatic generated code section for Diag Strategy Function Implementation: Start */
+/*********************************
+APPSDM_SPEC_DiagStrat_GANTRY_AXES_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_GANTRY_AXES_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_X, srvHealth_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_Y, srvHealth_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_Z, srvHealth_e);
+    }
+
+    return;
+}
+
+/*********************************
+APPSDM_SPEC_DiagStrat_GANTRY_AXE_X_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_GANTRY_AXE_X_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_X, srvHealth_e);
+    }
+
+    return;
+}
+
+/*********************************
+APPSDM_SPEC_DiagStrat_GANTRY_AXE_Y_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Y_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_Y, srvHealth_e);
+    }
+
+    return;
+}
+
+/*********************************
+APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_GTRY_Z, srvHealth_e);
+    }
+
+    return;
+}
+
 /* CAUTION : Automatic generated code section for Diag Strategy Function Implementation: End */
 
 //*****************************************************************************

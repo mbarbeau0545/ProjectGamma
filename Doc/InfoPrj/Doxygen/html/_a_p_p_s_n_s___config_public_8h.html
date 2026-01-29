@@ -80,8 +80,8 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a5fd39a5550ff50adf236b17d07e5d1a4" id="r_a5fd39a5550ff50adf236b17d07e5d1a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4">t_eAPPSNS_Sensors</a> { <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9">APPSNS_SENSOR_AIRTEMPERATURE</a> = 0x0
-, <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070">APPSNS_SENSOR_NB</a>
+<tr class="memitem:a5fd39a5550ff50adf236b17d07e5d1a4" id="r_a5fd39a5550ff50adf236b17d07e5d1a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4">t_eAPPSNS_SnsInterface</a> { <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9">APPSNS_SNS_AIRTEMPERATURE</a> = 0x0
+, <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070">APPSNS_SNS_NB</a>
  }</td></tr>
 <tr class="separator:a5fd39a5550ff50adf236b17d07e5d1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae479a9dbf75dd3ff4f9fad8038aed69c" id="r_ae479a9dbf75dd3ff4f9fad8038aed69c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae479a9dbf75dd3ff4f9fad8038aed69c">t_eAPPSNS_Drivers</a> { <a class="el" href="#ae479a9dbf75dd3ff4f9fad8038aed69ca5f5543d3ac4b81d604678bf1c80ee8af">APPSNS_DRIVER_NB</a>
@@ -160,9 +160,9 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a76777e58d23ae6d705a5fdff6dca88d0a7ab7944b70823d1a4859f65540a3e78b">APPSNS_FLOW_UNIT_NB</a>
  }</td></tr>
 <tr class="separator:a76777e58d23ae6d705a5fdff6dca88d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7afd89244a58f698fc5ac71cbbc897f" id="r_af7afd89244a58f698fc5ac71cbbc897f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7afd89244a58f698fc5ac71cbbc897f">t_eAPPSNS_SensorState</a> { <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400">APPSNS_SENSOR_STATE_DISABLE</a> = 0
-, <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f">APPSNS_SENSOR_STATE_ENABLE</a>
-, <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8">APPSNS_SENSOR_STATE_NB</a>
+<tr class="memitem:af7afd89244a58f698fc5ac71cbbc897f" id="r_af7afd89244a58f698fc5ac71cbbc897f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7afd89244a58f698fc5ac71cbbc897f">t_eAPPSNS_SnsInterfacetate</a> { <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400">APPSNS_SNS_STATE_DISABLE</a> = 0
+, <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f">APPSNS_SNS_STATE_ENABLE</a>
+, <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8">APPSNS_SNS_STATE_NB</a>
  }</td></tr>
 <tr class="separator:af7afd89244a58f698fc5ac71cbbc897f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ef4d954b286471e5a367bf0db5084c" id="r_ad6ef4d954b286471e5a367bf0db5084c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6ef4d954b286471e5a367bf0db5084c">t_eAPPSNS_DrvState</a> { <a class="el" href="#ad6ef4d954b286471e5a367bf0db5084ca500faacf728f46706b14012db3acabc3">APPSNS_DRIVER_STATE_DISABLE</a> = 0
@@ -356,41 +356,41 @@ Enumerations</h2></td></tr>
 </div>
 </div>
 <a id="a5fd39a5550ff50adf236b17d07e5d1a4" name="a5fd39a5550ff50adf236b17d07e5d1a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fd39a5550ff50adf236b17d07e5d1a4">&#9670;&#160;</a></span>t_eAPPSNS_Sensors</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fd39a5550ff50adf236b17d07e5d1a4">&#9670;&#160;</a></span>t_eAPPSNS_SnsInterface</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4">t_eAPPSNS_Sensors</a></td>
+          <td class="memname">enum <a class="el" href="#a5fd39a5550ff50adf236b17d07e5d1a4">t_eAPPSNS_SnsInterface</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9" name="a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"></a>APPSNS_SENSOR_AIRTEMPERATURE&#160;</td><td class="fielddoc"><p>Temp�rature local de l'air </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9" name="a5fd39a5550ff50adf236b17d07e5d1a4ac63d0f26cc632594089cabe90b1030b9"></a>APPSNS_SNS_AIRTEMPERATURE&#160;</td><td class="fielddoc"><p>Temp�rature local de l'air </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070" name="a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"></a>APPSNS_SENSOR_NB&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070" name="a5fd39a5550ff50adf236b17d07e5d1a4adb3814c4991dd41cbc8d0d41adb65070"></a>APPSNS_SNS_NB&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
 </div>
 <a id="af7afd89244a58f698fc5ac71cbbc897f" name="af7afd89244a58f698fc5ac71cbbc897f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7afd89244a58f698fc5ac71cbbc897f">&#9670;&#160;</a></span>t_eAPPSNS_SensorState</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af7afd89244a58f698fc5ac71cbbc897f">&#9670;&#160;</a></span>t_eAPPSNS_SNSState</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897f">t_eAPPSNS_SensorState</a></td>
+          <td class="memname">enum <a class="el" href="#af7afd89244a58f698fc5ac71cbbc897f">t_eAPPSNS_SNSState</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400" name="af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"></a>APPSNS_SENSOR_STATE_DISABLE&#160;</td><td class="fielddoc"><p>The sensor is unused in a system configuration </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400" name="af7afd89244a58f698fc5ac71cbbc897fa527da5636a255a0acce77cbe0ac8d400"></a>APPSNS_SNS_STATE_DISABLE&#160;</td><td class="fielddoc"><p>The sensor is unused in a system configuration </p>
 </td></tr>
-<tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f" name="af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"></a>APPSNS_SENSOR_STATE_ENABLE&#160;</td><td class="fielddoc"><p>The sensor is used in a system configuration </p>
+<tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f" name="af7afd89244a58f698fc5ac71cbbc897fa02b24125cca117dc7e43158b4d98383f"></a>APPSNS_SNS_STATE_ENABLE&#160;</td><td class="fielddoc"><p>The sensor is used in a system configuration </p>
 </td></tr>
-<tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8" name="af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"></a>APPSNS_SENSOR_STATE_NB&#160;</td><td class="fielddoc"><p>Number of sensor state </p>
+<tr><td class="fieldname"><a id="af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8" name="af7afd89244a58f698fc5ac71cbbc897fa839a28cee603e79d2d290a6e97feafb8"></a>APPSNS_SNS_STATE_NB&#160;</td><td class="fielddoc"><p>Number of sensor state </p>
 </td></tr>
 </table>
 
