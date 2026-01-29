@@ -404,7 +404,7 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 
     t_eReturnCode Ret_e;
 
-    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    //Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
     
     return Ret_e;
 }
@@ -416,15 +416,6 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    for(t_sint32 idxAgent_s32 = 0 ; (idxAgent_s32 < APPLGC_AGENT_NB) && (Ret_e == RC_OK) ; idxAgent_s32++)
-    {
-        Ret_e = c_AppLGc_AgentInfo_as[idxAgent_s32].init_pcb();
-
-        if(Ret_e < RC_OK)
-        {
-            ASSERT((t_uint16)idxAgent_s32);
-        }
-    }
     // if(Ret_e == RC_OK)
     // {
     //     Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
@@ -437,46 +428,22 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
  *********************************/
 static t_eReturnCode s_APPLGC_Operational(void)
 {
+
     t_eReturnCode Ret_e;
+    t_uint8 data_u8[8] = {0,1,2,3,4,5,6,7};
+    t_sFMKFDCAN_TxItem txItem_s = {
+        .BitRate_e = FMKFDCAN_BITRATE_SWITCH_OFF,
+        .frameFormat_e = FMKFDCAN_FRAME_FORMAT_CLASSIC,
+        .ItemId_s.FramePurpose_e = FMKFDCAN_FRAME_PURPOSE_DATA,
+        .ItemId_s.Identifier_u32 = 0x18FF999,
+        .ItemId_s.IdType_e = FMKFDCAN_IDTYPE_EXTENDED,
+        .CanMsg_s.Direction_e = FMKFDCAN_NODE_DIRECTION_TX,
+        .CanMsg_s.Dlc_e = FMKFDCAN_DLC_8,
+        .CanMsg_s.data_pu8 = data_u8
 
-    //---- update service health ----//
-    if(g_resetSrvState_b == TRUE)
-    {
-        Ret_e = s_APPLGC_ResetSrvState();
-        if(Ret_e == RC_OK)
-        {
-            g_resetSrvState_b = FALSE;
-        }
-    }
-    else 
-    {
-        Ret_e = RC_OK;
-    }
-    //---- update sensors value ----//
-    if(Ret_e >= RC_OK)
-    {
-        Ret_e = s_APPLGC_UpdateActValues();
-    }
-    //---- update sensors value ----//
-    if(Ret_e >= RC_OK)
-    {
-        Ret_e = s_APPLGC_UpdateSnsValues();
-    }
-    if(Ret_e >= RC_OK)
-    {
-        for(t_sint32 idxAgent_s32 = 0; idxAgent_s32 < APPLGC_AGENT_NB ; idxAgent_s32++)
-        {
-            Ret_e = c_AppLGc_AgentInfo_as[idxAgent_s32].PeriodTask_pcb();
+    };
 
-            if(Ret_e < RC_OK)
-            {
-                ASSERT((t_uint16)idxAgent_s32);
-            }
-        }
-    }
-
-
-    
+    Ret_e = FMKFDCAN_SendTxItem(FMKFDCAN_NODE_1, txItem_s);
     return Ret_e;
 }
 

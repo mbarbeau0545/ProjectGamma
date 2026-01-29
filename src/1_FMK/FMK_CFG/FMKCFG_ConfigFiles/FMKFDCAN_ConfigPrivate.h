@@ -27,7 +27,7 @@
     /**
      * @brief Operating mode for FDCAN nodes.
      */
-    #define FMKFDCAN_NODE_MODE (FDCAN_MODE_INTERNAL_LOOPBACK)
+    #define FMKFDCAN_NODE_MODE (FDCAN_MODE_NORMAL)
     /**
      * @brief Source clock for FDCAN kernel (in MHz).
      */
@@ -283,7 +283,7 @@
     
 
     const t_bool c_FmkCan_IsNodeActive[FMKFDCAN_NODE_NB] = {
-        (t_bool)True,  // FMKFDCAN_NODE_1
+        TRUE,  // FMKFDCAN_NODE_1
         FALSE, // FMKFDCAN_NODE_2
 #if defined(FMKCPU_STM32_ECU_FAMILY_G4)
         FALSE, // FMKFDCAN_NODE_3
