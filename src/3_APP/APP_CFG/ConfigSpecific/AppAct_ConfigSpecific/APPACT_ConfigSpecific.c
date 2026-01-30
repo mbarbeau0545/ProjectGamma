@@ -193,7 +193,14 @@ t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32,
     {
         s_APPACT_SPEC_CL42T_CheckTimeValidity(f_shadowCmd_ps);
         FMKCPU_GetTick(&f_shadowCmd_ps->lastCmdSet_u32);
-        f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
+        if (f_SigValue_pf32 >= 0.0f)
+        {
+            f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
+        }
+        else
+        {
+            f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(f_SigValue_pf32 - 0.5f);
+        }
         f_shadowCmd_ps->isPulsesRcv_b = TRUE;
 
         if((f_shadowCmd_ps->isFreqRcv_b == TRUE)

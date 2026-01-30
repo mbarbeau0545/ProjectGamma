@@ -342,11 +342,11 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .pwmCtrlPrm_s = {
                 .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
                 .rampCfg_ps = NULL,
-                .enablePulseSyncOpe_b = TRUE
+                .enablePulseSyncOpe_b = FALSE
             }
         }
     };
-
+    
     Ret_e  = CL42T_AddMotorConfiguration(   c_MtrXL_CL42T_Id,
                                             motorConfig, 
                                             APPACT_SPEC_MOTOR_XL_ENABLE_DEADTIME,

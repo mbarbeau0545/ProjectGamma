@@ -330,7 +330,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .PulseSigCfg_s = {
-            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_5,
+            .PulseSignal_e = FMKIO_OUTPUT_SIGPWM_6,
             .pwmWaveForm_s = {
                 .deadTime_u32 = 0,
                 .frequency_f32 = 1000,
@@ -341,7 +341,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             .pwmCtrlPrm_s = {
                 .ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED,
                 .rampCfg_ps = NULL,
-                .enablePulseSyncOpe_b = TRUE
+                .enablePulseSyncOpe_b = FALSE
             }
         }
     };
