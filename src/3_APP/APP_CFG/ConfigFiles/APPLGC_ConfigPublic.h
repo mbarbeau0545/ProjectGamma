@@ -56,6 +56,9 @@
         APPLGC_SRV_GTRY_X = 0x00,
         APPLGC_SRV_GTRY_Y,
         APPLGC_SRV_GTRY_Z,
+        APPLGC_SRV_WHEEL_AV_R,
+        APPLGC_SRV_WHEEL_AV_L,
+        APPLGC_SRV_HEAD_CUTTER,
 
         APPLGC_SRV_NB,
     } t_eAPPLGC_SrvList;
@@ -65,6 +68,8 @@
     typedef enum ____t_eAPPLGC_AgentList
     {
         APPLGC_AGENT_GANTRY = 0x00,          // Gère la gestion du gantry
+        APPLGC_AGENT_HEAD_CUTTER,     // Gère la gestion du cutter
+        APPLGC_AGENT_MOTION,          // Gère la gestion des roues et leur direction
 
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;

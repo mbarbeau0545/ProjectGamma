@@ -64,6 +64,8 @@
     */
     const t_sAPPLGC_AgentFunc c_AppLGc_AgentInfo_as[APPLGC_AGENT_NB] ={
         {GANTRY_Init,                       GANTRY_PeriodicTask},// APPLGC_AGENT_GANTRY
+        {HEAD_CUTTER_Init,                  HEAD_CUTTER_PeriodicTask},// APPLGC_AGENT_HEAD_CUTTER
+        {MOTION_Init,                       MOTION_PeriodicTask},// APPLGC_AGENT_MOTION
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

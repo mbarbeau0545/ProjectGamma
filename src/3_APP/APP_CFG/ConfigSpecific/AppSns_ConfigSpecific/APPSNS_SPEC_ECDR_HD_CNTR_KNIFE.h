@@ -1,5 +1,5 @@
 /*********************************************************************
- * @file        APPSYS_ConfigPublic.h
+ * @file        TemplateName.h
  * @brief       Template_BriefDescription.
  * @note        TemplateDetailsDescription.\n
  *
@@ -7,9 +7,10 @@
  * @date        jj/mm/yyyy
  * @version     1.0
  */
-  
-#ifndef APPSDM_CONFIGSPECIFIC_H_INCLUDED
-#define APPSDM_CONFIGSPECIFIC_H_INCLUDED
+/* CAUTION : Automatic generated code section for ifndef: Start */
+#ifndef APPSNS_SPEC_ECDR_HD_CNTR_KNIFE
+#define APPSNS_SPEC_ECDR_HD_CNTR_KNIFE
+/* CAUTION : Automatic generated code section for ifndef: End */
 
 
 
@@ -18,8 +19,10 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    /* CAUTION : Automatic generated code section for Include: Start */
     #include "TypeCommon.h"
-    
+    #include "APP_CFG/ConfigFiles/APPSNS_ConfigPublic.h"
+    /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -27,18 +30,11 @@
     // ********************************************************************
     // *                      Types
     // ********************************************************************
-    typedef enum 
-    {
-        APPSDM_DIAG_STRAT_INHIBIT_OFF = 0x00,
-        APPSDM_DIAG_STRAT_INHIBIT_ON,
-
-        APPSDM_DIAG_STRAT_INHIBIT_NB
-    } t_eAPPSDM_DiagStratOpe;
 	/* CAUTION : Automatic generated code section for Enum: Start */
 
 	/* CAUTION : Automatic generated code section for Enum: End */
 	//-----------------------------ENUM TYPES-----------------------------//
-    /**< enum for module list */
+
 
 	/* CAUTION : Automatic generated code section for Structure: Start */
 
@@ -48,8 +44,6 @@
 
 	/* CAUTION : Automatic generated code section : End */
 	//-----------------------------TYPEDEF TYPES---------------------------//
-
-    
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************
@@ -58,44 +52,48 @@
     // *                      Variables
     // ********************************************************************
 
+
     //********************************************************************************
-    //                      Public functions - Prototyupe
+    //                      Public functions - Prototyupes
     //********************************************************************************
-    /* CAUTION : Automatic generated code section for Diag Strategy Function Declaration: Start */
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: Start */
     /**
-    * @brief Stratefy Function : Disable All Mouvement From Gantry
+    *
+    * @brief     @ref t_cbAppSns_SetSnsCfg
+    *
     */
-    void APPSDM_SPEC_DiagStrat_GANTRY_AXES_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
-
-    /**
-    * @brief Stratefy Function : Disable Axe X Mouvement From Gantry
-    */
-    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_X_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDriverList *f_drvUsed_pe);
 
     /**
-    * @brief Stratefy Function : Disable Axe Y Mouvement From Gantry
+    *
+    * @brief     @ref t_cbAppSns_GetSigValue
+    *
     */
-    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Y_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
 
     /**
-    * @brief Stratefy Function : Disable Axe Z Mouvement From Gantry
+    *
+    * @brief     @ref t_cbAppSns_FormatValSI
+    *
     */
-    void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
 
     /**
-    * @brief Stratefy Function : Disable Mouvement From Head 
+    *
+    * @brief     @ref t_cbAppSns_GetSigValue
+    *
     */
-    void APPSDM_SPEC_DiagStrat_HEAD_CUTTER_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
 
     /**
-    * @brief Stratefy Function : Disable motion
+    *
+    * @brief     @ref t_cbAppSns_FormatValSI
+    *
     */
-    void APPSDM_SPEC_DiagStrat_MOTION_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
 
-    /* CAUTION : Automatic generated code section for Diag Strategy Function Declaration: End */
-   
-
-#endif // APPSDM_CONFIGSPECIFIC_H_INCLUDED           
+    /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
+#endif            
 //************************************************************************************
 // End of File
 //************************************************************************************
@@ -106,8 +104,8 @@
  *	@note   
  *
  *
- *	@params[in] 
- *	@params[out]
+ *	@param[in] 
+ *	@param[out]
  *	 
  *
  *

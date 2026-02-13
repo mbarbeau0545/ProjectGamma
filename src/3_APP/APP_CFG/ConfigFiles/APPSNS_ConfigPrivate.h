@@ -30,6 +30,29 @@
     #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_Y.h"
     #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_Z.h"
     #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_Z.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_WHL_AV_L.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_WHL_AV_L.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_WHL_AV_R.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_WHL_AV_R.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_CNTR_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_CNTR_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_HOLD.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_ECDR_HD_HOLD.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_HD_UP_LEFT.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_HD_DWN_LEFT.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_HD_UP_RIGHT.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_HD_DWN_RIGHT.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_XL.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_XR.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_Y.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_Z.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_WHL_AV_L.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_WHL_AV_R.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_HD_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_CNTR_KNIFE.h"
+    #include "APP_CFG\\ConfigSpecific\\AppSns_ConfigSpecific/APPSNS_SPEC_TRQ_MTR_HD_HOLD.h"
     /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
@@ -131,14 +154,37 @@
     /* CAUTION : Automatic generated code section for Variable: Start */
     ///@brief Variable for System Sensors Interface Ope Mngmt Info
     const t_sAPPSNS_SysSnsCfg c_AppSns_SysSns_as[APPSNS_SNSITF_NB] = {
-        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XL_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XL_POS_FormatValue,                        APPSIG_SIGNAL_SNS_SNSITF_ECDR_XL_POS},//APPSNS_SNSITF_ECDR_XL_POS
-        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XL_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_SNSITF_ECDR_XL_SPEED},//APPSNS_SNSITF_ECDR_XL_SPEED
-        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XR_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XR_POS_FormatValue,                        APPSIG_SIGNAL_SNS_SNSITF_ECDR_XR_POS},//APPSNS_SNSITF_ECDR_XR_POS
-        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XR_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XR_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_SNSITF_ECDR_XR_SPEED},//APPSNS_SNSITF_ECDR_XR_SPEED
-        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Y_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Y_POS_FormatValue,                         APPSIG_SIGNAL_SNS_SNSITF_ECDR_Y_POS},//APPSNS_SNSITF_ECDR_Y_POS
-        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Y_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Y_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_SNSITF_ECDR_Y_SPEED},//APPSNS_SNSITF_ECDR_Y_SPEED
-        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Z_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Z_POS_FormatValue,                         APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_POS},//APPSNS_SNSITF_ECDR_Z_POS
-        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Z_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Z_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_SNSITF_ECDR_Z_SPEED},//APPSNS_SNSITF_ECDR_Z_SPEED
+        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XL_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XL_POS_FormatValue,                        APPSIG_SIGNAL_SNS_ECDR_XL_POS},//APPSNS_SNSITF_ECDR_XL_POS
+        {APPSNS_SNSDVC_ECDR_XL,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XL_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_ECDR_XL_SPEED},//APPSNS_SNSITF_ECDR_XL_SPEED
+        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_XR_POS_GetSigValue,                           APPSNS_SPEC_ECDR_XR_POS_FormatValue,                        APPSIG_SIGNAL_SNS_ECDR_XR_POS},//APPSNS_SNSITF_ECDR_XR_POS
+        {APPSNS_SNSDVC_ECDR_XR,                                       APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_XR_SPEED_GetSigValue,                         APPSNS_SPEC_ECDR_XR_SPEED_FormatValue,                      APPSIG_SIGNAL_SNS_ECDR_XR_SPEED},//APPSNS_SNSITF_ECDR_XR_SPEED
+        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Y_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Y_POS_FormatValue,                         APPSIG_SIGNAL_SNS_ECDR_Y_POS},//APPSNS_SNSITF_ECDR_Y_POS
+        {APPSNS_SNSDVC_ECDR_Y,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Y_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Y_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_ECDR_Y_SPEED},//APPSNS_SNSITF_ECDR_Y_SPEED
+        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_Z_POS_GetSigValue,                            APPSNS_SPEC_ECDR_Z_POS_FormatValue,                         APPSIG_SIGNAL_SNS_ECDR_Z_POS},//APPSNS_SNSITF_ECDR_Z_POS
+        {APPSNS_SNSDVC_ECDR_Z,                                        APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_Z_SPEED_GetSigValue,                          APPSNS_SPEC_ECDR_Z_SPEED_FormatValue,                       APPSIG_SIGNAL_SNS_ECDR_Z_SPEED},//APPSNS_SNSITF_ECDR_Z_SPEED
+        {APPSNS_SNSDVC_ECDR_WHL_AV_L,                                 APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_WHL_AV_L_POS_GetSigValue,                     APPSNS_SPEC_ECDR_WHL_AV_L_POS_FormatValue,                  APPSIG_SIGNAL_SNS_ECDR_WHL_AV_L_POS},//APPSNS_SNSITF_ECDR_WHL_AV_L_POS
+        {APPSNS_SNSDVC_ECDR_WHL_AV_L,                                 APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_WHL_AV_L_SPEED_GetSigValue,                   APPSNS_SPEC_ECDR_WHL_AV_L_SPEED_FormatValue,                APPSIG_SIGNAL_SNS_ECDR_WHL_AV_L_SPEED},//APPSNS_SNSITF_ECDR_WHL_AV_L_SPEED
+        {APPSNS_SNSDVC_ECDR_WHL_AV_R,                                 APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_WHL_AV_R_POS_GetSigValue,                     APPSNS_SPEC_ECDR_WHL_AV_R_POS_FormatValue,                  APPSIG_SIGNAL_SNS_ECDR_WHL_AV_R_POS},//APPSNS_SNSITF_ECDR_WHL_AV_R_POS
+        {APPSNS_SNSDVC_ECDR_WHL_AV_R,                                 APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_WHL_AV_R_SPEED_GetSigValue,                   APPSNS_SPEC_ECDR_WHL_AV_R_SPEED_FormatValue,                APPSIG_SIGNAL_SNS_ECDR_WHL_AV_R_SPEED},//APPSNS_SNSITF_ECDR_WHL_AV_R_SPEED
+        {APPSNS_SNSDVC_ECDR_HD_KNIFE,                                 APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_HD_KNIFE_POS_GetSigValue,                     APPSNS_SPEC_ECDR_HD_KNIFE_POS_FormatValue,                  APPSIG_SIGNAL_SNS_ECDR_HD_KNIFE_POS},//APPSNS_SNSITF_ECDR_HD_KNIFE_POS
+        {APPSNS_SNSDVC_ECDR_HD_KNIFE,                                 APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_HD_KNIFE_SPEED_GetSigValue,                   APPSNS_SPEC_ECDR_HD_KNIFE_SPEED_FormatValue,                APPSIG_SIGNAL_SNS_ECDR_HD_KNIFE_SPEED},//APPSNS_SNSITF_ECDR_HD_KNIFE_SPEED
+        {APPSNS_SNSDVC_ECDR_HD_CNTR_KNIFE,                            APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_GetSigValue,                APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_FormatValue,             APPSIG_SIGNAL_SNS_ECDR_HD_CNTR_KNIFE_POS},//APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_POS
+        {APPSNS_SNSDVC_ECDR_HD_CNTR_KNIFE,                            APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_GetSigValue,              APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_FormatValue,           APPSIG_SIGNAL_SNS_ECDR_HD_CNTR_KNIFE_SPEED},//APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_SPEED
+        {APPSNS_SNSDVC_ECDR_HD_HOLD,                                  APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_ECDR_HD_HOLD_POS_GetSigValue,                      APPSNS_SPEC_ECDR_HD_HOLD_POS_FormatValue,                   APPSIG_SIGNAL_SNS_ECDR_HD_HOLD_POS},//APPSNS_SNSITF_ECDR_HD_HOLD_POS
+        {APPSNS_SNSDVC_ECDR_HD_HOLD,                                  APPSNS_MEASTYPE_ANGULAR_SPD,                                 APPSNS_SPEC_ECDR_HD_HOLD_SPEED_GetSigValue,                    APPSNS_SPEC_ECDR_HD_HOLD_SPEED_FormatValue,                 APPSIG_SIGNAL_SNS_ECDR_HD_HOLD_SPEED},//APPSNS_SNSITF_ECDR_HD_HOLD_SPEED
+        {APPSNS_SNSDVC_HD_UP_LEFT,                                    APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_HD_UP_LEFT_DIST_GetSigValue,                       APPSNS_SPEC_HD_UP_LEFT_DIST_FormatValue,                    APPSIG_SIGNAL_SNS_HD_UP_LEFT_DIST},//APPSNS_SNSITF_HD_UP_LEFT_DIST
+        {APPSNS_SNSDVC_HD_DWN_LEFT,                                   APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_HD_DWN_LEFT_DIST_GetSigValue,                      APPSNS_SPEC_HD_DWN_LEFT_DIST_FormatValue,                   APPSIG_SIGNAL_SNS_HD_DWN_LEFT_DIST},//APPSNS_SNSITF_HD_DWN_LEFT_DIST
+        {APPSNS_SNSDVC_HD_UP_RIGHT,                                   APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_HD_UP_RIGHT_DIST_GetSigValue,                      APPSNS_SPEC_HD_UP_RIGHT_DIST_FormatValue,                   APPSIG_SIGNAL_SNS_HD_UP_RIGHT_DIST},//APPSNS_SNSITF_HD_UP_RIGHT_DIST
+        {APPSNS_SNSDVC_HD_DWN_RIGHT,                                  APPSNS_MEASTYPE_DISTANCE,                                    APPSNS_SPEC_HD_DWN_RIGHT_DIST_GetSigValue,                     APPSNS_SPEC_HD_DWN_RIGHT_DIST_FormatValue,                  APPSIG_SIGNAL_SNS_HD_DWN_RIGHT_DIST},//APPSNS_SNSITF_HD_DWN_RIGHT_DIST
+        {APPSNS_SNSDVC_TRQ_MTR_XL,                                    APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_XL_TRQ_GetSigValue,                        APPSNS_SPEC_TRQ_MTR_XL_TRQ_FormatValue,                     APPSIG_SIGNAL_SNS_TRQ_MTR_XL_TRQ},//APPSNS_SNSITF_TRQ_MTR_XL_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_XR,                                    APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_XR_TRQ_GetSigValue,                        APPSNS_SPEC_TRQ_MTR_XR_TRQ_FormatValue,                     APPSIG_SIGNAL_SNS_TRQ_MTR_XR_TRQ},//APPSNS_SNSITF_TRQ_MTR_XR_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_Y,                                     APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_Y_TRQ_GetSigValue,                         APPSNS_SPEC_TRQ_MTR_Y_TRQ_FormatValue,                      APPSIG_SIGNAL_SNS_TRQ_MTR_Y_TRQ},//APPSNS_SNSITF_TRQ_MTR_Y_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_Z,                                     APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_Z_TRQ_GetSigValue,                         APPSNS_SPEC_TRQ_MTR_Z_TRQ_FormatValue,                      APPSIG_SIGNAL_SNS_TRQ_MTR_Z_TRQ},//APPSNS_SNSITF_TRQ_MTR_Z_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_WHL_AV_L,                              APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_WHL_AV_L_TRQ_GetSigValue,                  APPSNS_SPEC_TRQ_MTR_WHL_AV_L_TRQ_FormatValue,               APPSIG_SIGNAL_SNS_TRQ_MTR_WHL_AV_L_TRQ},//APPSNS_SNSITF_TRQ_MTR_WHL_AV_L_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_WHL_AV_R,                              APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_WHL_AV_R_TRQ_GetSigValue,                  APPSNS_SPEC_TRQ_MTR_WHL_AV_R_TRQ_FormatValue,               APPSIG_SIGNAL_SNS_TRQ_MTR_WHL_AV_R_TRQ},//APPSNS_SNSITF_TRQ_MTR_WHL_AV_R_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_HD_KNIFE,                              APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_HD_KNIFE_TRQ_GetSigValue,                  APPSNS_SPEC_TRQ_MTR_HD_KNIFE_TRQ_FormatValue,               APPSIG_SIGNAL_SNS_TRQ_MTR_HD_KNIFE_TRQ},//APPSNS_SNSITF_TRQ_MTR_HD_KNIFE_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_CNTR_KNIFE,                            APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_CNTR_KNIFE_TRQ_GetSigValue,                APPSNS_SPEC_TRQ_MTR_CNTR_KNIFE_TRQ_FormatValue,             APPSIG_SIGNAL_SNS_TRQ_MTR_CNTR_KNIFE_TRQ},//APPSNS_SNSITF_TRQ_MTR_CNTR_KNIFE_TRQ
+        {APPSNS_SNSDVC_TRQ_MTR_HD_HOLD,                               APPSNS_MEASTYPE_FORCE,                                       APPSNS_SPEC_TRQ_MTR_HD_HOLD_TRQ_GetSigValue,                   APPSNS_SPEC_TRQ_MTR_HD_HOLD_TRQ_FormatValue,                APPSIG_SIGNAL_SNS_TRQ_MTR_HD_HOLD_TRQ},//APPSNS_SNSITF_TRQ_MTR_HD_HOLD_TRQ
     };
 
     ///@brief Variable for system Sensors Device Ope Mngmt
@@ -147,6 +193,24 @@
         {APPSYS_OPT_ID_SNS_ECDR_XR,                                   APPSNS_SPEC_ECDR_XR_SetCfg},                                   // APPSNS_SNSDVC_ECDR_XR
         {APPSYS_OPT_ID_SNS_ECDR_Y,                                    APPSNS_SPEC_ECDR_Y_SetCfg},                                    // APPSNS_SNSDVC_ECDR_Y
         {APPSYS_OPT_ID_SNS_ECDR_Z,                                    APPSNS_SPEC_ECDR_Z_SetCfg},                                    // APPSNS_SNSDVC_ECDR_Z
+        {APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L,                             APPSNS_SPEC_ECDR_WHL_AV_L_SetCfg},                             // APPSNS_SNSDVC_ECDR_WHL_AV_L
+        {APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R,                             APPSNS_SPEC_ECDR_WHL_AV_R_SetCfg},                             // APPSNS_SNSDVC_ECDR_WHL_AV_R
+        {APPSYS_OPT_ID_SNS_ECDR_HD_KNIFE,                             APPSNS_SPEC_ECDR_HD_KNIFE_SetCfg},                             // APPSNS_SNSDVC_ECDR_HD_KNIFE
+        {APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNIFE,                        APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SetCfg},                        // APPSNS_SNSDVC_ECDR_HD_CNTR_KNIFE
+        {APPSYS_OPT_ID_SNS_ECDR_HD_HOLD,                              APPSNS_SPEC_ECDR_HD_HOLD_SetCfg},                              // APPSNS_SNSDVC_ECDR_HD_HOLD
+        {APPSYS_OPT_ID_SNS_HD_UP_LEFT,                                APPSNS_SPEC_HD_UP_LEFT_SetCfg},                                // APPSNS_SNSDVC_HD_UP_LEFT
+        {APPSYS_OPT_ID_SNS_HD_DWN_LEFT,                               APPSNS_SPEC_HD_DWN_LEFT_SetCfg},                               // APPSNS_SNSDVC_HD_DWN_LEFT
+        {APPSYS_OPT_ID_SNS_HD_UP_RIGHT,                               APPSNS_SPEC_HD_UP_RIGHT_SetCfg},                               // APPSNS_SNSDVC_HD_UP_RIGHT
+        {APPSYS_OPT_ID_SNS_HD_DWN_RIGHT,                              APPSNS_SPEC_HD_DWN_RIGHT_SetCfg},                              // APPSNS_SNSDVC_HD_DWN_RIGHT
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_XL,                                APPSNS_SPEC_TRQ_MTR_XL_SetCfg},                                // APPSNS_SNSDVC_TRQ_MTR_XL
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_XR,                                APPSNS_SPEC_TRQ_MTR_XR_SetCfg},                                // APPSNS_SNSDVC_TRQ_MTR_XR
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_Y,                                 APPSNS_SPEC_TRQ_MTR_Y_SetCfg},                                 // APPSNS_SNSDVC_TRQ_MTR_Y
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_Z,                                 APPSNS_SPEC_TRQ_MTR_Z_SetCfg},                                 // APPSNS_SNSDVC_TRQ_MTR_Z
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L,                          APPSNS_SPEC_TRQ_MTR_WHL_AV_L_SetCfg},                          // APPSNS_SNSDVC_TRQ_MTR_WHL_AV_L
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R,                          APPSNS_SPEC_TRQ_MTR_WHL_AV_R_SetCfg},                          // APPSNS_SNSDVC_TRQ_MTR_WHL_AV_R
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNIFE,                          APPSNS_SPEC_TRQ_MTR_HD_KNIFE_SetCfg},                          // APPSNS_SNSDVC_TRQ_MTR_HD_KNIFE
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNIFE,                        APPSNS_SPEC_TRQ_MTR_CNTR_KNIFE_SetCfg},                        // APPSNS_SNSDVC_TRQ_MTR_CNTR_KNIFE
+        {APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD,                           APPSNS_SPEC_TRQ_MTR_HD_HOLD_SetCfg},                           // APPSNS_SNSDVC_TRQ_MTR_HD_HOLD
     };
 
     /**< Variable for System Sensors drivers functions*/

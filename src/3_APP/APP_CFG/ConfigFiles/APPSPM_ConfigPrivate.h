@@ -100,7 +100,7 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_SLP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_SLOP_SPEED
     },
     [APPSPM_PRM_LGC_GTRY_X_RAMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,
@@ -160,7 +160,7 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_SLP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_SLOP_SPEED
     },
     [APPSPM_PRM_LGC_GTRY_Y_RAMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,
@@ -220,7 +220,7 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_SLP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_SLOP_SPEED
     },
     [APPSPM_PRM_LGC_GTRY_Z_RAMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,

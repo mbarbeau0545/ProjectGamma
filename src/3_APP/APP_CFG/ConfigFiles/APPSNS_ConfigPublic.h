@@ -41,6 +41,29 @@
         APPSNS_SNSITF_ECDR_Y_SPEED,             /**< Sensors Device ECDR_Y, Interface SPEED, Moteur Y left position */
         APPSNS_SNSITF_ECDR_Z_POS,               /**< Sensors Device ECDR_Z, Interface POS, Moteur X left position */
         APPSNS_SNSITF_ECDR_Z_SPEED,             /**< Sensors Device ECDR_Z, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_WHL_AV_L_POS,        /**< Sensors Device ECDR_WHL_AV_L, Interface POS, Moteur wheel left position */
+        APPSNS_SNSITF_ECDR_WHL_AV_L_SPEED,      /**< Sensors Device ECDR_WHL_AV_L, Interface SPEED, Moteur wheel left speed */
+        APPSNS_SNSITF_ECDR_WHL_AV_R_POS,        /**< Sensors Device ECDR_WHL_AV_R, Interface POS, Moteur wheel right position */
+        APPSNS_SNSITF_ECDR_WHL_AV_R_SPEED,      /**< Sensors Device ECDR_WHL_AV_R, Interface SPEED, Moteur wheel right speed */
+        APPSNS_SNSITF_ECDR_HD_KNIFE_POS,        /**< Sensors Device ECDR_HD_KNIFE, Interface POS, Moteur box that cut the product position */
+        APPSNS_SNSITF_ECDR_HD_KNIFE_SPEED,      /**< Sensors Device ECDR_HD_KNIFE, Interface SPEED, Moteur box that cut the product speed */
+        APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_POS,   /**< Sensors Device ECDR_HD_CNTR_KNIFE, Interface POS, Moteur HD box manage the angle of the box */
+        APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_SPEED, /**< Sensors Device ECDR_HD_CNTR_KNIFE, Interface SPEED, Moteur HD box manage the angle of the box */
+        APPSNS_SNSITF_ECDR_HD_HOLD_POS,         /**< Sensors Device ECDR_HD_HOLD, Interface POS, Moteur box side that secure moving the salad */
+        APPSNS_SNSITF_ECDR_HD_HOLD_SPEED,       /**< Sensors Device ECDR_HD_HOLD, Interface SPEED, Moteur box side that secure moving the salad */
+        APPSNS_SNSITF_HD_UP_LEFT_DIST,          /**< Sensors Device HD_UP_LEFT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
+        APPSNS_SNSITF_HD_DWN_LEFT_DIST,         /**< Sensors Device HD_DWN_LEFT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
+        APPSNS_SNSITF_HD_UP_RIGHT_DIST,         /**< Sensors Device HD_UP_RIGHT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
+        APPSNS_SNSITF_HD_DWN_RIGHT_DIST,        /**< Sensors Device HD_DWN_RIGHT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
+        APPSNS_SNSITF_TRQ_MTR_XL_TRQ,           /**< Sensors Device TRQ_MTR_XL, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_XR_TRQ,           /**< Sensors Device TRQ_MTR_XR, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_Y_TRQ,            /**< Sensors Device TRQ_MTR_Y, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_Z_TRQ,            /**< Sensors Device TRQ_MTR_Z, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_WHL_AV_L_TRQ,     /**< Sensors Device TRQ_MTR_WHL_AV_L, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_WHL_AV_R_TRQ,     /**< Sensors Device TRQ_MTR_WHL_AV_R, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_HD_KNIFE_TRQ,     /**< Sensors Device TRQ_MTR_HD_KNIFE, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_CNTR_KNIFE_TRQ,   /**< Sensors Device TRQ_MTR_CNTR_KNIFE, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_HD_HOLD_TRQ,      /**< Sensors Device TRQ_MTR_HD_HOLD, Interface TRQ, Current flow into motor XL  */
     
         APPSNS_SNSITF_NB,
     } t_eAPPSNS_SnsInterface;
@@ -63,6 +86,24 @@
         APPSNS_SNSDVC_ECDR_XR,
         APPSNS_SNSDVC_ECDR_Y,
         APPSNS_SNSDVC_ECDR_Z,
+        APPSNS_SNSDVC_ECDR_WHL_AV_L,
+        APPSNS_SNSDVC_ECDR_WHL_AV_R,
+        APPSNS_SNSDVC_ECDR_HD_KNIFE,
+        APPSNS_SNSDVC_ECDR_HD_CNTR_KNIFE,
+        APPSNS_SNSDVC_ECDR_HD_HOLD,
+        APPSNS_SNSDVC_HD_UP_LEFT,
+        APPSNS_SNSDVC_HD_DWN_LEFT,
+        APPSNS_SNSDVC_HD_UP_RIGHT,
+        APPSNS_SNSDVC_HD_DWN_RIGHT,
+        APPSNS_SNSDVC_TRQ_MTR_XL,
+        APPSNS_SNSDVC_TRQ_MTR_XR,
+        APPSNS_SNSDVC_TRQ_MTR_Y,
+        APPSNS_SNSDVC_TRQ_MTR_Z,
+        APPSNS_SNSDVC_TRQ_MTR_WHL_AV_L,
+        APPSNS_SNSDVC_TRQ_MTR_WHL_AV_R,
+        APPSNS_SNSDVC_TRQ_MTR_HD_KNIFE,
+        APPSNS_SNSDVC_TRQ_MTR_CNTR_KNIFE,
+        APPSNS_SNSDVC_TRQ_MTR_HD_HOLD,
     
         APPSNS_SNSDVC_NB,
     } t_eAPPSNS_SnsDeviceList;
