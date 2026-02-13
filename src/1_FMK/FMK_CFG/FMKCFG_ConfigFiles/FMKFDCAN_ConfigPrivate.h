@@ -51,7 +51,7 @@
     /**
      * @brief Maximum number of RX event registrations.
      */
-    #define FMKFDCAN_RX_NUM_REGISTRATION_EVNT ((t_uint8)30)
+    #define FMKFDCAN_RX_NUM_REGISTRATION_EVNT ((t_uint8)60)
 
     // #define FMKFDCAN_RX_NUM_REGISTRATION_POLL ((t_uint8)20) /**< Uncomment for polling-based registrations. */
 
@@ -283,7 +283,7 @@
     
 
     const t_bool c_FmkCan_IsNodeActive[FMKFDCAN_NODE_NB] = {
-        TRUE,  // FMKFDCAN_NODE_1
+        (t_bool)True,  // FMKFDCAN_NODE_1
         FALSE, // FMKFDCAN_NODE_2
 #if defined(FMKCPU_STM32_ECU_FAMILY_G4)
         FALSE, // FMKFDCAN_NODE_3
@@ -293,12 +293,12 @@
 
     const t_sFMKFDCAN_DrvNodeCfg c_FmkCan_BspNodeCfgList_as[FMKFDCAN_NODE_CFG_NB] = 
     {// clockDivider_e                      ProtocolUse_e                       FrameBaudrate_e                 DataBaudrate_e                    QueueType_e                       FifoMode_e
-        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_FDCAN_NO_BRS,          FMKFDCAN_FRAME_BAUDRATE_250K,   FMKFDCAN_FRAME_BAUDRATE_250K,    FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_1
+        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_CAN2_0B,          FMKFDCAN_FRAME_BAUDRATE_250K,   FMKFDCAN_FRAME_BAUDRATE_250K,    FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_1
         {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_CAN2_0B,          FMKFDCAN_FRAME_BAUDRATE_1M,     FMKFDCAN_FRAME_BAUDRATE_1M,      FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_2
-        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_FDCAN_NO_BRS,     FMKFDCAN_FRAME_BAUDRATE_1M,     FMKFDCAN_FRAME_BAUDRATE_1M,      FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_3
-        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_FDCAN_BRS,        FMKFDCAN_FRAME_BAUDRATE_1M,     FMKFDCAN_FRAME_BAUDRATE_4M,      FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_4
+        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_CAN2_0B,     FMKFDCAN_FRAME_BAUDRATE_1M,     FMKFDCAN_FRAME_BAUDRATE_1M,      FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_3
+        {FMKFDCAN_CLOCK_KERNEL_DIV1,        FMKFDCAN_PROTOCOL_CAN2_0B,        FMKFDCAN_FRAME_BAUDRATE_1M,     FMKFDCAN_FRAME_BAUDRATE_4M,      FMKFDCAN_HWQUEUE_TYPE_FIFO,      FMKFDCAN_FIFO_OPEMODE_BLOCKING}, // FMKFDCAN_NODE_CFG_4
     };
-    /* /!\/!\/!\ This configration has been calculated for CLOCK FDCAN equals 120MHz but works for every divider /!\/!\/!\*/
+    /* /!\/!\/!\ This configration has been calculated for CLOCK FDCAN equals 128MHz but works for every divider /!\/!\/!\*/
     /*  Formule :
     *                                  Fclock (FMKFDCAN_SRC_CLOCK)
     *  Baudrate =     -----------------------------------------
@@ -307,14 +307,14 @@
     /*< Configuration to found Init baudrate value*/ 
     const t_sFMKFDCAN_BaudrateCfg c_FmkCan_BspBaudrateCfg_as[FMKFDCAN_FRAME_BAUDRATE_NB] = {
     //       prescaler        syncSeg     timeSeg1     timeSeg2         
-            {(t_uint16)150, (t_uint8)1, (t_uint8)15, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_40K
-            {(t_uint16)48,  (t_uint8)1, (t_uint8)15, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_125K
-            {(t_uint16)24,  (t_uint8)1, (t_uint8)15, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_250K 
-            {(t_uint16)12,  (t_uint8)1, (t_uint8)15, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_500K 
-            {(t_uint16)6,   (t_uint8)1, (t_uint8)15, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_1M 
-            {(t_uint16)4,   (t_uint8)1, (t_uint8)10, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_2M
-            {(t_uint16)2,   (t_uint8)1, (t_uint8)10, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_4M
-            {(t_uint16)1,   (t_uint8)1, (t_uint8)10, (t_uint8)4},    // FMKFDCAN_FRAME_BAUDRATE_8M
+            {(t_uint16)200, (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_40K
+            {(t_uint16)64,  (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_125K
+            {(t_uint16)32,  (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_250K 
+            {(t_uint16)16,  (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_500K 
+            {(t_uint16)8,   (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_1M 
+            {(t_uint16)4,   (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_2M
+            {(t_uint16)2,   (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_4M
+            {(t_uint16)1,   (t_uint8)1, (t_uint8)12, (t_uint8)3},    // FMKFDCAN_FRAME_BAUDRATE_8M
     };
 
     //********************************************************************************

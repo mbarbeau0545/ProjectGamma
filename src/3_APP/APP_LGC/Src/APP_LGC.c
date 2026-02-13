@@ -214,14 +214,8 @@ t_eReturnCode APPLGC_Cyclic(void)
         Ret_e = s_APPLGC_ConfigurationState();
         if(Ret_e == RC_OK)
         {
-            g_AppLgc_ModState_e = STATE_CYCLIC_WAITING;
+            g_AppLgc_ModState_e = STATE_CYCLIC_PREOPE;
         }
-        break;
-    }
-
-    case STATE_CYCLIC_WAITING:
-    {
-        // nothing to do, just wait all module are Ope
         break;
     }
     case STATE_CYCLIC_PREOPE:
@@ -402,7 +396,7 @@ t_eReturnCode APPLGC_GetActValue(t_eAPPACT_ActInterface f_actIfID_e, t_float32 *
 static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
-    t_eReturnCode Ret_e;
+    t_eReturnCode Ret_e = RC_OK;
 
     //Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
     

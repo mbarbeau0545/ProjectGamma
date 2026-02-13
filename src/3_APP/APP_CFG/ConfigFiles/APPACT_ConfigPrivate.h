@@ -19,6 +19,7 @@
     // *                      Includes
     // ********************************************************************
     #include "./APPACT_ConfigPublic.h"
+    #include "./APPSYS_ConfigPublic.h"
     #include "APP_CTRL/APP_SPM/Src/APP_SPM.h"
     #include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
     /* CAUTION : Automatic generated code section for Include: Start */

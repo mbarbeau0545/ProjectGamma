@@ -148,13 +148,8 @@ t_eReturnCode APPSPM_Cyclic(void)
         Ret_e = s_APPSM_ConfigurationState();
         if(Ret_e == RC_OK)
         {
-            g_APPSM_ModState_e = STATE_CYCLIC_WAITING;
+            g_APPSM_ModState_e = STATE_CYCLIC_PREOPE;
         }   
-        break;
-    }
-    case STATE_CYCLIC_WAITING:
-    {
-        // nothing to do, just wait all module are Ope
         break;
     }
     case STATE_CYCLIC_PREOPE:

@@ -46,8 +46,15 @@
     #define APPSYS_ELASPED_TIME_FASTTASK        ((t_uint32)5)                   /**< Fast Task every 3 ms */
     #define APPSYS_WATCHDOG_ENABLE              (FALSE)
 
+    ///@brief Analog pin that define the Ecu Position 
+    #define APPSYS_IO_ANALOG_SIGNAL (FMKIO_INPUT_SIGANA_2)
     ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
-    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (TRUE)
+    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (FALSE)
+
+    #define APPSYS_ECU_POS_MAX      ((t_uint32)6)
+
+    ///@brief Time waiting PC to send Parameter
+    #define APPSYS_WAIT_PRM_TIMEOUT ((t_uint32)1000)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -60,6 +67,12 @@
 
     /* CAUTION : Automatic generated code section for Structure: End */
 	//-----------------------------STRUCT TYPES---------------------------//
+    ///@brief range for determine the ecu position 
+    typedef struct 
+    {
+        t_float32 min_f32;
+        t_float32 max_f32;
+    } t_sAPPSYS_EcuPosAnaRange;
     /* CAUTION : Automatic generated code section : Start */
 
     /* CAUTION : Automatic generated code section : End */
@@ -159,6 +172,15 @@
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */
+
+    const t_sAPPSYS_EcuPosAnaRange c_EcuPosAnaRange_as[APPSYS_ECU_POS_MAX] = {
+        {2551,      3550},
+        {2051,      2550},
+        {1551,      2050},
+        {1051,      1550},
+        {551,       1050},
+        {50,        550}
+    };
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************

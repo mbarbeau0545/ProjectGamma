@@ -42,6 +42,16 @@
     // ********************************************************************
     // *                      Types
     // ********************************************************************
+    
+    typedef enum 
+    {
+        APPSYS_ECU_POS_GTRY = 0,
+        APPSYS_ECU_POS_GTRY_HEAD,
+        APPSYS_ECU_POS_MOTION,
+
+        APPSYS_ECU_POS_NB
+    } t_eAPPSYS_EcuPos;
+
     /* CAUTION : Automatic generated code section for Enum: Start */
     typedef enum
     {
