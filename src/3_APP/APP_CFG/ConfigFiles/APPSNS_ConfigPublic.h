@@ -34,23 +34,23 @@
     typedef enum
     {
         APPSNS_SNSITF_ECDR_XL_POS = 0,        /**< Sensors Device ECDR_XL, Interface POS, Moteur Y left position */
-        APPSNS_SNSITF_ECDR_XL_SPEED,            /**< Sensors Device ECDR_XL, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_XL_SPD,              /**< Sensors Device ECDR_XL, Interface SPD, Moteur Y left position */
         APPSNS_SNSITF_ECDR_XR_POS,              /**< Sensors Device ECDR_XR, Interface POS, Moteur X left position */
-        APPSNS_SNSITF_ECDR_XR_SPEED,            /**< Sensors Device ECDR_XR, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_XR_SPD,              /**< Sensors Device ECDR_XR, Interface SPD, Moteur Y left position */
         APPSNS_SNSITF_ECDR_Y_POS,               /**< Sensors Device ECDR_Y, Interface POS, Moteur X left position */
-        APPSNS_SNSITF_ECDR_Y_SPEED,             /**< Sensors Device ECDR_Y, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_Y_SPD,               /**< Sensors Device ECDR_Y, Interface SPD, Moteur Y left position */
         APPSNS_SNSITF_ECDR_Z_POS,               /**< Sensors Device ECDR_Z, Interface POS, Moteur X left position */
-        APPSNS_SNSITF_ECDR_Z_SPEED,             /**< Sensors Device ECDR_Z, Interface SPEED, Moteur Y left position */
+        APPSNS_SNSITF_ECDR_Z_SPD,               /**< Sensors Device ECDR_Z, Interface SPD, Moteur Y left position */
         APPSNS_SNSITF_ECDR_WHL_AV_L_POS,        /**< Sensors Device ECDR_WHL_AV_L, Interface POS, Moteur wheel left position */
-        APPSNS_SNSITF_ECDR_WHL_AV_L_SPEED,      /**< Sensors Device ECDR_WHL_AV_L, Interface SPEED, Moteur wheel left speed */
+        APPSNS_SNSITF_ECDR_WHL_AV_L_SPD,        /**< Sensors Device ECDR_WHL_AV_L, Interface SPD, Moteur wheel left speed */
         APPSNS_SNSITF_ECDR_WHL_AV_R_POS,        /**< Sensors Device ECDR_WHL_AV_R, Interface POS, Moteur wheel right position */
-        APPSNS_SNSITF_ECDR_WHL_AV_R_SPEED,      /**< Sensors Device ECDR_WHL_AV_R, Interface SPEED, Moteur wheel right speed */
-        APPSNS_SNSITF_ECDR_HD_KNIFE_POS,        /**< Sensors Device ECDR_HD_KNIFE, Interface POS, Moteur box that cut the product position */
-        APPSNS_SNSITF_ECDR_HD_KNIFE_SPEED,      /**< Sensors Device ECDR_HD_KNIFE, Interface SPEED, Moteur box that cut the product speed */
-        APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_POS,   /**< Sensors Device ECDR_HD_CNTR_KNIFE, Interface POS, Moteur HD box manage the angle of the box */
-        APPSNS_SNSITF_ECDR_HD_CNTR_KNIFE_SPEED, /**< Sensors Device ECDR_HD_CNTR_KNIFE, Interface SPEED, Moteur HD box manage the angle of the box */
+        APPSNS_SNSITF_ECDR_WHL_AV_R_SPD,        /**< Sensors Device ECDR_WHL_AV_R, Interface SPD, Moteur wheel right speed */
+        APPSNS_SNSITF_ECDR_HD_KNF_POS,          /**< Sensors Device ECDR_HD_KNF, Interface POS, Moteur box that cut the product position */
+        APPSNS_SNSITF_ECDR_HD_KNF_SPD,          /**< Sensors Device ECDR_HD_KNF, Interface SPD, Moteur box that cut the product speed */
+        APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS,     /**< Sensors Device ECDR_HD_CNTR_KNF, Interface POS, Moteur HD box manage the angle of the box */
+        APPSNS_SNSITF_ECDR_HD_CNTR_KNF_SPD,     /**< Sensors Device ECDR_HD_CNTR_KNF, Interface SPD, Moteur HD box manage the angle of the box */
         APPSNS_SNSITF_ECDR_HD_HOLD_POS,         /**< Sensors Device ECDR_HD_HOLD, Interface POS, Moteur box side that secure moving the salad */
-        APPSNS_SNSITF_ECDR_HD_HOLD_SPEED,       /**< Sensors Device ECDR_HD_HOLD, Interface SPEED, Moteur box side that secure moving the salad */
+        APPSNS_SNSITF_ECDR_HD_HOLD_SPD,         /**< Sensors Device ECDR_HD_HOLD, Interface SPD, Moteur box side that secure moving the salad */
         APPSNS_SNSITF_HD_UP_LEFT_DIST,          /**< Sensors Device HD_UP_LEFT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
         APPSNS_SNSITF_HD_DWN_LEFT_DIST,         /**< Sensors Device HD_DWN_LEFT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
         APPSNS_SNSITF_HD_UP_RIGHT_DIST,         /**< Sensors Device HD_UP_RIGHT, Interface DIST, Distance du sol sur la phase gauche de le tête  */
@@ -61,8 +61,8 @@
         APPSNS_SNSITF_TRQ_MTR_Z_TRQ,            /**< Sensors Device TRQ_MTR_Z, Interface TRQ, Current flow into motor XL  */
         APPSNS_SNSITF_TRQ_MTR_WHL_AV_L_TRQ,     /**< Sensors Device TRQ_MTR_WHL_AV_L, Interface TRQ, Current flow into motor XL  */
         APPSNS_SNSITF_TRQ_MTR_WHL_AV_R_TRQ,     /**< Sensors Device TRQ_MTR_WHL_AV_R, Interface TRQ, Current flow into motor XL  */
-        APPSNS_SNSITF_TRQ_MTR_HD_KNIFE_TRQ,     /**< Sensors Device TRQ_MTR_HD_KNIFE, Interface TRQ, Current flow into motor XL  */
-        APPSNS_SNSITF_TRQ_MTR_CNTR_KNIFE_TRQ,   /**< Sensors Device TRQ_MTR_CNTR_KNIFE, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_HD_KNF_TRQ,       /**< Sensors Device TRQ_MTR_HD_KNF, Interface TRQ, Current flow into motor XL  */
+        APPSNS_SNSITF_TRQ_MTR_CNTR_KNF_TRQ,     /**< Sensors Device TRQ_MTR_CNTR_KNF, Interface TRQ, Current flow into motor XL  */
         APPSNS_SNSITF_TRQ_MTR_HD_HOLD_TRQ,      /**< Sensors Device TRQ_MTR_HD_HOLD, Interface TRQ, Current flow into motor XL  */
     
         APPSNS_SNSITF_NB,
@@ -88,8 +88,8 @@
         APPSNS_SNSDVC_ECDR_Z,
         APPSNS_SNSDVC_ECDR_WHL_AV_L,
         APPSNS_SNSDVC_ECDR_WHL_AV_R,
-        APPSNS_SNSDVC_ECDR_HD_KNIFE,
-        APPSNS_SNSDVC_ECDR_HD_CNTR_KNIFE,
+        APPSNS_SNSDVC_ECDR_HD_KNF,
+        APPSNS_SNSDVC_ECDR_HD_CNTR_KNF,
         APPSNS_SNSDVC_ECDR_HD_HOLD,
         APPSNS_SNSDVC_HD_UP_LEFT,
         APPSNS_SNSDVC_HD_DWN_LEFT,
@@ -101,8 +101,8 @@
         APPSNS_SNSDVC_TRQ_MTR_Z,
         APPSNS_SNSDVC_TRQ_MTR_WHL_AV_L,
         APPSNS_SNSDVC_TRQ_MTR_WHL_AV_R,
-        APPSNS_SNSDVC_TRQ_MTR_HD_KNIFE,
-        APPSNS_SNSDVC_TRQ_MTR_CNTR_KNIFE,
+        APPSNS_SNSDVC_TRQ_MTR_HD_KNF,
+        APPSNS_SNSDVC_TRQ_MTR_CNTR_KNF,
         APPSNS_SNSDVC_TRQ_MTR_HD_HOLD,
     
         APPSNS_SNSDVC_NB,

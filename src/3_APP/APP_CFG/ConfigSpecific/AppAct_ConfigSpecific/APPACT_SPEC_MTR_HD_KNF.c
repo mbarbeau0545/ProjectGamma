@@ -17,7 +17,7 @@
 // *                      Includes
 // ********************************************************************
 /* CAUTION : Automatic generated code section for Include: Start */
-#include "./APPSNS_SPEC_ECDR_Y.h"
+#include "./APPACT_SPEC_MTR_HD_KNF.h"
 /* CAUTION : Automatic generated code section for Include: End */
 // ********************************************************************
 // *                      Defines
@@ -60,12 +60,12 @@
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_Y_SetCfg
+* APPACT_SPEC_MTR_HD_KNF_SetCfg
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_Y_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDriverList *f_drvUsed_pe)
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe)
 {
     t_eReturnCode Ret_e = RC_OK;
-    //    Your code for ECDR_Y_SetSnsCfg here
+    //    Your code for MTR_HD_KNF_SetActCfg here
 
 
 
@@ -75,12 +75,12 @@ t_eReturnCode APPSNS_SPEC_ECDR_Y_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDri
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_Y_POS_GetSigValue
+* APPACT_SPEC_MTR_HD_KNF_PLS_GetValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_Y_POS_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK)
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_PLS_GetValue(t_float32 *f_rawSigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    //    Your code for ECDR_Y_GetSigValue here
+    //    Your code for MTR_HD_KNF_GetIfValue here
 
 
 
@@ -90,12 +90,12 @@ t_eReturnCode APPSNS_SPEC_ECDR_Y_POS_GetSigValue(t_float32 *f_rawSigValue_pf32, 
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_Y_POS_FormatValue
+* APPACT_SPEC_MTR_HD_KNF_PLS_SetValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_Y_POS_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32)
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_PLS_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    //    Your code for ECDR_Y_FormatValSI here
+    //    Your code for MTR_HD_KNF_SetIfValue here
 
 
 
@@ -105,12 +105,12 @@ t_eReturnCode APPSNS_SPEC_ECDR_Y_POS_FormatValue(t_float32  rawValue_f32, t_floa
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_Y_SPD_GetSigValue
+* APPACT_SPEC_MTR_HD_KNF_SPD_GetValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_Y_SPD_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK)
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_SPD_GetValue(t_float32 *f_rawSigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    //    Your code for ECDR_Y_GetSigValue here
+    //    Your code for MTR_HD_KNF_GetIfValue here
 
 
 
@@ -120,12 +120,42 @@ t_eReturnCode APPSNS_SPEC_ECDR_Y_SPD_GetSigValue(t_float32 *f_rawSigValue_pf32, 
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_Y_SPD_FormatValue
+* APPACT_SPEC_MTR_HD_KNF_SPD_SetValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_Y_SPD_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32)
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_SPD_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    //    Your code for ECDR_Y_FormatValSI here
+    //    Your code for MTR_HD_KNF_SetIfValue here
+
+
+
+    return Ret_e;
+}
+
+
+
+/******************************************
+* APPACT_SPEC_MTR_HD_KNF_TRG_GetValue
+******************************************/
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_TRG_GetValue(t_float32 *f_rawSigValue_pf32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    //    Your code for MTR_HD_KNF_GetIfValue here
+
+
+
+    return Ret_e;
+}
+
+
+
+/******************************************
+* APPACT_SPEC_MTR_HD_KNF_TRG_SetValue
+******************************************/
+t_eReturnCode APPACT_SPEC_MTR_HD_KNF_TRG_SetValue(t_float32 f_SigValue_pf32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    //    Your code for MTR_HD_KNF_SetIfValue here
 
 
 

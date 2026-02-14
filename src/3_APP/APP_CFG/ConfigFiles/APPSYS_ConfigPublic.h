@@ -63,112 +63,112 @@
     } t_eAPPSYS_MachineList;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_HD_HOLD.
+    * @brief Enum Option list for  ACT_PWR_MTR_HD_HOLD.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_HD_HOLD_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_HD_HOLD_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_HD_HOLD_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_HD_HOLD_NB,
-    } t_eAPPSYS_OptActPowerMtrHdHold;
+        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_NB,
+    } t_eAPPSYS_OptActPwrMtrHdHold;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_HD_CNTR_KNIFE.
+    * @brief Enum Option list for  ACT_PWR_MTR_HD_CNTR_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_HD_CNTR_KNIFE_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_HD_CNTR_KNIFE_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_HD_CNTR_KNIFE_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_HD_CNTR_KNIFE_NB,
-    } t_eAPPSYS_OptActPowerMtrHdCntrKnife;
+        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_NB,
+    } t_eAPPSYS_OptActPwrMtrHdCntrKnf;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_HD_KNIFE.
+    * @brief Enum Option list for  ACT_PWR_MTR_HD_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_HD_KNIFE_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_HD_KNIFE_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_HD_KNIFE_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_HD_KNIFE_NB,
-    } t_eAPPSYS_OptActPowerMtrHdKnife;
+        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_NB,
+    } t_eAPPSYS_OptActPwrMtrHdKnf;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_WHL_AV_R.
+    * @brief Enum Option list for  ACT_PWR_WHL_AV_R.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_WHL_AV_R_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_WHL_AV_R_AOD4184A,
-        APPSYS_OPT_ACT_POWER_WHL_AV_R_APPSIG,
+        APPSYS_OPT_ACT_PWR_WHL_AV_R_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_WHL_AV_R_AOD4184A,
+        APPSYS_OPT_ACT_PWR_WHL_AV_R_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_WHL_AV_R_NB,
-    } t_eAPPSYS_OptActPowerWhlAvR;
+        APPSYS_OPT_ACT_PWR_WHL_AV_R_NB,
+    } t_eAPPSYS_OptActPwrWhlAvR;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_WHL_AV_L.
+    * @brief Enum Option list for  ACT_PWR_WHL_AV_L.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_WHL_AV_L_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_WHL_AV_L_AOD4184A,
-        APPSYS_OPT_ACT_POWER_WHL_AV_L_APPSIG,
+        APPSYS_OPT_ACT_PWR_WHL_AV_L_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_WHL_AV_L_AOD4184A,
+        APPSYS_OPT_ACT_PWR_WHL_AV_L_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_WHL_AV_L_NB,
-    } t_eAPPSYS_OptActPowerWhlAvL;
+        APPSYS_OPT_ACT_PWR_WHL_AV_L_NB,
+    } t_eAPPSYS_OptActPwrWhlAvL;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_Z.
+    * @brief Enum Option list for  ACT_PWR_MTR_Z.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_Z_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_Z_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_Z_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_Z_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_Z_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_Z_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_Z_NB,
-    } t_eAPPSYS_OptActPowerMtrZ;
+        APPSYS_OPT_ACT_PWR_MTR_Z_NB,
+    } t_eAPPSYS_OptActPwrMtrZ;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_Y.
+    * @brief Enum Option list for  ACT_PWR_MTR_Y.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_Y_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_Y_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_Y_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_Y_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_Y_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_Y_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_Y_NB,
-    } t_eAPPSYS_OptActPowerMtrY;
+        APPSYS_OPT_ACT_PWR_MTR_Y_NB,
+    } t_eAPPSYS_OptActPwrMtrY;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_XR.
+    * @brief Enum Option list for  ACT_PWR_MTR_XR.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_XR_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_XR_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_XR_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_XR_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_XR_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_XR_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_XR_NB,
-    } t_eAPPSYS_OptActPowerMtrXr;
+        APPSYS_OPT_ACT_PWR_MTR_XR_NB,
+    } t_eAPPSYS_OptActPwrMtrXr;
 
     /**
-    * @brief Enum Option list for  ACT_POWER_MTR_XL.
+    * @brief Enum Option list for  ACT_PWR_MTR_XL.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_POWER_MTR_XL_UNUSED = 0,
-        APPSYS_OPT_ACT_POWER_MTR_XL_AOD4184A,
-        APPSYS_OPT_ACT_POWER_MTR_XL_APPSIG,
+        APPSYS_OPT_ACT_PWR_MTR_XL_UNUSED = 0,
+        APPSYS_OPT_ACT_PWR_MTR_XL_AOD4184A,
+        APPSYS_OPT_ACT_PWR_MTR_XL_APPSIG,
     
-        APPSYS_OPT_ACT_POWER_MTR_XL_NB,
-    } t_eAPPSYS_OptActPowerMtrXl;
+        APPSYS_OPT_ACT_PWR_MTR_XL_NB,
+    } t_eAPPSYS_OptActPwrMtrXl;
 
     /**
     * @brief Enum Option list for  ACT_MTR_HD_HOLD.
@@ -183,28 +183,28 @@
     } t_eAPPSYS_OptActMtrHdHold;
 
     /**
-    * @brief Enum Option list for  ACT_MTR_HD_CNTR_KNIFE.
+    * @brief Enum Option list for  ACT_MTR_HD_CNTR_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_MTR_HD_CNTR_KNIFE_UNUSED = 0,
-        APPSYS_OPT_ACT_MTR_HD_CNTR_KNIFE_CL42T,
-        APPSYS_OPT_ACT_MTR_HD_CNTR_KNIFE_APPSIG,
+        APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_UNUSED = 0,
+        APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_CL42T,
+        APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_APPSIG,
     
-        APPSYS_OPT_ACT_MTR_HD_CNTR_KNIFE_NB,
-    } t_eAPPSYS_OptActMtrHdCntrKnife;
+        APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_NB,
+    } t_eAPPSYS_OptActMtrHdCntrKnf;
 
     /**
-    * @brief Enum Option list for  ACT_MTR_HD_KNIFE.
+    * @brief Enum Option list for  ACT_MTR_HD_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_ACT_MTR_HD_KNIFE_UNUSED = 0,
-        APPSYS_OPT_ACT_MTR_HD_KNIFE_CL42T,
-        APPSYS_OPT_ACT_MTR_HD_KNIFE_APPSIG,
+        APPSYS_OPT_ACT_MTR_HD_KNF_UNUSED = 0,
+        APPSYS_OPT_ACT_MTR_HD_KNF_CL42T,
+        APPSYS_OPT_ACT_MTR_HD_KNF_APPSIG,
     
-        APPSYS_OPT_ACT_MTR_HD_KNIFE_NB,
-    } t_eAPPSYS_OptActMtrHdKnife;
+        APPSYS_OPT_ACT_MTR_HD_KNF_NB,
+    } t_eAPPSYS_OptActMtrHdKnf;
 
     /**
     * @brief Enum Option list for  ACT_MTR_WHL_AV_R.
@@ -279,160 +279,160 @@
     } t_eAPPSYS_OptActMtrXl;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_HD_HOLD.
+    * @brief Enum Option list for  SNS_TRQ_MTR_HD_HOLD.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_HOLD_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_HOLD_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_HOLD_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_HOLD_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrHdHold;
+        APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_NB,
+    } t_eAPPSYS_OptSnsTrqMtrHdHold;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_CNTR_KNIFE.
+    * @brief Enum Option list for  SNS_TRQ_MTR_CNTR_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_CNTR_KNIFE_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_CNTR_KNIFE_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_CNTR_KNIFE_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_CNTR_KNIFE_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrCntrKnife;
+        APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_NB,
+    } t_eAPPSYS_OptSnsTrqMtrCntrKnf;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_HD_KNIFE.
+    * @brief Enum Option list for  SNS_TRQ_MTR_HD_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_KNIFE_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_KNIFE_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_KNIFE_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_HD_KNIFE_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrHdKnife;
+        APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_NB,
+    } t_eAPPSYS_OptSnsTrqMtrHdKnf;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_WHL_AV_R.
+    * @brief Enum Option list for  SNS_TRQ_MTR_WHL_AV_R.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_R_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_R_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_R_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_R_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrWhlAvR;
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_NB,
+    } t_eAPPSYS_OptSnsTrqMtrWhlAvR;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_WHL_AV_L.
+    * @brief Enum Option list for  SNS_TRQ_MTR_WHL_AV_L.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_L_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_L_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_L_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_WHL_AV_L_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrWhlAvL;
+        APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_NB,
+    } t_eAPPSYS_OptSnsTrqMtrWhlAvL;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_Z.
+    * @brief Enum Option list for  SNS_TRQ_MTR_Z.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_Z_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_Z_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_Z_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_Z_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_Z_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_Z_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_Z_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrZ;
+        APPSYS_OPT_SNS_TRQ_MTR_Z_NB,
+    } t_eAPPSYS_OptSnsTrqMtrZ;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_Y.
+    * @brief Enum Option list for  SNS_TRQ_MTR_Y.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_Y_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_Y_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_Y_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_Y_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_Y_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_Y_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_Y_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrY;
+        APPSYS_OPT_SNS_TRQ_MTR_Y_NB,
+    } t_eAPPSYS_OptSnsTrqMtrY;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_XR.
+    * @brief Enum Option list for  SNS_TRQ_MTR_XR.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_XR_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_XR_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_XR_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_XR_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_XR_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_XR_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_XR_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrXr;
+        APPSYS_OPT_SNS_TRQ_MTR_XR_NB,
+    } t_eAPPSYS_OptSnsTrqMtrXr;
 
     /**
-    * @brief Enum Option list for  SNS_TORQUE_MTR_XL.
+    * @brief Enum Option list for  SNS_TRQ_MTR_XL.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_TORQUE_MTR_XL_UNUSED = 0,
-        APPSYS_OPT_SNS_TORQUE_MTR_XL_ACS716,
-        APPSYS_OPT_SNS_TORQUE_MTR_XL_APPSIG,
+        APPSYS_OPT_SNS_TRQ_MTR_XL_UNUSED = 0,
+        APPSYS_OPT_SNS_TRQ_MTR_XL_ACS716,
+        APPSYS_OPT_SNS_TRQ_MTR_XL_APPSIG,
     
-        APPSYS_OPT_SNS_TORQUE_MTR_XL_NB,
-    } t_eAPPSYS_OptSnsTorqueMtrXl;
+        APPSYS_OPT_SNS_TRQ_MTR_XL_NB,
+    } t_eAPPSYS_OptSnsTrqMtrXl;
 
     /**
-    * @brief Enum Option list for  SNS_DIST_HD_DWN_RIGHT.
+    * @brief Enum Option list for  SNS_HD_DWN_RIGHT.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_DIST_HD_DWN_RIGHT_UNUSED = 0,
-        APPSYS_OPT_SNS_DIST_HD_DWN_RIGHT_CAPTEUR_DIST,
-        APPSYS_OPT_SNS_DIST_HD_DWN_RIGHT_APPSIG,
+        APPSYS_OPT_SNS_HD_DWN_RIGHT_UNUSED = 0,
+        APPSYS_OPT_SNS_HD_DWN_RIGHT_CAPTEUR_DIST,
+        APPSYS_OPT_SNS_HD_DWN_RIGHT_APPSIG,
     
-        APPSYS_OPT_SNS_DIST_HD_DWN_RIGHT_NB,
-    } t_eAPPSYS_OptSnsDistHdDwnRight;
+        APPSYS_OPT_SNS_HD_DWN_RIGHT_NB,
+    } t_eAPPSYS_OptSnsHdDwnRight;
 
     /**
-    * @brief Enum Option list for  SNS_DIST_HD_UP_RIGHT.
+    * @brief Enum Option list for  SNS_HD_UP_RIGHT.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_DIST_HD_UP_RIGHT_UNUSED = 0,
-        APPSYS_OPT_SNS_DIST_HD_UP_RIGHT_CAPTEUR_DIST,
-        APPSYS_OPT_SNS_DIST_HD_UP_RIGHT_APPSIG,
+        APPSYS_OPT_SNS_HD_UP_RIGHT_UNUSED = 0,
+        APPSYS_OPT_SNS_HD_UP_RIGHT_CAPTEUR_DIST,
+        APPSYS_OPT_SNS_HD_UP_RIGHT_APPSIG,
     
-        APPSYS_OPT_SNS_DIST_HD_UP_RIGHT_NB,
-    } t_eAPPSYS_OptSnsDistHdUpRight;
+        APPSYS_OPT_SNS_HD_UP_RIGHT_NB,
+    } t_eAPPSYS_OptSnsHdUpRight;
 
     /**
-    * @brief Enum Option list for  SNS_DIST_HD_DWN_LEFT.
+    * @brief Enum Option list for  SNS_HD_DWN_LEFT.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_DIST_HD_DWN_LEFT_UNUSED = 0,
-        APPSYS_OPT_SNS_DIST_HD_DWN_LEFT_CAPTEUR_DIST,
-        APPSYS_OPT_SNS_DIST_HD_DWN_LEFT_APPSIG,
+        APPSYS_OPT_SNS_HD_DWN_LEFT_UNUSED = 0,
+        APPSYS_OPT_SNS_HD_DWN_LEFT_CAPTEUR_DIST,
+        APPSYS_OPT_SNS_HD_DWN_LEFT_APPSIG,
     
-        APPSYS_OPT_SNS_DIST_HD_DWN_LEFT_NB,
-    } t_eAPPSYS_OptSnsDistHdDwnLeft;
+        APPSYS_OPT_SNS_HD_DWN_LEFT_NB,
+    } t_eAPPSYS_OptSnsHdDwnLeft;
 
     /**
-    * @brief Enum Option list for  SNS_DIST_HD_UP_LEFT.
+    * @brief Enum Option list for  SNS_HD_UP_LEFT.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_DIST_HD_UP_LEFT_UNUSED = 0,
-        APPSYS_OPT_SNS_DIST_HD_UP_LEFT_CAPTEUR_DIST,
-        APPSYS_OPT_SNS_DIST_HD_UP_LEFT_APPSIG,
+        APPSYS_OPT_SNS_HD_UP_LEFT_UNUSED = 0,
+        APPSYS_OPT_SNS_HD_UP_LEFT_CAPTEUR_DIST,
+        APPSYS_OPT_SNS_HD_UP_LEFT_APPSIG,
     
-        APPSYS_OPT_SNS_DIST_HD_UP_LEFT_NB,
-    } t_eAPPSYS_OptSnsDistHdUpLeft;
+        APPSYS_OPT_SNS_HD_UP_LEFT_NB,
+    } t_eAPPSYS_OptSnsHdUpLeft;
 
     /**
     * @brief Enum Option list for  SNS_ECDR_HD_HOLD.
@@ -447,28 +447,28 @@
     } t_eAPPSYS_OptSnsEcdrHdHold;
 
     /**
-    * @brief Enum Option list for  SNS_ECDR_HD_CNTR_KNIFE.
+    * @brief Enum Option list for  SNS_ECDR_HD_CNTR_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNIFE_UNUSED = 0,
-        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNIFE_NEMA17,
-        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNIFE_APPSIG,
+        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_UNUSED = 0,
+        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_NEMA17,
+        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_APPSIG,
     
-        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNIFE_NB,
-    } t_eAPPSYS_OptSnsEcdrHdCntrKnife;
+        APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_NB,
+    } t_eAPPSYS_OptSnsEcdrHdCntrKnf;
 
     /**
-    * @brief Enum Option list for  SNS_ECDR_HD_KNIFE.
+    * @brief Enum Option list for  SNS_ECDR_HD_KNF.
     */
     typedef enum
     {
-        APPSYS_OPT_SNS_ECDR_HD_KNIFE_UNUSED = 0,
-        APPSYS_OPT_SNS_ECDR_HD_KNIFE_NEMA17,
-        APPSYS_OPT_SNS_ECDR_HD_KNIFE_APPSIG,
+        APPSYS_OPT_SNS_ECDR_HD_KNF_UNUSED = 0,
+        APPSYS_OPT_SNS_ECDR_HD_KNF_NEMA17,
+        APPSYS_OPT_SNS_ECDR_HD_KNF_APPSIG,
     
-        APPSYS_OPT_SNS_ECDR_HD_KNIFE_NB,
-    } t_eAPPSYS_OptSnsEcdrHdKnife;
+        APPSYS_OPT_SNS_ECDR_HD_KNF_NB,
+    } t_eAPPSYS_OptSnsEcdrHdKnf;
 
     /**
     * @brief Enum Option list for  SNS_ECDR_WHL_AV_R.
@@ -553,40 +553,40 @@
         APPSYS_OPT_ID_SNS_ECDR_Z,
         APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L,
         APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R,
-        APPSYS_OPT_ID_SNS_ECDR_HD_KNIFE,
-        APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNIFE,
+        APPSYS_OPT_ID_SNS_ECDR_HD_KNF,
+        APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF,
         APPSYS_OPT_ID_SNS_ECDR_HD_HOLD,
-        APPSYS_OPT_ID_SNS_DIST_HD_UP_LEFT,
-        APPSYS_OPT_ID_SNS_DIST_HD_DWN_LEFT,
-        APPSYS_OPT_ID_SNS_DIST_HD_UP_RIGHT,
-        APPSYS_OPT_ID_SNS_DIST_HD_DWN_RIGHT,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_XL,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_XR,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_Y,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_Z,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_WHL_AV_L,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_WHL_AV_R,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_HD_KNIFE,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_CNTR_KNIFE,
-        APPSYS_OPT_ID_SNS_TORQUE_MTR_HD_HOLD,
+        APPSYS_OPT_ID_SNS_HD_UP_LEFT,
+        APPSYS_OPT_ID_SNS_HD_DWN_LEFT,
+        APPSYS_OPT_ID_SNS_HD_UP_RIGHT,
+        APPSYS_OPT_ID_SNS_HD_DWN_RIGHT,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_XL,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_XR,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_Y,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_Z,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNF,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNF,
+        APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD,
         APPSYS_OPT_ID_ACT_MTR_XL,
         APPSYS_OPT_ID_ACT_MTR_XR,
         APPSYS_OPT_ID_ACT_MTR_Y,
         APPSYS_OPT_ID_ACT_MTR_Z,
         APPSYS_OPT_ID_ACT_MTR_WHL_AV_L,
         APPSYS_OPT_ID_ACT_MTR_WHL_AV_R,
-        APPSYS_OPT_ID_ACT_MTR_HD_KNIFE,
-        APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNIFE,
+        APPSYS_OPT_ID_ACT_MTR_HD_KNF,
+        APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF,
         APPSYS_OPT_ID_ACT_MTR_HD_HOLD,
-        APPSYS_OPT_ID_ACT_POWER_MTR_XL,
-        APPSYS_OPT_ID_ACT_POWER_MTR_XR,
-        APPSYS_OPT_ID_ACT_POWER_MTR_Y,
-        APPSYS_OPT_ID_ACT_POWER_MTR_Z,
-        APPSYS_OPT_ID_ACT_POWER_WHL_AV_L,
-        APPSYS_OPT_ID_ACT_POWER_WHL_AV_R,
-        APPSYS_OPT_ID_ACT_POWER_MTR_HD_KNIFE,
-        APPSYS_OPT_ID_ACT_POWER_MTR_HD_CNTR_KNIFE,
-        APPSYS_OPT_ID_ACT_POWER_MTR_HD_HOLD,
+        APPSYS_OPT_ID_ACT_PWR_MTR_XL,
+        APPSYS_OPT_ID_ACT_PWR_MTR_XR,
+        APPSYS_OPT_ID_ACT_PWR_MTR_Y,
+        APPSYS_OPT_ID_ACT_PWR_MTR_Z,
+        APPSYS_OPT_ID_ACT_PWR_WHL_AV_L,
+        APPSYS_OPT_ID_ACT_PWR_WHL_AV_R,
+        APPSYS_OPT_ID_ACT_PWR_MTR_HD_KNF,
+        APPSYS_OPT_ID_ACT_PWR_MTR_HD_CNTR_KNF,
+        APPSYS_OPT_ID_ACT_PWR_MTR_HD_HOLD,
     
         APPSYS_OPT_ID_NB,
     } t_eAPPSYS_SysOptionList;

@@ -20,6 +20,8 @@
 
     //---- agent include ----//
     #include "APP_LGC/Src/Agents/Gantry/Src/GANTRY.h"
+    #include "APP_LGC/Src/Agents/HeadCutter/Src/HEAD_CUTTER.h"
+    #include "APP_LGC/Src/Agents/Motion/Src/MOTION.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************

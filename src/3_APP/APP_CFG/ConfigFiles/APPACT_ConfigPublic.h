@@ -62,12 +62,12 @@
         APPACT_ACTITF_MTR_WHL_AV_R_PLS,         /**< Actuator Device MTR_WHL_AV_R, Interface PLS, None */
         APPACT_ACTITF_MTR_WHL_AV_R_SPD,         /**< Actuator Device MTR_WHL_AV_R, Interface SPD, None */
         APPACT_ACTITF_MTR_WHL_AV_R_TRG,         /**< Actuator Device MTR_WHL_AV_R, Interface TRG, None */
-        APPACT_ACTITF_MTR_HD_KNIFE_PLS,         /**< Actuator Device MTR_HD_KNIFE, Interface PLS, Moteur Z PLSs */
-        APPACT_ACTITF_MTR_HD_KNIFE_SPD,         /**< Actuator Device MTR_HD_KNIFE, Interface SPD, Moteur Z SPD */
-        APPACT_ACTITF_MTR_HD_KNIFE_TRG,         /**< Actuator Device MTR_HD_KNIFE, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
-        APPACT_ACTITF_MTR_HD_CNTR_KNIFE_PLS,    /**< Actuator Device MTR_HD_CNTR_KNIFE, Interface PLS, Moteur Z PLSs */
-        APPACT_ACTITF_MTR_HD_CNTR_KNIFE_SPD,    /**< Actuator Device MTR_HD_CNTR_KNIFE, Interface SPD, Moteur Z SPD */
-        APPACT_ACTITF_MTR_HD_CNTR_KNIFE_TRG,    /**< Actuator Device MTR_HD_CNTR_KNIFE, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
+        APPACT_ACTITF_MTR_HD_KNF_PLS,           /**< Actuator Device MTR_HD_KNF, Interface PLS, Moteur Z PLSs */
+        APPACT_ACTITF_MTR_HD_KNF_SPD,           /**< Actuator Device MTR_HD_KNF, Interface SPD, Moteur Z SPD */
+        APPACT_ACTITF_MTR_HD_KNF_TRG,           /**< Actuator Device MTR_HD_KNF, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
+        APPACT_ACTITF_MTR_HD_CNTR_KNF_PLS,      /**< Actuator Device MTR_HD_CNTR_KNF, Interface PLS, Moteur Z PLSs */
+        APPACT_ACTITF_MTR_HD_CNTR_KNF_SPD,      /**< Actuator Device MTR_HD_CNTR_KNF, Interface SPD, Moteur Z SPD */
+        APPACT_ACTITF_MTR_HD_CNTR_KNF_TRG,      /**< Actuator Device MTR_HD_CNTR_KNF, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
         APPACT_ACTITF_MTR_HD_HOLD_PLS,          /**< Actuator Device MTR_HD_HOLD, Interface PLS, Moteur Z PLSs */
         APPACT_ACTITF_MTR_HD_HOLD_SPD,          /**< Actuator Device MTR_HD_HOLD, Interface SPD, Moteur Z SPD */
         APPACT_ACTITF_MTR_HD_HOLD_TRG,          /**< Actuator Device MTR_HD_HOLD, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
@@ -105,8 +105,8 @@
         APPACT_ACTDVC_MTR_Z,
         APPACT_ACTDVC_MTR_WHL_AV_L,
         APPACT_ACTDVC_MTR_WHL_AV_R,
-        APPACT_ACTDVC_MTR_HD_KNIFE,
-        APPACT_ACTDVC_MTR_HD_CNTR_KNIFE,
+        APPACT_ACTDVC_MTR_HD_KNF,
+        APPACT_ACTDVC_MTR_HD_CNTR_KNF,
         APPACT_ACTDVC_MTR_HD_HOLD,
         APPACT_ACTDVC_PWR_MTR_XL,
         APPACT_ACTDVC_PWR_MTR_XR,

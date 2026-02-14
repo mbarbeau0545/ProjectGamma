@@ -64,9 +64,9 @@ static void s_APPACT_SPEC_CL42T_CheckTimeValidity(t_sAPPACT_SPEC_CL42T_ShadowCmd
 
 
 /******************************************
-* APPACT_SPEC_CL42T_Speed_SetValue
+* APPACT_SPEC_CL42T_SPD_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_CL42T_Speed_SetValue( t_float32 f_SigValue_pf32, 
+t_eReturnCode APPACT_SPEC_CL42T_SPD_SetValue( t_float32 f_SigValue_pf32, 
                                                 t_eCL42T_MotorId f_MotorId_e,
                                                 t_sint32 f_dirPositive_s32,
                                                 t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps)
@@ -127,9 +127,9 @@ t_eReturnCode APPACT_SPEC_CL42T_Speed_SetValue( t_float32 f_SigValue_pf32,
 }
 
 /******************************************
-* APPACT_SPEC_CL42T_TrigTime_SetValue
+* APPACT_SPEC_CL42T_TRG_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_CL42T_TrigTime_SetValue(  t_float32 f_SigValue_pf32, 
+t_eReturnCode APPACT_SPEC_CL42T_TRG_SetValue(  t_float32 f_SigValue_pf32, 
                                                     t_eCL42T_MotorId f_MotorId_e,
                                                     t_sint32 f_dirPositive_s32,
                                                     t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps)
@@ -175,9 +175,9 @@ t_eReturnCode APPACT_SPEC_CL42T_TrigTime_SetValue(  t_float32 f_SigValue_pf32,
 }
 
 /******************************************
-* APPACT_SPEC_CL42T_Pulse_SetValue
+* APPACT_SPEC_CL42T_PLS_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32, 
+t_eReturnCode APPACT_SPEC_CL42T_PLS_SetValue( t_float32 f_SigValue_pf32, 
                                                 t_eCL42T_MotorId f_MotorId_e,
                                                 t_sint32 f_dirPositive_s32,
                                                 t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps)
@@ -230,9 +230,9 @@ t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32,
 }
 
 /******************************************
-* APPACT_SPEC_CL42T_Speed_GetValue
+* APPACT_SPEC_CL42T_SPD_GetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_CL42T_Speed_GetValue( t_float32 * f_SigValue_pf32,
+t_eReturnCode APPACT_SPEC_CL42T_SPD_GetValue( t_float32 * f_SigValue_pf32,
                                                 t_eCL42T_MotorId f_MotorId_e)
 {
     t_eReturnCode Ret_e;

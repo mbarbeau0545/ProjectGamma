@@ -1,5 +1,5 @@
 /*********************************************************************
- * @file        TemplateName.h
+ * @file        MOTION.h
  * @brief       Template_BriefDescription.
  * @note        TemplateDetailsDescription.\n
  *
@@ -7,10 +7,9 @@
  * @date        jj/mm/yyyy
  * @version     1.0
  */
-/* CAUTION : Automatic generated code section for ifndef: Start */
-#ifndef APPACT_SPEC_MTR_XR
-#define APPACT_SPEC_MTR_XR
-/* CAUTION : Automatic generated code section for ifndef: End */
+  
+#ifndef MOTION_H_INCLUDED
+#define MOTION_H_INCLUDED
 
 
 
@@ -19,10 +18,7 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
-    /* CAUTION : Automatic generated code section for Include: Start */
     #include "TypeCommon.h"
-    #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
-    /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -40,6 +36,7 @@
 
 	/* CAUTION : Automatic generated code section for Structure: End */
 	//-----------------------------STRUCT TYPES---------------------------//
+    
 	/* CAUTION : Automatic generated code section : Start */
 
 	/* CAUTION : Automatic generated code section : End */
@@ -52,60 +49,25 @@
     // *                      Variables
     // ********************************************************************
 
-
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************
-    /* CAUTION : Automatic generated code section for Specific Function Declaration: Start */
     /**
-    *
-    * @brief     @ref t_cbAppAct_SetActCfg
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
+     * @brief Function Init for Agent HeadCutter
+     *          of state  Machine
+     * ----------------------------------------------------------------------------
+     * @return ohters : @ref t_eReturnCode
+     */
+    t_eReturnCode MOTION_Init(void);
+    /**
+     * @brief Function Init for Agent HeadCutter
+     *          of state  Machine
+     * ----------------------------------------------------------------------------
+     * @return ohters : @ref t_eReturnCode
+     */
+    t_eReturnCode MOTION_PeriodicTask(void);
 
-    /**
-    *
-    * @brief     @ref t_cbAppAct_GetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_GetValue(t_float32 *f_rawSigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_SetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_SetValue(t_float32 f_SigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_GetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_GetValue(t_float32 *f_rawSigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_SetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_SetValue(t_float32 f_SigValue_pf32);
-            /**
-    *
-    * @brief     @ref t_cbAppAct_GetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_GetValue(t_float32 *f_rawSigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_SetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_SetValue(t_float32 f_SigValue_pf32);
-    /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
-#endif            
+#endif // MOTION_H_INCLUDED           
 //************************************************************************************
 // End of File
 //************************************************************************************
@@ -116,8 +78,8 @@
  *	@note   
  *
  *
- *	@param[in] 
- *	@param[out]
+ *	@params[in] 
+ *	@params[out]
  *	 
  *
  *

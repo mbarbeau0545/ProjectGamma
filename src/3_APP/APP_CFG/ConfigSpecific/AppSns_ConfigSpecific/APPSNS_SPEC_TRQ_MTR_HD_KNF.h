@@ -8,8 +8,8 @@
  * @version     1.0
  */
 /* CAUTION : Automatic generated code section for ifndef: Start */
-#ifndef APPACT_SPEC_MTR_XR
-#define APPACT_SPEC_MTR_XR
+#ifndef APPSNS_SPEC_TRQ_MTR_HD_KNF
+#define APPSNS_SPEC_TRQ_MTR_HD_KNF
 /* CAUTION : Automatic generated code section for ifndef: End */
 
 
@@ -21,7 +21,7 @@
     // ********************************************************************
     /* CAUTION : Automatic generated code section for Include: Start */
     #include "TypeCommon.h"
-    #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
+    #include "APP_CFG/ConfigFiles/APPSNS_ConfigPublic.h"
     /* CAUTION : Automatic generated code section for Include: End */
     // ********************************************************************
     // *                      Defines
@@ -59,51 +59,25 @@
     /* CAUTION : Automatic generated code section for Specific Function Declaration: Start */
     /**
     *
-    * @brief     @ref t_cbAppAct_SetActCfg
+    * @brief     @ref t_cbAppSns_SetSnsCfg
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
+    t_eReturnCode APPSNS_SPEC_TRQ_MTR_HD_KNF_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDriverList *f_drvUsed_pe);
 
     /**
     *
-    * @brief     @ref t_cbAppAct_GetIfValue
+    * @brief     @ref t_cbAppSns_GetSigValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPSNS_SPEC_TRQ_MTR_HD_KNF_TRQ_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
 
     /**
     *
-    * @brief     @ref t_cbAppAct_SetIfValue
+    * @brief     @ref t_cbAppSns_FormatValSI
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPSNS_SPEC_TRQ_MTR_HD_KNF_TRQ_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
 
-    /**
-    *
-    * @brief     @ref t_cbAppAct_GetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_GetValue(t_float32 *f_rawSigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_SetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_SetValue(t_float32 f_SigValue_pf32);
-            /**
-    *
-    * @brief     @ref t_cbAppAct_GetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_GetValue(t_float32 *f_rawSigValue_pf32);
-
-    /**
-    *
-    * @brief     @ref t_cbAppAct_SetIfValue
-    *
-    */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_SetValue(t_float32 f_SigValue_pf32);
     /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
 #endif            
 //************************************************************************************

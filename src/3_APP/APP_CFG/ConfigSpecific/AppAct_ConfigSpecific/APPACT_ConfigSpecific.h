@@ -74,7 +74,7 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_Speed_SetValue( t_float32 f_SigValue_pf32, 
+    t_eReturnCode APPACT_SPEC_CL42T_SPD_SetValue( t_float32 f_SigValue_pf32, 
                                                     t_eCL42T_MotorId f_MotorId_e,
                                                     t_sint32 f_dirPositive_s32,
                                                     t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
@@ -86,7 +86,7 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_TrigTime_SetValue(  t_float32 f_SigValue_pf32, 
+    t_eReturnCode APPACT_SPEC_CL42T_TRG_SetValue(  t_float32 f_SigValue_pf32, 
                                                         t_eCL42T_MotorId f_MotorId_e,
                                                         t_sint32 f_dirPositive_s32,
                                                         t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
@@ -98,7 +98,7 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_Speed_GetValue( t_float32 * f_SigValue_pf32,
+    t_eReturnCode APPACT_SPEC_CL42T_SPD_GetValue( t_float32 * f_SigValue_pf32,
                                                     t_eCL42T_MotorId f_MotorId_e);
     /**
      * @brief This function handle the reception of signals from APPSIG
@@ -108,7 +108,7 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_Pulse_SetValue( t_float32 f_SigValue_pf32, 
+    t_eReturnCode APPACT_SPEC_CL42T_PLS_SetValue( t_float32 f_SigValue_pf32, 
                                                     t_eCL42T_MotorId f_MotorId_e,
                                                     t_sint32 f_dirPositive_s32,
                                                     t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);

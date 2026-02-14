@@ -685,12 +685,20 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
 
     //----1- Enable axes Motor ----//
     Ret_e = s_GTRY_EnableAxe(GTRY_PHYS_AXE_X);
-    Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Y);
-    Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
-
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = s_GTRY_EnableAxe(GTRY_PHYS_AXE_Y);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e |= s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
+    }
     
     //---- 2- Init the algo parameter ----//
-    Ret_e = s_GTRY_UpdateAlgoParameters();
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = s_GTRY_UpdateAlgoParameters();
+    }
     //---- 3- send the algo parameter ----//
     if(Ret_e == RC_OK)
     {
@@ -979,19 +987,19 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsMove(t_eGTRY_PhysicalAxe f_PhysAx
             case GTRY_PHYS_AXE_X:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_X;
                 pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM;
-                minSpeedID_e = APPSPM_PRM_LGC_GTRY_X_SPEED_MIN;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_X_SPD_MIN;
                 axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_X_LEN;
             break;
             case GTRY_PHYS_AXE_Y:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_Y;
                 pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM;
-                minSpeedID_e = APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_Y_SPD_MIN;
                 axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_Y_LEN;
             break;
             case GTRY_PHYS_AXE_Z:
                 pulseFactor_s32 = GTRY_CALIB_DIR_AXE_Z;
                 pulseperMmID_e = APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM;
-                minSpeedID_e = APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN;
+                minSpeedID_e = APPSPM_PRM_LGC_GTRY_Z_SPD_MIN;
                 axeLenghtID_e = APPSPM_PRM_LGC_GTRY_AXE_Z_LEN;
             break;
             case GTRY_PHYS_AXE_NB:
@@ -1154,19 +1162,19 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_OpsOffset(t_eGTRY_PhysicalAxe f_Phys
         {
             case GTRY_PHYS_AXE_X:
                 gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_X;
-                minFreq_e = APPSPM_PRM_LGC_GTRY_X_SPEED_MIN;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_X_SPD_MIN;
                 calibPrm_e = APPSPM_PRM_LGC_GTRY_X_CALIB_OFFSET;
                 pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM;
             break;
             case GTRY_PHYS_AXE_Y:
                 gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_Y;
-                minFreq_e = APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_Y_SPD_MIN;
                 calibPrm_e = APPSPM_PRM_LGC_GTRY_Y_CALIB_OFFSET;
                 pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM;
             break;
             case GTRY_PHYS_AXE_Z:
                 gtryCalibDirOpposite_s32 = -GTRY_CALIB_DIR_AXE_Z;
-                minFreq_e = APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN;
+                minFreq_e = APPSPM_PRM_LGC_GTRY_Z_SPD_MIN;
                 calibPrm_e = APPSPM_PRM_LGC_GTRY_Z_CALIB_OFFSET;
                 pulsePerMmPrm_e = APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM;
             break;
@@ -1830,10 +1838,10 @@ static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e)
             //---- 2- Get missing information ---//
             if(Ret_e == RC_OK)
             {
-                APPLGC_GetActValue(APPACT_ACTITF_MTR_XL_PULSE, &actMissXLPulse_f32);
+                APPLGC_GetActValue(APPACT_ACTITF_MTR_XL_PLS, &actMissXLPulse_f32);
                 if(Ret_e == RC_OK)
                 {
-                    APPLGC_GetActValue(APPACT_ACTITF_MTR_XR_PULSE, &actMissXRPulse_f32);
+                    APPLGC_GetActValue(APPACT_ACTITF_MTR_XR_PLS, &actMissXRPulse_f32);
                 }
                 if(Ret_e == RC_OK)
                 {

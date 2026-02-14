@@ -105,9 +105,9 @@ t_eReturnCode APPSNS_SPEC_ECDR_XL_POS_FormatValue(t_float32  rawValue_f32, t_flo
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue
+* APPSNS_SPEC_ECDR_XL_SPD_GetSigValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK)
+t_eReturnCode APPSNS_SPEC_ECDR_XL_SPD_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for ECDR_XL_GetSigValue here
@@ -120,9 +120,9 @@ t_eReturnCode APPSNS_SPEC_ECDR_XL_SPEED_GetSigValue(t_float32 *f_rawSigValue_pf3
 
 
 /******************************************
-* APPSNS_SPEC_ECDR_XL_SPEED_FormatValue
+* APPSNS_SPEC_ECDR_XL_SPD_FormatValue
 ******************************************/
-t_eReturnCode APPSNS_SPEC_ECDR_XL_SPEED_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32)
+t_eReturnCode APPSNS_SPEC_ECDR_XL_SPD_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for ECDR_XL_FormatValSI here

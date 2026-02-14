@@ -411,10 +411,10 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
     t_eReturnCode Ret_e = RC_OK;
 
     //---- enable axes ----//
-    Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPEED, APPACT_ENABLE_MOTOR);
+    Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPD, APPACT_ENABLE_MOTOR);
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Y_SPEED, APPACT_ENABLE_MOTOR);
+        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Y_SPD, APPACT_ENABLE_MOTOR);
     }
     // if(Ret_e == RC_OK)
     // {

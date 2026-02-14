@@ -148,33 +148,33 @@
     ///@brief variable for application mapping
     const t_sGTRY_AxeAppCfg c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_NB] = {
         [GTRY_AXE_HANDLE_XL] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XL_PULSE,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_XL_SPEED,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRIGTIME,
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XL_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_XL_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XL_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL
         },
         [GTRY_AXE_HANDLE_XR] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XR_PULSE,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_XR_SPEED,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRIGTIME,
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XR_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_XR_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XR_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR
         },
         [GTRY_AXE_HANDLE_Y] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Y_PULSE,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_Y_SPEED,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRIGTIME,
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Y_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_Y_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Y,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Y_POS,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y
         },
         [GTRY_AXE_HANDLE_Z] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Z_PULSE,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_Z_SPEED,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRIGTIME,
+            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Z_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_Z_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Z,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Z_POS,
         }
@@ -182,8 +182,8 @@
     /// @brief Varialbe to store item to reach for algo aprameter
     const t_sGTRYSPEC_AlgoItemPrm c_GTRY_AlgoItemPrm_s = {
         .chunkSize_e = APPSPM_PRM_LGC_GTRY_PULSE_ITER_MAX,
-        .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Y_SPEED_MIN, APPSPM_PRM_LGC_GTRY_Z_SPEED_MIN},
-        .MaxFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Y_SPEED_MAX, APPSPM_PRM_LGC_GTRY_Z_SPEED_MAX},
+        .MinFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPD_MIN, APPSPM_PRM_LGC_GTRY_Y_SPD_MIN, APPSPM_PRM_LGC_GTRY_Z_SPD_MIN},
+        .MaxFreq_ae = {APPSPM_PRM_LGC_GTRY_X_SPD_MAX, APPSPM_PRM_LGC_GTRY_Y_SPD_MAX, APPSPM_PRM_LGC_GTRY_Z_SPD_MAX},
         .pulsePerMm_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM},
         .cptPrio_SafeHeight_ae = {APPSPM_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT, APPSPM_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT},
     };

@@ -8,8 +8,8 @@
  * @version     1.0
  */
 /* CAUTION : Automatic generated code section for ifndef: Start */
-#ifndef APPACT_SPEC_MTR_XR
-#define APPACT_SPEC_MTR_XR
+#ifndef APPACT_SPEC_MTR_HD_CNTR_KNF
+#define APPACT_SPEC_MTR_HD_CNTR_KNF
 /* CAUTION : Automatic generated code section for ifndef: End */
 
 
@@ -62,48 +62,50 @@
     * @brief     @ref t_cbAppAct_SetActCfg
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDriverList *f_drvUsed_pe);
 
     /**
     *
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_PLS_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_PLS_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_PLS_SetValue(t_float32 f_SigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_SPD_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_SPD_SetValue(t_float32 f_SigValue_pf32);
-            /**
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_SPD_SetValue(t_float32 f_SigValue_pf32);
+
+    /**
     *
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_TRG_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_XR_TRG_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_TRG_SetValue(t_float32 f_SigValue_pf32);
+
     /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
 #endif            
 //************************************************************************************

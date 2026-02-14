@@ -8,8 +8,8 @@
  * @version     1.0
  */
 /* CAUTION : Automatic generated code section for ifndef: Start */
-#ifndef APPSNS_SPEC_ECDR_HD_CNTR_KNIFE
-#define APPSNS_SPEC_ECDR_HD_CNTR_KNIFE
+#ifndef APPSNS_SPEC_ECDR_HD_CNTR_KNF
+#define APPSNS_SPEC_ECDR_HD_CNTR_KNF
 /* CAUTION : Automatic generated code section for ifndef: End */
 
 
@@ -62,35 +62,35 @@
     * @brief     @ref t_cbAppSns_SetSnsCfg
     *
     */
-    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDriverList *f_drvUsed_pe);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDriverList *f_drvUsed_pe);
 
     /**
     *
     * @brief     @ref t_cbAppSns_GetSigValue
     *
     */
-    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_POS_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
 
     /**
     *
     * @brief     @ref t_cbAppSns_FormatValSI
     *
     */
-    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_POS_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_POS_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
 
     /**
     *
     * @brief     @ref t_cbAppSns_GetSigValue
     *
     */
-    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_SPD_GetSigValue(t_float32 *f_rawSigValue_pf32, t_bool * f_isValue_OK);
 
     /**
     *
     * @brief     @ref t_cbAppSns_FormatValSI
     *
     */
-    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNIFE_SPEED_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
+    t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_SPD_FormatValue(t_float32  rawValue_f32, t_float32 *SnsValue_f32);
 
     /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
 #endif            
