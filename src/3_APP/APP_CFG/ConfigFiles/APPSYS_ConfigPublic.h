@@ -63,114 +63,6 @@
     } t_eAPPSYS_MachineList;
 
     /**
-    * @brief Enum Option list for  ACT_PWR_MTR_HD_HOLD.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_HD_HOLD_NB,
-    } t_eAPPSYS_OptActPwrMtrHdHold;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_HD_CNTR_KNF.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_HD_CNTR_KNF_NB,
-    } t_eAPPSYS_OptActPwrMtrHdCntrKnf;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_HD_KNF.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_HD_KNF_NB,
-    } t_eAPPSYS_OptActPwrMtrHdKnf;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_WHL_AV_R.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_WHL_AV_R_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_WHL_AV_R_AOD4184A,
-        APPSYS_OPT_ACT_PWR_WHL_AV_R_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_WHL_AV_R_NB,
-    } t_eAPPSYS_OptActPwrWhlAvR;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_WHL_AV_L.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_WHL_AV_L_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_WHL_AV_L_AOD4184A,
-        APPSYS_OPT_ACT_PWR_WHL_AV_L_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_WHL_AV_L_NB,
-    } t_eAPPSYS_OptActPwrWhlAvL;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_Z.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_Z_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_Z_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_Z_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_Z_NB,
-    } t_eAPPSYS_OptActPwrMtrZ;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_Y.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_Y_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_Y_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_Y_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_Y_NB,
-    } t_eAPPSYS_OptActPwrMtrY;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_XR.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_XR_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_XR_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_XR_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_XR_NB,
-    } t_eAPPSYS_OptActPwrMtrXr;
-
-    /**
-    * @brief Enum Option list for  ACT_PWR_MTR_XL.
-    */
-    typedef enum
-    {
-        APPSYS_OPT_ACT_PWR_MTR_XL_UNUSED = 0,
-        APPSYS_OPT_ACT_PWR_MTR_XL_AOD4184A,
-        APPSYS_OPT_ACT_PWR_MTR_XL_APPSIG,
-    
-        APPSYS_OPT_ACT_PWR_MTR_XL_NB,
-    } t_eAPPSYS_OptActPwrMtrXl;
-
-    /**
     * @brief Enum Option list for  ACT_MTR_HD_HOLD.
     */
     typedef enum
@@ -578,15 +470,6 @@
         APPSYS_OPT_ID_ACT_MTR_HD_KNF,
         APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF,
         APPSYS_OPT_ID_ACT_MTR_HD_HOLD,
-        APPSYS_OPT_ID_ACT_PWR_MTR_XL,
-        APPSYS_OPT_ID_ACT_PWR_MTR_XR,
-        APPSYS_OPT_ID_ACT_PWR_MTR_Y,
-        APPSYS_OPT_ID_ACT_PWR_MTR_Z,
-        APPSYS_OPT_ID_ACT_PWR_WHL_AV_L,
-        APPSYS_OPT_ID_ACT_PWR_WHL_AV_R,
-        APPSYS_OPT_ID_ACT_PWR_MTR_HD_KNF,
-        APPSYS_OPT_ID_ACT_PWR_MTR_HD_CNTR_KNF,
-        APPSYS_OPT_ID_ACT_PWR_MTR_HD_HOLD,
     
         APPSYS_OPT_ID_NB,
     } t_eAPPSYS_SysOptionList;

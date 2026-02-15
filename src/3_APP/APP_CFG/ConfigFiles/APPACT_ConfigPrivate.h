@@ -50,15 +50,6 @@
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_HD_HOLD.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_HD_HOLD.h"
     #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_MTR_HD_HOLD.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_XL.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_XR.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_Y.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_Z.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_WHL_AV_L.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_WHL_AV_R.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_HD_KNF.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_HD_CNTR_KNF.h"
-    #include "APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific/APPACT_SPEC_PWR_MTR_HD_HOLD.h"
     /* CAUTION : Automatic generated code section for Include: End */
 
     #include "2_DRV/CL42T/Src/CL42T.h"
@@ -181,15 +172,6 @@
         {APPACT_ACTDVC_MTR_HD_HOLD,                                   APPACT_SPEC_MTR_HD_HOLD_PLS_SetValue,                       APPACT_SPEC_MTR_HD_HOLD_PLS_GetValue,                       APPSIG_SIGNAL_ACT_SET_MTR_HD_HOLD_PLS,                       APPSIG_SIGNAL_ACT_GET_MTR_HD_HOLD_PLS,                       APPSIG_SIGNAL_ACT_CTRL_MTR_HD_HOLD_PLS},//APPACT_ACTITF_MTR_HD_HOLD_PLS
         {APPACT_ACTDVC_MTR_HD_HOLD,                                   APPACT_SPEC_MTR_HD_HOLD_SPD_SetValue,                       APPACT_SPEC_MTR_HD_HOLD_SPD_GetValue,                       APPSIG_SIGNAL_ACT_SET_MTR_HD_HOLD_SPD,                       APPSIG_SIGNAL_ACT_GET_MTR_HD_HOLD_SPD,                       APPSIG_SIGNAL_ACT_CTRL_MTR_HD_HOLD_SPD},//APPACT_ACTITF_MTR_HD_HOLD_SPD
         {APPACT_ACTDVC_MTR_HD_HOLD,                                   APPACT_SPEC_MTR_HD_HOLD_TRG_SetValue,                       APPACT_SPEC_MTR_HD_HOLD_TRG_GetValue,                       APPSIG_SIGNAL_ACT_SET_MTR_HD_HOLD_TRG,                       APPSIG_SIGNAL_ACT_GET_MTR_HD_HOLD_TRG,                       APPSIG_SIGNAL_ACT_CTRL_MTR_HD_HOLD_TRG},//APPACT_ACTITF_MTR_HD_HOLD_TRG
-        {APPACT_ACTDVC_PWR_MTR_XL,                                    APPACT_SPEC_PWR_MTR_XL_RLY_SetValue,                        APPACT_SPEC_PWR_MTR_XL_RLY_GetValue,                        APPSIG_SIGNAL_ACT_SET_PWR_MTR_XL_RLY,                        APPSIG_SIGNAL_ACT_GET_PWR_MTR_XL_RLY,                        APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_XL_RLY},//APPACT_ACTITF_PWR_MTR_XL_RLY
-        {APPACT_ACTDVC_PWR_MTR_XR,                                    APPACT_SPEC_PWR_MTR_XR_RLY_SetValue,                        APPACT_SPEC_PWR_MTR_XR_RLY_GetValue,                        APPSIG_SIGNAL_ACT_SET_PWR_MTR_XR_RLY,                        APPSIG_SIGNAL_ACT_GET_PWR_MTR_XR_RLY,                        APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_XR_RLY},//APPACT_ACTITF_PWR_MTR_XR_RLY
-        {APPACT_ACTDVC_PWR_MTR_Y,                                     APPACT_SPEC_PWR_MTR_Y_RLY_SetValue,                         APPACT_SPEC_PWR_MTR_Y_RLY_GetValue,                         APPSIG_SIGNAL_ACT_SET_PWR_MTR_Y_RLY,                         APPSIG_SIGNAL_ACT_GET_PWR_MTR_Y_RLY,                         APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_Y_RLY},//APPACT_ACTITF_PWR_MTR_Y_RLY
-        {APPACT_ACTDVC_PWR_MTR_Z,                                     APPACT_SPEC_PWR_MTR_Z_RLY_SetValue,                         APPACT_SPEC_PWR_MTR_Z_RLY_GetValue,                         APPSIG_SIGNAL_ACT_SET_PWR_MTR_Z_RLY,                         APPSIG_SIGNAL_ACT_GET_PWR_MTR_Z_RLY,                         APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_Z_RLY},//APPACT_ACTITF_PWR_MTR_Z_RLY
-        {APPACT_ACTDVC_PWR_WHL_AV_L,                                  APPACT_SPEC_PWR_WHL_AV_L_RLY_SetValue,                      APPACT_SPEC_PWR_WHL_AV_L_RLY_GetValue,                      APPSIG_SIGNAL_ACT_SET_PWR_WHL_AV_L_RLY,                      APPSIG_SIGNAL_ACT_GET_PWR_WHL_AV_L_RLY,                      APPSIG_SIGNAL_ACT_CTRL_PWR_WHL_AV_L_RLY},//APPACT_ACTITF_PWR_WHL_AV_L_RLY
-        {APPACT_ACTDVC_PWR_WHL_AV_R,                                  APPACT_SPEC_PWR_WHL_AV_R_RLY_SetValue,                      APPACT_SPEC_PWR_WHL_AV_R_RLY_GetValue,                      APPSIG_SIGNAL_ACT_SET_PWR_WHL_AV_R_RLY,                      APPSIG_SIGNAL_ACT_GET_PWR_WHL_AV_R_RLY,                      APPSIG_SIGNAL_ACT_CTRL_PWR_WHL_AV_R_RLY},//APPACT_ACTITF_PWR_WHL_AV_R_RLY
-        {APPACT_ACTDVC_PWR_MTR_HD_KNF,                                APPACT_SPEC_PWR_MTR_HD_KNF_RLY_SetValue,                    APPACT_SPEC_PWR_MTR_HD_KNF_RLY_GetValue,                    APPSIG_SIGNAL_ACT_SET_PWR_MTR_HD_KNF_RLY,                    APPSIG_SIGNAL_ACT_GET_PWR_MTR_HD_KNF_RLY,                    APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_HD_KNF_RLY},//APPACT_ACTITF_PWR_MTR_HD_KNF_RLY
-        {APPACT_ACTDVC_PWR_MTR_HD_CNTR_KNF,                           APPACT_SPEC_PWR_MTR_HD_CNTR_KNF_RLY_SetValue,               APPACT_SPEC_PWR_MTR_HD_CNTR_KNF_RLY_GetValue,               APPSIG_SIGNAL_ACT_SET_PWR_MTR_HD_CNTR_KNF_RLY,               APPSIG_SIGNAL_ACT_GET_PWR_MTR_HD_CNTR_KNF_RLY,               APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_HD_CNTR_KNF_RLY},//APPACT_ACTITF_PWR_MTR_HD_CNTR_KNF_RLY
-        {APPACT_ACTDVC_PWR_MTR_HD_HOLD,                               APPACT_SPEC_PWR_MTR_HD_HOLD_RLY_SetValue,                   APPACT_SPEC_PWR_MTR_HD_HOLD_RLY_GetValue,                   APPSIG_SIGNAL_ACT_SET_PWR_MTR_HD_HOLD_RLY,                   APPSIG_SIGNAL_ACT_GET_PWR_MTR_HD_HOLD_RLY,                   APPSIG_SIGNAL_ACT_CTRL_PWR_MTR_HD_HOLD_RLY},//APPACT_ACTITF_PWR_MTR_HD_HOLD_RLY
     };
 
     ///@brief Variable for system Actuators Device Ope Mngmt
@@ -203,15 +185,6 @@
         {APPSYS_OPT_ID_ACT_MTR_HD_KNF,                                APPACT_SPEC_MTR_HD_KNF_SetCfg},                                // APPACT_ACTDVC_MTR_HD_KNF
         {APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF,                           APPACT_SPEC_MTR_HD_CNTR_KNF_SetCfg},                           // APPACT_ACTDVC_MTR_HD_CNTR_KNF
         {APPSYS_OPT_ID_ACT_MTR_HD_HOLD,                               APPACT_SPEC_MTR_HD_HOLD_SetCfg},                               // APPACT_ACTDVC_MTR_HD_HOLD
-        {APPSYS_OPT_ID_ACT_PWR_MTR_XL,                                APPACT_SPEC_PWR_MTR_XL_SetCfg},                                // APPACT_ACTDVC_PWR_MTR_XL
-        {APPSYS_OPT_ID_ACT_PWR_MTR_XR,                                APPACT_SPEC_PWR_MTR_XR_SetCfg},                                // APPACT_ACTDVC_PWR_MTR_XR
-        {APPSYS_OPT_ID_ACT_PWR_MTR_Y,                                 APPACT_SPEC_PWR_MTR_Y_SetCfg},                                 // APPACT_ACTDVC_PWR_MTR_Y
-        {APPSYS_OPT_ID_ACT_PWR_MTR_Z,                                 APPACT_SPEC_PWR_MTR_Z_SetCfg},                                 // APPACT_ACTDVC_PWR_MTR_Z
-        {APPSYS_OPT_ID_ACT_PWR_WHL_AV_L,                              APPACT_SPEC_PWR_WHL_AV_L_SetCfg},                              // APPACT_ACTDVC_PWR_WHL_AV_L
-        {APPSYS_OPT_ID_ACT_PWR_WHL_AV_R,                              APPACT_SPEC_PWR_WHL_AV_R_SetCfg},                              // APPACT_ACTDVC_PWR_WHL_AV_R
-        {APPSYS_OPT_ID_ACT_PWR_MTR_HD_KNF,                            APPACT_SPEC_PWR_MTR_HD_KNF_SetCfg},                            // APPACT_ACTDVC_PWR_MTR_HD_KNF
-        {APPSYS_OPT_ID_ACT_PWR_MTR_HD_CNTR_KNF,                       APPACT_SPEC_PWR_MTR_HD_CNTR_KNF_SetCfg},                       // APPACT_ACTDVC_PWR_MTR_HD_CNTR_KNF
-        {APPSYS_OPT_ID_ACT_PWR_MTR_HD_HOLD,                           APPACT_SPEC_PWR_MTR_HD_HOLD_SetCfg},                           // APPACT_ACTDVC_PWR_MTR_HD_HOLD
     };
 
     /**< Variable for System Actuators drivers functions*/

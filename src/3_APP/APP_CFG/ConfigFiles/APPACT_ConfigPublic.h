@@ -71,15 +71,6 @@
         APPACT_ACTITF_MTR_HD_HOLD_PLS,          /**< Actuator Device MTR_HD_HOLD, Interface PLS, Moteur Z PLSs */
         APPACT_ACTITF_MTR_HD_HOLD_SPD,          /**< Actuator Device MTR_HD_HOLD, Interface SPD, Moteur Z SPD */
         APPACT_ACTITF_MTR_HD_HOLD_TRG,          /**< Actuator Device MTR_HD_HOLD, Interface TRG, Moteur Z Left Trigger Time to plan sending PLS */
-        APPACT_ACTITF_PWR_MTR_XL_RLY,           /**< Actuator Device PWR_MTR_XL, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_XR_RLY,           /**< Actuator Device PWR_MTR_XR, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_Y_RLY,            /**< Actuator Device PWR_MTR_Y, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_Z_RLY,            /**< Actuator Device PWR_MTR_Z, Interface RLY, None */
-        APPACT_ACTITF_PWR_WHL_AV_L_RLY,         /**< Actuator Device PWR_WHL_AV_L, Interface RLY, None */
-        APPACT_ACTITF_PWR_WHL_AV_R_RLY,         /**< Actuator Device PWR_WHL_AV_R, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_HD_KNF_RLY,       /**< Actuator Device PWR_MTR_HD_KNF, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_HD_CNTR_KNF_RLY,  /**< Actuator Device PWR_MTR_HD_CNTR_KNF, Interface RLY, None */
-        APPACT_ACTITF_PWR_MTR_HD_HOLD_RLY,      /**< Actuator Device PWR_MTR_HD_HOLD, Interface RLY, None */
     
         APPACT_ACTITF_NB,
     } t_eAPPACT_ActInterface;
@@ -108,15 +99,6 @@
         APPACT_ACTDVC_MTR_HD_KNF,
         APPACT_ACTDVC_MTR_HD_CNTR_KNF,
         APPACT_ACTDVC_MTR_HD_HOLD,
-        APPACT_ACTDVC_PWR_MTR_XL,
-        APPACT_ACTDVC_PWR_MTR_XR,
-        APPACT_ACTDVC_PWR_MTR_Y,
-        APPACT_ACTDVC_PWR_MTR_Z,
-        APPACT_ACTDVC_PWR_WHL_AV_L,
-        APPACT_ACTDVC_PWR_WHL_AV_R,
-        APPACT_ACTDVC_PWR_MTR_HD_KNF,
-        APPACT_ACTDVC_PWR_MTR_HD_CNTR_KNF,
-        APPACT_ACTDVC_PWR_MTR_HD_HOLD,
     
         APPACT_ACTDVC_NB,
     } t_eAPPACT_ActDeviceList;

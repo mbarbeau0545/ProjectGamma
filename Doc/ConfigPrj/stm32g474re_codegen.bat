@@ -9,8 +9,8 @@ python -m pip show openpyxl
 
 REM Exécuter le script Python avec des arguments fixes
 "%PYTHON_PATH%" Doc/ConfigPrj/PythonTool_CodeGen/main.py ^
-Doc\ConfigPrj\ExcelCfg\STM32G474RE\STM32G474RE_HwCfg.xlsx ^
-Doc\ConfigPrj\GammaCfg\Project_SoftwareCfg.xlsm
+Doc\ConfigPrj\GammaCfg\FirmwareOpeCfg\Ope_STM32G474RE_HwCfg.xlsx ^
+Doc\ConfigPrj\GammaCfg\FirmwareOpeCfg\Ope_Project_SoftwareCfg.xlsm
 
 echo Press any key to continue...
 pause

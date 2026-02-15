@@ -47,7 +47,7 @@ APPSPM_CFG_PUBLIC = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPublic.h'
 
 APPSIG_CFG_PRIVATE = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPrivate.h'
 APPSIG_CFG_PUBLIC = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPublic.h'
-SYM_MSG_CFG = r'Doc\ConfigPrj\GammaCfg\MessagingCfg\PrjMsgDefinition.sym'
+SYM_MSG_CFG = r'Doc\ConfigPrj\GammaCfg\FirmwareOpeCfg\MessagingCfg\OpePrjMsgDefinition.sym'
 
 APPSYS_CFG_PUBLIC = r"src\3_APP\APP_CFG\ConfigFiles\APPSYS_ConfigPublic.h"
 APPSYS_CFG_PRIVATE = r"src\3_APP\APP_CFG\ConfigFiles\APPSYS_ConfigPrivate.h"

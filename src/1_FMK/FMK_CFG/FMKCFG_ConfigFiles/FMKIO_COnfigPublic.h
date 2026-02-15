@@ -88,7 +88,6 @@
     */
     typedef enum
     {
-        FMKIO_INPUT_SIGDIG_1 = 0,                  /**< Reference to PC13 */
     
         FMKIO_INPUT_SIGDIG_NB,
     } t_eFMKIO_InDigSig;
@@ -125,9 +124,8 @@
     {
         FMKIO_INPUT_ENCODER_1 = 0,                  /**< TI1 -> PB6, TI2 -> PB7, Reference to Encoder 1 */
         FMKIO_INPUT_ENCODER_2,                        /**< TI1 -> PB4, TI2 -> PB5, Reference to Encoder 2 */
-        FMKIO_INPUT_ENCODER_3,                        /**< TI1 -> PC0, TI2 -> PC1, Reference to Encoder 3 */
-        FMKIO_INPUT_ENCODER_4,                        /**< TI1 -> PC6, TI2 -> PC7, Reference to Encoder 4 */
-        FMKIO_INPUT_ENCODER_5,                        /**< TI1 -> PA15, TI2 -> PB3, Reference to Encoder 5 */
+        FMKIO_INPUT_ENCODER_3,                        /**< TI1 -> PC6, TI2 -> PC7, Reference to Encoder 3 */
+        FMKIO_INPUT_ENCODER_4,                        /**< TI1 -> PA15, TI2 -> PB3, Reference to Encoder 4 */
     
         FMKIO_INPUT_ENCODER_NB,
     } t_eFMKIO_InEcdrSignals;
@@ -157,7 +155,7 @@
         FMKIO_OUTPUT_SIGDIG_1 = 0,                  /**< Reference to PB11 */
         FMKIO_OUTPUT_SIGDIG_2,                        /**< Reference to PF0 */
         FMKIO_OUTPUT_SIGDIG_3,                        /**< Reference to PF1 */
-        FMKIO_OUTPUT_SIGDIG_4,                        /**< Reference to PB13 */
+        FMKIO_OUTPUT_SIGDIG_4,                        /**< Reference to PC13 */
         FMKIO_OUTPUT_SIGDIG_5,                        /**< Reference to PA9 */
         FMKIO_OUTPUT_SIGDIG_6,                        /**< Reference to PB10 */
         FMKIO_OUTPUT_SIGDIG_7,                        /**< Reference to PC12 */
@@ -171,16 +169,19 @@
     */
     typedef enum
     {
-        FMKIO_OUTPUT_SIGPWM_1 = 0,                  /**< Reference to PB15, TIMER_15 CHANNEL_2 ,Pwm with Adaptable Frequency and DutyCycle */
-        FMKIO_OUTPUT_SIGPWM_2,                        /**< Reference to PB2, TIMER_20 CHANNEL_1 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_3,                        /**< Reference to PA8, TIMER_A CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_4,                        /**< Reference to PA10, TIMER_B CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_5,                        /**< Reference to PB12, TIMER_C CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_6,                        /**< Reference to PB14, TIMER_D CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
-        FMKIO_OUTPUT_SIGPWM_7,                        /**< Reference to PC8, TIMER_E CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation)
+        FMKIO_OUTPUT_SIGPWM_1 = 0,                  /**< Reference to PC0, TIMER_1 CHANNEL_1 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation)
+                                                            WARNING, this pwm share frequency and pulses with SIGPWM2, */
+        FMKIO_OUTPUT_SIGPWM_2,                        /**< Reference to PC1, TIMER_1 CHANNEL_2 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation)
+                                                            WARNING, this pwm share frequency and pulses with SIGPWM1, */
+        FMKIO_OUTPUT_SIGPWM_3,                        /**< Reference to PB15, TIMER_15 CHANNEL_2 ,Pwm with Adaptable Frequency and DutyCycle */
+        FMKIO_OUTPUT_SIGPWM_4,                        /**< Reference to PB2, TIMER_20 CHANNEL_1 ,Pwm with Adaptable Frequency, DutyCycle and Pulses, (WaveForm pulses cannot be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_5,                        /**< Reference to PA8, TIMER_A CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_6,                        /**< Reference to PA10, TIMER_B CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_7,                        /**< Reference to PB14, TIMER_D CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation) */
+        FMKIO_OUTPUT_SIGPWM_8,                        /**< Reference to PC8, TIMER_E CHANNEL_1 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation)
+                                                            WARNING, this pwm share frequency and pulses with SIGPWM9, */
+        FMKIO_OUTPUT_SIGPWM_9,                        /**< Reference to PC9, TIMER_E CHANNEL_2 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation)
                                                             WARNING, this pwm share frequency and pulses with SIGPWM8, */
-        FMKIO_OUTPUT_SIGPWM_8,                        /**< Reference to PC9, TIMER_E CHANNEL_2 ,Pwm with Adaptable Frequency > x Hz @ref FMKHRT_ConfigurePwmLine, DutyCycle, Pulses and current Feedback, (Waveform Pulses can be change during generation)
-                                                            WARNING, this pwm share frequency and pulses with SIGPWM7, */
     
         FMKIO_OUTPUT_SIGPWM_NB,
     } t_eFMKIO_OutPwmSig;
@@ -191,7 +192,7 @@
     typedef enum
     {
         FMKIO_COM_SIGNAL_CAN_1 = 0,                  /**< Rx -> PA11, Tx -> PA12, Reference to CAN 0 */
-        FMKIO_COM_SIGNAL_CAN_2,                        /**< Rx -> PG14, Tx -> PG15, Reference to CAN 1 */
+        FMKIO_COM_SIGNAL_CAN_2,                        /**< Rx -> PB12, Tx -> PB13, Reference to CAN 1 */
         FMKIO_COM_SIGNAL_CAN_3,                        /**< Rx -> PG13, Tx -> PG12, Reference to CAN 2 */
     
         FMKIO_COM_SIGNAL_CAN_NB,
