@@ -22,6 +22,7 @@
     #include "TypeCommon.h"
     #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
     #include "APP_CTRL/APP_SDM/Src/APP_SDM.h"
+    #include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -74,9 +75,10 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_SPD_SetValue( t_float32 f_SigValue_pf32, 
+    t_eReturnCode APPACT_SPEC_CL42T_SPD_SetValue(   t_float32 f_SigValue_pf32, 
                                                     t_eCL42T_MotorId f_MotorId_e,
                                                     t_sint32 f_dirPositive_s32,
+                                                    t_eAPPSIG_Signal f_sigMtrRelay_e,
                                                     t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
     /**
      * @brief This function handle the reception of signals from APPSIG
@@ -87,9 +89,10 @@
      * @return 
      */
     t_eReturnCode APPACT_SPEC_CL42T_TRG_SetValue(  t_float32 f_SigValue_pf32, 
-                                                        t_eCL42T_MotorId f_MotorId_e,
-                                                        t_sint32 f_dirPositive_s32,
-                                                        t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
+                                                    t_eCL42T_MotorId f_MotorId_e,
+                                                    t_sint32 f_dirPositive_s32,
+                                                    t_eAPPSIG_Signal f_sigMtrRelay_e,
+                                                    t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
     /**
      * @brief This function handle the reception of signals from APPSIG
      * ----------------------------------------------------------------------------
@@ -98,7 +101,8 @@
      * ----------------------------------------------------------------------------
      * @return 
      */
-    t_eReturnCode APPACT_SPEC_CL42T_SPD_GetValue( t_float32 * f_SigValue_pf32,
+    t_eReturnCode APPACT_SPEC_CL42T_SPD_GetValue(   t_float32 * f_SigValue_pf32,
+                                                    t_eAPPSIG_Signal f_sigMtrRelay_e,
                                                     t_eCL42T_MotorId f_MotorId_e);
     /**
      * @brief This function handle the reception of signals from APPSIG
@@ -111,6 +115,7 @@
     t_eReturnCode APPACT_SPEC_CL42T_PLS_SetValue( t_float32 f_SigValue_pf32, 
                                                     t_eCL42T_MotorId f_MotorId_e,
                                                     t_sint32 f_dirPositive_s32,
+                                                    t_eAPPSIG_Signal f_sigMtrRelay_e,
                                                     t_sAPPACT_SPEC_CL42T_ShadowCmd * f_shadowCmd_ps);
     /**
      * @brief This function handle the reception of signals from APPSIG

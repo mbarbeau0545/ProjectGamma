@@ -14,7 +14,9 @@
     // ********************************************************************
     // *                      Includes
     // ********************************************************************
+    #include "./CL42T_ConfigPublic.h"
     #include "FMK_HAL/FMK_IO/Src/FMK_IO.h"
+    #include "./APPSIG_ConfigPublic.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
@@ -58,7 +60,15 @@
     /* CAUTION : Automatic generated code section for Enum: End */
    
     //-----------------------------STRUCT TYPES---------------------------//
-
+    typedef struct 
+    {
+        t_eAPPSIG_Signal mtrState_e;
+        t_eAPPSIG_Signal cwEndStop_e;
+        t_eAPPSIG_Signal ccwEndStop_e;
+        t_eAPPSIG_Signal deadTime_e;
+        t_eAPPSIG_Signal direction_e;
+        t_eAPPSIG_Signal health_e;
+    } t_sCL42T_MtrDebugInfo;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */
@@ -70,7 +80,88 @@
     // ********************************************************************
     // *                      Variables
     // ********************************************************************
-
+    const t_sCL42T_MtrDebugInfo c_CL42T_SigMtrDebug[CL42T_MOTOR_NB] = {
+        [CL42T_MOTOR_1] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_1_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_1_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_1_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_1_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_1_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_1_HEALTH
+        },
+        [CL42T_MOTOR_2] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_2_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_2_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_2_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_2_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_2_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_2_HEALTH
+        },
+        [CL42T_MOTOR_3] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_3_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_3_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_3_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_3_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_3_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_3_HEALTH
+        },
+        [CL42T_MOTOR_4] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_4_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_4_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_4_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_4_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_4_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_4_HEALTH
+        },
+        [CL42T_MOTOR_5] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_5_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_5_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_5_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_5_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_5_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_5_HEALTH
+        },
+        [CL42T_MOTOR_6] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_6_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_6_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_6_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_6_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_6_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_6_HEALTH
+        },
+        [CL42T_MOTOR_7] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_7_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_7_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_7_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_7_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_7_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_7_HEALTH
+        },
+        [CL42T_MOTOR_8] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_8_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_8_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_8_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_8_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_8_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_8_HEALTH
+        },
+        [CL42T_MOTOR_9] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_9_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_9_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_9_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_9_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_9_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_9_HEALTH
+        },
+        [CL42T_MOTOR_10] = {
+            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_10_STATE,
+            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_10_CW_ENDSTOP,
+            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_10_CCW_ENDSTOP,
+            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_10_DEADTIME,
+            .direction_e = APPSIG_SIGNAL_CL42T_MTR_10_DIRECTION,
+            .health_e = APPSIG_SIGNAL_CL42T_MTR_10_HEALTH
+        }
+    };
     //********************************************************************************
     //                      Public functions - Prototyupes
     //********************************************************************************

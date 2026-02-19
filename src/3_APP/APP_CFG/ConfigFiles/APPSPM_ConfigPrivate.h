@@ -27,6 +27,7 @@
     ///@brief number of msg to follow 
     #define APPSPM_SIG_MSG_NB       ((t_uint8)1)
     /* CAUTION : Automatic generated code section for define: End */
+    #define APPSPM_SIG_SEND_PER_CYCLIC ((t_uint16)20)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -72,7 +73,7 @@
     ///@brief Variable for System Parameter Inforamtion
     const t_sAPPSPM_ItemPrmCfg c_AppSpm_ItemPrmInfo_as[APPSPM_PRM_NB] ={
     //version_u8                   minItemVal_u16                maxItemVal_u16                 DefaultItemVal_u16
-    [APPSPM_PRM_LGC_GTRY_PULSE_ITER_MAX] = {
+    [APPSPM_PRM_GTRY_PULSE_ITER_MAX] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -80,9 +81,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_PULSE_ITER_MAX
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_PULSE_ITER_MAX
     },
-    [APPSPM_PRM_LGC_GTRY_X_RAMP_CTRL_KFACTOR] = {
+    [APPSPM_PRM_GTRY_X_RMP_CTRL_KFACTOR] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -90,9 +91,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_KFACTOR
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_RMP_CTRL_KFACTOR
     },
-    [APPSPM_PRM_LGC_GTRY_X_RAMP_CTRL_SLOP_SPD] = {
+    [APPSPM_PRM_GTRY_X_RMP_CTRL_SLOP_SPD] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -100,9 +101,9 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_SLOP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_RMP_CTRL_SLOP_SPD
     },
-    [APPSPM_PRM_LGC_GTRY_X_RAMP_CTRL_NB_STEP] = {
+    [APPSPM_PRM_GTRY_X_RMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -110,9 +111,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_RAMP_CTRL_NB_STEP
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_RMP_CTRL_NB_STEP
     },
-    [APPSPM_PRM_LGC_GTRY_X_SPD_MAX] = {
+    [APPSPM_PRM_GTRY_X_SPD_MAX] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -120,9 +121,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPD_MAX
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_SPD_MAX
     },
-    [APPSPM_PRM_LGC_GTRY_X_SPD_MIN] = {
+    [APPSPM_PRM_GTRY_X_SPD_MIN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -130,9 +131,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_SPD_MIN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_SPD_MIN
     },
-    [APPSPM_PRM_LGC_GTRY_X_CALIB_OFFSET] = {
+    [APPSPM_PRM_GTRY_X_CALIB_OFFSET] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -140,9 +141,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_X_CALIB_OFFSET
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_X_CALIB_OFFSET
     },
-    [APPSPM_PRM_LGC_GTRY_Y_RAMP_CTRL_KFACTOR] = {
+    [APPSPM_PRM_GTRY_Y_RMP_CTRL_KFACTOR] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -150,9 +151,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_KFACTOR
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_RMP_CTRL_KFACTOR
     },
-    [APPSPM_PRM_LGC_GTRY_Y_RAMP_CTRL_SLOP_SPD] = {
+    [APPSPM_PRM_GTRY_Y_RMP_CTRL_SLOP_SPD] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -160,9 +161,9 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_SLOP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_RMP_CTRL_SLOP_SPD
     },
-    [APPSPM_PRM_LGC_GTRY_Y_RAMP_CTRL_NB_STEP] = {
+    [APPSPM_PRM_GTRY_Y_RMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -170,9 +171,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_RAMP_CTRL_NB_STEP
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_RMP_CTRL_NB_STEP
     },
-    [APPSPM_PRM_LGC_GTRY_Y_SPD_MAX] = {
+    [APPSPM_PRM_GTRY_Y_SPD_MAX] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -180,9 +181,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPD_MAX
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_SPD_MAX
     },
-    [APPSPM_PRM_LGC_GTRY_Y_SPD_MIN] = {
+    [APPSPM_PRM_GTRY_Y_SPD_MIN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -190,9 +191,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_SPD_MIN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_SPD_MIN
     },
-    [APPSPM_PRM_LGC_GTRY_Y_CALIB_OFFSET] = {
+    [APPSPM_PRM_GTRY_Y_CALIB_OFFSET] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -200,9 +201,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Y_CALIB_OFFSET
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Y_CALIB_OFFSET
     },
-    [APPSPM_PRM_LGC_GTRY_Z_RAMP_CTRL_KFACTOR] = {
+    [APPSPM_PRM_GTRY_Z_RMP_CTRL_KFACTOR] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -210,9 +211,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_KFACTOR
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_RMP_CTRL_KFACTOR
     },
-    [APPSPM_PRM_LGC_GTRY_Z_RAMP_CTRL_SLOP_SPD] = {
+    [APPSPM_PRM_GTRY_Z_RMP_CTRL_SLOP_SPD] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -220,9 +221,9 @@
         .factor_f32 = (t_float32)2.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_SLOP_SPD
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_RMP_CTRL_SLOP_SPD
     },
-    [APPSPM_PRM_LGC_GTRY_Z_RAMP_CTRL_NB_STEP] = {
+    [APPSPM_PRM_GTRY_Z_RMP_CTRL_NB_STEP] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -230,9 +231,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_RAMP_CTRL_NB_STEP
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_RMP_CTRL_NB_STEP
     },
-    [APPSPM_PRM_LGC_GTRY_Z_SPD_MAX] = {
+    [APPSPM_PRM_GTRY_Z_SPD_MAX] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -240,9 +241,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPD_MAX
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_SPD_MAX
     },
-    [APPSPM_PRM_LGC_GTRY_Z_SPD_MIN] = {
+    [APPSPM_PRM_GTRY_Z_SPD_MIN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)1,
         .maxItemVal_f32 = (t_float32)65535,
@@ -250,9 +251,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_SPD_MIN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_SPD_MIN
     },
-    [APPSPM_PRM_LGC_GTRY_Z_CALIB_OFFSET] = {
+    [APPSPM_PRM_GTRY_Z_CALIB_OFFSET] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -260,7 +261,7 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_Z_CALIB_OFFSET
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_Z_CALIB_OFFSET
     },
     [APPSPM_PRM_SYS_OPT_SNS_ECDR_XL] = {
         .version_u8 = (t_uint8)1,
@@ -352,7 +353,7 @@
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
     },
-    [APPSPM_PRM_LGC_GTRY_ALGO_CPTE_TYPE] = {
+    [APPSPM_PRM_GTRY_ALGO_CPTE_TYPE] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)8,
@@ -360,9 +361,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_ALGO_CPTE_TYPE
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_ALGO_CPTE_TYPE
     },
-    [APPSPM_PRM_LGC_GTRY_CALIB_TYPE] = {
+    [APPSPM_PRM_GTRY_CALIB_TYPE] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -370,9 +371,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_CALIB_TYPE
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_CALIB_TYPE
     },
-    [APPSPM_PRM_LGC_GTRY_SENDITER_TYPE] = {
+    [APPSPM_PRM_GTRY_SENDITER_TYPE] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -380,9 +381,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_SENDITER_TYPE
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_SENDITER_TYPE
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM] = {
+    [APPSPM_PRM_GTRY_AXE_X_PULSE_PER_MM] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -390,9 +391,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_X_PULSE_PER_MM
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM] = {
+    [APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_MM] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -400,9 +401,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Y_PULSE_PER_MM
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM] = {
+    [APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_MM] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -410,9 +411,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Z_PULSE_PER_MM
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_X_LEN] = {
+    [APPSPM_PRM_GTRY_AXE_X_LEN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -420,9 +421,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_LEN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_X_LEN
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Y_LEN] = {
+    [APPSPM_PRM_GTRY_AXE_Y_LEN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -430,9 +431,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_LEN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Y_LEN
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Z_LEN] = {
+    [APPSPM_PRM_GTRY_AXE_Z_LEN] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -440,9 +441,9 @@
         .factor_f32 = (t_float32)0.1,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_LEN
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Z_LEN
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT] = {
+    [APPSPM_PRM_GTRY_AXE_X_SAFE_HEIGHT] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -450,9 +451,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_X_SAFE_HEIGHT
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_X_SAFE_HEIGHT
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT] = {
+    [APPSPM_PRM_GTRY_AXE_Y_SAFE_HEIGHT] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -460,9 +461,9 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Y_SAFE_HEIGHT
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Y_SAFE_HEIGHT
     },
-    [APPSPM_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT] = {
+    [APPSPM_PRM_GTRY_AXE_Z_SAFE_HEIGHT] = {
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
@@ -470,7 +471,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_PRM_LGC_GTRY_AXE_Z_SAFE_HEIGHT
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Z_SAFE_HEIGHT
     },
     [APPSPM_PRM_SYS_OPT_ACT_MTR_WHL_AV_L] = {
         .version_u8 = (t_uint8)1,

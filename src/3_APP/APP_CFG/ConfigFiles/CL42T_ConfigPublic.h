@@ -30,6 +30,12 @@
         CL42T_MOTOR_2,
         CL42T_MOTOR_3,
         CL42T_MOTOR_4,
+        CL42T_MOTOR_5,
+        CL42T_MOTOR_6,
+        CL42T_MOTOR_7,
+        CL42T_MOTOR_8,
+        CL42T_MOTOR_9,
+        CL42T_MOTOR_10,
 
         CL42T_MOTOR_NB
     } t_eCL42T_MotorId;

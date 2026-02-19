@@ -19,6 +19,7 @@
 #include "APP_CFG/ConfigFiles/APPSYS_ConfigPublic.h"
 #if defined(APPSYS_MODULE_FMKHRT_ENABLE)
 #include "./FMKHRT_ConfigSpecific.h"
+#include "FMK_HAL/FMK_SRL/Src/FMK_SRL.h"
 // ********************************************************************
 // *                      Defines
 // ********************************************************************
@@ -362,7 +363,14 @@ HAL_StatusTypeDef FMKHRT_HAL_HRTIM_WaveformStart(   HRTIM_HandleTypeDef * f_bspI
     HAL_StatusTypeDef bspRet_e = HAL_OK;
     t_eReturnCode Ret_e = RC_OK;
     t_uint32 bspslvTimId_u32;
+    volatile uint32_t oenr = HRTIM1->sCommonRegs.OENR;
+    volatile uint32_t odsr = HRTIM1->sCommonRegs.ODSR;
+    volatile uint32_t odisr = HRTIM1->sCommonRegs.ODISR;
+    volatile uint32_t isr  = HRTIM1->sCommonRegs.ISR;
+    volatile uint32_t outx  = HRTIM1->sTimerxRegs[4].OUTxR;
 
+    FMKSRL_LOG("oenr :%d, odsr :%d, odisr :%d, isr %d, outx_r:%d\r\n",
+                        oenr,odsr,odisr,isr, outx);
     Ret_e = s_FMKHRTSPEC_GetSlvTimerId(f_timerIdx_u32, &bspslvTimId_u32);
 
     if(Ret_e == RC_OK)
@@ -380,7 +388,14 @@ HAL_StatusTypeDef FMKHRT_HAL_HRTIM_WaveformStart(   HRTIM_HandleTypeDef * f_bspI
         //---- not the best way to track the error -----//
         bspRet_e = HAL_ERROR;
     }
+    oenr = HRTIM1->sCommonRegs.OENR;
+    odsr = HRTIM1->sCommonRegs.ODSR;
+    odisr = HRTIM1->sCommonRegs.ODISR;
+    isr  = HRTIM1->sCommonRegs.ISR;
+    outx  = HRTIM1->sTimerxRegs[4].OUTxR;
 
+    FMKSRL_LOG("oenr :%d, odsr :%d, odisr :%d, isr %d, outx_r:%d\r\n",
+                        oenr,odsr,odisr,isr, outx);
     return bspRet_e;
 }
 

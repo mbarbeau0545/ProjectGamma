@@ -32,6 +32,7 @@
     #define APPACT_HARD_STOP                ((t_float32)-1.0f)
     #define APPACT_ENABLE_MOTOR             ((t_float32)-2.0f)
 
+    #define APPACT_ACT_MOTOR_SUPPLY_SET     ((t_float32)1.0f)
     ///@brief define normalize direction of spec files 
     #define APPACT_DIRECTION_CW ((t_float32)0.0f)
     #define APPACT_DIRECTION_CCW ((t_float32)1.0f)

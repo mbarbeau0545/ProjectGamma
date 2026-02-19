@@ -93,6 +93,8 @@ static t_sAPPLGC_ActIfInfo g_actValues_as[APPACT_ACTITF_NB];
 */
 static t_bool  g_resetSrvState_b = (t_bool)FALSE; 
 
+///@brief Ecu Position 
+static t_eAPPSYS_EcuPos g_EcuPos_e;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -397,9 +399,33 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
     t_eReturnCode Ret_e = RC_OK;
+t_sFMKIO_PwmWaveformCfg pwmWvForm_s;
+    t_sFMKIO_PwmControlPrm pwmCtrl_s;
 
+    pwmWvForm_s.deadTime_u32 = 0;
+            pwmWvForm_s.frequency_f32 = 1000;
+            pwmWvForm_s.polarity_e = FMKIO_SIGPWM_POLARITY_LOW;
+            pwmWvForm_s.pullMode_e = FMKIO_PULL_MODE_DISABLE;
+            pwmWvForm_s.spdMode_e = FMKIO_SPD_MODE_HIGH;
+
+            pwmCtrl_s.ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED;
+            pwmCtrl_s.rampCfg_ps = NULL;
+            pwmCtrl_s.enablePulseSyncOpe_b = FALSE;
+
+            Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_1,
+                                            pwmWvForm_s,
+                                            pwmCtrl_s,
+                                            NULL_FUNCTION,
+                                            NULL_FUNCTION);
+            Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_5,
+                                            pwmWvForm_s,
+                                            pwmCtrl_s,
+                                            NULL_FUNCTION,
+                                            NULL_FUNCTION);
+
+    Ret_e = APPSYS_GetEcuPosition(&g_EcuPos_e);
     //Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
-    
+
     return Ret_e;
 }
 
@@ -414,7 +440,7 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
     Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPD, APPACT_ENABLE_MOTOR);
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Y_SPD, APPACT_ENABLE_MOTOR);
+        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XR_SPD, APPACT_ENABLE_MOTOR);
     }
     // if(Ret_e == RC_OK)
     // {
@@ -433,10 +459,18 @@ static t_eReturnCode s_APPLGC_Operational(void)
 
     Ret_e = s_APPLGC_UpdateSnsValues();
 
-    if(Ret_e == RC_OK)
+    if(Ret_e >= RC_OK)
     {
         Ret_e = s_APPLGC_UpdateActValues();
-    }
+    }  
+    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_6, 1000);
+    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_6, 500);
+    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_7, 1000);
+    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_7, 500);
+    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_1, 1000);
+    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_1, 500);
+    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, 1000);
+    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_5, 500);
     return Ret_e;
 }
 
@@ -534,12 +568,20 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                                         t_uint16 f_debugInfo1_u16,
                                         t_uint16 f_debugInfo2_u16)
 {
+    
+
+    //---- send error to can ----//
+    (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_ITEM, (t_float32)f_item_e);
+    (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_REPORT_STATUS, (t_float32)f_reportState_e);
+    (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_1, (t_float32)f_debugInfo1_u16);
+    (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_2, (t_float32)f_debugInfo2_u16);
+
+    //---- send error to serial ----//
     FMKSRL_LOG("Diag Item %d, status : %d, debug1 : %d, debug2 : %d\r\n",
                 f_item_e,
                 f_reportState_e,
                 f_debugInfo1_u16,
                 f_debugInfo2_u16);
-
     return;
 }
 

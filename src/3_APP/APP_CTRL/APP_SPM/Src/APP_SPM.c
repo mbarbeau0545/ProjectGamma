@@ -105,8 +105,15 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
 *	@brief  Call driver cyclic function
 *
 */
-static t_eReturnCode s_APPSPM_EncodePrmValue(   t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps, 
+static t_eReturnCode s_APPSPM_DecodeSigValue(   t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps, 
                                                 void * f_value_pv);
+/**
+*
+*	@brief  Call driver cyclic function
+*
+*/
+static t_eReturnCode s_APPSPM_EncodePrmValue(  const t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps,
+                                              t_float32 * f_value_pf32);
 /**
 *
 *	@brief  Call driver cyclic function
@@ -252,7 +259,7 @@ t_eReturnCode APPSPM_SetParam(t_eAPPSPM_ItemPrm f_itemId_e, t_uAPPSPM_PrmValType
     {
         itemPrmInfo_ps = (t_sAPPSPM_ItemPrmInfo *)(&g_ItemPrmInfo_as[f_itemId_e]);
 
-        Ret_e = s_APPSPM_EncodePrmValue(itemPrmInfo_ps,
+        Ret_e = s_APPSPM_DecodeSigValue(itemPrmInfo_ps,
                                         (void *)(&f_prmVal_u));
     }
 
@@ -360,7 +367,39 @@ static t_eReturnCode s_APPSM_ConfigurationState(void)
  *********************************/
 static t_eReturnCode s_APPSM_Operational(void)
 {  
-    return RC_OK;
+    t_eReturnCode Ret_e = RC_OK;
+    t_float32 sigValue_f32;
+    t_sAPPSPM_ItemPrmInfo * prmInfo_ps;
+    static t_uint16 s_currIdxPrmSig_u16 = (t_uint16)0;
+    t_uint16 idxPrmSig_u16;
+
+    for(idxPrmSig_u16 = (t_uint16)s_currIdxPrmSig_u16; 
+        (idxPrmSig_u16 < APPSPM_PRM_NB) 
+    &&  ((idxPrmSig_u16 - s_currIdxPrmSig_u16) < APPSPM_SIG_SEND_PER_CYCLIC) 
+    &&  (Ret_e == RC_OK) ; idxPrmSig_u16++)
+    {
+        prmInfo_ps = &g_ItemPrmInfo_as[idxPrmSig_u16];
+        //---- we send the value to sig and he deals with sending/ or do nothing ----//
+        if(prmInfo_ps->prmCfg_ps->signal_e < APPSIG_SIGNAL_NB)
+        {
+            Ret_e = s_APPSPM_EncodePrmValue(prmInfo_ps,
+                                            &sigValue_f32);
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = APPSIG_SetSignalValue(  prmInfo_ps->prmCfg_ps->signal_e,
+                                                sigValue_f32);
+            }
+        }
+    }
+    if(Ret_e == RC_OK)
+    {
+        if(idxPrmSig_u16 >= APPSPM_PRM_NB)
+        {
+            s_currIdxPrmSig_u16 = (t_uint16)0;
+        }
+    }
+
+    return Ret_e;
 }
 
 /*********************************
@@ -396,7 +435,7 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
                 {
                     //---- apply offset and factor ----//
 
-                    Ret_e = s_APPSPM_EncodePrmValue(&g_ItemPrmInfo_as[idxParam_u16],
+                    Ret_e = s_APPSPM_DecodeSigValue(&g_ItemPrmInfo_as[idxParam_u16],
                                                     (void *)&tmpValue_u32);
                 }
                 //--- set flag for eeprom, once there will be one ----//
@@ -412,9 +451,9 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
 }
 
 /*********************************
- * s_APPSPM_EncodePrmValue
+ * s_APPSPM_DecodeSigValue
  *********************************/
-static t_eReturnCode s_APPSPM_EncodePrmValue(   t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps, 
+static t_eReturnCode s_APPSPM_DecodeSigValue(   t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps, 
                                                 void * f_value_pv)
 {
     t_eReturnCode Ret_e = RC_OK;
@@ -547,6 +586,73 @@ static t_eReturnCode s_APPSPM_EncodePrmValue(   t_sAPPSPM_ItemPrmInfo * f_prmInf
                 ASSERT((t_uint16)0);
                 break;
 
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_APPSPM_EncodePrmValue
+ *********************************/
+static t_eReturnCode s_APPSPM_EncodePrmValue(  const t_sAPPSPM_ItemPrmInfo * f_prmInfo_ps,
+                                              t_float32 * f_value_pf32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_float32 rawValue_f32 = 0.0F;
+
+    if ((f_prmInfo_ps == NULL) || (f_value_pf32 == NULL) || (f_prmInfo_ps->prmCfg_ps == NULL))
+    {
+        Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        switch (f_prmInfo_ps->prmCfg_ps->prmType_e)
+        {
+            case APPSPM_PRM_TYPE_UINT8:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_u8;
+                break;
+
+            case APPSPM_PRM_TYPE_UINT16:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_u16;
+                break;
+
+            case APPSPM_PRM_TYPE_UINT32:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_u32;
+                break;
+
+            case APPSPM_PRM_TYPE_SINT8:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_s8;
+                break;
+
+            case APPSPM_PRM_TYPE_SINT16:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_s16;
+                break;
+
+            case APPSPM_PRM_TYPE_SINT32:
+                rawValue_f32 = (t_float32)f_prmInfo_ps->value_u.prmVal_s32;
+                break;
+
+            case APPSPM_PRM_TYPE_FLOAT32:
+                rawValue_f32 = f_prmInfo_ps->value_u.prmVal_f32;
+                break;
+
+            case APPSPM_PRM_TYPE_NB:
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+                ASSERT((t_uint16)0);
+                break;
+        }
+
+        if (Ret_e == RC_OK)
+        {
+            *f_value_pf32 = (rawValue_f32 - (t_float32)f_prmInfo_ps->prmCfg_ps->offset_s16
+                                        / f_prmInfo_ps->prmCfg_ps->factor_f32);
+        }
+        else
+        {
+            *f_value_pf32 = 0.0F;
         }
     }
 

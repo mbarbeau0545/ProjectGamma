@@ -301,16 +301,16 @@ t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB],
         //---- 2- getpulse per mm parameter for each axe ---//
         if(Ret_e == RC_OK)
         {
-            Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_X_PULSE_PER_MM, 
+            Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_X_PULSE_PER_MM, 
                                     &pulseperMmAxeXID_u);
             if(Ret_e == RC_OK)
             {
-                Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Y_PULSE_PER_MM, 
+                Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_MM, 
                                         &pulseperMmAxeYID_u);
             }
             if(Ret_e == RC_OK)
             {
-                Ret_e = APPSPM_GetParam(APPSPM_PRM_LGC_GTRY_AXE_Z_PULSE_PER_MM, 
+                Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_MM, 
                                         &pulseperMmAxeZID_u);
             }
         }

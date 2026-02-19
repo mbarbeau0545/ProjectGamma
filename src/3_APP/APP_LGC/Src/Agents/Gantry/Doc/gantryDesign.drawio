@@ -550,13 +550,13 @@
         <mxCell id="fqrwjeAK49L0SIDF5bni-2" value="GTRY_FSM_CALIB_OPE_ AXE_X" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
           <mxGeometry y="60" width="320" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="fqrwjeAK49L0SIDF5bni-3" value="GTRY_FSM_CALIB_OPE_AXE_Y" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
+        <mxCell id="fqrwjeAK49L0SIDF5bni-3" value="GTRY_FSM_CLB_AXE_Y" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
           <mxGeometry y="90" width="320" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="fqrwjeAK49L0SIDF5bni-4" value="GTRY_FSM_CALIB_OPE_AXE_Z" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
+        <mxCell id="fqrwjeAK49L0SIDF5bni-4" value="GTRY_FSM_CLB_AXE_Z" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
           <mxGeometry y="120" width="320" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="fqrwjeAK49L0SIDF5bni-5" value="GTRY_FSM_CALIB_OPE_AXE_ALL" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
+        <mxCell id="fqrwjeAK49L0SIDF5bni-5" value="GTRY_FSM_CLB_AXE_ALL" style="text;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#000000;" vertex="1" parent="fqrwjeAK49L0SIDF5bni-1">
           <mxGeometry y="150" width="320" height="30" as="geometry" />
         </mxCell>
         <mxCell id="fqrwjeAK49L0SIDF5bni-7" value="t_sGTRY_CalibrationType" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#000000;strokeColor=#B20000;" vertex="1" parent="1">
@@ -855,7 +855,7 @@
         <mxCell id="xh1KnHcRkxqPMujBOrLh-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="xh1KnHcRkxqPMujBOrLh-5" target="xh1KnHcRkxqPMujBOrLh-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="xh1KnHcRkxqPMujBOrLh-5" value="&lt;span style=&quot;color: rgb(237, 237, 237); text-align: left;&quot;&gt;GTRY_FSM_PERIODIC_TASK_ERROR&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;" parent="1" vertex="1">
+        <mxCell id="xh1KnHcRkxqPMujBOrLh-5" value="&lt;span style=&quot;color: rgb(237, 237, 237); text-align: left;&quot;&gt;GTRY_FSM_PRDTSK_ERROR&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;" parent="1" vertex="1">
           <mxGeometry x="280" y="840" width="320" height="40" as="geometry" />
         </mxCell>
         <mxCell id="xh1KnHcRkxqPMujBOrLh-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="xh1KnHcRkxqPMujBOrLh-6" target="xh1KnHcRkxqPMujBOrLh-8" edge="1">
@@ -1129,7 +1129,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="QSw58aYtTUbGxGBS-bgy-13" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font&gt;g_fsmCalibSts_e =&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;GTRY_FSM_CALIB_OPE_AXE_X&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;g_FsmCalibOpeSts_e_ =&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;GTRY_FSM_CALIB_OPE_STOP_AXE&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;fillColor=#d0cee2;strokeColor=#56517e;html=1;fontColor=#000000;" vertex="1" parent="1">
+        <mxCell id="QSw58aYtTUbGxGBS-bgy-13" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font&gt;g_fsmCalibSts_e =&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;GTRY_FSM_CLB_AXE_X&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;g_FsmCalibOpeSts_e_ =&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;GTRY_FSM_CALIB_OPE_STOP_AXE&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;fillColor=#d0cee2;strokeColor=#56517e;html=1;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="320" y="518" width="365" height="40" as="geometry" />
         </mxCell>
         <mxCell id="EKAFun48Ga6oaT9-15wx-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSw58aYtTUbGxGBS-bgy-16" target="D4WbEpLgED57o-o1ZcNK-16">
