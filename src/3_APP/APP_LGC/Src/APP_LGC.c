@@ -412,16 +412,16 @@ t_sFMKIO_PwmWaveformCfg pwmWvForm_s;
             pwmCtrl_s.rampCfg_ps = NULL;
             pwmCtrl_s.enablePulseSyncOpe_b = FALSE;
 
-            Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_1,
-                                            pwmWvForm_s,
-                                            pwmCtrl_s,
-                                            NULL_FUNCTION,
-                                            NULL_FUNCTION);
-            Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_5,
-                                            pwmWvForm_s,
-                                            pwmCtrl_s,
-                                            NULL_FUNCTION,
-                                            NULL_FUNCTION);
+            // Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_1,
+            //                                 pwmWvForm_s,
+            //                                 pwmCtrl_s,
+            //                                 NULL_FUNCTION,
+            //                                 NULL_FUNCTION);
+            // Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_5,
+            //                                 pwmWvForm_s,
+            //                                 pwmCtrl_s,
+            //                                 NULL_FUNCTION,
+            //                                 NULL_FUNCTION);
 
     Ret_e = APPSYS_GetEcuPosition(&g_EcuPos_e);
     //Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
@@ -577,6 +577,10 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
     (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_2, (t_float32)f_debugInfo2_u16);
 
     //---- send error to serial ----//
+    if(f_item_e == APPSDM_DIAG_ITEM_APPSIG_MSG_TIMEOUT)
+    {
+        return;
+    }
     FMKSRL_LOG("Diag Item %d, status : %d, debug1 : %d, debug2 : %d\r\n",
                 f_item_e,
                 f_reportState_e,

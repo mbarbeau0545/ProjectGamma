@@ -28,7 +28,7 @@
 // ********************************************************************
 #define APPSNS_SPEC_ECDR_ID (FMKIO_INPUT_ENCODER_3)
 #define APPSNS_SPEC_ECDR_MULTIPLE_TOUR ((t_uint8)1)
-#define APPSNS_SPEC_ECDR_PULSE_PER_REV ((t_uint16)3600)
+#define APPSNS_SPEC_ECDR_PULSE_PER_REV ((t_uint16)3200)
 /* CAUTION : Automatic generated code section for Include: Start */
 
 /* CAUTION : Automatic generated code section for Include: End */
@@ -151,8 +151,9 @@ t_eReturnCode APPSNS_SPEC_ECDR_HD_HOLD_POS_GetSigValue(t_float32 *f_rawSigValue_
                 break;
 
             case APPSYS_OPT_SNS_ECDR_HD_HOLD_NEMA17:
-                Ret_e = FMKIO_Get_InEcdrPositionValue(  APPSNS_SPEC_ECDR_ID,
+                    Ret_e = FMKIO_Get_InEcdrPositionValue(  APPSNS_SPEC_ECDR_ID,
                                                         FMKIO_ECDR_VAL_FORMAT_MRADIAN,
+                                                        NULL,
                                                         &position_f32);
                 if(Ret_e == RC_OK)
                 {

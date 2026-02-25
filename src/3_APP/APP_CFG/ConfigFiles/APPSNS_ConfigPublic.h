@@ -162,6 +162,7 @@
     typedef enum
     {
         APPSNS_ANGULARSPD_RADIAN_PER_SEC = 0x00,           /**< Angular Speed in radian per second*/
+        APPSNS_ANGULARSPD_MILLI_RADIAN_PER_SEC,            /**< Angular Speed in Milliradian per second*/
         APPSNS_ANGULARSPD_DEGREE_PER_SEC,                  /**< Angular Speed in Degree per second*/
         APPSNS_ANGULARSPD_ROUND_PER_MIN,                   /**< Angular Speed in Round per minute*/
         APPSNS_ANGULARSPD_ROUND_PER_SEC,                   /**< Angular Speed in Round per second*/
@@ -174,6 +175,7 @@
     typedef enum
     {
         APPSNS_ANGLE_UNIT_RADIAN = 0x00,               /**< Angle in Radians (rad) */
+        APPSNS_ANGLE_UNIT_MILLIRADIAN,               /**< Milli Angle in Radians (rad) */
         APPSNS_ANGLE_UNIT_DEGREE,        /**< Angle in Degrees (°) */
         APPSNS_ANGLE_UNIT_GRAD,                 /**< Angle in Gradians (gon) */
 

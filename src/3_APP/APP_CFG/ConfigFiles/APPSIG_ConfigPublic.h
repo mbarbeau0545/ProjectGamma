@@ -18,7 +18,9 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    ///@brief Number maximum of max subsriber a msg can have 
+    ///@brief Number maximum of max subsriber a SIGNAL can have 
+    #define APPSIG_SIG_RCV_SUBSRIBERS_MAX   ((t_uint8)1)
+    ///@brief Number maximum of max subsriber a MSG can have 
     #define APPSIG_MSG_RCV_SUBSRIBERS_MAX   ((t_uint8)1)
     // ********************************************************************
     // *                      Types
@@ -238,6 +240,14 @@
         APPSIG_SIGNAL_PRM_GTRY_AXE_X_SAFE_HEIGHT,
         APPSIG_SIGNAL_PRM_GTRY_AXE_Y_SAFE_HEIGHT,
         APPSIG_SIGNAL_PRM_GTRY_AXE_Z_SAFE_HEIGHT,
+        APPSIG_SIGNAL_LGC_CMD_CALIB_ID,
+        APPSIG_SIGNAL_LGC_CMD_CALIB_REQ_STATE,
+        APPSIG_SIGNAL_LGC_CMD_CALIB_CURR_FEEDBACK,
+        APPSIG_SIGNAL_LGC_CMD_CALIB_PLS,
+        APPSIG_SIGNAL_LGC_CMD_CALIB_SPD,
+        APPSIG_SIGNAL_LGC_CMD_REARMAMENT,
+        APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE,
+        APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE,
         APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X,
         APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y,
         APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z,
@@ -257,6 +267,8 @@
         APPSIG_SIGNAL_LGC_GTRY_FSM_CLB_AXE_Z,
         APPSIG_SIGNAL_LGC_GTRY_FSM_OPE,
         APPSIG_SIGNAL_LGC_GTRY_FSM_OPE_CMD_PRCSS,
+        APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X,
+        APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y,
         APPSIG_SIGNAL_GTRY_AXE_X_POSITION,
         APPSIG_SIGNAL_GTRY_AXE_Y_POSITION,
         APPSIG_SIGNAL_GTRY_AXE_Z_POSITION,
@@ -394,9 +406,12 @@
         APPSIG_CAN_MSG_LGC_CL42T_MOTORS_INFO_HEAD_GTRY,
         APPSIG_CAN_MSG_LGC_CL42T_MOTORS_INFO_MOTION,
         APPSIG_CAN_MSG_LGC_GTRY_CMD_POSITION,
+        APPSIG_CAN_MSG_LGC_REARMAMENT_CMD,
         APPSIG_CAN_MSG_LGC_GTRY_CMD_STEPS,
         APPSIG_CAN_MSG_LGC_GTRY_POSITION,
         APPSIG_CAN_MSG_LGC_GTRY_DEBUG_FSM,
+        APPSIG_CAN_MSG_LGC_HC_CMD_CALIBRATION,
+        APPSIG_CAN_MSG_LGC_HC_CMD_POSITION,
     
         APPSIG_CAN_MSG_NB,
     } t_eAPPSIG_CanMsgList;

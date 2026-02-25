@@ -478,7 +478,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.1,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -488,7 +488,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.2,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -498,7 +498,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.3,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -508,7 +508,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.4,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -518,7 +518,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.5,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -528,7 +528,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.6,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -538,7 +538,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.7,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -548,7 +548,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.8,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -558,7 +558,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.9,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -568,7 +568,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.10,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -578,7 +578,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.11,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -588,7 +588,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.12,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -598,7 +598,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.13,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -608,7 +608,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.14,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -618,7 +618,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.15,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -628,7 +628,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.16,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -638,7 +638,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.17,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -648,7 +648,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.18,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -658,7 +658,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.19,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -668,7 +668,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.20,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -678,7 +678,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.21,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -688,7 +688,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.22,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -698,7 +698,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.23,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -708,7 +708,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.24,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -718,7 +718,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.25,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -728,7 +728,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.26,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -738,7 +738,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.27,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -748,7 +748,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.28,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -758,7 +758,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.29,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -768,7 +768,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.30,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -778,7 +778,7 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.31,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
         .signal_e = APPSIG_SIGNAL_NB
@@ -788,9 +788,69 @@
         .minItemVal_f32 = (t_float32)0,
         .maxItemVal_f32 = (t_float32)65535,
         .DefaultItemVal_f32 = (t_float32)0,
-        .factor_f32 = (t_float32)1.32,
+        .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_LEN_FROM_REFA_TO_REFB] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)235,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_UINT16,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_LEN_HEAD_CNTR_KNIFE] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)310,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_UINT16,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_LEN_HEAD_KNIFE] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)205,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_UINT16,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_CNTR_KNIFE_PULSE_TO_RAD] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)0.14,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_KNIFE_PULSE_TO_RAD] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)0.123,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
+        .signal_e = APPSIG_SIGNAL_NB
+    },
+    [APPSPM_PRM_HC_HOLD_KNIFE_PULSE_TO_RAD] = {
+        .version_u8 = (t_uint8)1,
+        .minItemVal_f32 = (t_float32)0,
+        .maxItemVal_f32 = (t_float32)65535,
+        .DefaultItemVal_f32 = (t_float32)1.89,
+        .factor_f32 = (t_float32)1.0,
+        .offset_s16 = (t_sint16)0,
+        .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
         .signal_e = APPSIG_SIGNAL_NB
     },
     };

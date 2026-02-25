@@ -189,7 +189,7 @@
 
     /**< Variable for System Actuators drivers functions*/
     const t_sAPPACT_SysDrvFunc c_AppAct_SysDrvCfg_as[APPACT_DRV_NB] = {
-        {(t_cbAppAct_DrvInit *)CL42T_Init,                    (t_cbAppAct_DrvCyclic *)CL42T_Cyclic,TRUE}                                // APPACT_DRV_CL42T
+        {(t_cbAppAct_DrvInit *)NULL_FUNCTION,                        (t_cbAppAct_DrvInit *)NULL_FUNCTION,FALSE}                                // APPACT_DRV_CL42T
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

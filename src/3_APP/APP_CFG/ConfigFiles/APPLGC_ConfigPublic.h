@@ -20,7 +20,8 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-
+    #define APPLGC_OPE_SUCESS = 1
+    #define APPLGC_OPE_FAILED = 0xFF
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -74,7 +75,25 @@
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;
     /* CAUTION : Automatic generated code section for Enum: End */
-    
+
+    ///@brief Calibration Common status 
+    typedef enum 
+    {
+        APPLGC_CALIB_STS_IDLE = 0,          //---- Calibration statte IDLE Status ----//
+        APPLGC_CALIB_STS_MOVE,              //---- Calibration statte Move Status ----//
+        APPLGC_CALIB_STS_REGSITER_VALUE,    //---- Calibration statte Register Status ----//
+
+        APPLGC_CALIB_STS_NB                 //---- calibration state number ----//
+    } t_eAPPLGC_CalibStatus;
+
+    ///@brief Rearmament Type
+    typedef enum 
+    {
+        APP_LGC_REARM_TYPE_FSM_PRE_OPE = 0,     //---- rearmament type concern only a go back to fsm_ope ----//
+        APP_LGC_REARM_TYPE_TOTAL,               //---- rearmament type to Init of the agent ----//
+
+        LGC_REARM_TYPE_NB                       //---- rearmament type number  ----//
+    } t_eAPPLGC_RearmType;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */

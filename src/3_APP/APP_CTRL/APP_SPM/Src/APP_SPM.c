@@ -323,7 +323,7 @@ static t_eReturnCode s_APPSM_ConfigurationState(void)
         prmInfo_ps = &g_ItemPrmInfo_as[idxParm_e];
         if(prmInfo_ps->prmCfg_ps->signal_e < APPSIG_SIGNAL_NB)
         {
-            Ret_e = APPSIG_AddRcvMsgCallback(   prmInfo_ps->prmCfg_ps->signal_e,
+            Ret_e = APPSIG_AddRcvSigCallback(   prmInfo_ps->prmCfg_ps->signal_e,
                                                 s_APPSPM_AppSigMsgRcvCallback);
         }
 

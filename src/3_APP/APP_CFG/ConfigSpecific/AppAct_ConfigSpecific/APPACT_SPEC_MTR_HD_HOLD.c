@@ -419,7 +419,7 @@ static void s_APPACT_SPEC_CL42T_HealthCallback(t_eCL42T_MotorId f_MotorID_e, t_e
         /* TODO: Replace APPSDM_DIAG_ITEM_HEAD_KNIFE_OPE_ERROR by the proper diagnostic item for HD_HOLD. */
         APPACT_SPEC_CL42T_Diagnostic(   f_defaultInfo_e,
                                         c_MtrHdHold_CL42T_Id,
-                                        APPSDM_DIAG_ITEM_HEAD_KNIFE_OPE_ERROR);
+                                        APPSDM_DIAG_ITEM_HEAD_HOLD_OPE_ERROR);
     }
 
     return;

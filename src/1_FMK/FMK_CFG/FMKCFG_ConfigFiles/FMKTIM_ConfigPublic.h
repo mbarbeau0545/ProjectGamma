@@ -30,9 +30,9 @@
     #define FMKTIM_FREQ_COMPUTE_DELTA_ACCEPTANCE ((t_float32)0.5f) // +- frequency
     #define FMKTIM_FREQPWM_COMPUTE_DELTA_ACCEPTANCE ((t_float32)0.05f) // % of frequency 
     #define FMKTIM_ARR_LOW_LIMIT_16BIT  ((t_uint32)0xC350)     // 50000
-    #define FMKTIM_ARR_HIGH_LIMIT_16BIT ((t_uint32)0xFFFE)     // 65534
+    #define FMKTIM_ARR_HIGH_LIMIT_16BIT ((t_uint32)0xFFFF)     // 65534
     #define FMKTIM_ARR_LOW_LIMIT_32BIT  ((t_uint32)0xB2D05E00) // 3_000_000_000
-    #define FMKTIM_ARR_HIGH_LIMIT_32BIT ((t_uint32)0xFFFFFFFE) // 4_294_967_295
+    #define FMKTIM_ARR_HIGH_LIMIT_32BIT ((t_uint32)0xFFFFFFFF) // 4_294_967_295
 
     ///@brief for a 16 bits timer is the min frequency allowed, PSC & ARR > 0xFFFF
     #define FMKTIM_TIMER_MIN_FREQ_ALLOWED    ((t_float32)0.5)

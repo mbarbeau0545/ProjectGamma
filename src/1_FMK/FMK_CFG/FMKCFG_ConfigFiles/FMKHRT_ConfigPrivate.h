@@ -35,6 +35,9 @@
     * @brief Min ARR Value for PWM 
     */
     #define FMKHRT_PWM_MAX_ARR_VALUE ((t_uint32)64000)
+
+    ///@brief Max pulse that could get REPx register 
+    #define FMKHRT_MAX_PULSE_REPX       ((t_uint32)0xFF)
     // ********************************************************************
     // *                      Types
     // ********************************************************************

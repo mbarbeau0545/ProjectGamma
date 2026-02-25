@@ -47,7 +47,7 @@
         typedef DMA_Channel_TypeDef FMKCPU_DmaChnlTypeDef;
 
         /// @brief Mapping for whatchfog instance
-        #define FMKCPU_WWDG_INSTANCE            ((IWDG_TypeDef *)WWDG)
+        #define FMKCPU_WWDG_INSTANCE            ((IWDG_TypeDef *)IWDG)
 
         /// @brief Mapping for freeze wathdog during breakpoint
         #define FMKPCU_DISABLE_WWDG_DEBUG()       __HAL_DBGMCU_FREEZE_IWDG()

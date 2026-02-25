@@ -38,7 +38,7 @@
     /**
      * @brief ARR value for timer in Encoder Mode
      */
-    #define FMKIO_ECDR_ARR_VALUE ((t_uint32)(0xFFFF - 1))
+    #define FMKIO_ECDR_ARR_VALUE ((t_uint32)(0xFFFF))
 
     ///@brief Flag to say that the alternate function is not used in Signal Init
     #define FMKIO_AF_UNUSED   ((t_uint8)0xFF) 

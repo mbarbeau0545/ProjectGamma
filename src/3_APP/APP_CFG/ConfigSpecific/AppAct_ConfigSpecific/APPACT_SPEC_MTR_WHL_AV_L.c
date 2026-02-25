@@ -473,7 +473,7 @@ static void s_APPACT_SPEC_CL42T_HealthCallback(t_eCL42T_MotorId f_MotorID_e, t_e
         /* TODO: Replace APPSDM_DIAG_ITEM_HEAD_KNIFE_OPE_ERROR by the proper diagnostic item for this wheel motor. */
         APPACT_SPEC_CL42T_Diagnostic(   f_defaultInfo_e,
                                         c_MtrWhlAvL_CL42T_Id,
-                                        APPSDM_DIAG_ITEM_HEAD_KNIFE_OPE_ERROR);
+                                        APPSDM_DIAG_ITEM_WHL_AV_L_OPE_ERROR);
     }
 
     return;

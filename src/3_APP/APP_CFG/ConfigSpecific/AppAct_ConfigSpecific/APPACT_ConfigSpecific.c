@@ -344,8 +344,9 @@ void APPACT_SPEC_CL42T_Diagnostic(  t_eCL42T_DiagError f_defaultInfo_e,
             emitDiag_b = TRUE;
         break;
         case CL42T_DIAGNOSTIC_OK:
+        break;
         default:
-            
+            ASSERT((t_uint16)f_defaultInfo_e);
         break;
     }
     if(emitDiag_b == TRUE)

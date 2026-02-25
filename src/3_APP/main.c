@@ -13,7 +13,7 @@
 // ********************************************************************
 #include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
 #include "FMK_HAL/FMK_CPU/Src/FMK_CPU.h"
-
+#include "2_DRV./CL42T/Src/CL42T.h"
 // ********************************************************************
 // *                      Defines
 // ******************************************************************** 
@@ -30,10 +30,16 @@ int main(void)
     // code running once
     APPSYS_Init();
 
+    //--- motor needs cyclic <= 1 ms ----//
+    CL42T_Init();
+
     while (True)
     {
         // code running every APPSYS_ELAPSED_TIME_CYCLIC ms
         APPSYS_Cyclic();
+
+        //--- motor needs cyclic <= 1 ms ----//
+        CL42T_Cyclic();
     }
         
     return 0;
