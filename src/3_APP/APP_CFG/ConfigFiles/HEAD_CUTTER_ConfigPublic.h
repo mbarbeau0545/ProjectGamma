@@ -1,6 +1,6 @@
 /**
- * @file        CL42T_ConfigPublic.h
- * @brief       Driver Module for Driver CL42T.
+ * @file        HEAD_CUTTER_ConfigPublic.h
+ * @brief       \n.
  * @note        TemplateDetailsDescription.\n
  *
  * @author      mba

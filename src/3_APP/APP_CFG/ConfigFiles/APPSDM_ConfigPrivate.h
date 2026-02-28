@@ -112,6 +112,9 @@
         {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Z_OFF},// GTRY_Z_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_KNIFE_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_CNTR_KNIFE_OPE_ERROR
+        {(t_uint16)0,                  (t_uint32)2000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR
+        {(t_uint16)0,                  (t_uint32)10000,              (t_bool)True,                 (t_bool)False,                APPSDM_DIAG_STRAT_NONE},        // HEAD_TIP_KNIVE_POS_LIMIT_ERROR
+        {(t_uint16)0,                  (t_uint32)10000,              (t_bool)True,                 (t_bool)False,                APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_TIP_KNIVE_POS_TIMESTAMPS_ID
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_HOLD_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_L_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_R_OPE_ERROR

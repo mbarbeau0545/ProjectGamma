@@ -215,6 +215,7 @@
 
     /**< Variable for System Sensors drivers functions*/
     const t_sAPPSNS_SysDrvFunc c_AppSns_SysDrv_as[APPSNS_DRV_NB] = {
+        {(t_cbAppSns_DrvInit *)NULL_FUNCTION,                        (t_cbAppSns_DrvInit *)NULL_FUNCTION,FALSE}                                // APPSNS_DRV_NONE
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

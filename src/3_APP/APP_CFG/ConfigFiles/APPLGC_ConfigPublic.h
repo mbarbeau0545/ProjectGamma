@@ -20,8 +20,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define APPLGC_OPE_SUCESS = 1
-    #define APPLGC_OPE_FAILED = 0xFF
+
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -79,13 +78,24 @@
     ///@brief Calibration Common status 
     typedef enum 
     {
-        APPLGC_CALIB_STS_IDLE = 0,          //---- Calibration statte IDLE Status ----//
-        APPLGC_CALIB_STS_MOVE,              //---- Calibration statte Move Status ----//
-        APPLGC_CALIB_STS_REGSITER_VALUE,    //---- Calibration statte Register Status ----//
+        APPLGC_CALIB_REQSTS_IDLE = 0,          //---- Calibration statte IDLE Status ----//
+        APPLGC_CALIB_REQSTS_MOVE,              //---- Calibration statte Move Status ----//
+        APPLGC_CALIB_REQSTS_REGSITER_VALUE,    //---- Calibration statte Register Status ----//
 
         APPLGC_CALIB_STS_NB                 //---- calibration state number ----//
     } t_eAPPLGC_CalibStatus;
 
+    ///@brief Calibration status Feedback
+    typedef enum 
+    {
+        APPLGC_CALIB_FBSTS_ONGOING,                 //---- Calibration FeedBack status, calib on going & accepted ----//
+        APPLGC_CALIB_FBSTS_REGIST_VAL_SUCCEED,      //---- Calibration FeedBack status, successfully registered value ----//
+        APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED,       //---- Calibration FeedBack status, failed to registered calib value ----//
+        APPLGC_CALIB_FBSTS_WRONG_STATE,             //---- Calibration FeedBack status, wrong states ----//
+        APPLGC_CALIB_FBSTS_UNDEFINED_ERROR,             //---- Calibration FeedBack status, error undifend ----//
+        APPLGC_CALIB_FBSTS_MTR_DISABLE,             //---- Calibration FeedBack status, Mtr Disable, failed to enables it ----//
+    } t_eAPPLGC_CalibFeedbackSts;
+    
     ///@brief Rearmament Type
     typedef enum 
     {

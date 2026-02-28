@@ -63,7 +63,7 @@
 // ///@brief Finite State Machine for Periodic Task Sub State Operational
 // typedef enum 
 // {
-//     HC_FSM_PRDTSK_OPE_IDLE =  0,      //---- Fsm for Operational state, subState Idle ----//
+//     HC_FSM_PRDTSK_OPE_SERVO =  0,      //---- Fsm for Operational state, subState Idle ----//
 //     HC_FSM_PRDTSK_OPE_CMD_CHECK,      //---- Fsm for Operational state, subState check command ----//
 //     HC_FSM_PRDTSK_OPE_CMD_PROCESS,    //---- Fsm for Operational state, subState process command ----//
 // } t_eHC_FsmPrdTsk_Ope;
@@ -388,7 +388,7 @@
 
 //         g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_CFG;
 //         g_Fsm_PrdTsk_CalibSts_e = HC_FSM_PRDTSK_CALIB_INIT;
-//         g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_IDLE;
+//         g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
 //         g_Fsm_PrdTsk_CalibOpeSts_ae[HC_AXE_HD_KNFE] = HC_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
 //         g_Fsm_PrdTsk_CalibOpeSts_ae[HC_AXE_HD_CNTR_KNFE] = HC_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
 //         g_Fsm_PrdTsk_CalibOpeSts_ae[HC_AXE_HD_HOLD_KNFE] = HC_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
@@ -462,7 +462,7 @@
 //             if(Ret_e == RC_OK)
 //             {
 //                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_OPS;
-//                 g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_IDLE;
+//                 g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
 //             }
 //             else if(Ret_e < RC_OK)
 //             {

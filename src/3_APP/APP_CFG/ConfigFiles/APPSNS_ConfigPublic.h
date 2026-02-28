@@ -73,6 +73,7 @@
     */
     typedef enum
     {
+        APPSNS_DRV_NONE = 0,               /**< None */
     
         APPSNS_DRV_NB,
     } t_eAPPSNS_SnsDriverList;
