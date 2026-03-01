@@ -136,6 +136,22 @@ static t_eReturnCode s_APPLGC_Operational(void);
 */
 static t_eReturnCode s_APPLGC_ConfigurationState(void);
 /**
+*
+*	@brief
+*	@note   
+*
+*
+*	@param[in] 
+*	@param[out]
+*	 
+*
+*
+*/
+static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
+                                            t_uint8 f_nbSignal_u8,
+                                            t_eAPPSIG_Signal *f_signal_ae, 
+                                            t_float32 *f_sigValue_af32);
+/**
 *	@brief      Get Sensors Values.\n
 */
 static t_eReturnCode s_APPLGC_UpdateActValues(void);
@@ -406,7 +422,16 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
     t_eReturnCode Ret_e;
 
     Ret_e = APPSYS_GetEcuPosition(&g_EcuPos_e);
-    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_AddRcvMsgCallback(   APPSIG_CAN_MSG_APPLICATIONDIAGNOSTICECUSAFETY,
+                                            APPSIG_MSG_ORIGIN_CAN,
+                                            s_APPLGC_AppSigMsgRcvCallback);
+    }
 
     return Ret_e;
 }
@@ -569,6 +594,58 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
                 f_reportState_e,
                 f_debugInfo1_u16,
                 f_debugInfo2_u16);
+    return;
+}
+
+/*********************************
+ * s_APPLGC_AppSigMsgRcvCallback
+ *********************************/
+static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
+                                            t_uint8 f_nbSignal_u8,
+                                            t_eAPPSIG_Signal *f_signal_ae, 
+                                            t_float32 *f_sigValue_af32)
+{
+    t_uint8 idxSrv_u8;
+    t_eAPPSDM_DiagnosticReport reprtEcuSafety_e;
+
+    if((f_msgID_u16 >= (t_uint16)APPSIG_CAN_MSG_NB)
+    || (f_msgID_u16 != (t_uint16)APPSIG_CAN_MSG_APPLICATIONDIAGNOSTICECUSAFETY))
+    {
+        ASSERT((t_uint16)f_msgID_u16);
+    }
+    else if((f_signal_ae == (t_eAPPSIG_Signal *)NULL)
+         || (f_sigValue_af32 == (t_float32 *)NULL))
+    {
+        ASSERT((t_uint16)0);
+    }
+    else if(g_AppLgc_ModState_e != STATE_CYCLIC_OPE)
+    {
+        return;
+    }
+    else 
+    {
+        if((f_nbSignal_u8 != (t_uint8)4)
+            (f_signal_ae[0] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM)
+            (f_signal_ae[1] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS)
+            (f_signal_ae[2] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1)
+            (f_signal_ae[3] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2))
+        {
+            ASSERT((t_uint16)f_nbSignal_u8);
+        }
+        else 
+        {
+            //---- if safety ecu is in error we set all service to default ----//
+            reprtEcuSafety_e = (t_eAPPSDM_DiagnosticReport)f_sigValue_af32[1];
+            if(reprtEcuSafety_e == APPSDM_DIAG_ITEM_REPORT_FAIL)
+            {
+                for(idxSrv_u8 = (t_uint8)0 ; idxSrv_u8 < (t_uint8)APPLGC_SRV_NB ; idxSrv_u8++)
+                {
+                    (void)APPLGC_SetServiceHealth((t_eAPPLGC_SrvList)idxSrv_u8, APPLGC_SRV_HEALTH_ERROR);
+                }
+            }
+        }
+    }
+
     return;
 }
 

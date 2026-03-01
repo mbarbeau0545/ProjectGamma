@@ -56,6 +56,12 @@
     #define APPSIG_PORTGATE_SRL_LINE    (FMKSRL_SERIAL_LINE_3)
 
     #define APPSIG_PORTGATE_CFG         (1 << APPSIG_MSG_ORIGIN_CAN) // (1 << APPSIG_MSG_ORIGIN_SRL)
+
+    ///@brief number of queue element treated per cycle 
+    #define APPSIG_TREAT_ELEM_NB        ((t_uint8)25)
+
+    #define APPSIG_MSG_RX_ONLY          ((t_uint32)0xFFFF)
+
     /* CAUTION : Automatic generated code section for Define: Start */
     ///@brief Serial Message Id
     ///@brief CAN Message Id
@@ -65,6 +71,7 @@
     #define APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC0                   ((t_uint32)0x18ff0001)
     #define APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC1                   ((t_uint32)0x18ff1001)
     #define APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC2                   ((t_uint32)0x18ff2001)
+    #define APPSIG_CAN_ID_APPLICATIONDIAGNOSTICECUSAFETY           ((t_uint32)0x18ff4001)
     #define APPSIG_CAN_ID_APPACT_CTRL_MTR_XL                       ((t_uint32)0x18fff000)
     #define APPSIG_CAN_ID_APPACT_CTRL_MTR_XR                       ((t_uint32)0x18fff001)
     #define APPSIG_CAN_ID_APPACT_CTRL_MTR_Y                        ((t_uint32)0x18fff002)
@@ -92,9 +99,12 @@
     #define APPSIG_CAN_ID_APPACT_GET_MTR_HD_HOLD                   ((t_uint32)0x18ff1126)
     #define APPSIG_CAN_ID_APPACT_GET_MTR_WHL_AV_L                  ((t_uint32)0x18ff2127)
     #define APPSIG_CAN_ID_APPACT_GET_MTR_WHL_AV_R                  ((t_uint32)0x18ff2128)
-    #define APPSIG_CAN_ID_APPACT_GET_ACT_PWR_MTR                   ((t_uint32)0x18ff1129)
+    #define APPSIG_CAN_ID_APPACT_GET_ACT_PWR_MTR                   ((t_uint32)0x18ff4201)
     #define APPSIG_CAN_ID_APPSNS_GET_ECDR_GTRY_XL_XR               ((t_uint32)0x18ff0130)
     #define APPSIG_CAN_ID_APPSNS_GET_ECDR_GTRY_Y_Z                 ((t_uint32)0x18ff0131)
+    #define APPSIG_CAN_ID_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z            ((t_uint32)0x18ff4100)
+    #define APPSIG_CAN_ID_APPSNS_GET_TRQ_WHEEL_DIRECTION           ((t_uint32)0x18ff4101)
+    #define APPSIG_CAN_ID_APPSNS_GET_TRQ_HEAD_KNIFE                ((t_uint32)0x18ff4102)
     #define APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_0                    ((t_uint32)0x18ff03ff)
     #define APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_1                    ((t_uint32)0x18ff03fe)
     #define APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_2                    ((t_uint32)0x18ff03fd)
@@ -128,11 +138,6 @@
     #define APPSIG_CAN_ID_LGC_MOT_FB_DIR_PROPR                     ((t_uint32)0x18ff2405)
     /* CAUTION : Automatic generated code section for Define: End */
     
-
-    ///@brief number of queue element treated per cycle 
-    #define APPSIG_TREAT_ELEM_NB        ((t_uint8)15)
-
-    #define APPSIG_MSG_RX_ONLY          ((t_uint32)0xFFFF)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -211,6 +216,10 @@
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_REPORT_STATUS
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_1
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_2
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1
+        {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2
         {(t_uint8)12,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_FASTTASKDURATION
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)-32534                                                 },// APPSIG_SIGNAL_SNS_ECDR_XL_POS
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)-32534                                                 },// APPSIG_SIGNAL_SNS_ECDR_XL_SPD
@@ -595,6 +604,15 @@
 
 
     ///@brief Variable for decoding SDM_DIAG_DEBUG_INFO_2
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_ApplicationDiagnosticEcuSafety_as[4] = {
+    {APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM,                (t_uint8)0                                             },
+    {APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS,       (t_uint8)16                                            },
+    {APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1,        (t_uint8)32                                            },
+    {APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2,        (t_uint8)48                                            },
+    };
+
+
+    ///@brief Variable for decoding SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPACT_CTRL_MTR_XL_as[3] = {
     {APPSIG_SIGNAL_ACT_CTRL_MTR_XL_PLS,                     (t_uint8)0                                             },
     {APPSIG_SIGNAL_ACT_CTRL_MTR_XL_SPD,                     (t_uint8)32                                            },
@@ -843,6 +861,30 @@
 
 
     ///@brief Variable for decoding SNS_ECDR_Z_SPD
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z_as[4] = {
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_XL_TRQ,                      (t_uint8)0                                             },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_XR_TRQ,                      (t_uint8)16                                            },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_Y_TRQ,                       (t_uint8)32                                            },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_Z_TRQ,                       (t_uint8)48                                            },
+    };
+
+
+    ///@brief Variable for decoding SNS_TRQ_MTR_Z_TRQ
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPSNS_GET_TRQ_WHEEL_DIRECTION_as[2] = {
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_WHL_AV_L_TRQ,                (t_uint8)0                                             },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_WHL_AV_R_TRQ,                (t_uint8)16                                            },
+    };
+
+
+    ///@brief Variable for decoding SNS_TRQ_MTR_WHL_AV_R_TRQ
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPSNS_GET_TRQ_HEAD_KNIFE_as[3] = {
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_HD_KNF_TRQ,                  (t_uint8)0                                             },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_CNTR_KNF_TRQ,                (t_uint8)16                                            },
+    {APPSIG_SIGNAL_SNS_TRQ_MTR_HD_HOLD_TRQ,                 (t_uint8)32                                            },
+    };
+
+
+    ///@brief Variable for decoding SNS_TRQ_MTR_HD_HOLD_TRQ
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_PRM_SEND_STATUS_ECU_0_as[1] = {
     {APPSIG_SIGNAL_PRM_FLAG_PARAM_SEND_OK,                  (t_uint8)0                                             },
     };
@@ -1154,6 +1196,7 @@
     {APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC0,                   {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)1000,                                         (t_uint16)65535,                                        c_AppSig_Can_ApplicationDiagnostic0_as,                 (t_uint8)4}, // APPSIG_CAN_APPLICATIONDIAGNOSTIC0
     {APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC1,                   {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)1000,                                         (t_uint16)65535,                                        c_AppSig_Can_ApplicationDiagnostic1_as,                 (t_uint8)4}, // APPSIG_CAN_APPLICATIONDIAGNOSTIC1
     {APPSIG_CAN_ID_APPLICATIONDIAGNOSTIC2,                   {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)1000,                                         (t_uint16)65535,                                        c_AppSig_Can_ApplicationDiagnostic2_as,                 (t_uint8)4}, // APPSIG_CAN_APPLICATIONDIAGNOSTIC2
+    {APPSIG_CAN_ID_APPLICATIONDIAGNOSTICECUSAFETY,           {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX},          (t_uint16)1000,                                         (t_uint16)65535,                                        c_AppSig_Can_ApplicationDiagnosticEcuSafety_as,         (t_uint8)4}, // APPSIG_CAN_APPLICATIONDIAGNOSTICECUSAFETY
     {APPSIG_CAN_ID_APPACT_CTRL_MTR_XL,                       {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_APPACT_CTRL_MTR_XL_as,                     (t_uint8)3}, // APPSIG_CAN_APPACT_CTRL_MTR_XL
     {APPSIG_CAN_ID_APPACT_CTRL_MTR_XR,                       {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_APPACT_CTRL_MTR_XR_as,                     (t_uint8)3}, // APPSIG_CAN_APPACT_CTRL_MTR_XR
     {APPSIG_CAN_ID_APPACT_CTRL_MTR_Y,                        {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_APPACT_CTRL_MTR_Y_as,                      (t_uint8)3}, // APPSIG_CAN_APPACT_CTRL_MTR_Y
@@ -1184,6 +1227,9 @@
     {APPSIG_CAN_ID_APPACT_GET_ACT_PWR_MTR,                   {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPACT_GET_ACT_PWR_MTR_as,                 (t_uint8)9}, // APPSIG_CAN_APPACT_GET_ACT_PWR_MTR
     {APPSIG_CAN_ID_APPSNS_GET_ECDR_GTRY_XL_XR,               {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPSNS_GET_ECDR_GTRY_XL_XR_as,             (t_uint8)4}, // APPSIG_CAN_APPSNS_GET_ECDR_GTRY_XL_XR
     {APPSIG_CAN_ID_APPSNS_GET_ECDR_GTRY_Y_Z,                 {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPSNS_GET_ECDR_GTRY_Y_Z_as,               (t_uint8)4}, // APPSIG_CAN_APPSNS_GET_ECDR_GTRY_Y_Z
+    {APPSIG_CAN_ID_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z,            {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z_as,          (t_uint8)4}, // APPSIG_CAN_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z
+    {APPSIG_CAN_ID_APPSNS_GET_TRQ_WHEEL_DIRECTION,           {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPSNS_GET_TRQ_WHEEL_DIRECTION_as,         (t_uint8)2}, // APPSIG_CAN_APPSNS_GET_TRQ_WHEEL_DIRECTION
+    {APPSIG_CAN_ID_APPSNS_GET_TRQ_HEAD_KNIFE,                {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)200,                                          c_AppSig_Can_APPSNS_GET_TRQ_HEAD_KNIFE_as,              (t_uint8)3}, // APPSIG_CAN_APPSNS_GET_TRQ_HEAD_KNIFE
     {APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_0,                    {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_PRM_SEND_STATUS_ECU_0_as,                  (t_uint8)1}, // APPSIG_CAN_PRM_SEND_STATUS_ECU_0
     {APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_1,                    {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_PRM_SEND_STATUS_ECU_1_as,                  (t_uint8)1}, // APPSIG_CAN_PRM_SEND_STATUS_ECU_1
     {APPSIG_CAN_ID_PRM_SEND_STATUS_ECU_2,                    {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_PRM_SEND_STATUS_ECU_2_as,                  (t_uint8)1}, // APPSIG_CAN_PRM_SEND_STATUS_ECU_2
