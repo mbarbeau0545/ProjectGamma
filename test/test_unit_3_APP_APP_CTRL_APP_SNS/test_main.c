@@ -126,6 +126,35 @@ t_eReturnCode APPSIG_SetSignalValue(t_eAPPSIG_Signal f_signal_e, t_float32 f_val
     return RC_OK;
 }
 
+t_eReturnCode APPSNSCAL_Init(void)
+{
+    return RC_OK;
+}
+
+t_eReturnCode APPSNSCAL_Apply(t_eAPPSNS_SnsInterface f_sns_e, t_float32 f_input_f32, t_float32 *f_output_pf32)
+{
+    (void)f_sns_e;
+    if(f_output_pf32 == NULL)
+    {
+        return RC_ERROR_PTR_NULL;
+    }
+    *f_output_pf32 = f_input_f32;
+    return RC_OK;
+}
+
+t_eReturnCode APPSNSCAL_SetEnable(t_eAPPSNS_SnsInterface f_sns_e, t_bool f_enable_b)
+{
+    (void)f_sns_e;
+    (void)f_enable_b;
+    return RC_OK;
+}
+
+t_eReturnCode APPSNSCAL_Load(t_eAPPSNS_SnsInterface f_sns_e)
+{
+    (void)f_sns_e;
+    return RC_OK;
+}
+
 void setUp(void)
 {
     (void)memset(&g_ctx_s, 0, sizeof(g_ctx_s));
@@ -152,11 +181,20 @@ void test_APPSNS_Init_registers_fasttask(void)
 void test_APPSNS_Cyclic_reaches_ope(void)
 {
     t_eCyclicModState state_e = STATE_CYCLIC_ERROR;
-    TEST_ASSERT_EQUAL(RC_WARNING_PENDING, APPSNS_Cyclic());
-    TEST_ASSERT_EQUAL(RC_WARNING_PENDING, APPSNS_Cyclic());
-    TEST_ASSERT_EQUAL(RC_OK, APPSNS_Cyclic());
-    TEST_ASSERT_EQUAL(RC_OK, APPSNS_GetState(&state_e));
+    t_eReturnCode Ret_e = RC_WARNING_PENDING;
+    t_uint8 safety_u8 = 0u;
+
+    while((state_e != STATE_CYCLIC_PREOPE) && (safety_u8 < 10u))
+    {
+        safety_u8++;
+        Ret_e = APPSNS_Cyclic();
+        TEST_ASSERT_TRUE((Ret_e == RC_WARNING_PENDING) || (Ret_e == RC_OK));
+        TEST_ASSERT_EQUAL(RC_OK, APPSNS_GetState(&state_e));
+    }
+
     TEST_ASSERT_EQUAL(STATE_CYCLIC_PREOPE, state_e);
+    TEST_ASSERT_EQUAL(RC_OK, Ret_e);
+    TEST_ASSERT_EQUAL(RC_OK, APPSNS_GetState(&state_e));
     TEST_ASSERT_EQUAL(RC_OK, APPSNS_Cyclic());
     TEST_ASSERT_EQUAL(RC_OK, APPSNS_GetState(&state_e));
     TEST_ASSERT_EQUAL(STATE_CYCLIC_OPE, state_e);

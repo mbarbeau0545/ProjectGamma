@@ -265,7 +265,6 @@ t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_SPD_GetValue(t_float32 *f_rawSigValue_
 t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_SPD_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_float32 cntrKnfMtr_PowerSupp_f32 = 0.0f;
     //    Your code for MTR_HD_CNTR_KNF_SetIfValue here
     switch(g_Mtr_OptCfg_e)
     {
@@ -334,7 +333,6 @@ t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_TRG_GetValue(t_float32 *f_rawSigValue_
 t_eReturnCode APPACT_SPEC_MTR_HD_CNTR_KNF_TRG_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
-    t_float32 cntrKnfMtr_PowerSupp_f32 = 0.0f;
     //    Your code for MTR_HD_CNTR_KNF_SetIfValue here
     switch(g_Mtr_OptCfg_e)
     {

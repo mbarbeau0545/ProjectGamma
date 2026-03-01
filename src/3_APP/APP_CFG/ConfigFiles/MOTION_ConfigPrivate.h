@@ -1,6 +1,6 @@
 /**
- * @file        CL42T_ConfigPrivate.h
- * @brief       Driver Module for Driver CL42T.
+ * @file        MOTION_ConfigPrivate.h
+ * @brief       .
  * @note        TemplateDetailsDescription.\n
  *
  * @author      mba
@@ -8,8 +8,8 @@
  * @version     1.0
  */
   
-#ifndef HEADGE_CUTTER_CONFIGPRIVATE_H_INCLUDED
-#define HEADGE_CUTTER_CONFIGPRIVATE_H_INCLUDED
+#ifndef MOTION_CONFIGPRIVATE_H_INCLUDED
+#define MOTION_CONFIGPRIVATE_H_INCLUDED
 
     // ********************************************************************
     // *                      Includes
@@ -21,30 +21,10 @@
     #include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
     #include "APP_LGC/Src/APP_LGC.h"
 
-    #include "./HEAD_CUTTER_ConfigPublic.h"
+    #include "./MOTION_ConfigPublic.h"
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    ///@brief Fifo Buffer len define
-    #define HC_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)30) // must be divided by 3, 40 cmd 
-    #define HC_CMD_ITER_BUFFER_LEN            ((t_uint8)50)
-
-
-    ///@brief Number of iteration we can send 
-    #define HC_MTR_MAX_SEND_ITER              ((t_uint8)15)
-
-    ///@brief Timestamp id max in position cpmma,d
-    #define HC_CMD_POS_TIMESTAMP_ID_MAX       ((t_uint16)0xFFFF)
-
-    ///@brief Max Pos Cmd treated in fsm ope
-    #define HC_POS_CMD_TREATED_MAX              ((t_uint8)15)
-    
-    ///@brief Max Pos Cmd treated in fsm ope
-    #define HC_PuLSE_CMD_TREATED_MAX              ((t_uint8)15)
-
-    ///@brief When correction has to be made between compute & current position 
-    ///         define the speed 
-    #define HC_PULSE_SPEED_SERVO                    ((t_float32)6000.0F)
 
     // ********************************************************************
     // *                      Types
@@ -53,15 +33,16 @@
     //-----------------------------ENUM TYPES-----------------------------//
     typedef enum 
     {
-        HC_CMD_MSGSIG_HEAD = 0,
-        HC_CMD_MSGSIG_POSITION = HC_CMD_MSGSIG_HEAD,    //---- value is a the x positon in mm ----//
-        HC_CMD_MSGSIG_CALIB,                            //---- value is a the y positon in mm ----//
-        HC_CMD_MSGSIG_REARMAMENT,                       //---- value is a the y positon in mm ----//
+        MOT_CMD_MSGSIG_HEAD = 0,
+        MOT_CMD_MSGSIG_WHL_ANGLE = MOT_CMD_MSGSIG_HEAD,     //---- message is a the angle positon in milliradian ----//
+        MOT_CMD_MSGSIG_PROPULSION,                          //---- message is propulsion command, control ID, either current/ or speed rad/s ----//
+        MOT_CMD_MSGSIG_CALIB,                               //---- message is calibration, id, pulse, speed ----//
+        MOT_CMD_MSGSIG_REARMAMENT,                          //---- message value is the rearmament commmand ----//
 
-        HC_CDM_MSGSIG_NB
-    } t_eHC_CmdSignals;
+        MOT_CDM_MSGSIG_NB
+    } t_eMOT_CmdSignals;
     //---------------------------STRUCTURE TYPES--------------------------//
-    ///@brief Mapping structure beetween gantry and application
+    ///@brief Mapping structure beetween direction motor and application
     typedef struct 
     {
         t_eAPPACT_ActInterface actifMtrSetPoint_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
@@ -71,7 +52,7 @@
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
         t_float32 caliValExpectedMrad_f32;          //---- calibration value expected ----//
-    } t_sHC_AxeAppCfg;
+    } t_sMOT_DirMtrCfg;
 
     ///@brief Structure to gather user command from AppSig 
     typedef struct 
@@ -79,14 +60,14 @@
         t_float32 value_f32;
         t_bool isRcv_b;
         t_uint32 timeStamp_u32;
-    } t_sHC_cmdSigInfo;
+    } t_sMOT_cmdSigInfo;
 
     typedef struct
     {
         const t_eAPPSIG_Signal *signal_pe;      //---- pointor to a list of signals for the group -----//
         t_uint8 nbsignals_u8;                   //---- Number of signal for the group -----//
         t_uint32 timeoutMs_u32;                 //---- Time out to set a entire command -----//
-    } t_sHC_SigGroupInfo;
+    } t_sMOT_SigGroupInfo;
     /* CAUTION : Automatic generated code section for Enum: Start */
 
     /* CAUTION : Automatic generated code section for Enum: End */
@@ -104,42 +85,51 @@
     // *                      Variables
     // ********************************************************************
     ///@brief variable for application mapping
-    const t_sHC_AxeAppCfg c_HC_AppAxesCfg_as[HC_AXE_HD_NB] = {
-        [HC_AXE_HD_KNFE] = {
-            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_KNF_PLS,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_HD_KNF_SPD,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_HD_KNF_TRG,
-            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_KNF_POS,
-            .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_KNF,
+    const t_sMOT_DirMtrCfg c_MOT_AppWhlDirCfg_as[MOT_ACTDIR_NB] = {
+        [MOT_ACTDIR_WHL_AV_L] = {
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_L_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_L_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_L_TRG,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_L_POS,
+            .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_L,
             .caliValExpectedMrad_f32 = 0.0F // Milliradian
         },
-        [HC_AXE_HD_CNTR_KNFE] = {
-            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_CNTR_KNF_PLS,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_HD_CNTR_KNF_SPD,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_HD_CNTR_KNF_TRG,
-            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS,
-            .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF,
-            .caliValExpectedMrad_f32 = (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
-        },
-        [HC_AXE_HD_HOLD_KNFE] = {
-            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_HOLD_PLS,
-            .actIfSpeed_e = APPACT_ACTITF_MTR_HD_HOLD_SPD,
-            .actIfTimTrig_e = APPACT_ACTITF_MTR_HD_HOLD_TRG,
-            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_HOLD_POS,
-            .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_HOLD,
-            .caliValExpectedMrad_f32 =  (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
+        [MOT_ACTDIR_WHL_AV_R] = {
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_R_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_R_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_R_TRG,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_R_POS,
+            .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_R,
+            .caliValExpectedMrad_f32 = (0.0F) // Milliradian
         }
     };
 
-    const t_eAPPSIG_CanMsgList c_HC_MsgMapping_ae[HC_CDM_MSGSIG_NB] = {
-        APPSIG_CAN_MSG_LGC_HC_CMD_POSITION,     // HC_CMD_MSGSIG_POSITION
-        APPSIG_CAN_MSG_LGC_HC_CMD_CALIBRATION,  // HC_CMD_MSGSIG_CALIB
-        APPSIG_CAN_MSG_LGC_REARMAMENT_CMD       // HC_CMD_MSGSIG_REARMAMENT
+    ///@brief variable for application mapping
+    const t_sMOT_DirMtrCfg c_MOT_AppWhlPropCfg_as[MOT_ACTPROP_NB] = {
+        [MOT_ACTPROP_WHL_AR_L] = {
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_L_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_L_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_L_TRG,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_L_POS,
+            .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_L,
+            .caliValExpectedMrad_f32 = 0.0F // Milliradian
+        },
+        [MOT_ACTPROP_WHL_AR_R] = {
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_R_PLS,
+            .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_R_SPD,
+            .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_R_TRG,
+            .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_R_POS,
+            .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_R,
+            .caliValExpectedMrad_f32 = (0.0F) // Milliradian
+        }
     };
 
+    const t_eAPPSIG_CanMsgList c_MOT_MsgMapping_ae[MOT_CDM_MSGSIG_NB] = {
+        APPSIG_CAN_MSG_LGC_MOT_CMD_WHL_AV_POSITION,         // MOT_CMD_MSGSIG_WHL_ANGLE
+        APPSIG_CAN_MSG_LGC_MOT_CMD_WHL_AR_PROPULSION,       // MOT_CMD_MSGSIG_PROPULSION
+        APPSIG_CAN_MSG_LGC_MOT_CMD_CALIBRATION,             // MOT_CMD_MSGSIG_CALIB
+        APPSIG_CAN_MSG_LGC_REARMAMENT_CMD                   // MOT_CMD_MSGSIG_REARMAMENT
+    };
 
     //********************************************************************************
     //                      Public functions - Prototyupes

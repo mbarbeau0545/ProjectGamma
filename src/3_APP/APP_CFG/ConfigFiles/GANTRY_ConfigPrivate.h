@@ -87,7 +87,7 @@
     ///@brief Mapping structure beetween gantry and application
     typedef struct 
     {
-        t_eAPPACT_ActInterface actIfMtrPulse_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
+        t_eAPPACT_ActInterface actifMtrSetPoint_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
         t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
         t_eAPPACT_ActInterface actIfTimTrig_e;       //---- Trigger Timer Actuator interface -----//
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
@@ -148,7 +148,7 @@
     ///@brief variable for application mapping
     const t_sGTRY_AxeAppCfg c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_NB] = {
         [GTRY_AXE_HANDLE_XL] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XL_PLS,
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_XL_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_XL_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
@@ -156,7 +156,7 @@
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL
         },
         [GTRY_AXE_HANDLE_XR] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_XR_PLS,
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_XR_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_XR_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
@@ -164,7 +164,7 @@
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR
         },
         [GTRY_AXE_HANDLE_Y] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Y_PLS,
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_Y_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_Y_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Y,
@@ -172,7 +172,7 @@
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y
         },
         [GTRY_AXE_HANDLE_Z] = {
-            .actIfMtrPulse_e = APPACT_ACTITF_MTR_Z_PLS,
+            .actifMtrSetPoint_e = APPACT_ACTITF_MTR_Z_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_Z_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Z,

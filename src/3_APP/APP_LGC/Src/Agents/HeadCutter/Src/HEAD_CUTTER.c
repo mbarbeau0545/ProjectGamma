@@ -80,23 +80,23 @@ typedef struct
 ///@brief carthesian position 
 typedef struct 
 {
-    t_float32 x_f32;                //---- position x of the axe
-    t_float32 y_f32;                //---- position y of the axe
+    t_float32 x_mm;                //---- position x of the axe
+    t_float32 y_mm;                //---- position y of the axe
 
 } t_sHC_CarthPos;
 
 ///@brief angle joint 
 typedef struct 
 {
-    t_float32 alpha_b_f32;             //---- angle milliradian of joint b ----//
-    t_float32 alpha_c_f32;             //---- angle milliradian of joint c ----//
+    t_float32 alpha_b_mrad;             //---- angle milliradian of joint b ----//
+    t_float32 alpha_c_mrad;             //---- angle milliradian of joint c ----//
 } t_sHC_JointAngle;
 
 ///@brief speed KNIFEs vallue
 typedef struct 
 {
-    t_uint16 knifeSpd_u16;
-    t_uint16 cntrKnifeSpd_u16;
+    t_float32 knifeSpd_rpm;
+    t_float32 cntrKnifeSpd_rpm;
 } t_sHC_KnifeSpeed;
 ///@brief calibration information
 typedef struct 
@@ -150,7 +150,6 @@ static t_float32 g_axeMissPulses_af32[HC_AXE_HD_NB];
 
 ///@brief Finite State Machine Variables
 static t_eHC_FsmPeriodicTask g_Fsm_PrdcTskSts_e;
-static t_eHC_FsmPrdTsk_Calib g_Fsm_PrdTsk_CalibSts_e;
 static  t_eHC_FsmPrdTsk_Ope g_Fsm_PrdTsk_OpeSts_e;
 
 ///@brief Command Queue Variables
@@ -174,8 +173,6 @@ static t_sHC_CalibCmdInfo g_calibCmdInfo_s;
 ///@brief Information for rearmament 
 static t_sHC_RearmInfo g_RearmInfo_s; 
 
-///@brief Report state of motor from ecu safety 
-static t_eAPPSDM_DiagnosticReport g_reportStsMtr_ae[HC_AXE_HD_NB];
 ///@brief current timestamp id apply 
 static t_uint32 g_currCmdTimeStampID_u32 = 0U; 
 /* CAUTION : Automatic generated code section for Variable: Start */
@@ -327,18 +324,6 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
  * ----------------------------------------------------------------------------
  * @return @ref t_eReturnCode
  */
-static t_eReturnCode s_HC_UpdateAxePosition(t_eHC_AxeHandleList f_idxAxe_e);
-/**
- * @brief Hard Stop for all Axes Motor
- * @details This function Set an hard stop, means pin enable se to 1
- *             to release torque on each axes, this function also check if action 
- *              has to be made before hard stop motor
- * 
- * ----------------------------------------------------------------------------
- * @param[in] f_idxAxe_e : axe to get informatio on
- * ----------------------------------------------------------------------------
- * @return @ref t_eReturnCode
- */
 static t_eReturnCode s_HC_AxeStop(t_eHC_AxeHandleList f_idxAxe_e, t_bool f_isHardStop_b);
 /**
  * @brief Enable the motor axes
@@ -355,7 +340,7 @@ static t_eReturnCode s_HC_EnableAxe(t_eHC_AxeHandleList f_idxAxe_e);
  * ----------------------------------------------------------------------------
  * @param[in] f_idxAxe_e : axe to set new position
  * @param[in] f_setPoint_s32 : set point to reach (pulses)
- * @param[in] f_speed_f32 : speed of the setpoint (frequency)
+ * @param[in] f_speedHz_f32 : speed of the setpoint (frequency)
  * @param[in] f_trigTiming_u32 : motor get the capabilities to store the command and set it in f_trigTiming_u32 ms
  * ----------------------------------------------------------------------------
  * @return RC_OK  : command set
@@ -364,7 +349,7 @@ static t_eReturnCode s_HC_EnableAxe(t_eHC_AxeHandleList f_idxAxe_e);
  */
 static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e, 
                                             t_sint32 f_setPoint_s32,
-                                            t_float32 f_speed_f32, 
+                                            t_float32 f_speedHz_f32, 
                                             t_float32 f_trigTiming_u32);
 /**
  * @brief Update Signal for debugging process
@@ -372,46 +357,46 @@ static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e,
  * ----------------------------------------------------------------------------
  * @return @ref t_eReturnCode
  */
-static void s_HC_DebugRoutine();
+static void s_HC_DebugRoutine(void);
 /**
- * @brief Compute the actual position {x,y} from angle alpha_b_f32 (angle between xa & xb see drawIO)
- *          and alpha_c_f32 (angle between xb & xc)
+ * @brief Compute the actual position {x,y} from angle alpha_b_mrad (angle between xa & xb see drawIO)
+ *          and alpha_c_mrad (angle between xb & xc)
  * 
  * ----------------------------------------------------------------------------
- * @param[in] f_alphaB_f32 : Angle MilliRadian position of joint Cntr KNIFE and support head
- * @param[in] f_alphaC_f32 : Angle MilliRadian position of joint KNIFE & CntrKNIFE
- * @param[in] f_posX_f32 : Position X in ref A in millimeter
- * @param[in] f_posY_f32 : Position Y in ref A in millimeter
+ * @param[in] f_alphaB_mrad : Angle MilliRadian position of joint Cntr KNIFE and support head
+ * @param[in] f_alphaC_mrad : Angle MilliRadian position of joint KNIFE & CntrKNIFE
+ * @param[in] f_posX_mm : Position X in ref A in millimeter
+ * @param[in] f_posY_mm : Position Y in ref A in millimeter
  * ----------------------------------------------------------------------------
  * @return @ref t_eReturnCode
  */
-static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_f32,
-                                                        t_float32 f_alphaC_f32,
-                                                        t_float32 * f_posX_pf32,
-                                                        t_float32 * f_posY_pf32);
-static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
-                                                        t_float32 f_posY_f32,
-                                                        t_float32 * f_alphaB_pf32,
-                                                        t_float32 * f_alphaC_pf32);
+static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_mrad,
+                                                        t_float32 f_alphaC_mrad,
+                                                        t_float32 * f_posX_pmm,
+                                                        t_float32 * f_posY_pmm);
+static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_mm,
+                                                        t_float32 f_posY_mm,
+                                                        t_float32 * f_alphaB_pmrad,
+                                                        t_float32 * f_alphaC_pmrad);
       /**
  * @brief Compute the pulse corresponding to angle alpha b & c 
  * 
  * ----------------------------------------------------------------------------
- * @param[in] f_alphaB_pf32 : Angle MilliRadian position of joint Cntr KNIFE and support head
- * @param[in] f_alphaC_pf32 : Angle MilliRadian position of joint KNIFE & CntrKNIFE
+ * @param[in] f_alphaB_pmrad : Angle MilliRadian position of joint Cntr KNIFE and support head
+ * @param[in] f_alphaC_pmrad : Angle MilliRadian position of joint KNIFE & CntrKNIFE
  * @param[in] f_pulseKnf_pf32 : Pulse for Knife Actuators
  * @param[in] f_pulseCntrKnf_pf32 : Pulse for counter knife actuator
  * ----------------------------------------------------------------------------
  * @return @ref t_eReturnCode
  */                                                  
-static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_f32,
-                                                t_float32 f_alphaC_f32,
+static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_mrad,
+                                                t_float32 f_alphaC_mrad,
                                                 t_float32 * f_pulseKnf_pf32,
                                                 t_float32 * f_pulseCntrKnf_pf32);
 static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
                                                 t_sint32 f_pulseCntrKnf_s32,
-                                                t_float32 * f_alphaB_pf32,
-                                                t_float32 * f_alphaC_pf32);
+                                                t_float32 * f_alphaB_pmrad,
+                                                t_float32 * f_alphaC_pmrad);
 /**
  * @brief Check Position with boundaries limit
  * 
@@ -438,8 +423,6 @@ t_eReturnCode HEAD_CUTTER_Init(void)
     Ret_e = RC_OK;
     for(idxAxe_e = HC_AXE_HEAD ; idxAxe_e < HC_AXE_HD_NB ; idxAxe_e++)
     {
-        g_reportStsMtr_ae[idxAxe_e] = APPSDM_DIAG_ITEM_REPORT_PASS;
-
         cmdIterFifoCfg_s.bufferHead_pv = &g_BufferCmdMtrIter_as[idxAxe_e];
         cmdIterFifoCfg_s.bufferSize_u8 = HC_CMD_ITER_BUFFER_LEN;
         cmdIterFifoCfg_s.elementSize_u8 = sizeof(t_sHC_MtrCmdIterPayload);
@@ -480,21 +463,20 @@ t_eReturnCode HEAD_CUTTER_Init(void)
     }
     if(Ret_e == RC_OK)
     {
-        g_KnifeTipCmpte_s.carthPos_s.x_f32 = 0.0f;
-        g_KnifeTipCmpte_s.carthPos_s.y_f32 = 0.0f;
-        g_KnifeTipCurr_s.jointAng_s.alpha_b_f32 = 0.0F;
-        g_KnifeTipCurr_s.jointAng_s.alpha_c_f32 = 0.0F;
+        g_KnifeTipCmpte_s.carthPos_s.x_mm = 0.0f;
+        g_KnifeTipCmpte_s.carthPos_s.y_mm = 0.0f;
+        g_KnifeTipCurr_s.jointAng_s.alpha_b_mrad = 0.0F;
+        g_KnifeTipCurr_s.jointAng_s.alpha_c_mrad = 0.0F;
 
-        g_KnifeHoldCurr_s.carthPos_s.x_f32 = 0.0F;
-        g_KnifeHoldCurr_s.carthPos_s.y_f32 = 0.0F;
-        g_KnifeHoldCurr_s.jointAng_s.alpha_b_f32 = 0.0F;
-        g_KnifeHoldCurr_s.jointAng_s.alpha_c_f32 = 0.0F;
+        g_KnifeHoldCurr_s.carthPos_s.x_mm = 0.0F;
+        g_KnifeHoldCurr_s.carthPos_s.y_mm = 0.0F;
+        g_KnifeHoldCurr_s.jointAng_s.alpha_b_mrad = 0.0F;
+        g_KnifeHoldCurr_s.jointAng_s.alpha_c_mrad = 0.0F;
 
         g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
         g_RearmInfo_s.reqRearm_b = FALSE;
 
         g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_CFG;
-        g_Fsm_PrdTsk_CalibSts_e = HC_FSM_PRDTSK_CALIB_INIT;
         g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
     }
 
@@ -545,7 +527,6 @@ static t_eReturnCode s_HC_StateMachine(void)
             if(Ret_e == RC_OK)
             {
                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_PRE_OPS;
-                g_Fsm_PrdTsk_CalibSts_e = HC_FSM_PRDTSK_CALIB_INIT;
             }
             else if(Ret_e < RC_OK)
             {
@@ -662,6 +643,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
 
                         g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                         feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
+                        Ret_e = RC_WARNING_PENDING;
                     }
                     
                 break;
@@ -680,13 +662,17 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                             g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                             Ret_e = RC_WARNING_PENDING;
                         }
+                        else 
+                        {
+                            feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
+                        }
                     }
                     if(g_calibCmdInfo_s.reqSts_e != g_calibCmdInfo_s.currSts_e)
                     {
                         g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                     }
                 break;
-                case APPLGC_CALIB_REQSTS_REGSITER_VALUE:
+                case APPLGC_CALIB_REQSTS_REGISTER_VALUE:
                 {
                     t_eAPPSNS_SnsInterface snsItfID_e = c_HC_AppAxesCfg_as[g_calibCmdInfo_s.axeHead_e].snsIfEcdrPos_e;
                     t_float32 snsVal_f32;
@@ -712,6 +698,12 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                     g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
                     g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 }
+                break;
+                case APPLGC_CALIB_STS_NB:
+                default:
+                    feedbackSts_e = APPLGC_CALIB_FBSTS_UNDEFINED_ERROR;
+                    ASSERT((t_uint16)g_calibCmdInfo_s.currSts_e);
+                    Ret_e = RC_ERROR_WRONG_STATE;
                 break;
             }
         }
@@ -790,7 +782,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Operational(void)
     }
     //---- Check calibration needed for user ----//
     else if(g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_MOVE
-    || g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_REGSITER_VALUE)
+    || g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_REGISTER_VALUE)
     {
         g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_CALIB_AXE;
         Ret_e = RC_OK;
@@ -948,9 +940,7 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
                 g_FlagIterCmdReady_b = FALSE;
                 g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
-                g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
-                g_Fsm_PrdTsk_CalibSts_e = HC_FSM_PRDTSK_CALIB_INIT;
-                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                 //---- reset to preope ----//
                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_PRE_OPS;
             break;
@@ -963,14 +953,15 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
                     (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[idxAxe_e]);
                     g_axeMissPulses_af32[idxAxe_e] = 0.0F;
                 }
-                g_KnifeTipCmpte_s.carthPos_s.x_f32 = 0.0F;
-                g_KnifeTipCmpte_s.carthPos_s.y_f32 = 0.0F;
-                g_KnifeTipCmpte_s.jointAng_s.alpha_b_f32 = 0.0F;
-                g_KnifeTipCmpte_s.jointAng_s.alpha_c_f32 = 0.0F;
-                g_KnifeHoldCmpte_s.carthPos_s.x_f32 = 0.0F;
-                g_KnifeHoldCmpte_s.carthPos_s.y_f32 = 0.0F;
-                g_KnifeHoldCmpte_s.jointAng_s.alpha_b_f32 = 0.0F;
-                g_KnifeHoldCmpte_s.jointAng_s.alpha_c_f32 = 0.0F;
+
+                g_KnifeTipCmpte_s.carthPos_s.x_mm = 0.0F;
+                g_KnifeTipCmpte_s.carthPos_s.y_mm = 0.0F;
+                g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad = 0.0F;
+                g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad = 0.0F;
+                g_KnifeHoldCmpte_s.carthPos_s.x_mm = 0.0F;
+                g_KnifeHoldCmpte_s.carthPos_s.y_mm = 0.0F;
+                g_KnifeHoldCmpte_s.jointAng_s.alpha_b_mrad = 0.0F;
+                g_KnifeHoldCmpte_s.jointAng_s.alpha_c_mrad = 0.0F;
                 g_currCmdTimeStampID_u32 = (t_uint32)0;
                 g_FlagPosCmdPending_b = FALSE;
                 g_FlagIterCmdReady_b = FALSE;
@@ -981,7 +972,6 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
                 g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                 g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
-                g_Fsm_PrdTsk_CalibSts_e = HC_FSM_PRDTSK_CALIB_INIT;
             break;
 
             default:
@@ -1009,12 +999,12 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
 
     //---- variable for delta angle ----//
     t_float32 deltaAplha_b_f32 = (
-          g_KnifeTipCmpte_s.jointAng_s.alpha_b_f32 
-        - g_KnifeHoldCmpte_s.jointAng_s.alpha_b_f32
+          g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad 
+        - g_KnifeHoldCmpte_s.jointAng_s.alpha_b_mrad
     );
     t_float32 deltaAplha_c_f32 = (
-        g_KnifeTipCmpte_s.jointAng_s.alpha_c_f32 
-        - g_KnifeHoldCmpte_s.jointAng_s.alpha_c_f32
+        g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad 
+        - g_KnifeHoldCmpte_s.jointAng_s.alpha_c_mrad
     );
 
     //---- pulse correction -----//
@@ -1084,21 +1074,32 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
     t_uint8 idxCmdTreated_u8;
     t_sHC_PosCmdQueueElem posCmd_s;
     //---- angle alpha variable ----//
-    t_float32 alpha_b_f32 = 0.0F;
-    t_float32 alpha_c_f32 = 0.0F;
+    t_float32 alpha_b_mrad = 0.0F;
+    t_float32 alpha_c_mrad = 0.0F;
     t_float32 deltaAlpha_b_f32;
     t_float32 deltaAlpha_c_f32;
 
     //---- we take the actual cmpte as beginning ----//
-    t_float32 currCmpte_alpha_b_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_b_f32;
-    t_float32 currCmpte_alpha_c_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_c_f32;
+    t_float32 currCmpte_alpha_b_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad;
+    t_float32 currCmpte_alpha_c_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad;
 
     //---- act_pulse value ----//
     t_float32 pulseKnf_f32;
     t_float32 pulseCntrKnf_f32;
 
+    //--- retrieve elem queue ----//
     t_sHC_MtrCmdIterPayload knfCmdIterPayload_s;
     t_sHC_MtrCmdIterPayload cntrKnfCmdIterPayload_s;
+
+    //--- transform rpm to Hz ----//
+    t_uAPPSPM_PrmValType prmKnifeRpmToHz_u;
+    t_uAPPSPM_PrmValType prmCntrKnifeRpmToHz_u;
+
+    Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_KNIFE_RPM_TO_HZ, &prmKnifeRpmToHz_u);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_CNTR_KNIFE_RPM_TO_HZ, &prmCntrKnifeRpmToHz_u);
+    }
 
     for(idxCmdTreated_u8 = (t_uint8)0 ; 
     (idxCmdTreated_u8 < HC_POS_CMD_TREATED_MAX)
@@ -1130,16 +1131,16 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
             if(Ret_e == RC_OK)
             {
                 //---- 2- Angle to apply on each ----//
-                Ret_e = s_HC_ComputeAngleFromCarthesian(posCmd_s.carthPos_s.x_f32,
-                                                        posCmd_s.carthPos_s.y_f32,
-                                                        &alpha_b_f32,
-                                                        &alpha_c_f32);
+                Ret_e = s_HC_ComputeAngleFromCarthesian(posCmd_s.carthPos_s.x_mm,
+                                                        posCmd_s.carthPos_s.y_mm,
+                                                        &alpha_b_mrad,
+                                                        &alpha_c_mrad);
                 //---- 3- calculate delta ----//
                 if(Ret_e == RC_OK)
                 {
                     //---- here we have to take the previous point 
-                    deltaAlpha_b_f32 = currCmpte_alpha_b_f32 - alpha_b_f32;
-                    deltaAlpha_c_f32 = currCmpte_alpha_c_f32 - alpha_c_f32;
+                    deltaAlpha_b_f32 = currCmpte_alpha_b_f32 - alpha_b_mrad;
+                    deltaAlpha_c_f32 = currCmpte_alpha_c_f32 - alpha_c_mrad;
 
                     Ret_e = s_HC_ComputePulseFromAngle( deltaAlpha_b_f32,
                                                         deltaAlpha_c_f32,
@@ -1148,11 +1149,13 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
                 }
                 if(Ret_e == RC_OK)
                 {
-                    knfCmdIterPayload_s.frequency_f32 = (t_float32)posCmd_s.speed_s.knifeSpd_u16;
+                    knfCmdIterPayload_s.frequency_f32 = 
+                        (t_float32)posCmd_s.speed_s.knifeSpd_rpm * prmKnifeRpmToHz_u.prmVal_f32;
                     knfCmdIterPayload_s.pulses_s32 = (t_sint32)pulseKnf_f32;
                     knfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
 
-                    cntrKnfCmdIterPayload_s.frequency_f32 = (t_float32)posCmd_s.speed_s.cntrKnifeSpd_u16;
+                    cntrKnfCmdIterPayload_s.frequency_f32 = 
+                        (t_float32)posCmd_s.speed_s.cntrKnifeSpd_rpm * prmCntrKnifeRpmToHz_u.prmVal_f32;
                     cntrKnfCmdIterPayload_s.pulses_s32 = (t_sint32)pulseCntrKnf_f32;
                     cntrKnfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
 
@@ -1172,8 +1175,8 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
                                                         NULL,
                                                         sizeof(t_sHC_PosCmdQueueElem));
                         //---- adapt current alpha_b & alpha_c pos 
-                        currCmpte_alpha_b_f32 = alpha_b_f32;
-                        currCmpte_alpha_c_f32 = alpha_c_f32;
+                        currCmpte_alpha_b_f32 = alpha_b_mrad;
+                        currCmpte_alpha_c_f32 = alpha_c_mrad;
 
                         //---- update the current time stamps ----//
                         g_currCmdTimeStampID_u32 ++;
@@ -1204,8 +1207,8 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
     t_uint8 idxPulseCmdTreated_u8;
 
     //---- get info from pulse queue ----//
-    t_sHC_MtrCmdIterPayload knfCmdIterPayload_s;
-    t_sHC_MtrCmdIterPayload cntrKnfCmdIterPayload_s;
+    t_sHC_MtrCmdIterPayload knfCmdIterPayload_s = {0};
+    t_sHC_MtrCmdIterPayload cntrKnfCmdIterPayload_s = {0};
 
     //---- update angle position/ x,y compute position ----//
     t_float32 deltaAlpha_b_f32 = 0.0F;
@@ -1275,17 +1278,17 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
     && (Ret_e >= RC_OK))
     {
         //---- now update the global current position ----//
-        g_KnifeTipCmpte_s.jointAng_s.alpha_b_f32 += deltaAlpha_b_f32;
-        g_KnifeTipCmpte_s.jointAng_s.alpha_c_f32 += deltaAlpha_c_f32;
+        g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad += deltaAlpha_b_f32;
+        g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad += deltaAlpha_c_f32;
 
-        Ret_e = s_HC_ComputeCarthesianFromAngle(g_KnifeTipCmpte_s.jointAng_s.alpha_b_f32,
-                                                g_KnifeTipCmpte_s.jointAng_s.alpha_c_f32,
+        Ret_e = s_HC_ComputeCarthesianFromAngle(g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad,
+                                                g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad,
                                                 &posXCmpte_f32,
                                                 &posYCmpte_f32);
         if(Ret_e == RC_OK)
         {
-            g_KnifeTipCmpte_s.carthPos_s.x_f32 = posXCmpte_f32;
-            g_KnifeTipCmpte_s.carthPos_s.y_f32 = posYCmpte_f32;
+            g_KnifeTipCmpte_s.carthPos_s.x_mm = posXCmpte_f32;
+            g_KnifeTipCmpte_s.carthPos_s.y_mm = posYCmpte_f32;
         }
     }
 
@@ -1321,8 +1324,8 @@ static t_eReturnCode s_HC_UpdatePosition(void)
     t_float32 snsHoldKnvAngle_f32;
 
     //---- angle value ----//
-    t_float32 alpha_b_f32;
-    t_float32 alpha_c_f32;
+    t_float32 alpha_b_mrad;
+    t_float32 alpha_c_mrad;
 
     //--- carthesian position ---//
     t_float32 posX_f32;
@@ -1353,19 +1356,19 @@ static t_eReturnCode s_HC_UpdatePosition(void)
             }
             if(Ret_e == RC_OK)
             {
-                alpha_b_f32 = snsCntrKnvAngle_f32;
-                alpha_c_f32 = snsKnvAngle_f32;
+                alpha_b_mrad = snsCntrKnvAngle_f32;
+                alpha_c_mrad = snsKnvAngle_f32;
 
-                Ret_e = s_HC_ComputeCarthesianFromAngle(alpha_b_f32,
-                                                        alpha_c_f32,
+                Ret_e = s_HC_ComputeCarthesianFromAngle(alpha_b_mrad,
+                                                        alpha_c_mrad,
                                                         &posX_f32,
                                                         &posY_f32);
                 if(Ret_e == RC_OK)
                 {
-                    g_KnifeTipCurr_s.carthPos_s.x_f32 = posX_f32;
-                    g_KnifeTipCurr_s.carthPos_s.y_f32 = posY_f32;
-                    g_KnifeTipCurr_s.jointAng_s.alpha_b_f32 = alpha_b_f32;
-                    g_KnifeTipCurr_s.jointAng_s.alpha_c_f32 = alpha_c_f32;
+                    g_KnifeTipCurr_s.carthPos_s.x_mm = posX_f32;
+                    g_KnifeTipCurr_s.carthPos_s.y_mm = posY_f32;
+                    g_KnifeTipCurr_s.jointAng_s.alpha_b_mrad = alpha_b_mrad;
+                    g_KnifeTipCurr_s.jointAng_s.alpha_c_mrad = alpha_c_mrad;
                 }
                 else 
                 {
@@ -1391,7 +1394,7 @@ static t_eReturnCode s_HC_UpdatePosition(void)
  *********************************/
 static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e, 
                                             t_sint32 f_setPoint_s32,
-                                            t_float32 f_speed_f32, 
+                                            t_float32 f_speedHz_f32, 
                                             t_float32 f_trigTiming_f32)
 {
     t_eReturnCode Ret_e;
@@ -1412,15 +1415,19 @@ static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e,
         }
         if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
         {
-            Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfMtrPulse_e, (t_float32)f_setPoint_s32);
+            Ret_e = APPACT_SetActValue(appAxeCfg_ps->actifMtrSetPoint_e, (t_float32)f_setPoint_s32);
             if(Ret_e == RC_OK)
             {
-                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, f_speed_f32);
+                Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, f_speedHz_f32);
             }
             if(Ret_e == RC_OK)
             {
                 Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfTimTrig_e, f_trigTiming_f32);
             }              
+        }
+        else 
+        {
+            Ret_e = RC_WARNING_BUSY;
         }
     }
 
@@ -1538,11 +1545,11 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 }
                 else 
                 {
-                    buffPos_s.carthPos_s.x_f32 = f_sigValue_af32[0];
-                    buffPos_s.carthPos_s.y_f32 = f_sigValue_af32[1];
+                    buffPos_s.carthPos_s.x_mm = f_sigValue_af32[0];
+                    buffPos_s.carthPos_s.y_mm = f_sigValue_af32[1];
                     buffPos_s.timeStampID_u32 = f_sigValue_af32[2];
-                    buffPos_s.speed_s.knifeSpd_u16 = (t_uint16)f_sigValue_af32[3];
-                    buffPos_s.speed_s.cntrKnifeSpd_u16 = (t_uint16)f_sigValue_af32[4];
+                    buffPos_s.speed_s.knifeSpd_rpm = (t_uint16)f_sigValue_af32[3];
+                    buffPos_s.speed_s.cntrKnifeSpd_rpm = (t_uint16)f_sigValue_af32[4];
                     
                     Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
                                                     &buffPos_s,
@@ -1687,16 +1694,49 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
  *********************************/
 static void s_HC_DebugRoutine(void)
 {
+    t_eReturnCode Ret_e;
+
+    Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FB_AXE_X_POS,
+                                    g_KnifeTipCurr_s.carthPos_s.x_mm);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FB_AXE_Y_POS,
+                                        g_KnifeTipCurr_s.carthPos_s.y_mm);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FB_ALPHA_B_ANGLE,
+                                        g_KnifeTipCurr_s.jointAng_s.alpha_b_mrad);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FB_ALPHA_C_ANGLE,
+                                        g_KnifeTipCurr_s.jointAng_s.alpha_c_mrad);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FSM_STS,
+                                        (t_float32)g_Fsm_PrdcTskSts_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSIG_SetSignalValue(  APPSIG_SIGNAL_LGC_HC_FSM_OPE_STS,
+                                        (t_float32)g_Fsm_PrdTsk_OpeSts_e);
+    }
+    if(Ret_e != RC_OK)
+    {
+        ASSERT((t_uint16)Ret_e);
+    }
     return;
 }
 
 /*********************************
  * s_HC_ComputeCarthesianFromAngle
  *********************************/
-static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_f32,
-                                                        t_float32 f_alphaC_f32,
-                                                        t_float32 * f_posX_pf32,
-                                                        t_float32 * f_posY_pf32)
+static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_mrad,
+                                                        t_float32 f_alphaC_mrad,
+                                                        t_float32 * f_posX_pmm,
+                                                        t_float32 * f_posY_pmm)
 {
     t_eReturnCode Ret_e;
 
@@ -1706,18 +1746,15 @@ static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_f32,
     t_uAPPSPM_PrmValType prmLenghtCntrKnifeMm_u;
 
     //---- variable for compute ----//
-    t_float32 lenHeadMm_f32;
-    t_float32 lenKnifeMm_f32;
-    t_float32 lenCntrKnifeMm_f32;
-    t_float32 alphaB_rad_f32 = f_alphaB_f32 / 1000.0F;
-    t_float32 alphaC_rad_f32 = f_alphaC_f32 / 1000.0F;
+    t_float32 alphaB_rad_f32 = f_alphaB_mrad / 1000.0F;
+    t_float32 alphaC_rad_f32 = f_alphaC_mrad / 1000.0F;
     t_float32 cosAlphaB_f32;
     t_float32 sinAlphaB_f32;
     t_float32 cosAlphaC_f32;
     t_float32 sinAlphaC_f32;
 
-    if((f_posX_pf32 == NULL)
-    || (f_posY_pf32 == NULL))
+    if((f_posX_pmm == NULL)
+    || (f_posY_pmm == NULL))
     {
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
@@ -1742,13 +1779,13 @@ static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_f32,
             sinAlphaB_f32 = sinf(alphaB_rad_f32);
             cosAlphaC_f32 = cosf(alphaC_rad_f32);
             sinAlphaC_f32 = sinf(alphaC_rad_f32);
-            *f_posX_pf32 = (
+            *f_posX_pmm = (
                   (t_float32)prmLenghtHeadMm_u.prmVal_u16
                 + (t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16 * cosAlphaB_f32
                 - (t_float32)prmLenghtKnifeMm_u.prmVal_u16 * ((cosAlphaC_f32 * cosAlphaB_f32) + (sinAlphaC_f32 * sinAlphaB_f32))
             );
 
-            *f_posY_pf32 = (
+            *f_posY_pmm = (
                 -(t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16 * sinAlphaB_f32
                 + (t_float32)prmLenghtKnifeMm_u.prmVal_u16 * ((cosAlphaC_f32 * sinAlphaB_f32) + (sinAlphaC_f32 * cosAlphaB_f32))
             );
@@ -1761,10 +1798,10 @@ static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_f32,
 /*********************************
  * s_HC_ComputeCarthesianFromAngle
  *********************************/
-static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
-                                                        t_float32 f_posY_f32,
-                                                        t_float32 * f_alphaB_pf32,
-                                                        t_float32 * f_alphaC_pf32)
+static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_mm,
+                                                        t_float32 f_posY_mm,
+                                                        t_float32 * f_alphaB_pmrad,
+                                                        t_float32 * f_alphaC_pmrad)
 {
     t_eReturnCode Ret_e;
 
@@ -1773,8 +1810,8 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
     t_uAPPSPM_PrmValType prmLenghtKnifeMm_u;
     t_uAPPSPM_PrmValType prmLenghtCntrKnifeMm_u;
 
-    if((f_alphaB_pf32 == NULL)
-    || (f_alphaC_pf32 == NULL))
+    if((f_alphaB_pmrad == NULL)
+    || (f_alphaC_pmrad == NULL))
     {
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
@@ -1792,12 +1829,12 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
         }
         if(Ret_e == RC_OK)
         {
-            const t_float32 r2_f32 = (f_posX_f32 * f_posX_f32) + (f_posY_f32 * f_posY_f32);
+            const t_float32 r2_f32 = (f_posX_mm * f_posX_mm) + (f_posY_mm * f_posY_mm);
             const t_float32 cntrKnfeLen_f32 = (t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16;
             const t_float32 KnfeLen_f32 = (t_float32)prmLenghtKnifeMm_u.prmVal_u16;
             const t_float32 headLen_f32 = (t_float32)prmLenghtHeadMm_u.prmVal_u16;
-            const t_float32 x_mm_f32 = (t_float32)(f_posX_f32 - headLen_f32);
-            const t_float32 y_mm_f32 = (t_float32)(f_posY_f32 - 0.0f);
+            const t_float32 x_mm_f32 = (t_float32)(f_posX_mm - headLen_f32);
+            const t_float32 y_mm_f32 = (t_float32)(f_posY_mm - 0.0f);
 
             t_float32 cos_q2_f32;
             t_float32 sin_q2_abs_f32;
@@ -1877,11 +1914,11 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
                 (void)s_HC_ComputeCarthesianFromAngle((b1_rad_f32 * 1000.0f), (c1_rad_f32 * 1000.0f), &x1_f32, &y1_f32);
                 (void)s_HC_ComputeCarthesianFromAngle((b2_rad_f32 * 1000.0f), (c2_rad_f32 * 1000.0f), &x2_f32, &y2_f32);
 
-                err1_f32 = ((x1_f32 - f_posX_f32) * (x1_f32 - f_posX_f32))
-                        + ((y1_f32 - f_posY_f32) * (y1_f32 - f_posY_f32));
+                err1_f32 = ((x1_f32 - f_posX_mm) * (x1_f32 - f_posX_mm))
+                        + ((y1_f32 - f_posY_mm) * (y1_f32 - f_posY_mm));
 
-                err2_f32 = ((x2_f32 - f_posX_f32) * (x2_f32 - f_posX_f32))
-                        + ((y2_f32 - f_posY_f32) * (y2_f32 - f_posY_f32));
+                err2_f32 = ((x2_f32 - f_posX_mm) * (x2_f32 - f_posX_mm))
+                        + ((y2_f32 - f_posY_mm) * (y2_f32 - f_posY_mm));
 
                 if(err2_f32 < err1_f32)
                 {
@@ -1901,8 +1938,8 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
                 while(c_mrad_f32 > CST_PI_MRAD)  { c_mrad_f32 -= CST_2PI_MRAD; }
                 while(c_mrad_f32 < -CST_PI_MRAD) { c_mrad_f32 += CST_2PI_MRAD; }
 
-                *f_alphaB_pf32 = b_mrad_f32;
-                *f_alphaC_pf32 = c_mrad_f32;
+                *f_alphaB_pmrad = b_mrad_f32;
+                *f_alphaC_pmrad = c_mrad_f32;
             }
         }
 
@@ -1915,8 +1952,8 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_f32,
 /*********************************
  * s_HC_ComputePulseFromAngle
  *********************************/
-static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_f32,
-                                                t_float32 f_alphaC_f32,
+static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_mrad,
+                                                t_float32 f_alphaC_mrad,
                                                 t_float32 * f_pulseKnf_pf32,
                                                 t_float32 * f_pulseCntrKnf_pf32)
 {
@@ -1945,12 +1982,12 @@ static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_f32,
             //---- 2- get pulse per radian parameter ----//
             //---- parameter give the pulse for 2PI radian ----//
             *f_pulseKnf_pf32 = (
-                  f_alphaB_f32 
+                  f_alphaB_mrad 
                 * (t_float32)prmPulsePerRadKnf_u.prmVal_u16
                 / CST_2PI_MRAD
             );
             *f_pulseCntrKnf_pf32 = (
-                f_alphaC_f32
+                f_alphaC_mrad
                 * (t_float32)prmPulsePerRadCntrKnf_u.prmVal_u16
                 / CST_2PI_MRAD
             );
@@ -1964,15 +2001,15 @@ static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_f32,
  *********************************/
 static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
                                                 t_sint32 f_pulseCntrKnf_s32,
-                                                t_float32 * f_alphaB_pf32,
-                                                t_float32 * f_alphaC_pf32)
+                                                t_float32 * f_alphaB_pmrad,
+                                                t_float32 * f_alphaC_pmrad)
 {
     t_eReturnCode Ret_e;
     t_uAPPSPM_PrmValType prmPulsePerRadKnf_u;
     t_uAPPSPM_PrmValType prmPulsePerRadCntrKnf_u;
 
-    if((f_alphaB_pf32 == NULL)
-    || (f_alphaC_pf32 == NULL))
+    if((f_alphaB_pmrad == NULL)
+    || (f_alphaC_pmrad == NULL))
     {
         Ret_e = RC_ERROR_PTR_NULL;
         ASSERT((t_uint16)0);
@@ -1988,9 +2025,9 @@ static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
         && (prmPulsePerRadKnf_u.prmVal_u16 > (t_uint16)0)
         && (prmPulsePerRadCntrKnf_u.prmVal_u16 > (t_uint16)0))
         {
-            *f_alphaB_pf32 = ((t_float32)f_pulseKnf_s32 * CST_2PI_MRAD)
+            *f_alphaB_pmrad = ((t_float32)f_pulseKnf_s32 * CST_2PI_MRAD)
                             / (t_float32)prmPulsePerRadKnf_u.prmVal_u16;
-            *f_alphaC_pf32 = ((t_float32)f_pulseCntrKnf_s32 * CST_2PI_MRAD)
+            *f_alphaC_pmrad = ((t_float32)f_pulseCntrKnf_s32 * CST_2PI_MRAD)
                             / (t_float32)prmPulsePerRadCntrKnf_u.prmVal_u16;
         }
         else if(Ret_e == RC_OK)
@@ -2030,25 +2067,25 @@ static t_eReturnCode s_HC_CheckPositionValidity(t_sHC_CarthPos f_carthPos_s)
     if(Ret_e == RC_OK)
     {
         //---- comparing mm & mm ----//
-        if((f_carthPos_s.x_f32 > (t_float32)prmPosXMax_u.prmVal_u16)
-        || (f_carthPos_s.x_f32 < (t_float32)prmPosXMin_u.prmVal_u16))
+        if((f_carthPos_s.x_mm > (t_float32)prmPosXMax_u.prmVal_u16)
+        || (f_carthPos_s.x_mm < (t_float32)prmPosXMin_u.prmVal_u16))
         {
             Ret_e = RC_ERROR_LIMIT_REACHED;
-            ASSERT((t_uint16)f_carthPos_s.x_f32);
+            ASSERT((t_uint16)f_carthPos_s.x_mm);
             APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_LIMIT_ERROR,
                                     APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                    (t_uint16)f_carthPos_s.x_f32,
+                                    (t_uint16)f_carthPos_s.x_mm,
                                     (t_uint16)0);
         }
-        else if((f_carthPos_s.y_f32 > (t_float32)prmPosYMax_u.prmVal_u16)
-        ||      (f_carthPos_s.y_f32 < (t_float32)prmPosYMin_u.prmVal_u16))
+        else if((f_carthPos_s.y_mm > (t_float32)prmPosYMax_u.prmVal_u16)
+        ||      (f_carthPos_s.y_mm < (t_float32)prmPosYMin_u.prmVal_u16))
         {
             Ret_e = RC_ERROR_LIMIT_REACHED;
-            ASSERT((t_uint16)f_carthPos_s.y_f32);
+            ASSERT((t_uint16)f_carthPos_s.y_mm);
             APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_LIMIT_ERROR,
                                     APPSDM_DIAG_ITEM_REPORT_FAIL,
                                     (t_uint16)0,
-                                    (t_uint16)f_carthPos_s.y_f32);
+                                    (t_uint16)f_carthPos_s.y_mm);
         }
         else 
         {

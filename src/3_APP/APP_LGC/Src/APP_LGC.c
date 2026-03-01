@@ -196,6 +196,11 @@ t_eReturnCode APPLGC_Init(void)
         g_srvFuncInfo_as[idxSrv_u8].state_e = APPLGC_SRV_STATE_NB;        
     }
 
+    for(idxAgent_u8 = (t_uint8)0 ; idxAgent_u8 < APPLGC_AGENT_NB ; idxAgent_u8++)
+    {
+        c_AppLgc_AgentInfo_as[idxAgent_u8].init_pcb();
+    }
+
     Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
 
     return Ret_e;
@@ -398,33 +403,10 @@ t_eReturnCode APPLGC_GetActValue(t_eAPPACT_ActInterface f_actIfID_e, t_float32 *
 static t_eReturnCode s_APPLGC_ConfigurationState(void)
 {
 
-    t_eReturnCode Ret_e = RC_OK;
-t_sFMKIO_PwmWaveformCfg pwmWvForm_s;
-    t_sFMKIO_PwmControlPrm pwmCtrl_s;
-
-    pwmWvForm_s.deadTime_u32 = 0;
-            pwmWvForm_s.frequency_f32 = 1000;
-            pwmWvForm_s.polarity_e = FMKIO_SIGPWM_POLARITY_LOW;
-            pwmWvForm_s.pullMode_e = FMKIO_PULL_MODE_DISABLE;
-            pwmWvForm_s.spdMode_e = FMKIO_SPD_MODE_HIGH;
-
-            pwmCtrl_s.ctrlType_e = FMKIO_PWM_CTRL_TYPE_UNUSED;
-            pwmCtrl_s.rampCfg_ps = NULL;
-            pwmCtrl_s.enablePulseSyncOpe_b = FALSE;
-
-            // Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_1,
-            //                                 pwmWvForm_s,
-            //                                 pwmCtrl_s,
-            //                                 NULL_FUNCTION,
-            //                                 NULL_FUNCTION);
-            // Ret_e = FMKIO_Set_OutPwmSigCfg( FMKIO_OUTPUT_SIGPWM_5,
-            //                                 pwmWvForm_s,
-            //                                 pwmCtrl_s,
-            //                                 NULL_FUNCTION,
-            //                                 NULL_FUNCTION);
+    t_eReturnCode Ret_e;
 
     Ret_e = APPSYS_GetEcuPosition(&g_EcuPos_e);
-    //Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
+    Ret_e = APPSYS_AddFastTask(APPSYS_MODULE_APP_LGC, s_APPLGC_FastTask);
 
     return Ret_e;
 }
@@ -577,6 +559,7 @@ static void s_APPLGC_DiagnosticEvent(   t_eAPPSDM_DiagnosticItem f_item_e,
     (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_SDM_DIAG_DEBUG_INFO_2, (t_float32)f_debugInfo2_u16);
 
     //---- send error to serial ----//
+    #warning special debug
     if(f_item_e == APPSDM_DIAG_ITEM_APPSIG_MSG_TIMEOUT)
     {
         return;

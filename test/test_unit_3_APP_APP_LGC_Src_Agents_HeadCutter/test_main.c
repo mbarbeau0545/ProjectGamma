@@ -465,8 +465,8 @@ void test_calibration_register_value_calls_snscal_and_resets_states(void)
     g_ctx_s.snsValues_af32[APPSNS_SNSITF_ECDR_HD_KNF_POS] = 321.0f;
     g_FlagMotorEnable_b = TRUE;
     g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_KNFE;
-    g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_REGSITER_VALUE;
-    g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_REGSITER_VALUE;
+    g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_REGISTER_VALUE;
+    g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_REGISTER_VALUE;
 
     TEST_ASSERT_EQUAL(RC_OK, s_HC_Fsm_PrdTsk_Calibration());
     TEST_ASSERT_EQUAL_UINT32(1u, g_ctx_s.registerRefCnt_u32);
@@ -570,8 +570,8 @@ void test_statemachine_calib_error_goes_to_safety(void)
     g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_CALIB_AXE;
     g_FlagMotorEnable_b = TRUE;
     g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_KNFE;
-    g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_REGSITER_VALUE;
-    g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_REGSITER_VALUE;
+    g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_REGISTER_VALUE;
+    g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_REGISTER_VALUE;
 
     TEST_ASSERT_EQUAL(RC_ERROR_WRONG_RESULT, s_HC_StateMachine());
     TEST_ASSERT_EQUAL(HC_FSM_PRD_TSK_SAFETY, g_Fsm_PrdcTskSts_e);

@@ -694,7 +694,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Configuration(void)
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e == s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
+        Ret_e = s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
     }
     
     //---- 2- Init the algo parameter ----//
@@ -899,7 +899,7 @@ static t_eReturnCode s_GTRY_Fsm_PrdTskCalib_Ops(t_eGTRY_CalibAxeId f_calibId_e)
                         //---- restart operation ----//
                         if(Ret_e == RC_WARNING_LIMIT_REACHED)
                         {
-                            g_Fsm_PrdTsk_CalibOpeSts_ae[currAxeId_e];
+                            g_Fsm_PrdTsk_CalibOpeSts_ae[currAxeId_e] = GTRY_FSM_PRDTSK_CALIB_OPE_STOP_AXE;
                         }
                         APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_CALIB_ERROR,
                                                 APPSDM_DIAG_ITEM_REPORT_FAIL,
@@ -1925,7 +1925,7 @@ static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e)
             //---- 2- Get missing information ---//
             if(Ret_e == RC_OK)
             {
-                APPLGC_GetActValue(appxeCfg_ps->actIfMtrPulse_e, &actMissPulse_f32);
+                APPLGC_GetActValue(appxeCfg_ps->actifMtrSetPoint_e, &actMissPulse_f32);
                 if(Ret_e == RC_OK)
                 {
                     g_axeMissPulses_af32[f_idxAxe_e] = actMissPulse_f32;
@@ -2040,7 +2040,7 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_setPoint_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, (t_float32)f_setPoint_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_speed_f32);
@@ -2052,7 +2052,7 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                     if(Ret_e == RC_OK)
                     {
                         axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
-                        Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_setPoint_s32);
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, (t_float32)f_setPoint_s32);
                         if(Ret_e == RC_OK)
                         {
                             Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_speed_f32);
@@ -2087,7 +2087,7 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_setPoint_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, (t_float32)f_setPoint_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_speed_f32);
@@ -2120,7 +2120,7 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 if(axeHealth_e == APPLGC_SRV_HEALTH_OK)
                 {
-                    Ret_e = APPACT_SetActValue(axeCfg_ps->actIfMtrPulse_e, (t_float32)f_setPoint_s32);
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, (t_float32)f_setPoint_s32);
                     if(Ret_e == RC_OK)
                     {
                         Ret_e = APPACT_SetActValue(axeCfg_ps->actIfSpeed_e, f_speed_f32);
@@ -2295,19 +2295,19 @@ static void s_GTRYDebugRoutine()
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_X_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_X]);
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_GTRY_AXE_X_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_X]);
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_Y_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Y]);
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_GTRY_AXE_Y_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Y]);
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_AXE_Z_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Z]);
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_GTRY_AXE_Z_POSITION, (t_float32)g_axeCurrPos_af32[GTRY_PHYS_AXE_Z]);
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_GTRY_ALGO_COMPUTE_TIME, (t_float32)g_algoComputeTime_u32);
+        Ret_e = APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_GTRY_ALGO_COMPUTE_TIME, (t_float32)g_algoComputeTime_u32);
     }
     if(Ret_e < RC_OK)
     {
