@@ -1136,6 +1136,7 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                     }
                     else 
                     {
+                        Ret_e = RC_ERROR_PARAM_INVALID;
                         ASSERT((t_uint16)sigSnsID_e);
                     }
                 }
@@ -1151,6 +1152,7 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID)
                 || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE))
                 {
+                    Ret_e = RC_ERROR_PARAM_INVALID;
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
                 else
@@ -1177,6 +1179,10 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
             break;
         }
     }
+
+    FMKSRL_LOG( "[MOT] : Receive msg CAN -> %d, Retcode %d\r\n",
+                f_msgID_u16,
+                Ret_e);
 }
 //************************************************************************************
 // End of File

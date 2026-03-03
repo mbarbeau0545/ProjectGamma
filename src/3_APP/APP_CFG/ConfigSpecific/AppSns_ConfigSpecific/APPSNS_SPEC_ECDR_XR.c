@@ -27,7 +27,7 @@
 // *                      Defines
 // ********************************************************************
 #define APPSNS_SPEC_ECDR_ID (FMKIO_INPUT_ENCODER_1)
-#define APPSNS_SPEC_ECDR_MULTIPLE_TOUR ((t_uint8)1)
+#define APPSNS_SPEC_ECDR_MULTIPLE_TOUR ((t_uint8)5)
 #define APPSNS_SPEC_ECDR_PULSE_PER_REV ((t_uint16)1000) // 1,8° per 
 /* CAUTION : Automatic generated code section for Include: Start */
 

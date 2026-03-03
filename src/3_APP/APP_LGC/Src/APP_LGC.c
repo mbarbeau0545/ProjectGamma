@@ -443,17 +443,6 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
 {
     t_eReturnCode Ret_e = RC_OK;
 
-    //---- enable axes ----//
-    Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPD, APPACT_ENABLE_MOTOR);
-    if(Ret_e == RC_OK)
-    {
-        Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XR_SPD, APPACT_ENABLE_MOTOR);
-    }
-    // if(Ret_e == RC_OK)
-    // {
-    //     Ret_e = APPSYS_SetFastTaskState(APPSYS_MODULE_APP_LGC, APPSYS_FAST_TASK_ENABLE);
-    // }
-
     return Ret_e;
 }
 /*********************************
@@ -466,18 +455,34 @@ static t_eReturnCode s_APPLGC_Operational(void)
 
     Ret_e = s_APPLGC_UpdateSnsValues();
 
-    if(Ret_e >= RC_OK)
+    if(Ret_e == RC_OK)
     {
         Ret_e = s_APPLGC_UpdateActValues();
-    }  
-    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_6, 1000);
-    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_6, 500);
-    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_7, 1000);
-    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_7, 500);
-    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_1, 1000);
-    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_1, 500);
-    // (void)FMKIO_Set_OutPwmSigFrequency(FMKIO_OUTPUT_SIGPWM_5, 1000);
-    // (void)FMKIO_Set_OutPwmSigDutyCycle(FMKIO_OUTPUT_SIGPWM_5, 500);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSYS_GetEcuPosition(&g_EcuPos_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        switch(g_EcuPos_e)
+        {
+            case APPSYS_ECU_POS_GTRY:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_GANTRY].PeriodTask_pcb();
+            break;
+            case APPSYS_ECU_POS_GTRY_HEAD:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_HEAD_CUTTER].PeriodTask_pcb();
+            break;
+            case APPSYS_ECU_POS_MOTION:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_MOTION].PeriodTask_pcb();
+            break;
+        }
+        if(Ret_e < RC_OK)
+        {
+            ASSERT((t_uint16)Ret_e);
+        }
+    }
+   
     return Ret_e;
 }
 
@@ -488,20 +493,38 @@ static t_eReturnCode s_APPLGC_UpdateSnsValues(void)
 {
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxSns_u8 = (t_uint8)0;
+    t_sAPPSNS_SnsValueInfo snsValInfo_s;
 
-    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e >= RC_OK) ; idxSns_u8++)
+    for(idxSns_u8 = (t_uint8)0 ; (idxSns_u8 < APPSNS_SNSITF_NB) && (Ret_e == RC_OK) ; idxSns_u8++)
     {
         //----- Reset Container values -----//
-        g_snsValues_as[idxSns_u8].rqstedUnity_u8 = c_APPLGC_SnsIfCompType_au8[idxSns_u8];
-        g_snsValues_as[idxSns_u8].isValueOK_b = FALSE;
-        g_snsValues_as[idxSns_u8].rawValue_f32 = (t_float32)0.0;
-        g_snsValues_as[idxSns_u8].SnsValue_f32 = (t_float32)0.0;
+        snsValInfo_s.rqstedUnity_u8 = c_APPLGC_SnsIfCompType_au8[idxSns_u8];
+        snsValInfo_s.isValueOK_b = FALSE;
+        snsValInfo_s.rawValue_f32 = (t_float32)0.0;
+        snsValInfo_s.SnsValue_f32 = (t_float32)0.0;
 
-        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &g_snsValues_as[idxSns_u8]);
+        Ret_e = APPSNS_Get_SnsValue((t_eAPPSNS_SnsInterface)idxSns_u8, &snsValInfo_s);
+
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = SafeMem_memcpy(&g_snsValues_as[idxSns_u8], &snsValInfo_s, sizeof(t_sAPPSNS_SnsValueInfo));
+        }
+        else
+        {
+            //---- meaning not config on this software ----//
+            if((Ret_e == RC_WARNING_MISSING_CONFIG)
+            || (Ret_e == RC_WARNING_NO_OPERATION))
+            {
+                Ret_e = RC_OK;
+            }
+            g_snsValues_as[idxSns_u8].isValueOK_b = FALSE;
+            g_snsValues_as[idxSns_u8].rawValue_f32 = 0.0F;
+            g_snsValues_as[idxSns_u8].SnsValue_f32 = 0.0F;
+        }
 
         if(Ret_e < RC_OK)
         {
-            ASSERT((t_uint16)Ret_e);
+            ASSERT((t_uint16)idxSns_u8);
         }
     }
     
@@ -517,7 +540,7 @@ static t_eReturnCode s_APPLGC_UpdateActValues(void)
     t_uint8 idxAct_u8 = (t_uint8)0;
     t_float32 actValue_f32;
 
-    for(idxAct_u8 = (t_uint8)0 ; (idxAct_u8 < APPACT_ACTITF_NB) && (Ret_e >= RC_OK) ; idxAct_u8++)
+    for(idxAct_u8 = (t_uint8)0 ; (idxAct_u8 < APPACT_ACTITF_NB) && (Ret_e == RC_OK) ; idxAct_u8++)
     {
         //----- Reset Container values -----//
         actValue_f32 = 0.0f;
@@ -527,6 +550,14 @@ static t_eReturnCode s_APPLGC_UpdateActValues(void)
         {
             g_actValues_as[idxAct_u8].value_f32 = actValue_f32;
             g_actValues_as[idxAct_u8].isValueOK_b = TRUE;
+        }
+        else if((Ret_e == RC_WARNING_MISSING_CONFIG)
+            || (Ret_e == RC_WARNING_NO_OPERATION))
+        {
+            //---- meaning not config on this software ----//
+            Ret_e = RC_OK;
+            g_actValues_as[idxAct_u8].value_f32 = 0.0F;
+            g_actValues_as[idxAct_u8].isValueOK_b = FALSE;
         }
         else
         {
@@ -625,10 +656,10 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
     else 
     {
         if((f_nbSignal_u8 != (t_uint8)4)
-            (f_signal_ae[0] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM)
-            (f_signal_ae[1] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS)
-            (f_signal_ae[2] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1)
-            (f_signal_ae[3] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2))
+        || (f_signal_ae[0] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM)
+        || (f_signal_ae[1] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS)
+        || (f_signal_ae[2] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1)
+        || (f_signal_ae[3] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2))
         {
             ASSERT((t_uint16)f_nbSignal_u8);
         }
@@ -636,6 +667,7 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
         {
             //---- if safety ecu is in error we set all service to default ----//
             reprtEcuSafety_e = (t_eAPPSDM_DiagnosticReport)f_sigValue_af32[1];
+            FMKSRL_LOG("[LGC] : Receive diagnostic from EcuSafety, REPORT ->%d\r\n", (t_uint16)reprtEcuSafety_e);
             if(reprtEcuSafety_e == APPSDM_DIAG_ITEM_REPORT_FAIL)
             {
                 for(idxSrv_u8 = (t_uint8)0 ; idxSrv_u8 < (t_uint8)APPLGC_SRV_NB ; idxSrv_u8++)

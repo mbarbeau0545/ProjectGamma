@@ -172,6 +172,7 @@ t_eReturnCode APPSNS_SPEC_ECDR_XL_POS_GetSigValue(t_float32 *f_rawSigValue_pf32,
                                                 &position_f32);
                 if(Ret_e == RC_OK)
                 {
+                    //FMKSRL_LOG("Receive Ctnr KNife value");
                     *f_rawSigValue_pf32 = position_f32;
                     *f_isValue_OK = TRUE;
                 }

@@ -1755,6 +1755,8 @@ static void S_GTRY_CheckAndBuilCommand(t_eGTRY_CmdTypeId f_cmdTypeID_e, t_uint32
         if((allReceived_b == TRUE)
         && (expired_b == FALSE))
         {
+            FMKSRL_LOG("[GTRY] : Receive all signal for cmd type %d\r\n", f_cmdTypeID_e);
+
             (void)memset(sigGrpValues_af32, 0, (sizeof(t_float32) * GTRY_CMD_SIG_NB));   
             for(idxGrpSig_u8 = 0 ; idxGrpSig_u8 < grpInfo_ps->nbsignals_u8 ; idxGrpSig_u8++)
             {

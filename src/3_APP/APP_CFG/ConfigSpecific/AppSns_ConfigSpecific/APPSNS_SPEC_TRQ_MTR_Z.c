@@ -85,6 +85,9 @@ t_eReturnCode APPSNS_SPEC_TRQ_MTR_Z_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_Sns
                 Ret_e = RC_OK;
             break;
             case APPSYS_OPT_SNS_TRQ_MTR_Z_UNUSED:
+                Ret_e = RC_WARNING_NO_OPERATION;
+                *f_drvUsed_pe = APPSNS_DRV_NB;
+            break;
             case APPSYS_OPT_SNS_TRQ_MTR_Z_ACS716:
             case APPSYS_OPT_SNS_TRQ_MTR_Z_NB:
             default:

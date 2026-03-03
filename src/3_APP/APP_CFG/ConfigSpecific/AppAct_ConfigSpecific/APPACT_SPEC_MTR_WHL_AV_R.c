@@ -65,7 +65,7 @@
 ///@brief Motor instance used for Wheel AV Right.
 ///@note  This is intentionally kept as a cast to avoid hard dependency on a specific enumerator
 ///        name in CL42T (project-specific). Update it if needed.
-const static t_eCL42T_MotorId c_MtrWhlAvR_CL42T_Id = (t_eCL42T_MotorId)1;
+const static t_eCL42T_MotorId c_MtrWhlAvR_CL42T_Id = (t_eCL42T_MotorId)CL42T_MOTOR_2;
 
 static t_eAPPSYS_OptActMtrWhlAvR g_MtrWhlAvR_OptCfg_e = APPSYS_OPT_ACT_MTR_WHL_AV_R_NB;
 

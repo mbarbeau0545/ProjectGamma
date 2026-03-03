@@ -844,7 +844,6 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Operational(void)
                     g_FlagIterCmdReady_b = FALSE;
                     g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
                 }
-
             }
             break;
             default:
@@ -1000,11 +999,11 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
     //---- variable for delta angle ----//
     t_float32 deltaAplha_b_f32 = (
           g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad 
-        - g_KnifeHoldCmpte_s.jointAng_s.alpha_b_mrad
+        - g_KnifeTipCurr_s.jointAng_s.alpha_b_mrad
     );
     t_float32 deltaAplha_c_f32 = (
         g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad 
-        - g_KnifeHoldCmpte_s.jointAng_s.alpha_c_mrad
+        - g_KnifeTipCurr_s.jointAng_s.alpha_c_mrad
     );
 
     //---- pulse correction -----//
@@ -1015,6 +1014,12 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
     t_uAPPSPM_PrmValType prmMaxDeltaAlpha_b_u;
     t_uAPPSPM_PrmValType prmMaxDeltaAlpha_c_u;
 
+    //---- variable for getting status ----//
+    const t_sHC_AxeAppCfg * hdKnfCfg_ps = &c_HC_AppAxesCfg_as[HC_AXE_HD_KNFE];
+    const t_sHC_AxeAppCfg * hdCntrKnfCfg_ps = &c_HC_AppAxesCfg_as[HC_AXE_HD_CNTR_KNFE];
+    t_float32 hdKnfMtrsts_f32 = 0.0F;
+    t_float32 hdCntrKnfMtrsts_f32 = 0.0F;
+
     //---- 1- Get Info Param -----//
     Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_TIP_KNIFE_MAX_DELTA_ALPHA_B, &prmMaxDeltaAlpha_b_u);
     if(Ret_e == RC_OK)
@@ -1023,7 +1028,25 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
     }
     if(Ret_e == RC_OK)
     {
-        //---- 2- check delta for diagnostic -----//
+        //---- 3- get motor status  -----//
+        Ret_e = APPACT_GetActValue(hdKnfCfg_ps->actIfSpeed_e, &hdKnfMtrsts_f32);
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = APPACT_GetActValue(hdCntrKnfCfg_ps->actIfSpeed_e, &hdCntrKnfMtrsts_f32);
+        }
+    }
+    if(Ret_e == RC_OK)
+    {
+        //---- 4- check only if motor are off -----//
+        if((hdKnfMtrsts_f32 == APPACT_MOTOR_STS_ON)
+        || (hdCntrKnfMtrsts_f32 == APPACT_MOTOR_STS_ON))
+        {
+            Ret_e = RC_WARNING_BUSY;
+        }
+    }
+    if(Ret_e == RC_OK)
+    {
+        //---- 5- check asservissement -----//
 
         //---- param in milliradian ----//
         if(deltaAplha_b_f32 > prmMaxDeltaAlpha_b_u.prmVal_u16)
@@ -1046,19 +1069,23 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
                                                 deltaAplha_c_f32,
                                                 &pulseCorrAlpha_b_f32,
                                                 &pulseCorrAlpha_c_f32);
-            if(Ret_e == RC_OK)
+            if((Ret_e == RC_OK)
+            && ((pulseCorrAlpha_b_f32 >= 1.0F)
+            || (pulseCorrAlpha_b_f32 <= -1.0F)))
             {
                 Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_KNFE,
                                             pulseCorrAlpha_b_f32,
                                             HC_PULSE_SPEED_SERVO,
                                             0.0F);
-                if(Ret_e == RC_OK)
-                {
-                    Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_CNTR_KNFE,
-                                                pulseCorrAlpha_c_f32,
-                                                HC_PULSE_SPEED_SERVO,
-                                                0.0F);
-                }
+            }
+            if((Ret_e == RC_OK)
+            && ((pulseCorrAlpha_c_f32 >= 1.0F)
+            || (pulseCorrAlpha_c_f32 < -1.0F)))
+            {
+                Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_CNTR_KNFE,
+                                            pulseCorrAlpha_c_f32,
+                                            HC_PULSE_SPEED_SERVO,
+                                            0.0F);
             }
         }
     }
@@ -1225,7 +1252,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
     {
         //---- Clear buffer reception payload ----//
         (void)SafeMem_memclear(&knfCmdIterPayload_s, sizeof(t_sHC_MtrCmdIterPayload));
-        (void)SafeMem_memclear(&knfCmdIterPayload_s, sizeof(t_sHC_MtrCmdIterPayload));
+        (void)SafeMem_memclear(&cntrKnfCmdIterPayload_s, sizeof(t_sHC_MtrCmdIterPayload));
 
         //---- pop element for setpoint knife & cntr knife ----//
         Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
@@ -1234,7 +1261,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
         if(Ret_e == RC_OK)
         {
             Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
-                                            &knfCmdIterPayload_s,
+                                            &cntrKnfCmdIterPayload_s,
                                             sizeof(t_sHC_MtrCmdIterPayload));
         }
         if(Ret_e == RC_OK)
@@ -1408,6 +1435,8 @@ static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e,
     }
     else 
     {
+        appAxeCfg_ps = &c_HC_AppAxesCfg_as[f_idxAxe_e];
+
         Ret_e = APPLGC_GetServiceHealth(appAxeCfg_ps->lgcSrvID_e, &axeHealth_e);
         if(Ret_e != RC_OK)
         {
@@ -1537,9 +1566,9 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 if((f_nbSignal_u8 != (t_uint8)5)
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X)
                 || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y)
-                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID)
-                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_HC_CMD_KNF_POS_SPEED)
-                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_CNTR_KNF_POS_SPEED))
+                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_HC_CMD_KNF_POS_SPEED)
+                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_HC_CMD_CNTR_KNF_POS_SPEED)
+                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
@@ -1547,9 +1576,9 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 {
                     buffPos_s.carthPos_s.x_mm = f_sigValue_af32[0];
                     buffPos_s.carthPos_s.y_mm = f_sigValue_af32[1];
-                    buffPos_s.timeStampID_u32 = f_sigValue_af32[2];
-                    buffPos_s.speed_s.knifeSpd_rpm = (t_uint16)f_sigValue_af32[3];
-                    buffPos_s.speed_s.cntrKnifeSpd_rpm = (t_uint16)f_sigValue_af32[4];
+                    buffPos_s.speed_s.knifeSpd_rpm = (t_uint16)f_sigValue_af32[2];
+                    buffPos_s.speed_s.cntrKnifeSpd_rpm = (t_uint16)f_sigValue_af32[3];
+                    buffPos_s.timeStampID_u32 = f_sigValue_af32[4];
                     
                     Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
                                                     &buffPos_s,
@@ -1686,6 +1715,10 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
             break;
         }
     }
+
+    FMKSRL_LOG( "[HC] : Receive msg CAN -> %d, Retcode %d\r\n",
+                f_msgID_u16,
+                Ret_e);
 
     return;
 }
