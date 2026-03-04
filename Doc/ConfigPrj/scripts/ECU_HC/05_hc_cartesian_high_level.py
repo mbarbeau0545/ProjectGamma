@@ -1,0 +1,12 @@
+﻿from app.script_runtime_api import log
+from app.script_api_head_cutter import *
+
+# Cartesian sweep with high-level helper
+pts = []
+for i in range(100):
+    x = 1074 + (i % 40)
+    y = 1000 - (i % 40)
+    pts.append((x, y, 25, 25))
+
+send_hc_trajectory_cartesian(pts, dt_ms=15, start_pos_id=100, node=1)
+log(f"feedback end={get_hc_feedback(timeout_ms=50)}")

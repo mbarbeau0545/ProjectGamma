@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 set "SCRIPT_DIR=%~dp0"
 set "CONFIG_JSON=%SCRIPT_DIR%ecus_config.json"
 set "LAUNCH_PS1=%SCRIPT_DIR%launch_multi_exe_from_json.ps1"
-set "FW_EXE=D:\Project\Software\STM32\Gamma\Gamma_Firmware_AddHwCfg\.pio\build\pc_sim_debug\program.exe"
+set "FW_EXE=.pio\build\pc_sim_debug\program.exe"
 set "SAFE_EXE=D:\Project\Software\STM32\Gamma\Gamma_Safety_AddCfg\.pio\build\pc_sim_debug\program.exe"
 set "COMMON_ARGS=--sleep-ms 1"
 set "PYTHON_EXE=python"
@@ -35,4 +35,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "%LAUNCH_PS1%" ^
 
 set "RC=%ERRORLEVEL%"
 if not "%RC%"=="0" echo launch_multi_exe failed with code %RC%
-exit /b %RC%
+pause 

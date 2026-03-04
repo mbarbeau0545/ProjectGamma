@@ -12,9 +12,54 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Globalization
 
-if (-not (Test-Path -LiteralPath $ConfigJson -PathType Leaf)) {
-    throw "Config not found: $ConfigJson"
+function Resolve-AbsolutePath {
+    param(
+        [Parameter(Mandatory = $true)][string]$InputPath,
+        [Parameter(Mandatory = $true)][string]$Label,
+        [switch]$MustExist,
+        [ValidateSet("Leaf", "Container")] [string]$PathType = "Leaf"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($InputPath)) {
+        throw "$Label is empty"
+    }
+
+    $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\.."))
+    $candidates = [System.Collections.Generic.List[string]]::new()
+
+    if ([System.IO.Path]::IsPathRooted($InputPath)) {
+        $candidates.Add([System.IO.Path]::GetFullPath($InputPath))
+    } else {
+        $candidates.Add([System.IO.Path]::GetFullPath((Join-Path (Get-Location).Path $InputPath)))
+        $candidates.Add([System.IO.Path]::GetFullPath((Join-Path $repoRoot $InputPath)))
+        $candidates.Add([System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot $InputPath)))
+    }
+
+    $resolved = [System.Collections.Generic.List[string]]::new()
+    foreach ($candidate in $candidates) {
+        if (-not $resolved.Contains($candidate)) {
+            $resolved.Add($candidate)
+        }
+    }
+
+    foreach ($candidate in $resolved) {
+        if (Test-Path -LiteralPath $candidate -PathType $PathType) {
+            return $candidate
+        }
+    }
+
+    if ($MustExist) {
+        $tested = ($resolved -join ", ")
+        throw "$Label not found: $InputPath (tested: $tested)"
+    }
+
+    return $resolved[0]
 }
+
+$ConfigJson = Resolve-AbsolutePath -InputPath $ConfigJson -Label "Config" -MustExist -PathType Leaf
+$FwExe = Resolve-AbsolutePath -InputPath $FwExe -Label "Firmware executable" -PathType Leaf
+$SafeExe = Resolve-AbsolutePath -InputPath $SafeExe -Label "Safety executable" -PathType Leaf
+$RepoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\.."))
 
 $cfg = Get-Content -Raw -LiteralPath $ConfigJson | ConvertFrom-Json
 if (-not $cfg.ecus) {
@@ -72,10 +117,41 @@ function Test-BrokerAlive {
     }
 }
 
+function Test-BrokerProcessRunning {
+    param(
+        [Parameter(Mandatory = $true)][string]$BrokerScriptPath
+    )
+
+    try {
+        $scriptNorm = [System.IO.Path]::GetFullPath($BrokerScriptPath).ToLowerInvariant()
+        $procs = Get-CimInstance Win32_Process -ErrorAction Stop
+        foreach ($proc in $procs) {
+            $name = ([string]$proc.Name).ToLowerInvariant()
+            if ($name -notin @("python.exe", "pythonw.exe", "py.exe")) {
+                continue
+            }
+
+            $cmd = [string]$proc.CommandLine
+            if ([string]::IsNullOrWhiteSpace($cmd)) {
+                continue
+            }
+            $cmdNorm = $cmd.ToLowerInvariant()
+            if (($cmdNorm.Contains("can_broker.py")) -and ($cmdNorm.Contains($scriptNorm) -or $cmdNorm.Contains("tools\\multiecumonitor\\can_broker.py"))) {
+                return $true
+            }
+        }
+    } catch {
+        return $false
+    }
+
+    return $false
+}
+
 function Start-BrokerIfNeeded {
     param(
         $CfgObj,
         [string]$ConfigPath,
+        [string]$RepoRootPath,
         [string]$PyExe,
         [switch]$Dry
     )
@@ -127,15 +203,18 @@ function Start-BrokerIfNeeded {
         $port = [int]$portProp.Value
     }
 
-    if (Test-BrokerAlive -Port $port) {
-        Write-Host "[BROKER] already running on 127.0.0.1:$port"
+    $brokerScript = Join-Path $RepoRootPath "tools\MultiEcuMonitor\can_broker.py"
+    if (-not (Test-Path -LiteralPath $brokerScript -PathType Leaf)) {
+        Write-Warning "Broker script not found: $brokerScript"
         return
     }
 
-    $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\.."))
-    $brokerScript = Join-Path $repoRoot "tools\MultiEcuMonitor\can_broker.py"
-    if (-not (Test-Path -LiteralPath $brokerScript -PathType Leaf)) {
-        Write-Warning "Broker script not found: $brokerScript"
+    if (Test-BrokerProcessRunning -BrokerScriptPath $brokerScript) {
+        Write-Host "[BROKER] already running (process detected)"
+        return
+    }
+    if (Test-BrokerAlive -Port $port) {
+        Write-Host "[BROKER] already running on 127.0.0.1:$port"
         return
     }
 
@@ -145,19 +224,30 @@ function Start-BrokerIfNeeded {
     }
 
     Start-Process -FilePath $PyExe `
-                  -WorkingDirectory $repoRoot `
+                  -WorkingDirectory $RepoRootPath `
                   -ArgumentList @($brokerScript, "--config", $ConfigPath) `
                   -WindowStyle Minimized | Out-Null
 
-    Start-Sleep -Milliseconds 300
-    if (Test-BrokerAlive -Port $port) {
+    $brokerStarted = $false
+    for ($attempt = 0; $attempt -lt 20; $attempt++) {
+        Start-Sleep -Milliseconds 200
+        if (Test-BrokerAlive -Port $port) {
+            $brokerStarted = $true
+            break
+        }
+    }
+    if ($brokerStarted) {
         Write-Host "[BROKER] started"
     } else {
+        if (Test-BrokerProcessRunning -BrokerScriptPath $brokerScript) {
+            Write-Host "[BROKER] process detected after start (no second launch)"
+            return
+        }
         Write-Warning "Broker did not respond on port $port after start"
     }
 }
 
-Start-BrokerIfNeeded -CfgObj $cfg -ConfigPath $ConfigJson -PyExe $PythonExe -Dry:$DryRun
+Start-BrokerIfNeeded -CfgObj $cfg -ConfigPath $ConfigJson -RepoRootPath $RepoRoot -PyExe $PythonExe -Dry:$DryRun
 
 $launches = @()
 foreach ($ecu in $cfg.ecus) {

@@ -110,8 +110,8 @@ static void s_init_axis_queues(t_uint8 f_capacity_u8)
     {
         (void)memset(g_queueBuf_au8[idx_u8], 0, sizeof(g_queueBuf_au8[idx_u8]));
         cfg_s.bufferHead_pv = g_queueBuf_au8[idx_u8];
-        cfg_s.elementSize_u8 = (t_uint8)sizeof(t_sGTRY_MtrCmdIterPayload);
-        cfg_s.bufferSize_u8 = f_capacity_u8;
+        cfg_s.elementSize_u16 = (t_uint8)sizeof(t_sGTRY_MtrCmdIterPayload);
+        cfg_s.actualSize_u16 = f_capacity_u8;
         cfg_s.enableOverwrite_b = False;
         TEST_ASSERT_EQUAL(RC_OK, LIBQUEUE_Create(&g_queue_as[idx_u8], cfg_s));
     }
@@ -335,9 +335,9 @@ void test_returns_warning_when_queue_capacity_is_too_small(void)
 
     s_init_axis_queues(2u);
     TEST_ASSERT_EQUAL(RC_WARNING_LIMIT_REACHED, GANTRY_SPEC_AlgorithmCompute(GTRY_ALGO_COMPUTE_TYPE_BALANCED, target_af32, curr_af32, miss_af32, g_queue_as));
-    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_X].actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_Y].actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_Z].actualSize_u8);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_X].actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_Y].actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_queue_as[GTRY_PHYS_AXE_Z].actualSize_u16);
 }
 
 int main(void)

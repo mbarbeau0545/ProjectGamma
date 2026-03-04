@@ -13,11 +13,11 @@
   "ecus": [
     {
       "name": "ECU_GTRY",
-      "enable_ecu": true,
+      "enable_ecu": false,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
-      "fmkio_config_public": "D:/Project/Software/STM32/Gamma/Gamma_Firmware_AddHwCfg/src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
+      "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
       "encoder_modes": [
         {
           "idx": 0,
@@ -208,7 +208,7 @@
       "ecu_in_debug": true,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
-      "fmkio_config_public": "D:/Project/Software/STM32/Gamma/Gamma_Firmware_AddHwCfg/src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
+      "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
       "encoder_modes": [
         {
           "idx": 0,
@@ -221,6 +221,7 @@
           "sin_offset": 0.0,
           "sin_period_s": 4.0,
           "sig_pwm": 1,
+          "sig_dir": 0,
           "pulses_per_revolution": 3200.0
         },
         {
@@ -234,6 +235,7 @@
           "sin_offset": 0.0,
           "sin_period_s": 4.0,
           "sig_pwm": 6,
+          "sig_dir": 1,
           "pulses_per_revolution": 3200.0
         },
         {
@@ -247,6 +249,7 @@
           "sin_offset": 0.0,
           "sin_period_s": 4.0,
           "sig_pwm": 2,
+          "sig_dir": 2,
           "pulses_per_revolution": 3200.0
         },
         {
@@ -260,6 +263,7 @@
           "sin_offset": 0.0,
           "sin_period_s": 4.0,
           "sig_pwm": 3,
+          "sig_dir": 3,
           "pulses_per_revolution": 3200.0
         }
       ],
@@ -291,11 +295,11 @@
     },
     {
       "name": "ECU_MOT",
-      "enable_ecu": true,
+      "enable_ecu": false,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
-      "fmkio_config_public": "D:/Project/Software/STM32/Gamma/Gamma_Firmware_AddHwCfg/src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
+      "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
       "encoder_modes": [
         {
           "idx": 0,
@@ -341,7 +345,7 @@
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareSafetyCfg/MessagingCfg/SafetyPrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareSafetyCfg/Safety_Project_SoftwareCfg.xlsm",
-      "fmkio_config_public": "D:/Project/Software/STM32/Gamma/Gamma_Safety_AddCfg/src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
+      "fmkio_config_public": "C://PROJECT//STM32//Gamma_Safety_SILTest//src//1_FMK//FMK_CFG//FMKCFG_ConfigFiles//FMKIO_COnfigPublic.h",
       "encoder_modes": [
         {
           "idx": 0,

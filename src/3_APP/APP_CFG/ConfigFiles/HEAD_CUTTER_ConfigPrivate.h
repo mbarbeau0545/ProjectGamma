@@ -26,8 +26,8 @@
     // *                      Defines
     // ********************************************************************
     ///@brief Fifo Buffer len define
-    #define HC_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)30) // must be divided by 3, 40 cmd 
-    #define HC_CMD_ITER_BUFFER_LEN            ((t_uint8)50)
+    #define HC_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)120) 
+    #define HC_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
 
 
     ///@brief Number of iteration we can send 
@@ -40,7 +40,11 @@
     #define HC_POS_CMD_TREATED_MAX              ((t_uint8)15)
     
     ///@brief Max Pos Cmd treated in fsm ope
-    #define HC_PuLSE_CMD_TREATED_MAX              ((t_uint8)15)
+    #define HC_PULSE_CMD_TREATED_MAX              ((t_uint8)15)
+    
+    ///@brief Minimum absolute pulse amount before queueing an iterative motor command.
+    ///       Smaller values are ignored to avoid flooding CL42T with 1-pulse commands.
+    #define HC_MIN_PULSE_CMD_ABS_S32              ((t_sint32)2)
 
     ///@brief When correction has to be made between compute & current position 
     ///         define the speed 
@@ -60,6 +64,15 @@
 
         HC_CDM_MSGSIG_NB
     } t_eHC_CmdSignals;
+
+    ///@brief command type for position
+    typedef enum 
+    {
+        HC_CMD_TYPE_POS_CARTH = 0,                  //---- Command type for position is x,y of the knife in mm ----//
+        HC_CMD_TYPE_POS_JOINT,                      //---- Command Type for position is angle joint in mrad ----//
+
+        HC_CMD_TYPE_POS_NB
+    } t_eHC_CmdPosType;
     //---------------------------STRUCTURE TYPES--------------------------//
     ///@brief Mapping structure beetween gantry and application
     typedef struct 

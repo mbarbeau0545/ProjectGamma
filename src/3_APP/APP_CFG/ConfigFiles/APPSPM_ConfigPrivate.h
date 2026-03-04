@@ -27,7 +27,7 @@
     ///@brief number of msg to follow 
     #define APPSPM_SIG_MSG_NB       ((t_uint8)1)
     /* CAUTION : Automatic generated code section for define: End */
-    #define APPSPM_SIG_SEND_PER_CYCLIC ((t_uint16)20)
+    #define APPSPM_SIG_SEND_PER_CYCLIC ((t_uint16)40)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -1065,19 +1065,19 @@
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_X_MIN_MM] = {
         .version_u8 = (t_uint8)1,
-        .minItemVal_f32 = (t_float32)0,
-        .maxItemVal_f32 = (t_float32)65535,
-        .DefaultItemVal_f32 = (t_float32)0,
+        .minItemVal_f32 = (t_float32)-32000,
+        .maxItemVal_f32 = (t_float32)32000,
+        .DefaultItemVal_f32 = (t_float32)-300,
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
-        .prmType_e = APPSPM_PRM_TYPE_UINT16,
+        .prmType_e = APPSPM_PRM_TYPE_SINT16,
         .signal_e = APPSIG_SIGNAL_NB
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_X_MAX_MM] = {
         .version_u8 = (t_uint8)1,
-        .minItemVal_f32 = (t_float32)0,
-        .maxItemVal_f32 = (t_float32)65535,
-        .DefaultItemVal_f32 = (t_float32)4000,
+        .minItemVal_f32 = (t_float32)-32000,
+        .maxItemVal_f32 = (t_float32)32000,
+        .DefaultItemVal_f32 = (t_float32)300,
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
@@ -1085,9 +1085,9 @@
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_Y_MIN_MM] = {
         .version_u8 = (t_uint8)1,
-        .minItemVal_f32 = (t_float32)0,
-        .maxItemVal_f32 = (t_float32)65535,
-        .DefaultItemVal_f32 = (t_float32)0,
+        .minItemVal_f32 = (t_float32)-32000,
+        .maxItemVal_f32 = (t_float32)32000,
+        .DefaultItemVal_f32 = (t_float32)-300,
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
@@ -1095,9 +1095,9 @@
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_Y_MAX_MM] = {
         .version_u8 = (t_uint8)1,
-        .minItemVal_f32 = (t_float32)0,
-        .maxItemVal_f32 = (t_float32)65535,
-        .DefaultItemVal_f32 = (t_float32)3000,
+        .minItemVal_f32 = (t_float32)-32000,
+        .maxItemVal_f32 = (t_float32)32000,
+        .DefaultItemVal_f32 = (t_float32)300,
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,

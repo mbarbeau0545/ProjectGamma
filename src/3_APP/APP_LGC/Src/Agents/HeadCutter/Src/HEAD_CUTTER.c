@@ -77,6 +77,13 @@ typedef struct
     t_uint32 maxTimeWait_u32;       //---- Store the amount of time this is suspicious that the axe has not reach the set point yet ----//
 } t_sHC_CalibWaitInfo;
 
+///@brief angle joint 
+typedef struct 
+{
+    t_float32 alpha_b_mrad;             //---- angle milliradian of joint b ----//
+    t_float32 alpha_c_mrad;             //---- angle milliradian of joint c ----//
+} t_sHC_JointAngle;
+
 ///@brief carthesian position 
 typedef struct 
 {
@@ -85,12 +92,12 @@ typedef struct
 
 } t_sHC_CarthPos;
 
-///@brief angle joint 
-typedef struct 
+typedef union 
 {
-    t_float32 alpha_b_mrad;             //---- angle milliradian of joint b ----//
-    t_float32 alpha_c_mrad;             //---- angle milliradian of joint c ----//
-} t_sHC_JointAngle;
+    t_sHC_CarthPos Carth_s;
+    t_sHC_JointAngle Joint_s;
+} t_uHC_CmdPos;
+
 
 ///@brief speed KNIFEs vallue
 typedef struct 
@@ -119,9 +126,10 @@ typedef struct
 ///@brief position command queue 
 typedef struct
 {
-    t_sHC_CarthPos carthPos_s;              //---- Carthesian position x,y -----//
+    t_uHC_CmdPos Pos_u;              //---- Carthesian position x,y -----//
     t_sHC_KnifeSpeed speed_s;
     t_uint32 timeStampID_u32;               //---- time received position or ID ----//
+    t_eHC_CmdPosType cmdPosType_e;
 } t_sHC_PosCmdQueueElem;
 
 ///@brief Position Information
@@ -378,7 +386,7 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_mm,
                                                         t_float32 f_posY_mm,
                                                         t_float32 * f_alphaB_pmrad,
                                                         t_float32 * f_alphaC_pmrad);
-      /**
+/**
  * @brief Compute the pulse corresponding to angle alpha b & c 
  * 
  * ----------------------------------------------------------------------------
@@ -398,6 +406,40 @@ static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
                                                 t_float32 * f_alphaB_pmrad,
                                                 t_float32 * f_alphaC_pmrad);
 /**
+ * @brief Get the actual position for computation
+ * @details Whenever there is position to calculate, we get the current position
+ *          From encoder and add the position command no set yet to compute 
+ *          Directly from the futur postion 
+ * ----------------------------------------------------------------------------
+ * @param[in] f_alphaB_pmrad : Angle MilliRadian position of joint Cntr KNIFE and support head
+ * @param[in] f_alphaC_pmrad : Angle MilliRadian position of joint KNIFE & CntrKNIFE
+ * ----------------------------------------------------------------------------
+ * @return @ref t_eReturnCode
+ */   
+static t_eReturnCode s_HC_GetQueuedTipAngles( t_float32 * f_alphaB_pmrad,
+                                                t_float32 * f_alphaC_pmrad);
+/**
+ * @brief Get integer pulse and save float pulse, once > 1 set it 
+ * ----------------------------------------------------------------------------
+ * @param[in] f_idxAxe_e : idx axe of the knife
+ * @param[in] f_pulseCmd_f32 : float command to set, that has been calculate
+ * ----------------------------------------------------------------------------
+ * @return @ref integer pulses
+ */  
+static t_sint32 s_HC_QuantizePulseCmd(t_eHC_AxeHandleList f_idxAxe_e, t_float32 f_pulseCmd_f32);
+/**
+ * @brief Merge or Write Iteration Pulse Command
+ * @details  If the position are closed in mm or angle, in order to not have 
+ *              1 pulse per command, this function set a minimum of puls per command
+ * ----------------------------------------------------------------------------
+ * @param[in] f_queue_ps : idx axe of the knife
+ * @param[in] f_cmd_ps : float command to set, that has been calculate
+ * ----------------------------------------------------------------------------
+ * @return @ref integer pulses
+ */
+static t_eReturnCode s_HC_WriteOrMergeIterCmd(t_sLIBQUEUE_QueueCore * f_queue_ps,
+                                              const t_sHC_MtrCmdIterPayload * f_cmd_ps);
+/**
  * @brief Check Position with boundaries limit
  * 
  * ----------------------------------------------------------------------------
@@ -406,6 +448,8 @@ static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_HC_CheckPositionValidity(t_sHC_CarthPos f_carthPos_s);
+static t_eReturnCode s_HC_CheckAngleAssociationValidity(t_float32 f_alphaB_mrad,
+                                                        t_float32 f_alphaC_mrad);
 //****************************************************************************
 //                      Public functions - Implementation
 //********************************************************************************
@@ -424,8 +468,8 @@ t_eReturnCode HEAD_CUTTER_Init(void)
     for(idxAxe_e = HC_AXE_HEAD ; idxAxe_e < HC_AXE_HD_NB ; idxAxe_e++)
     {
         cmdIterFifoCfg_s.bufferHead_pv = &g_BufferCmdMtrIter_as[idxAxe_e];
-        cmdIterFifoCfg_s.bufferSize_u8 = HC_CMD_ITER_BUFFER_LEN;
-        cmdIterFifoCfg_s.elementSize_u8 = sizeof(t_sHC_MtrCmdIterPayload);
+        cmdIterFifoCfg_s.actualSize_u16 = HC_CMD_ITER_BUFFER_LEN;
+        cmdIterFifoCfg_s.elementSize_u16 = sizeof(t_sHC_MtrCmdIterPayload);
         cmdIterFifoCfg_s.enableOverwrite_b = FALSE;
         Ret_e = LIBQUEUE_Create(&g_QueueCmdIterRcvMngmt_as[idxAxe_e], cmdIterFifoCfg_s);
 
@@ -446,8 +490,8 @@ t_eReturnCode HEAD_CUTTER_Init(void)
     if(Ret_e == RC_OK)
     {
         cmdPosFifoCfg_s.bufferHead_pv = &g_BufferCmdPosRcv_as[0];
-        cmdPosFifoCfg_s.bufferSize_u8 = HC_CMD_POS_RCV_BUFFER_LEN;
-        cmdPosFifoCfg_s.elementSize_u8 = sizeof(t_sHC_PosCmdQueueElem);
+        cmdPosFifoCfg_s.actualSize_u16 = HC_CMD_POS_RCV_BUFFER_LEN;
+        cmdPosFifoCfg_s.elementSize_u16 = sizeof(t_sHC_PosCmdQueueElem);
         cmdPosFifoCfg_s.enableOverwrite_b = FALSE;
         Ret_e = LIBQUEUE_Create(&g_QueueCmdPosRcvMngmt_s, cmdPosFifoCfg_s);
 
@@ -598,6 +642,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Configuration(void)
 static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
 {
     t_eReturnCode Ret_e;
+    t_eHC_AxeHandleList idxAxe_e;
     t_uint8 sysOptHdHoldKnf_u8;
     t_eAPPLGC_CalibFeedbackSts feedbackSts_e = APPLGC_CALIB_FBSTS_UNDEFINED_ERROR;
     
@@ -640,6 +685,10 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                         (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE]);
                         (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE]);
                         (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_HOLD_KNFE]);
+                        for(idxAxe_e = HC_AXE_HD_KNFE; idxAxe_e < HC_AXE_HD_NB; idxAxe_e++)
+                        {
+                            g_axeMissPulses_af32[idxAxe_e] = 0.0F;
+                        }
 
                         g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                         feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
@@ -648,11 +697,15 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                     
                 break;
                 case APPLGC_CALIB_REQSTS_MOVE:
+                {
+                    t_sint32 pulsesCmd_s32;
                     //---- move ----//
                     if(g_calibCmdInfo_s.isNewCmdReceiv_b == TRUE)
                     {
+                        pulsesCmd_s32 = s_HC_QuantizePulseCmd(g_calibCmdInfo_s.axeHead_e,
+                                                              g_calibCmdInfo_s.pulses_f32);
                         Ret_e = s_HC_SetAxeSetPoint(g_calibCmdInfo_s.axeHead_e, 
-                                                    g_calibCmdInfo_s.pulses_f32,
+                                                    pulsesCmd_s32,
                                                     g_calibCmdInfo_s.speed_f32,
                                                     0.0F);
                         if(Ret_e == RC_OK)
@@ -671,6 +724,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                     {
                         g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                     }
+                }
                 break;
                 case APPLGC_CALIB_REQSTS_REGISTER_VALUE:
                 {
@@ -811,38 +865,41 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Operational(void)
                 Ret_e = s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt();
                 if(Ret_e == RC_WARNING_NO_OPERATION)
                 {
+                    Ret_e = RC_OK;
                     g_FlagPosCmdPending_b = FALSE;
                 }
                 else if(Ret_e < RC_OK)
                 {
                     ASSERT((t_uint16)0);
                 }
+                if(Ret_e == RC_OK)
+                {
+                    //---- then execute pulse command ----//
+                    Ret_e = s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt();
+                    if(Ret_e == RC_WARNING_NO_OPERATION)
+                    {
+                        g_FlagIterCmdReady_b = FALSE;
+                    }
+                    else if(Ret_e < RC_OK)
+                    {
+                        ASSERT((t_uint16)0);
+                    }
 
-                //---- then execute pulse command ----//
-                Ret_e = s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt();
-                if(Ret_e == RC_WARNING_NO_OPERATION)
-                {
-                    g_FlagIterCmdReady_b = FALSE;
-                }
-                else if(Ret_e < RC_OK)
-                {
-                    ASSERT((t_uint16)0);
-                }
-
-                //---- check work left in this state ----//
-                if((g_FlagIterCmdReady_b == FALSE)
-                && (g_FlagPosCmdPending_b == FALSE))
-                {
-                    g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
-                }
-                else if((g_QueueCmdPosRcvMngmt_s.actualSize_u8 == (t_uint8)0)
-                && (g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u8 == (t_uint8)0)
-                && (g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u8 == (t_uint8)0))
-                {
-                    // If queues are empty, force idle/servo state to avoid being stuck in CMD state.
-                    g_FlagPosCmdPending_b = FALSE;
-                    g_FlagIterCmdReady_b = FALSE;
-                    g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
+                    //---- check work left in this state ----//
+                    if((g_FlagIterCmdReady_b == FALSE)
+                    && (g_FlagPosCmdPending_b == FALSE))
+                    {
+                        g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
+                    }
+                    else if((g_QueueCmdPosRcvMngmt_s.actualSize_u16 == (t_uint8)0)
+                    && (g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u16 == (t_uint8)0)
+                    && (g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u16 == (t_uint8)0))
+                    {
+                        // If queues are empty, force idle/servo state to avoid being stuck in CMD state.
+                        g_FlagPosCmdPending_b = FALSE;
+                        g_FlagIterCmdReady_b = FALSE;
+                        g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
+                    }
                 }
             }
             break;
@@ -990,6 +1047,104 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
 }
 
 /*********************************
+ * s_HC_QuantizePulseCmd
+ *********************************/
+static t_sint32 s_HC_QuantizePulseCmd(t_eHC_AxeHandleList f_idxAxe_e, t_float32 f_pulseCmd_f32)
+{
+    t_float32 pulseWithResid_f32 = f_pulseCmd_f32;
+    t_float32 cmdPulse_f32;
+    t_sint32 cmdPulse_s32;
+
+    if(f_idxAxe_e < HC_AXE_HD_NB)
+    {
+        pulseWithResid_f32 += g_axeMissPulses_af32[f_idxAxe_e];
+    }
+
+    if(pulseWithResid_f32 >= 0.0F)
+    {
+        cmdPulse_f32 = floorf(pulseWithResid_f32 + 0.5F);
+    }
+    else
+    {
+        cmdPulse_f32 = ceilf(pulseWithResid_f32 - 0.5F);
+    }
+
+    cmdPulse_s32 = (t_sint32)cmdPulse_f32;
+
+    if(f_idxAxe_e < HC_AXE_HD_NB)
+    {
+        g_axeMissPulses_af32[f_idxAxe_e] = pulseWithResid_f32 - (t_float32)cmdPulse_s32;
+    }
+
+    return cmdPulse_s32;
+}
+
+/*********************************
+ * s_HC_WriteOrMergeIterCmd
+ *********************************/
+static t_eReturnCode s_HC_WriteOrMergeIterCmd(t_sLIBQUEUE_QueueCore * f_queue_ps,
+                                              const t_sHC_MtrCmdIterPayload * f_cmd_ps)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_sHC_MtrCmdIterPayload * lastCmd_ps;
+    t_uint16 lastIdx_u16;
+    t_float32 freqDiff_f32;
+    t_sint32 mergedPulse_s32;
+
+    if((f_queue_ps == NULL)
+    || (f_cmd_ps == NULL))
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    else if(f_cmd_ps->pulses_s32 == (t_sint32)0)
+    {
+        Ret_e = RC_OK;
+    }
+    else if(((f_cmd_ps->pulses_s32 > -(t_sint32)HC_MIN_PULSE_CMD_ABS_S32)
+          && (f_cmd_ps->pulses_s32 < (t_sint32)HC_MIN_PULSE_CMD_ABS_S32)))
+    {
+        Ret_e = RC_OK;
+    }
+    else if(f_queue_ps->actualSize_u16 > (t_uint16)0)
+    {
+        if(f_queue_ps->tail_u16 == (t_uint16)0)
+        {
+            lastIdx_u16 = (t_uint16)(f_queue_ps->QueueCfg_s.actualSize_u16 - (t_uint16)1);
+        }
+        else
+        {
+            lastIdx_u16 = (t_uint16)(f_queue_ps->tail_u16 - (t_uint16)1);
+        }
+
+        lastCmd_ps = (t_sHC_MtrCmdIterPayload *)((char *)f_queue_ps->QueueCfg_s.bufferHead_pv
+                                            + ((t_uint32)lastIdx_u16 * f_queue_ps->QueueCfg_s.elementSize_u16));
+
+        freqDiff_f32 = fabsf(lastCmd_ps->frequency_f32 - f_cmd_ps->frequency_f32);
+        mergedPulse_s32 = lastCmd_ps->pulses_s32 + f_cmd_ps->pulses_s32;
+
+        if((freqDiff_f32 <= 0.1F)
+        && (lastCmd_ps->triggerTimer_f32 == f_cmd_ps->triggerTimer_f32)
+        && (((lastCmd_ps->pulses_s32 > (t_sint32)0) && (f_cmd_ps->pulses_s32 > (t_sint32)0))
+            || ((lastCmd_ps->pulses_s32 < (t_sint32)0) && (f_cmd_ps->pulses_s32 < (t_sint32)0))))
+        {
+            lastCmd_ps->pulses_s32 = mergedPulse_s32;
+            Ret_e = RC_OK;
+        }
+        else
+        {
+            Ret_e = LIBQUEUE_WriteElement(f_queue_ps, f_cmd_ps, sizeof(t_sHC_MtrCmdIterPayload));
+        }
+    }
+    else
+    {
+        Ret_e = LIBQUEUE_WriteElement(f_queue_ps, f_cmd_ps, sizeof(t_sHC_MtrCmdIterPayload));
+    }
+
+    return Ret_e;
+}
+
+/*********************************
  * s_HC_Fsm_PrdTsk_Ope_Servo
  *********************************/
 static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
@@ -1009,6 +1164,8 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
     //---- pulse correction -----//
     t_float32 pulseCorrAlpha_b_f32;
     t_float32 pulseCorrAlpha_c_f32;
+    t_sint32 pulseCorrAlpha_b_s32 = 0;
+    t_sint32 pulseCorrAlpha_c_s32 = 0;
 
     //---- variable for param max delta ----//
     t_uAPPSPM_PrmValType prmMaxDeltaAlpha_b_u;
@@ -1029,10 +1186,10 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
     if(Ret_e == RC_OK)
     {
         //---- 3- get motor status  -----//
-        Ret_e = APPACT_GetActValue(hdKnfCfg_ps->actIfSpeed_e, &hdKnfMtrsts_f32);
+        Ret_e = APPLGC_GetActValue(hdKnfCfg_ps->actIfSpeed_e, &hdKnfMtrsts_f32);
         if(Ret_e == RC_OK)
         {
-            Ret_e = APPACT_GetActValue(hdCntrKnfCfg_ps->actIfSpeed_e, &hdCntrKnfMtrsts_f32);
+            Ret_e = APPLGC_GetActValue(hdCntrKnfCfg_ps->actIfSpeed_e, &hdCntrKnfMtrsts_f32);
         }
     }
     if(Ret_e == RC_OK)
@@ -1049,16 +1206,16 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
         //---- 5- check asservissement -----//
 
         //---- param in milliradian ----//
-        if(deltaAplha_b_f32 > prmMaxDeltaAlpha_b_u.prmVal_u16)
+        if(deltaAplha_b_f32 > (t_float32)prmMaxDeltaAlpha_b_u.prmVal_u16)
         {
-            APPSDM_ReportDiagEvnt(APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR,
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR,
                                     APPSDM_DIAG_ITEM_REPORT_FAIL,
                                     (t_uint16)(deltaAplha_b_f32 * 10), // milliradian * 10
                                     (t_uint16)(0));
         }
-        else if(deltaAplha_c_f32 > prmMaxDeltaAlpha_c_u.prmVal_u16)
+        else if(deltaAplha_c_f32 > (t_float32)prmMaxDeltaAlpha_c_u.prmVal_u16)
         {
-            APPSDM_ReportDiagEvnt(APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR,
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR,
                                     APPSDM_DIAG_ITEM_REPORT_FAIL,
                                     (t_uint16)(0), 
                                     (t_uint16)(deltaAplha_c_f32 * 10)); // milliradian * 10
@@ -1069,29 +1226,116 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_Servo(void)
                                                 deltaAplha_c_f32,
                                                 &pulseCorrAlpha_b_f32,
                                                 &pulseCorrAlpha_c_f32);
-            if((Ret_e == RC_OK)
-            && ((pulseCorrAlpha_b_f32 >= 1.0F)
-            || (pulseCorrAlpha_b_f32 <= -1.0F)))
+            if(Ret_e == RC_OK)
             {
-                Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_KNFE,
-                                            pulseCorrAlpha_b_f32,
-                                            HC_PULSE_SPEED_SERVO,
-                                            0.0F);
+                pulseCorrAlpha_b_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_CNTR_KNFE, pulseCorrAlpha_b_f32);
+                pulseCorrAlpha_c_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_KNFE, pulseCorrAlpha_c_f32);
             }
             if((Ret_e == RC_OK)
-            && ((pulseCorrAlpha_c_f32 >= 1.0F)
-            || (pulseCorrAlpha_c_f32 < -1.0F)))
+            && (pulseCorrAlpha_b_s32 != 0))
             {
                 Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_CNTR_KNFE,
-                                            pulseCorrAlpha_c_f32,
+                                            pulseCorrAlpha_b_s32,
                                             HC_PULSE_SPEED_SERVO,
                                             0.0F);
+                FMKSRL_LOG( "[HC] : Detect Delta b diff -> %d, correction B->%d, Retcode->%d\r\n",
+                            (t_sint32)deltaAplha_b_f32,
+                            (t_sint32)pulseCorrAlpha_b_s32,
+                            (t_sint32)Ret_e);
             }
+            if((Ret_e == RC_OK)
+            && (pulseCorrAlpha_c_s32 != 0))
+            {
+                Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_KNFE,
+                                            pulseCorrAlpha_c_s32,
+                                            HC_PULSE_SPEED_SERVO,
+                                            0.0F);
+                FMKSRL_LOG( "[HC] : Detect Delta c diff -> %d, correction C->%d, Retcode->%d\r\n",
+                            (t_sint32)deltaAplha_c_f32,
+                            (t_sint32)pulseCorrAlpha_c_s32,
+                            (t_sint32)Ret_e);
+            }
+            
+            
         }
     }
     
     return Ret_e;
 }
+/*********************************
+ * s_HC_GetQueuedTipAngles
+ *********************************/
+static t_eReturnCode s_HC_GetQueuedTipAngles( t_float32 * f_alphaB_pmrad,
+                                                t_float32 * f_alphaC_pmrad)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_uint16 idxCmd_u16;
+    t_float32 deltaAlpha_b_f32;
+    t_float32 deltaAlpha_c_f32;
+
+    const t_sLIBQUEUE_QueueCore * queueKnf_ps = &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE];
+    const t_sLIBQUEUE_QueueCore * queueCntrKnf_ps = &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE];
+
+    if((f_alphaB_pmrad == NULL)
+    || (f_alphaC_pmrad == NULL))
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        //---- start with what we already send ----//
+        *f_alphaB_pmrad = g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad;
+        *f_alphaC_pmrad = g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad;
+
+        //---- then add queued knife delta commands ----//
+        for(idxCmd_u16 = (t_uint16)0;
+        (idxCmd_u16 < queueKnf_ps->actualSize_u16)
+        && (Ret_e == RC_OK);
+        idxCmd_u16++)
+        {
+            const t_uint16 knfIdx_u16 = (t_uint16)((queueKnf_ps->head_u16 + idxCmd_u16) % queueKnf_ps->QueueCfg_s.actualSize_u16);
+
+            const t_sHC_MtrCmdIterPayload * knfCmd_ps = (const t_sHC_MtrCmdIterPayload *)((const char *)queueKnf_ps->QueueCfg_s.bufferHead_pv
+                                                    + ((t_uint32)knfIdx_u16 * queueKnf_ps->QueueCfg_s.elementSize_u16));
+
+            Ret_e = s_HC_ComputeAnglefromPulse(knfCmd_ps->pulses_s32,
+                                                (t_sint32)0,
+                                                &deltaAlpha_b_f32,
+                                                &deltaAlpha_c_f32);
+            if(Ret_e == RC_OK)
+            {
+                *f_alphaB_pmrad += deltaAlpha_b_f32;
+                *f_alphaC_pmrad += deltaAlpha_c_f32;
+            }
+        }
+
+        //---- add queued counter-knife delta commands ----//
+        for(idxCmd_u16 = (t_uint16)0;
+        (idxCmd_u16 < queueCntrKnf_ps->actualSize_u16)
+        && (Ret_e == RC_OK);
+        idxCmd_u16++)
+        {
+            const t_uint16 cntrKnfIdx_u16 = (t_uint16)((queueCntrKnf_ps->head_u16 + idxCmd_u16) % queueCntrKnf_ps->QueueCfg_s.actualSize_u16);
+
+            const t_sHC_MtrCmdIterPayload * cntrKnfCmd_ps = (const t_sHC_MtrCmdIterPayload *)((const char *)queueCntrKnf_ps->QueueCfg_s.bufferHead_pv
+                                                    + ((t_uint32)cntrKnfIdx_u16 * queueCntrKnf_ps->QueueCfg_s.elementSize_u16));
+
+            Ret_e = s_HC_ComputeAnglefromPulse((t_sint32)0,
+                                                cntrKnfCmd_ps->pulses_s32,
+                                                &deltaAlpha_b_f32,
+                                                &deltaAlpha_c_f32);
+            if(Ret_e == RC_OK)
+            {
+                *f_alphaB_pmrad += deltaAlpha_b_f32;
+                *f_alphaC_pmrad += deltaAlpha_c_f32;
+            }
+        }
+    }
+
+    return Ret_e;
+}
+
 /*********************************
  * s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt
  *********************************/
@@ -1100,15 +1344,16 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxCmdTreated_u8;
     t_sHC_PosCmdQueueElem posCmd_s;
+    
     //---- angle alpha variable ----//
     t_float32 alpha_b_mrad = 0.0F;
     t_float32 alpha_c_mrad = 0.0F;
     t_float32 deltaAlpha_b_f32;
     t_float32 deltaAlpha_c_f32;
 
-    //---- we take the actual cmpte as beginning ----//
-    t_float32 currCmpte_alpha_b_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad;
-    t_float32 currCmpte_alpha_c_f32 = g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad;
+    //---- expected base = current computed position + queued pulse commands ----//
+    t_float32 currCmpte_alpha_b_f32 = 0.0F;
+    t_float32 currCmpte_alpha_c_f32 = 0.0F;
 
     //---- act_pulse value ----//
     t_float32 pulseKnf_f32;
@@ -1122,7 +1367,14 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
     t_uAPPSPM_PrmValType prmKnifeRpmToHz_u;
     t_uAPPSPM_PrmValType prmCntrKnifeRpmToHz_u;
 
-    Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_KNIFE_RPM_TO_HZ, &prmKnifeRpmToHz_u);
+
+    //--- first, get the current alpha_b & aplha_c from previous build ----//
+    Ret_e = s_HC_GetQueuedTipAngles(&currCmpte_alpha_b_f32,
+                                    &currCmpte_alpha_c_f32);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_KNIFE_RPM_TO_HZ, &prmKnifeRpmToHz_u);
+    }
     if(Ret_e == RC_OK)
     {
         Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_CNTR_KNIFE_RPM_TO_HZ, &prmCntrKnifeRpmToHz_u);
@@ -1140,60 +1392,91 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
         Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdPosRcvMngmt_s,
                                         &posCmd_s,
                                         sizeof(t_sHC_PosCmdQueueElem));
-
-        if((Ret_e == RC_OK)
-        && (g_currCmdTimeStampID_u32 != posCmd_s.timeStampID_u32))
+        
+        #warning special debug
+        ////----1- check Id cmd with current ----//
+        // if((Ret_e == RC_OK)
+        // && (g_currCmdTimeStampID_u32 != posCmd_s.timeStampID_u32))
+        // {
+        //     Ret_e = RC_ERROR_NOT_SUPPORTED;
+        //     ASSERT((t_uint16)posCmd_s.timeStampID_u32);
+        //     APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_TIMESTAMPS_ID,
+        //                             APPSDM_DIAG_ITEM_REPORT_FAIL,
+        //                             (t_uint16)g_currCmdTimeStampID_u32,
+        //                             (t_uint16)posCmd_s.timeStampID_u32);
+        //     //---- erase value ----//
+        //     (void)LIBQUEUE_ReadElement( &g_QueueCmdPosRcvMngmt_s,
+        //                                 NULL,
+        //                                 sizeof(t_sHC_PosCmdQueueElem));
+        // }
+        //----2- Depending on cmd type, build pulses ----//
+        if(Ret_e == RC_OK) 
         {
-            Ret_e = RC_ERROR_NOT_SUPPORTED;
-            ASSERT((t_uint16)posCmd_s.timeStampID_u32);
-            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_TIMESTAMPS_ID,
-                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
-                                    (t_uint16)g_currCmdTimeStampID_u32,
-                                    (t_uint16)posCmd_s.timeStampID_u32);
-        }
-        if(Ret_e == RC_OK)
-        {
-            //---- check position validity ----//
-            Ret_e = s_HC_CheckPositionValidity(posCmd_s.carthPos_s);
-            if(Ret_e == RC_OK)
+            //---- Intermediary action if cmd type is carthesian ----//
+            if(posCmd_s.cmdPosType_e == HC_CMD_TYPE_POS_CARTH)
             {
-                //---- 2- Angle to apply on each ----//
-                Ret_e = s_HC_ComputeAngleFromCarthesian(posCmd_s.carthPos_s.x_mm,
-                                                        posCmd_s.carthPos_s.y_mm,
-                                                        &alpha_b_mrad,
-                                                        &alpha_c_mrad);
-                //---- 3- calculate delta ----//
+
+                Ret_e = s_HC_CheckPositionValidity(posCmd_s.Pos_u.Carth_s);
                 if(Ret_e == RC_OK)
                 {
-                    //---- here we have to take the previous point 
-                    deltaAlpha_b_f32 = currCmpte_alpha_b_f32 - alpha_b_mrad;
-                    deltaAlpha_c_f32 = currCmpte_alpha_c_f32 - alpha_c_mrad;
-
-                    Ret_e = s_HC_ComputePulseFromAngle( deltaAlpha_b_f32,
-                                                        deltaAlpha_c_f32,
-                                                        &pulseKnf_f32,
-                                                        &pulseCntrKnf_f32);
+                    //---- Angle to have to get to that position ----//
+                    Ret_e = s_HC_ComputeAngleFromCarthesian(posCmd_s.Pos_u.Carth_s.x_mm,
+                                                            posCmd_s.Pos_u.Carth_s.y_mm,
+                                                            &alpha_b_mrad,
+                                                            &alpha_c_mrad);
                 }
+            }
+            else if(posCmd_s.cmdPosType_e == HC_CMD_TYPE_POS_JOINT)
+            {
+                alpha_b_mrad = posCmd_s.Pos_u.Joint_s.alpha_b_mrad;
+                alpha_c_mrad = posCmd_s.Pos_u.Joint_s.alpha_c_mrad;
+            }
+            else 
+            {
+                Ret_e = RC_ERROR_PARAM_INVALID;
+                ASSERT((t_uint16)posCmd_s.cmdPosType_e);
+            }
+
+            //--- now we work with joint only ---//
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = s_HC_CheckAngleAssociationValidity(alpha_b_mrad, alpha_c_mrad);
+            }
+            if(Ret_e == RC_OK)
+            {
+                
+                //---- 3- calculate delta ----//
+                //---- delta to apply = target - current planned point ----//
+                deltaAlpha_b_f32 = alpha_b_mrad - currCmpte_alpha_b_f32;
+                deltaAlpha_c_f32 = alpha_c_mrad - currCmpte_alpha_c_f32;
+
+                Ret_e = s_HC_ComputePulseFromAngle( deltaAlpha_b_f32,
+                                                    deltaAlpha_c_f32,
+                                                    &pulseKnf_f32,
+                                                    &pulseCntrKnf_f32);
                 if(Ret_e == RC_OK)
                 {
                     knfCmdIterPayload_s.frequency_f32 = 
                         (t_float32)posCmd_s.speed_s.knifeSpd_rpm * prmKnifeRpmToHz_u.prmVal_f32;
-                    knfCmdIterPayload_s.pulses_s32 = (t_sint32)pulseKnf_f32;
+                    knfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_KNFE, pulseKnf_f32);
                     knfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
 
                     cntrKnfCmdIterPayload_s.frequency_f32 = 
                         (t_float32)posCmd_s.speed_s.cntrKnifeSpd_rpm * prmCntrKnifeRpmToHz_u.prmVal_f32;
-                    cntrKnfCmdIterPayload_s.pulses_s32 = (t_sint32)pulseCntrKnf_f32;
+                    cntrKnfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_CNTR_KNFE, pulseCntrKnf_f32);
                     cntrKnfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
-
-                    Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
-                                                    &knfCmdIterPayload_s,
-                                                    sizeof(t_sHC_MtrCmdIterPayload));
-                    if(Ret_e == RC_OK)
+                    
+                    //---- write element only if there is at least one pulse -----//
+                    if(knfCmdIterPayload_s.pulses_s32 != (t_sint32)0)
                     {
-                        Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
-                                                        &cntrKnfCmdIterPayload_s,
-                                                        sizeof(t_sHC_MtrCmdIterPayload));
+                        Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
+                                                         &knfCmdIterPayload_s);
+                    }
+                    if((Ret_e == RC_OK)
+                    && (cntrKnfCmdIterPayload_s.pulses_s32 != (t_sint32)0))
+                    {
+                        Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
+                                                         &cntrKnfCmdIterPayload_s);
                     }
                     if(Ret_e == RC_OK) 
                     {
@@ -1232,6 +1515,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
 {
     t_eReturnCode Ret_e = RC_OK;
     t_uint8 idxPulseCmdTreated_u8;
+    t_uint8 nbCmdApplied_u8 = (t_uint8)0;
 
     //---- get info from pulse queue ----//
     t_sHC_MtrCmdIterPayload knfCmdIterPayload_s = {0};
@@ -1240,30 +1524,30 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
     //---- update angle position/ x,y compute position ----//
     t_float32 deltaAlpha_b_f32 = 0.0F;
     t_float32 currdeltaAlpha_b_f32 = 0.0F;
+
     t_float32 deltaAlpha_c_f32 = 0.0F;
     t_float32 currdeltaAlpha_c_f32 = 0.0F;
+
     t_float32 posXCmpte_f32;
     t_float32 posYCmpte_f32;
+    t_bool hasKnfCmd_b;
+    t_bool hasCntrKnfCmd_b;
 
     for(idxPulseCmdTreated_u8 = (t_uint8)0 ; 
-    (idxPulseCmdTreated_u8 < HC_PuLSE_CMD_TREATED_MAX) 
+    (idxPulseCmdTreated_u8 < HC_PULSE_CMD_TREATED_MAX) 
     && (Ret_e == RC_OK) ; 
         idxPulseCmdTreated_u8++)
     {
         //---- Clear buffer reception payload ----//
         (void)SafeMem_memclear(&knfCmdIterPayload_s, sizeof(t_sHC_MtrCmdIterPayload));
         (void)SafeMem_memclear(&cntrKnfCmdIterPayload_s, sizeof(t_sHC_MtrCmdIterPayload));
+        hasKnfCmd_b = FALSE;
+        hasCntrKnfCmd_b = FALSE;
 
         //---- pop element for setpoint knife & cntr knife ----//
         Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
                                         &knfCmdIterPayload_s,
                                         sizeof(t_sHC_MtrCmdIterPayload));
-        if(Ret_e == RC_OK)
-        {
-            Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
-                                            &cntrKnfCmdIterPayload_s,
-                                            sizeof(t_sHC_MtrCmdIterPayload));
-        }
         if(Ret_e == RC_OK)
         {
             Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_KNFE,
@@ -1272,37 +1556,82 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PulseCmdMngmt(void)
                                         knfCmdIterPayload_s.triggerTimer_f32);
             if(Ret_e == RC_OK)
             {
-                Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_CNTR_KNFE,
-                                            knfCmdIterPayload_s.pulses_s32,
-                                            knfCmdIterPayload_s.frequency_f32,
-                                            knfCmdIterPayload_s.triggerTimer_f32);
+                hasKnfCmd_b = TRUE;
+                (void)LIBQUEUE_ReadElement(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE], NULL, sizeof(t_sHC_MtrCmdIterPayload));
             }
+            
+        }
+        else if(Ret_e == RC_WARNING_NO_OPERATION)
+        {
+            Ret_e = RC_OK;
+        }
+
+        
+        if(Ret_e == RC_OK)
+        {
+            Ret_e = LIBQUEUE_PopElement(    &g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
+                                            &cntrKnfCmdIterPayload_s,
+                                            sizeof(t_sHC_MtrCmdIterPayload));
             if(Ret_e == RC_OK)
             {
-                //---- erase setpoint for knife & cntr knife ----//
-                (void)LIBQUEUE_ReadElement(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE], NULL, sizeof(t_sHC_MtrCmdIterPayload));
-                (void)LIBQUEUE_ReadElement(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE], NULL, sizeof(t_sHC_MtrCmdIterPayload));
-
-                //---- update the current delta angle position ----//
-                Ret_e = s_HC_ComputeAnglefromPulse( knfCmdIterPayload_s.pulses_s32,
-                                                    cntrKnfCmdIterPayload_s.pulses_s32,
-                                                    &currdeltaAlpha_b_f32,
-                                                    &currdeltaAlpha_c_f32);
+                Ret_e = s_HC_SetAxeSetPoint(HC_AXE_HD_CNTR_KNFE,
+                                            cntrKnfCmdIterPayload_s.pulses_s32,
+                                            cntrKnfCmdIterPayload_s.frequency_f32,
+                                            cntrKnfCmdIterPayload_s.triggerTimer_f32);
                 if(Ret_e == RC_OK)
                 {
-                    deltaAlpha_b_f32 += currdeltaAlpha_b_f32;
-                    deltaAlpha_c_f32 += currdeltaAlpha_c_f32;
+                    hasCntrKnfCmd_b = TRUE;
+                    //---- erase setpoint for knife & cntr knife ----//
+                    
+                    (void)LIBQUEUE_ReadElement(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE], NULL, sizeof(t_sHC_MtrCmdIterPayload));
                 }
+            }
+            else if(Ret_e == RC_WARNING_NO_OPERATION)
+            {
+                Ret_e = RC_OK;
+            }
+        }
+
+        //---- nothing available on both queues ----//
+        if((Ret_e == RC_OK)
+        && (hasKnfCmd_b == FALSE)
+        && (hasCntrKnfCmd_b == FALSE))
+        {
+            if(nbCmdApplied_u8 == (t_uint8)0)
+            {
+                Ret_e = RC_WARNING_NO_OPERATION;
+            }
+            break;
+        }
+
+        //---- meaning we at least set one axe ----//
+        if((Ret_e == RC_OK)
+        && ((hasCntrKnfCmd_b == TRUE)
+        || (hasKnfCmd_b == TRUE)))
+        {
+            //---- update the current delta angle position ----//
+            Ret_e = s_HC_ComputeAnglefromPulse( knfCmdIterPayload_s.pulses_s32,
+                                                cntrKnfCmdIterPayload_s.pulses_s32,
+                                                &currdeltaAlpha_b_f32,
+                                                &currdeltaAlpha_c_f32);
+            if(Ret_e == RC_OK)
+            {
+                deltaAlpha_b_f32 += currdeltaAlpha_b_f32;
+                deltaAlpha_c_f32 += currdeltaAlpha_c_f32;
             }
             if(Ret_e < RC_OK)
             {
                 ASSERT((t_uint16)Ret_e);
             }
+            else if(Ret_e == RC_OK)
+            {
+                nbCmdApplied_u8++;
+            }
         }
     }
 
-    if((idxPulseCmdTreated_u8 > (t_uint8)0)
-    && (Ret_e >= RC_OK))
+    if((nbCmdApplied_u8 > (t_uint8)0)
+    && (Ret_e == RC_OK))
     {
         //---- now update the global current position ----//
         g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad += deltaAlpha_b_f32;
@@ -1561,24 +1890,40 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
             case APPSIG_CAN_MSG_LGC_HC_CMD_POSITION:
             {
                 t_sHC_PosCmdQueueElem buffPos_s;
-                // 0 : x_position, 1:y_position, 2: snsknifeSpeed, 3:snsCntrKnifeSpeed, 4: pos_cmdIdSpeed
+                t_eHC_CmdPosType cmdType_e;
 
-                if((f_nbSignal_u8 != (t_uint8)5)
-                || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X)
-                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y)
-                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_HC_CMD_KNF_POS_SPEED)
-                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_HC_CMD_CNTR_KNF_POS_SPEED)
-                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID))
+                if((f_nbSignal_u8 != (t_uint8)6)
+                || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X_ALPH_A)
+                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y_ALPH_B)
+                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_HC_CMD_KNF_POS_SPD_RPM)
+                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_HC_CMD_CNTR_KNF_POS_SPD_RPM)
+                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_TYPE_ID)
+                || (f_signal_ae[5] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
+                else if(f_sigValue_af32[4] >= (t_float32)HC_CMD_TYPE_POS_NB)
+                {
+                    ASSERT((t_uint16)f_sigValue_af32[4]);
+                }
                 else 
                 {
-                    buffPos_s.carthPos_s.x_mm = f_sigValue_af32[0];
-                    buffPos_s.carthPos_s.y_mm = f_sigValue_af32[1];
-                    buffPos_s.speed_s.knifeSpd_rpm = (t_uint16)f_sigValue_af32[2];
-                    buffPos_s.speed_s.cntrKnifeSpd_rpm = (t_uint16)f_sigValue_af32[3];
-                    buffPos_s.timeStampID_u32 = f_sigValue_af32[4];
+                    cmdType_e = (t_eHC_CmdPosType)f_sigValue_af32[4];
+                    if(cmdType_e == HC_CMD_TYPE_POS_CARTH)
+                    {
+                        buffPos_s.Pos_u.Carth_s.x_mm =  f_sigValue_af32[0];
+                        buffPos_s.Pos_u.Carth_s.y_mm =  f_sigValue_af32[1];
+                    }
+                    else // HC_CMD_TYPE_POS_JOINT
+                    {
+                        buffPos_s.Pos_u.Joint_s.alpha_b_mrad =  f_sigValue_af32[0];
+                        buffPos_s.Pos_u.Joint_s.alpha_c_mrad =  f_sigValue_af32[1];
+                    }
+
+                    buffPos_s.speed_s.knifeSpd_rpm = f_sigValue_af32[2];
+                    buffPos_s.speed_s.cntrKnifeSpd_rpm =f_sigValue_af32[3];
+                    buffPos_s.cmdPosType_e = cmdType_e; // f_sigValue_af32[4]
+                    buffPos_s.timeStampID_u32 = (t_uint32)f_sigValue_af32[5];
                     
                     Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
                                                     &buffPos_s,
@@ -1820,7 +2165,7 @@ static t_eReturnCode s_HC_ComputeCarthesianFromAngle(   t_float32 f_alphaB_mrad,
 
             *f_posY_pmm = (
                 -(t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16 * sinAlphaB_f32
-                + (t_float32)prmLenghtKnifeMm_u.prmVal_u16 * ((cosAlphaC_f32 * sinAlphaB_f32) + (sinAlphaC_f32 * cosAlphaB_f32))
+                + (t_float32)prmLenghtKnifeMm_u.prmVal_u16 * ((cosAlphaC_f32 * sinAlphaB_f32) - (sinAlphaC_f32 * cosAlphaB_f32))
             );
         }
     }
@@ -1862,17 +2207,18 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_mm,
         }
         if(Ret_e == RC_OK)
         {
-            const t_float32 r2_f32 = (f_posX_mm * f_posX_mm) + (f_posY_mm * f_posY_mm);
             const t_float32 cntrKnfeLen_f32 = (t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16;
             const t_float32 KnfeLen_f32 = (t_float32)prmLenghtKnifeMm_u.prmVal_u16;
             const t_float32 headLen_f32 = (t_float32)prmLenghtHeadMm_u.prmVal_u16;
             const t_float32 x_mm_f32 = (t_float32)(f_posX_mm - headLen_f32);
             const t_float32 y_mm_f32 = (t_float32)(f_posY_mm - 0.0f);
+            const t_float32 r2_f32 = (x_mm_f32 * x_mm_f32) + (y_mm_f32 * y_mm_f32);
+            const t_float32 den_f32 = 2.0f * cntrKnfeLen_f32 * KnfeLen_f32;
 
             t_float32 cos_q2_f32;
+            t_float32 cos_q2_raw_f32;
             t_float32 sin_q2_abs_f32;
             t_float32 sin_q2_f32;
-            t_float32 q2_rad_f32;
             t_float32 phi_rad_f32;
             t_float32 q1_rad_f32;
 
@@ -1885,98 +2231,145 @@ static t_eReturnCode s_HC_ComputeAngleFromCarthesian(   t_float32 f_posX_mm,
             t_float32 err2_f32;
 
             /* cos(q2) = (r^2 - L1^2 - L2^2) / (2 L1 L2) */
-            cos_q2_f32 = (r2_f32 - (cntrKnfeLen_f32 * cntrKnfeLen_f32) - (KnfeLen_f32 * KnfeLen_f32))
-                        / (2.0f * cntrKnfeLen_f32 * KnfeLen_f32);
+            cos_q2_raw_f32 = (r2_f32 - (cntrKnfeLen_f32 * cntrKnfeLen_f32) - (KnfeLen_f32 * KnfeLen_f32))
+                           / den_f32;
+            if((den_f32 <= 0.0f)
+            || (cos_q2_raw_f32 > 1.0001f)
+            || (cos_q2_raw_f32 < -1.0001f))
+            {
+                Ret_e = RC_ERROR_PARAM_INVALID;
+            }
+
+            cos_q2_f32 = cos_q2_raw_f32;
             if(cos_q2_f32 > 1.0f)  { cos_q2_f32 = 1.0f; }
             if(cos_q2_f32 < -1.0f) { cos_q2_f32 = -1.0f; }
 
-            sin_q2_abs_f32 = sqrtf(fmaxf(0.0f, 1.0f - (cos_q2_f32 * cos_q2_f32)));
-            phi_rad_f32 = atan2f(y_mm_f32, x_mm_f32);
-
-            /* ---------------- Branche 1 : elbow = +1 ---------------- */
-            sin_q2_f32 = (+1.0f) * sin_q2_abs_f32;
-            q2_rad_f32 = atan2f(sin_q2_f32, cos_q2_f32);
-            q1_rad_f32 = phi_rad_f32
-                    - atan2f((KnfeLen_f32 * sin_q2_f32),
-                                (cntrKnfeLen_f32 + (KnfeLen_f32 * cos_q2_f32)));
-
-            b1_rad_f32 = -q1_rad_f32; /* convention CW */
-
+            if(Ret_e == RC_OK)
             {
-                const t_float32 cb_f32 = cosf(b1_rad_f32);
-                const t_float32 sb_f32 = sinf(b1_rad_f32);
+                sin_q2_abs_f32 = sqrtf(fmaxf(0.0f, 1.0f - (cos_q2_f32 * cos_q2_f32)));
+                phi_rad_f32 = atan2f(y_mm_f32, x_mm_f32);
 
-                const t_float32 vAC_local_x_f32 = (cb_f32 * x_mm_f32) - (sb_f32 * y_mm_f32);
-                const t_float32 vAC_local_y_f32 = (sb_f32 * x_mm_f32) + (cb_f32 * y_mm_f32);
+                /* ---------------- Branche 1 : elbow = +1 ---------------- */
+                sin_q2_f32 = (+1.0f) * sin_q2_abs_f32;
+                q1_rad_f32 = phi_rad_f32
+                        - atan2f((KnfeLen_f32 * sin_q2_f32),
+                                    (cntrKnfeLen_f32 + (KnfeLen_f32 * cos_q2_f32)));
 
-                const t_float32 vBC_local_x_f32 = vAC_local_x_f32 - cntrKnfeLen_f32;
-                const t_float32 vBC_local_y_f32 = vAC_local_y_f32;
+                b1_rad_f32 = -q1_rad_f32; /* convention CW */
 
-                c1_rad_f32 = atan2f(-vBC_local_y_f32, -vBC_local_x_f32);
-            }
-
-            /* ---------------- Branche 2 : elbow = -1 ---------------- */
-            sin_q2_f32 = (-1.0f) * sin_q2_abs_f32;
-            q2_rad_f32 = atan2f(sin_q2_f32, cos_q2_f32);
-            q1_rad_f32 = phi_rad_f32
-                    - atan2f((KnfeLen_f32 * sin_q2_f32),
-                                (cntrKnfeLen_f32 + (KnfeLen_f32 * cos_q2_f32)));
-
-            b2_rad_f32 = -q1_rad_f32;
-
-            {
-                const t_float32 cb_f32 = cosf(b2_rad_f32);
-                const t_float32 sb_f32 = sinf(b2_rad_f32);
-
-                const t_float32 vAC_local_x_f32 = (cb_f32 * x_mm_f32) - (sb_f32 * y_mm_f32);
-                const t_float32 vAC_local_y_f32 = (sb_f32 * x_mm_f32) + (cb_f32 * y_mm_f32);
-
-                const t_float32 vBC_local_x_f32 = vAC_local_x_f32 - cntrKnfeLen_f32;
-                const t_float32 vBC_local_y_f32 = vAC_local_y_f32;
-
-                c2_rad_f32 = atan2f(-vBC_local_y_f32, -vBC_local_x_f32);
-            }
-
-            /* Choix via erreur FK minimale */
-            {
-                t_float32 x1_f32;
-                t_float32 y1_f32;
-                t_float32 x2_f32;
-                t_float32 y2_f32;
-
-                (void)s_HC_ComputeCarthesianFromAngle((b1_rad_f32 * 1000.0f), (c1_rad_f32 * 1000.0f), &x1_f32, &y1_f32);
-                (void)s_HC_ComputeCarthesianFromAngle((b2_rad_f32 * 1000.0f), (c2_rad_f32 * 1000.0f), &x2_f32, &y2_f32);
-
-                err1_f32 = ((x1_f32 - f_posX_mm) * (x1_f32 - f_posX_mm))
-                        + ((y1_f32 - f_posY_mm) * (y1_f32 - f_posY_mm));
-
-                err2_f32 = ((x2_f32 - f_posX_mm) * (x2_f32 - f_posX_mm))
-                        + ((y2_f32 - f_posY_mm) * (y2_f32 - f_posY_mm));
-
-                if(err2_f32 < err1_f32)
                 {
-                    b1_rad_f32 = b2_rad_f32;
-                    c1_rad_f32 = c2_rad_f32;
+                    const t_float32 cb_f32 = cosf(b1_rad_f32);
+                    const t_float32 sb_f32 = sinf(b1_rad_f32);
+
+                    const t_float32 vAC_local_x_f32 = (cb_f32 * x_mm_f32) - (sb_f32 * y_mm_f32);
+                    const t_float32 vAC_local_y_f32 = (sb_f32 * x_mm_f32) + (cb_f32 * y_mm_f32);
+
+                    const t_float32 vBC_local_x_f32 = vAC_local_x_f32 - cntrKnfeLen_f32;
+                    const t_float32 vBC_local_y_f32 = vAC_local_y_f32;
+
+                    c1_rad_f32 = atan2f(-vBC_local_y_f32, -vBC_local_x_f32);
                 }
-            }
 
-            /* wrap [-pi, pi] en milli-radian */
-            {
-                t_float32 b_mrad_f32 = b1_rad_f32 * 1000.0f;
-                t_float32 c_mrad_f32 = c1_rad_f32 * 1000.0f;
+                /* ---------------- Branche 2 : elbow = -1 ---------------- */
+                sin_q2_f32 = (-1.0f) * sin_q2_abs_f32;
+                q1_rad_f32 = phi_rad_f32
+                        - atan2f((KnfeLen_f32 * sin_q2_f32),
+                                    (cntrKnfeLen_f32 + (KnfeLen_f32 * cos_q2_f32)));
 
-                while(b_mrad_f32 > CST_PI_MRAD)  { b_mrad_f32 -= CST_2PI_MRAD; }
-                while(b_mrad_f32 < -CST_PI_MRAD) { b_mrad_f32 += CST_2PI_MRAD; }
+                b2_rad_f32 = -q1_rad_f32;
 
-                while(c_mrad_f32 > CST_PI_MRAD)  { c_mrad_f32 -= CST_2PI_MRAD; }
-                while(c_mrad_f32 < -CST_PI_MRAD) { c_mrad_f32 += CST_2PI_MRAD; }
+                {
+                    const t_float32 cb_f32 = cosf(b2_rad_f32);
+                    const t_float32 sb_f32 = sinf(b2_rad_f32);
 
-                *f_alphaB_pmrad = b_mrad_f32;
-                *f_alphaC_pmrad = c_mrad_f32;
+                    const t_float32 vAC_local_x_f32 = (cb_f32 * x_mm_f32) - (sb_f32 * y_mm_f32);
+                    const t_float32 vAC_local_y_f32 = (sb_f32 * x_mm_f32) + (cb_f32 * y_mm_f32);
+
+                    const t_float32 vBC_local_x_f32 = vAC_local_x_f32 - cntrKnfeLen_f32;
+                    const t_float32 vBC_local_y_f32 = vAC_local_y_f32;
+
+                    c2_rad_f32 = atan2f(-vBC_local_y_f32, -vBC_local_x_f32);
+                }
+
+                /* Choix de branche IK :
+                 * 1) priorite a la solution ou le point B (counter-knife) est a droite du tip cible
+                 * 2) sinon (ambigu), prendre l'alpha_b le plus petit
+                 * 3) fallback final sur l'erreur FK minimale
+                 */
+                {
+                    t_float32 x1_f32;
+                    t_float32 y1_f32;
+                    t_float32 x2_f32;
+                    t_float32 y2_f32;
+                    t_float32 xB1_f32;
+                    t_float32 xB2_f32;
+                    t_uint8 b1IsRight_u8;
+                    t_uint8 b2IsRight_u8;
+                    const t_float32 rightEps_mm_f32 = 0.001F;
+                    t_uint8 selectBranch2_u8 = 0u;
+
+                    (void)s_HC_ComputeCarthesianFromAngle((b1_rad_f32 * 1000.0f), (c1_rad_f32 * 1000.0f), &x1_f32, &y1_f32);
+                    (void)s_HC_ComputeCarthesianFromAngle((b2_rad_f32 * 1000.0f), (c2_rad_f32 * 1000.0f), &x2_f32, &y2_f32);
+
+                    err1_f32 = ((x1_f32 - f_posX_mm) * (x1_f32 - f_posX_mm))
+                            + ((y1_f32 - f_posY_mm) * (y1_f32 - f_posY_mm));
+
+                    err2_f32 = ((x2_f32 - f_posX_mm) * (x2_f32 - f_posX_mm))
+                            + ((y2_f32 - f_posY_mm) * (y2_f32 - f_posY_mm));
+
+                    xB1_f32 = headLen_f32 + (cntrKnfeLen_f32 * cosf(b1_rad_f32));
+                    xB2_f32 = headLen_f32 + (cntrKnfeLen_f32 * cosf(b2_rad_f32));
+
+                    b1IsRight_u8 = (xB1_f32 >= (f_posX_mm - rightEps_mm_f32)) ? 1u : 0u;
+                    b2IsRight_u8 = (xB2_f32 >= (f_posX_mm - rightEps_mm_f32)) ? 1u : 0u;
+
+                    if((b1IsRight_u8 == 1u)
+                    && (b2IsRight_u8 == 0u))
+                    {
+                        selectBranch2_u8 = 0u;
+                    }
+                    else if((b1IsRight_u8 == 0u)
+                    && (b2IsRight_u8 == 1u))
+                    {
+                        selectBranch2_u8 = 1u;
+                    }
+                    else if(b2_rad_f32 < b1_rad_f32)
+                    {
+                        selectBranch2_u8 = 1u;
+                    }
+                    else if(b1_rad_f32 < b2_rad_f32)
+                    {
+                        selectBranch2_u8 = 0u;
+                    }
+                    else if(err2_f32 < err1_f32)
+                    {
+                        selectBranch2_u8 = 1u;
+                    }
+
+                    if(selectBranch2_u8 == 1u)
+                    {
+                        b1_rad_f32 = b2_rad_f32;
+                        c1_rad_f32 = c2_rad_f32;
+                    }
+                }
+
+                /* wrap [-pi, pi] en milli-radian */
+                {
+                    t_float32 b_mrad_f32 = b1_rad_f32 * 1000.0f;
+                    t_float32 c_mrad_f32 = c1_rad_f32 * 1000.0f;
+
+                    while(b_mrad_f32 > CST_PI_MRAD)  { b_mrad_f32 -= CST_2PI_MRAD; }
+                    while(b_mrad_f32 < -CST_PI_MRAD) { b_mrad_f32 += CST_2PI_MRAD; }
+
+                    while(c_mrad_f32 > CST_PI_MRAD)  { c_mrad_f32 -= CST_2PI_MRAD; }
+                    while(c_mrad_f32 < -CST_PI_MRAD) { c_mrad_f32 += CST_2PI_MRAD; }
+
+                    *f_alphaB_pmrad = b_mrad_f32;
+                    *f_alphaC_pmrad = c_mrad_f32;
+                }
             }
         }
 
-        Ret_e = RC_OK;
     }
 
     return Ret_e;
@@ -2015,12 +2408,12 @@ static t_eReturnCode s_HC_ComputePulseFromAngle(t_float32 f_alphaB_mrad,
             //---- 2- get pulse per radian parameter ----//
             //---- parameter give the pulse for 2PI radian ----//
             *f_pulseKnf_pf32 = (
-                  f_alphaB_mrad 
+                  f_alphaC_mrad 
                 * (t_float32)prmPulsePerRadKnf_u.prmVal_u16
                 / CST_2PI_MRAD
             );
             *f_pulseCntrKnf_pf32 = (
-                f_alphaC_mrad
+                f_alphaB_mrad
                 * (t_float32)prmPulsePerRadCntrKnf_u.prmVal_u16
                 / CST_2PI_MRAD
             );
@@ -2058,9 +2451,9 @@ static t_eReturnCode s_HC_ComputeAnglefromPulse( t_sint32 f_pulseKnf_s32,
         && (prmPulsePerRadKnf_u.prmVal_u16 > (t_uint16)0)
         && (prmPulsePerRadCntrKnf_u.prmVal_u16 > (t_uint16)0))
         {
-            *f_alphaB_pmrad = ((t_float32)f_pulseKnf_s32 * CST_2PI_MRAD)
+            *f_alphaB_pmrad = ((t_float32)f_pulseCntrKnf_s32 * CST_2PI_MRAD)
                             / (t_float32)prmPulsePerRadKnf_u.prmVal_u16;
-            *f_alphaC_pmrad = ((t_float32)f_pulseCntrKnf_s32 * CST_2PI_MRAD)
+            *f_alphaC_pmrad = ((t_float32)f_pulseKnf_s32 * CST_2PI_MRAD)
                             / (t_float32)prmPulsePerRadCntrKnf_u.prmVal_u16;
         }
         else if(Ret_e == RC_OK)
@@ -2100,8 +2493,8 @@ static t_eReturnCode s_HC_CheckPositionValidity(t_sHC_CarthPos f_carthPos_s)
     if(Ret_e == RC_OK)
     {
         //---- comparing mm & mm ----//
-        if((f_carthPos_s.x_mm > (t_float32)prmPosXMax_u.prmVal_u16)
-        || (f_carthPos_s.x_mm < (t_float32)prmPosXMin_u.prmVal_u16))
+        if((f_carthPos_s.x_mm > (t_float32)prmPosXMax_u.prmVal_s16)
+        || (f_carthPos_s.x_mm < (t_float32)prmPosXMin_u.prmVal_s16))
         {
             Ret_e = RC_ERROR_LIMIT_REACHED;
             ASSERT((t_uint16)f_carthPos_s.x_mm);
@@ -2110,8 +2503,8 @@ static t_eReturnCode s_HC_CheckPositionValidity(t_sHC_CarthPos f_carthPos_s)
                                     (t_uint16)f_carthPos_s.x_mm,
                                     (t_uint16)0);
         }
-        else if((f_carthPos_s.y_mm > (t_float32)prmPosYMax_u.prmVal_u16)
-        ||      (f_carthPos_s.y_mm < (t_float32)prmPosYMin_u.prmVal_u16))
+        else if((f_carthPos_s.y_mm > (t_float32)prmPosYMax_u.prmVal_s16)
+        ||      (f_carthPos_s.y_mm < (t_float32)prmPosYMin_u.prmVal_s16))
         {
             Ret_e = RC_ERROR_LIMIT_REACHED;
             ASSERT((t_uint16)f_carthPos_s.y_mm);
@@ -2123,6 +2516,69 @@ static t_eReturnCode s_HC_CheckPositionValidity(t_sHC_CarthPos f_carthPos_s)
         else 
         {
             Ret_e = RC_OK;
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_HC_CheckAngleAssociationValidity
+ *********************************/
+static t_eReturnCode s_HC_CheckAngleAssociationValidity(t_float32 f_alphaB_mrad,
+                                                        t_float32 f_alphaC_mrad)
+{
+    t_eReturnCode Ret_e;
+    t_float32 posX_mm_f32 = 0.0F;
+    t_float32 posY_mm_f32 = 0.0F;
+
+    t_uAPPSPM_PrmValType prmLenghtHeadMm_u;
+    t_uAPPSPM_PrmValType prmLenghtKnifeMm_u;
+    t_uAPPSPM_PrmValType prmLenghtCntrKnifeMm_u;
+
+    t_float32 relX_mm_f32;
+    t_float32 relY_mm_f32;
+    t_float32 distAC_mm_f32;
+    t_float32 minReach_mm_f32;
+    t_float32 maxReach_mm_f32;
+    const t_float32 distTol_mm_f32 = 0.5F;
+
+    Ret_e = s_HC_ComputeCarthesianFromAngle(f_alphaB_mrad,
+                                            f_alphaC_mrad,
+                                            &posX_mm_f32,
+                                            &posY_mm_f32);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_LEN_FROM_REFA_TO_REFB, &prmLenghtHeadMm_u);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_LEN_HEAD_KNIFE, &prmLenghtKnifeMm_u);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSPM_GetParam(APPSPM_PRM_HC_LEN_HEAD_CNTR_KNIFE, &prmLenghtCntrKnifeMm_u);
+    }
+    if(Ret_e == RC_OK)
+    {
+        relX_mm_f32 = posX_mm_f32 - (t_float32)prmLenghtHeadMm_u.prmVal_u16;
+        relY_mm_f32 = posY_mm_f32;
+        distAC_mm_f32 = sqrtf((relX_mm_f32 * relX_mm_f32) + (relY_mm_f32 * relY_mm_f32));
+        minReach_mm_f32 = fabsf((t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16
+                                - (t_float32)prmLenghtKnifeMm_u.prmVal_u16);
+        maxReach_mm_f32 = (t_float32)prmLenghtCntrKnifeMm_u.prmVal_u16
+                        + (t_float32)prmLenghtKnifeMm_u.prmVal_u16;
+
+        if((distAC_mm_f32 < (minReach_mm_f32 - distTol_mm_f32))
+        || (distAC_mm_f32 > (maxReach_mm_f32 + distTol_mm_f32))
+        || (posY_mm_f32 > (t_float32)(0.0F + distTol_mm_f32)))
+        {
+            Ret_e = RC_ERROR_LIMIT_REACHED;
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_LIMIT_ERROR,
+                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                    (t_uint16)f_alphaB_mrad,
+                                    (t_uint16)f_alphaC_mrad);
+            ASSERT((t_uint16)Ret_e);
         }
     }
 

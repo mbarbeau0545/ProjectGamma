@@ -76,9 +76,9 @@ t_eReturnCode LIBQUEUE_Create(t_sLIBQUEUE_QueueCore *f_Queue_ps, t_sLIBQUEUE_Que
         return RC_ERROR_PTR_NULL;
     }
     f_Queue_ps->QueueCfg_s = f_QueueCfg_s;
-    f_Queue_ps->head_u8 = 0u;
-    f_Queue_ps->tail_u8 = 0u;
-    f_Queue_ps->actualSize_u8 = 0u;
+    f_Queue_ps->head_u16 = 0u;
+    f_Queue_ps->tail_u16 = 0u;
+    f_Queue_ps->actualSize_u16 = 0u;
     return RC_OK;
 }
 

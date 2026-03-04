@@ -436,8 +436,8 @@ t_eReturnCode GANTRY_Init(void)
     for(idxAxe_e = GTRY_PHYS_AXE_HEAD ; (idxAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK) ; idxAxe_e++)
     {
         CmdIterFifoCfg_s.bufferHead_pv = &g_BufferCmdMtrIter_as[idxAxe_e];
-        CmdIterFifoCfg_s.bufferSize_u8 = GTRY_CMD_ITER_BUFFER_LEN;
-        CmdIterFifoCfg_s.elementSize_u8 = sizeof(t_sGTRY_MtrCmdIterPayload);
+        CmdIterFifoCfg_s.actualSize_u16 = GTRY_CMD_ITER_BUFFER_LEN;
+        CmdIterFifoCfg_s.elementSize_u16 = sizeof(t_sGTRY_MtrCmdIterPayload);
         CmdIterFifoCfg_s.enableOverwrite_b = FALSE;
         Ret_e = LIBQUEUE_Create(&g_QueueCmdIterMngmt_as[idxAxe_e], CmdIterFifoCfg_s);
 
@@ -468,8 +468,8 @@ t_eReturnCode GANTRY_Init(void)
     if(Ret_e == RC_OK)
     {
         CmdPosFifoCfg_s.bufferHead_pv = &g_BufferCmdPosRcv_af32[0];
-        CmdPosFifoCfg_s.bufferSize_u8 = GTRY_CMD_POS_RCV_BUFFER_LEN;
-        CmdPosFifoCfg_s.elementSize_u8 = GTRTY_SIZEOF_ELEM_POSCMD_QUEUE;
+        CmdPosFifoCfg_s.actualSize_u16 = GTRY_CMD_POS_RCV_BUFFER_LEN;
+        CmdPosFifoCfg_s.elementSize_u16 = GTRTY_SIZEOF_ELEM_POSCMD_QUEUE;
         CmdPosFifoCfg_s.enableOverwrite_b = FALSE;
         Ret_e = LIBQUEUE_Create(&g_QueueCmdPosRcvMngmt_s, CmdPosFifoCfg_s);
     }

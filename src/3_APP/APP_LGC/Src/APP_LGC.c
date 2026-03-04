@@ -657,7 +657,7 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
     {
         if((f_nbSignal_u8 != (t_uint8)4)
         || (f_signal_ae[0] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_ITEM)
-        || (f_signal_ae[1] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_REPORT_STATUS)
+        || (f_signal_ae[1] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_RPRT_STS)
         || (f_signal_ae[2] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_1)
         || (f_signal_ae[3] != APPSIG_SIGNAL_SDM_DIAG_ECU_SAFETY_DEBUG_INFO_2))
         {

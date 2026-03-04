@@ -252,9 +252,9 @@ t_eReturnCode LIBQUEUE_Create(t_sLIBQUEUE_QueueCore *f_Queue_ps, t_sLIBQUEUE_Que
     }
 
     f_Queue_ps->QueueCfg_s = f_QueueCfg_s;
-    f_Queue_ps->head_u8 = 0u;
-    f_Queue_ps->tail_u8 = 0u;
-    f_Queue_ps->actualSize_u8 = 0u;
+    f_Queue_ps->head_u16 = 0u;
+    f_Queue_ps->tail_u16 = 0u;
+    f_Queue_ps->actualSize_u16 = 0u;
     return RC_OK;
 }
 
@@ -267,21 +267,21 @@ t_eReturnCode LIBQUEUE_WriteElement(t_sLIBQUEUE_QueueCore *f_Queue_ps, const voi
     {
         return RC_ERROR_PTR_NULL;
     }
-    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u8)
+    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u16)
     {
         return RC_ERROR_PARAM_INVALID;
     }
-    if(f_Queue_ps->actualSize_u8 >= f_Queue_ps->QueueCfg_s.bufferSize_u8)
+    if(f_Queue_ps->actualSize_u16 >= f_Queue_ps->QueueCfg_s.actualSize_u16)
     {
         return RC_WARNING_LIMIT_REACHED;
     }
 
     base_pu8 = (t_uint8 *)f_Queue_ps->QueueCfg_s.bufferHead_pv;
-    writeIdx_u8 = f_Queue_ps->tail_u8;
-    (void)memcpy(&base_pu8[(t_uint16)writeIdx_u8 * f_Queue_ps->QueueCfg_s.elementSize_u8], f_element_pv, f_size_u16);
+    writeIdx_u8 = f_Queue_ps->tail_u16;
+    (void)memcpy(&base_pu8[(t_uint16)writeIdx_u8 * f_Queue_ps->QueueCfg_s.elementSize_u16], f_element_pv, f_size_u16);
 
-    f_Queue_ps->tail_u8 = (t_uint8)((f_Queue_ps->tail_u8 + 1u) % f_Queue_ps->QueueCfg_s.bufferSize_u8);
-    f_Queue_ps->actualSize_u8++;
+    f_Queue_ps->tail_u16 = (t_uint8)((f_Queue_ps->tail_u16 + 1u) % f_Queue_ps->QueueCfg_s.actualSize_u16);
+    f_Queue_ps->actualSize_u16++;
     return RC_OK;
 }
 
@@ -293,18 +293,18 @@ t_eReturnCode LIBQUEUE_PopElement(t_sLIBQUEUE_QueueCore *f_Queue_ps, void * f_el
     {
         return RC_ERROR_PTR_NULL;
     }
-    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u8)
+    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u16)
     {
         return RC_ERROR_PARAM_INVALID;
     }
-    if(f_Queue_ps->actualSize_u8 == 0u)
+    if(f_Queue_ps->actualSize_u16 == 0u)
     {
         return RC_WARNING_NO_OPERATION;
     }
 
     base_pu8 = (t_uint8 *)f_Queue_ps->QueueCfg_s.bufferHead_pv;
     (void)memcpy(f_element_pv,
-                 &base_pu8[(t_uint16)f_Queue_ps->head_u8 * f_Queue_ps->QueueCfg_s.elementSize_u8],
+                 &base_pu8[(t_uint16)f_Queue_ps->head_u16 * f_Queue_ps->QueueCfg_s.elementSize_u16],
                  f_size_u16);
     return RC_OK;
 }
@@ -318,11 +318,11 @@ t_eReturnCode LIBQUEUE_ReadElement(t_sLIBQUEUE_QueueCore *f_Queue_ps, void * f_e
     {
         return RC_ERROR_PTR_NULL;
     }
-    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u8)
+    if(f_size_u16 != f_Queue_ps->QueueCfg_s.elementSize_u16)
     {
         return RC_ERROR_PARAM_INVALID;
     }
-    if(f_Queue_ps->actualSize_u8 == 0u)
+    if(f_Queue_ps->actualSize_u16 == 0u)
     {
         return RC_WARNING_NO_OPERATION;
     }
@@ -332,12 +332,12 @@ t_eReturnCode LIBQUEUE_ReadElement(t_sLIBQUEUE_QueueCore *f_Queue_ps, void * f_e
     {
         base_pu8 = (t_uint8 *)f_Queue_ps->QueueCfg_s.bufferHead_pv;
         (void)memcpy(f_element_pv,
-                    &base_pu8[(t_uint16)f_Queue_ps->head_u8 * f_Queue_ps->QueueCfg_s.elementSize_u8],
+                    &base_pu8[(t_uint16)f_Queue_ps->head_u16 * f_Queue_ps->QueueCfg_s.elementSize_u16],
                     f_size_u16);
     }
 
-    f_Queue_ps->head_u8 = (t_uint8)((f_Queue_ps->head_u8 + 1u) % f_Queue_ps->QueueCfg_s.bufferSize_u8);
-    f_Queue_ps->actualSize_u8--;
+    f_Queue_ps->head_u16 = (t_uint8)((f_Queue_ps->head_u16 + 1u) % f_Queue_ps->QueueCfg_s.actualSize_u16);
+    f_Queue_ps->actualSize_u16--;
     return Ret_e;
 }
 
@@ -345,9 +345,9 @@ void LIBQUEUE_ClearAll(t_sLIBQUEUE_QueueCore *f_Queue_ps)
 {
     if(f_Queue_ps != NULL)
     {
-        f_Queue_ps->head_u8 = 0u;
-        f_Queue_ps->tail_u8 = 0u;
-        f_Queue_ps->actualSize_u8 = 0u;
+        f_Queue_ps->head_u16 = 0u;
+        f_Queue_ps->tail_u16 = 0u;
+        f_Queue_ps->actualSize_u16 = 0u;
     }
 }
 
@@ -397,7 +397,7 @@ void test_msg_callback_position_valid_updates_queue_and_fields(void)
     s_push_pos_msg(120.0f, 20.0f, 17u, 1500u, 1400u);
 
     TEST_ASSERT_TRUE(g_FlagPosCmdPending_b == TRUE);
-    TEST_ASSERT_EQUAL_UINT8(1u, g_QueueCmdPosRcvMngmt_s.actualSize_u8);
+    TEST_ASSERT_EQUAL_UINT8(1u, g_QueueCmdPosRcvMngmt_s.actualSize_u16);
     TEST_ASSERT_EQUAL(RC_OK, LIBQUEUE_PopElement(&g_QueueCmdPosRcvMngmt_s, &elem_s, sizeof(elem_s)));
     TEST_ASSERT_FLOAT_WITHIN(0.01f, 120.0f, elem_s.carthPos_s.x_f32);
     TEST_ASSERT_FLOAT_WITHIN(0.01f, 20.0f, elem_s.carthPos_s.y_f32);
@@ -487,9 +487,9 @@ void test_position_three_commands_are_converted_to_iter_commands(void)
     TEST_ASSERT_EQUAL(RC_WARNING_NO_OPERATION, s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt());
     TEST_ASSERT_EQUAL_UINT32(3u, g_currCmdTimeStampID_u32);
     TEST_ASSERT_TRUE(g_FlagIterCmdReady_b == TRUE);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdPosRcvMngmt_s.actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(3u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(3u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u8);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdPosRcvMngmt_s.actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(3u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(3u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u16);
 }
 
 void test_statemachine_cfg_transitions_to_preops(void)
@@ -660,9 +660,9 @@ void test_rearm_total_resets_runtime_buffers_and_timestamp(void)
 
     TEST_ASSERT_EQUAL(RC_OK, s_HC_StateMachine());
     TEST_ASSERT_EQUAL(HC_FSM_PRD_TSK_CFG, g_Fsm_PrdcTskSts_e);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdPosRcvMngmt_s.actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u8);
-    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u8);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdPosRcvMngmt_s.actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE].actualSize_u16);
+    TEST_ASSERT_EQUAL_UINT8(0u, g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE].actualSize_u16);
     TEST_ASSERT_EQUAL_UINT32(0u, g_currCmdTimeStampID_u32);
     TEST_ASSERT_TRUE(g_FlagPosCmdPending_b == FALSE);
     TEST_ASSERT_TRUE(g_FlagIterCmdReady_b == FALSE);

@@ -412,7 +412,7 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     t_uint32 pulseTomake_au32[GTRY_PHYS_AXE_NB] = {0,0,0};
     t_sint32 pulseSigns_as32[GTRY_PHYS_AXE_NB] = {1,1,1};
     t_uint16 nbIterMax_u16 = 0;
-    t_uint8 QueueXLeft_u8, QueueYLeft_u8, QueueZLeft_u8;
+    t_uint16 QueueXLeft_u16, QueueYLeft_u16, QueueZLeft_u16;
 
     if((f_currPos_af32 == NULL) || 
        (f_targetPos_af32 == NULL) || (f_missPulses_af32 == NULL) || 
@@ -440,13 +440,13 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     nbIterMax_u16 = s_GTRY_SPEC_Algo_GetIndustrialIterCount(f_computeType_e, pulseTomake_au32);
 
     //---- 3- Check queues ----//
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_X], &QueueXLeft_u8);
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Y], &QueueYLeft_u8);
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Z], &QueueZLeft_u8);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_X], &QueueXLeft_u16);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Y], &QueueYLeft_u16);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Z], &QueueZLeft_u16);
 
-    if((QueueXLeft_u8 < nbIterMax_u16) 
-    || (QueueYLeft_u8 < nbIterMax_u16) 
-    || (QueueZLeft_u8 < nbIterMax_u16))
+    if((QueueXLeft_u16 < nbIterMax_u16) 
+    || (QueueYLeft_u16 < nbIterMax_u16) 
+    || (QueueZLeft_u16 < nbIterMax_u16))
     {
         return RC_WARNING_LIMIT_REACHED;
     }
