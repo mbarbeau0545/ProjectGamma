@@ -61,6 +61,78 @@
     } t_eAPPSYS_MachineList;
 
     /**
+    * @brief Enum Option list for  SYS_ROBOT_PROP_BACKWARD.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_UNUSED = 0,
+        APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_ENABLE,
+        APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_DISABLE,
+    
+        APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_NB,
+    } t_eAPPSYS_OptSysRobotPropBackward;
+
+    /**
+    * @brief Enum Option list for  SYS_ROBOT_PROP_FORWARD.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_UNUSED = 0,
+        APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_ENABLE,
+        APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_DISABLE,
+    
+        APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_NB,
+    } t_eAPPSYS_OptSysRobotPropForward;
+
+    /**
+    * @brief Enum Option list for  SYS_ROBOT_DIR_BACKWARD.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_UNUSED = 0,
+        APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_ENABLE,
+        APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_DISABLE,
+    
+        APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_NB,
+    } t_eAPPSYS_OptSysRobotDirBackward;
+
+    /**
+    * @brief Enum Option list for  SYS_ROBOT_DIR_FORWARD.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_UNUSED = 0,
+        APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_ENABLE,
+        APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_DISABLE,
+    
+        APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_NB,
+    } t_eAPPSYS_OptSysRobotDirForward;
+
+    /**
+    * @brief Enum Option list for  ACT_MTR_PROP_WHL_AR_R.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_UNUSED = 0,
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_STEEDYWIN,
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_APPSIG,
+    
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_NB,
+    } t_eAPPSYS_OptActMtrPropWhlArR;
+
+    /**
+    * @brief Enum Option list for  ACT_MTR_PROP_WHL_AR_L.
+    */
+    typedef enum
+    {
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_UNUSED = 0,
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_STEEDYWIN,
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_APPSIG,
+    
+        APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_NB,
+    } t_eAPPSYS_OptActMtrPropWhlArL;
+
+    /**
     * @brief Enum Option list for  ACT_MTR_HD_HOLD.
     */
     typedef enum
@@ -468,6 +540,12 @@
         APPSYS_OPT_ID_ACT_MTR_HD_KNF,
         APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF,
         APPSYS_OPT_ID_ACT_MTR_HD_HOLD,
+        APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_L,
+        APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_R,
+        APPSYS_OPT_ID_SYS_ROBOT_DIR_FORWARD,
+        APPSYS_OPT_ID_SYS_ROBOT_DIR_BACKWARD,
+        APPSYS_OPT_ID_SYS_ROBOT_PROP_FORWARD,
+        APPSYS_OPT_ID_SYS_ROBOT_PROP_BACKWARD,
     
         APPSYS_OPT_ID_NB,
     } t_eAPPSYS_SysOptionList;

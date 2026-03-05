@@ -650,11 +650,13 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
     {
         //---- calibration could not be done ----//
         feedbackSts_e = APPLGC_CALIB_FBSTS_MTR_DISABLE;
+        FMKSRL_LOG("[HC][CALIB] : Motor Disable, could not proceed calibration\r\n");
         Ret_e = RC_OK;
     }
     else if(g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_IDLE)
     {
         //---- nothing to do here ---//
+        FMKSRL_LOG("[HC][CALIB] : Application request IDLE state-> out of calibration\r\n");
         feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED;
         Ret_e = RC_OK; 
     }
@@ -667,6 +669,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
             {
                 case APPLGC_CALIB_REQSTS_IDLE:
                     //---- STOP pulse on going, clear queue ----//
+                    FMKSRL_LOG("[HC][CALIB] : Current State -> IDLE\r\n");
                     Ret_e = s_HC_AxeStop(HC_AXE_HD_KNFE, FALSE);
                     if(Ret_e == RC_OK)
                     {
@@ -702,6 +705,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                     //---- move ----//
                     if(g_calibCmdInfo_s.isNewCmdReceiv_b == TRUE)
                     {
+                        FMKSRL_LOG("[HC][CALIB] : Current State -> MOVE, New command receive\r\n");
                         pulsesCmd_s32 = s_HC_QuantizePulseCmd(g_calibCmdInfo_s.axeHead_e,
                                                               g_calibCmdInfo_s.pulses_f32);
                         Ret_e = s_HC_SetAxeSetPoint(g_calibCmdInfo_s.axeHead_e, 
@@ -739,11 +743,13 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                                                             c_HC_AppAxesCfg_as[g_calibCmdInfo_s.axeHead_e].caliValExpectedMrad_f32);
                         if(Ret_e == RC_OK)
                         {
+                            FMKSRL_LOG("[HC][CALIB] : Current State -> REG_VAL, Set calib successfully\r\n");
                             feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_SUCCEED;
                         }
                         else 
                         {
                             ASSERT((t_uint16)Ret_e);
+                            FMKSRL_LOG("[HC][CALIB] : Current State -> REG_VAL, Set calib failed, Retcode -> %d\r\n", (t_sint32)Ret_e);
                             feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED;
 
                         }
@@ -1487,6 +1493,13 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
                         //---- adapt current alpha_b & alpha_c pos 
                         currCmpte_alpha_b_f32 = alpha_b_mrad;
                         currCmpte_alpha_c_f32 = alpha_c_mrad;
+
+                        //---- Debug Log ----//
+                        FMKSRL_LOG( "[HC] : Set PosCmd, to reach alphB->%d, alphaC->%d, PulseKnf->%d, pulseCntrKnf->%d\r\n",
+                                    (t_sint32)currCmpte_alpha_b_f32,
+                                    (t_sint32)currCmpte_alpha_c_f32,
+                                    knfCmdIterPayload_s.pulses_s32,
+                                    cntrKnfCmdIterPayload_s.pulses_s32);
 
                         //---- update the current time stamps ----//
                         g_currCmdTimeStampID_u32 ++;
