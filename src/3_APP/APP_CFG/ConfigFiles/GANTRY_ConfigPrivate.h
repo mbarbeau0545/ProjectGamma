@@ -31,9 +31,9 @@
     #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
 
     ///@brief direction to go to the right spot for referencing 
-    #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)1)
-    #define GTRY_CALIB_DIR_AXE_Y                ((t_sint32)1)
-    #define GTRY_CALIB_DIR_AXE_Z                ((t_sint32)1)
+    #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)-1)
+    #define GTRY_CALIB_DIR_AXE_Y                ((t_sint32)-1)
+    #define GTRY_CALIB_DIR_AXE_Z                ((t_sint32)-1)
 
     ///@brief Number of iteration we can send 
     #define GTRY_MTR_MAX_SEND_ITER              ((t_uint8)15)
@@ -93,45 +93,22 @@
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
+        t_float32 calibExpectValue_f32;             //---- expected_value for calibration ----//
     } t_sGTRY_AxeAppCfg;
 
-    ///@brief Structure to gather user command from AppSig 
-    typedef struct 
-    {
-        t_float32 value_f32;
-        t_bool isRcv_b;
-        t_uint32 timeStamp_u32;
-    } t_sGTRY_cmdSigInfo;
     /* CAUTION : Automatic generated code section for Enum: Start */
 
     /* CAUTION : Automatic generated code section for Enum: End */
    
     //----------------------------- TYPES---------------------------//
-    /**
-     * @brief Function typedef to build command from cartesian pos, spheric pos etc 
-     * ----------------------------------------------------------------------------
-     * @param[in] f_value : value to compute
-     * ----------------------------------------------------------------------------
-     * @return @ref t_eReturnCode
-     */
-    typedef t_eReturnCode (*t_cbGTRY_BuildCmdFunc)(t_float32 f_value_af32[GTRY_CMD_SIG_NB], t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
-
-    /// @brief Sig Cmd Group to handle signal command
-    typedef struct
-    {
-        const t_eAPPSIG_Signal *signal_pe;    //---- pointor to a list of signals for the group -----//
-        t_uint8 nbsignals_u8;                   //---- Number of signal for the group -----//
-        t_uint32 timeoutMs_u32;                 //---- Time out to set a entire command -----//
-        t_cbGTRY_BuildCmdFunc buildFunc_pf;     //---- Function to build the cmd ----//
-    } t_sGTRY_SigGroupInfo;
-
     ///@brief get the algo paramter more easily
     typedef struct
     {
         t_eAPPSPM_ItemPrm chunkSize_e;                                 //---- chunk sizes per iteraitons ----//
         t_eAPPSPM_ItemPrm MinFreq_ae[GTRY_PHYS_AXE_NB];               //---- Minimum Frequency for Axes ----//
         t_eAPPSPM_ItemPrm MaxFreq_ae[GTRY_PHYS_AXE_NB];               //---- Maximum Frequency for Axes ----//
-        t_eAPPSPM_ItemPrm pulsePerMm_ae[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
+        t_eAPPSPM_ItemPrm pulsePerRound_ae[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
+        t_eAPPSPM_ItemPrm pinionDiamMm_ae[GTRY_PHYS_AXE_NB];            //---- Pulse per Millimeter for Axes ----//
         t_eAPPSPM_ItemPrm cptPrio_SafeHeight_ae[GTRY_PHYS_AXE_NB];    //---- Height to reach for the axe priority before others can move ----//
     } t_sGTRYSPEC_AlgoItemPrm;
     /* CAUTION : Automatic generated code section for Structure: Start */
@@ -153,7 +130,8 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_XL_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XL_POS,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XL,
+            .calibExpectValue_f32 = 0.0F
         },
         [GTRY_AXE_HANDLE_XR] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_XR_PLS,
@@ -161,7 +139,8 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_XR_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_X,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_XR_POS,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_XR,
+            .calibExpectValue_f32 = 0.0F
         },
         [GTRY_AXE_HANDLE_Y] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_Y_PLS,
@@ -169,7 +148,8 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_Y_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Y,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Y_POS,
-            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_Y,
+            .calibExpectValue_f32 = 0.0F
         },
         [GTRY_AXE_HANDLE_Z] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_Z_PLS,
@@ -177,6 +157,7 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_Z_TRG,
             .lgcSrvID_e = APPLGC_SRV_GTRY_Z,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_Z_POS,
+            .calibExpectValue_f32 = 0.0F
         }
     };
     /// @brief Varialbe to store item to reach for algo aprameter
@@ -184,51 +165,17 @@
         .chunkSize_e = APPSPM_PRM_GTRY_PULSE_ITER_MAX,
         .MinFreq_ae = {APPSPM_PRM_GTRY_X_SPD_MIN, APPSPM_PRM_GTRY_Y_SPD_MIN, APPSPM_PRM_GTRY_Z_SPD_MIN},
         .MaxFreq_ae = {APPSPM_PRM_GTRY_X_SPD_MAX, APPSPM_PRM_GTRY_Y_SPD_MAX, APPSPM_PRM_GTRY_Z_SPD_MAX},
-        .pulsePerMm_ae = {APPSPM_PRM_GTRY_AXE_X_PULSE_PER_MM, APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_MM, APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_MM},
+        .pulsePerRound_ae = {APPSPM_PRM_GTRY_AXE_X_PULSE_PER_ROUND, APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_ROUND, APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_ROUND},
+        .pinionDiamMm_ae = {APPSPM_PRM_GTRY_AXE_X_PINION_DIAM_MM, APPSPM_PRM_GTRY_AXE_Y_PINION_DIAM_MM, APPSPM_PRM_GTRY_AXE_Z_PINION_DIAM_MM},
         .cptPrio_SafeHeight_ae = {APPSPM_PRM_GTRY_AXE_X_SAFE_HEIGHT, APPSPM_PRM_GTRY_AXE_Y_SAFE_HEIGHT, APPSPM_PRM_GTRY_AXE_Z_SAFE_HEIGHT},
     };
-    ///@brief variable for signal group
-    static const t_eAPPSIG_Signal c_GTRY_cartesianSigs_ae[] = {
-        GTRY_CMD_SIG_POS_X,
-        GTRY_CMD_SIG_POS_Y,
-        GTRY_CMD_SIG_POS_Z,
-    };
-    static const t_eAPPSIG_Signal c_GTRY_SphericSigs_ae[] = {
-        GTRY_CMD_SIG_POS_RAYON,
-        GTRY_CMD_SIG_POS_THETHA,
-        GTRY_CMD_SIG_POS_PHI,
-    };
-    static const t_eAPPSIG_Signal c_GTRY_StepdirSigs_ae[] = {
-        GTRY_CMD_SIG_STEP_X,
-        GTRY_CMD_SIG_STEP_Y,
-        GTRY_CMD_SIG_STEP_Z,
-        GTRY_CMD_SIG_DIR_X,
-        GTRY_CMD_SIG_DIR_Y,
-        GTRY_CMD_SIG_DIR_Z,
-    };
 
-    ///@brief Information for Signals Groups 
-    const t_sGTRY_SigGroupInfo c_GTRY_SigGroupInfo_as[GTRY_CMD_TYPE_ID_NB] = {
-    //    signals from APPSIG        nbSignals    Timeout       function to build cmd
-        {c_GTRY_cartesianSigs_ae,       3,          100,        GANTRY_SPEC_BuildCartesianCmd},
-        {c_GTRY_SphericSigs_ae,         3,          100,        GANTRY_SPEC_BuildSphericCmd},
-        {c_GTRY_StepdirSigs_ae,         6,          100,        GANTRY_SPEC_BuildStepCmd},
-    };
-
-    ///@brief signal from APPSIG we want to reach
-    const t_eAPPSIG_Signal c_GTRY_AppSIgSignalsList_ae[GTRY_CMD_SIG_NB] = {
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X,// GTRY_CMD_SIG_POS_X
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Y,// GTRY_CMD_SIG_POS_Y
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_Z,// GTRY_CMD_SIG_POS_Z
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_RAYON,// GTRY_CMD_SIG_POS_RAYON
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_THETHA,// GTRY_CMD_SIG_POS_THETHA
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_PHI,// GTRY_CMD_SIG_POS_PHI
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X,// GTRY_CMD_SIG_STEP_X
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y,// GTRY_CMD_SIG_STEP_Y
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z,// GTRY_CMD_SIG_STEP_Z
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X,// GTRY_CMD_SIG_DIR_X
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y,// GTRY_CMD_SIG_DIR_Y
-        APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z,// GTRY_CMD_SIG_DIR_Z
+    const t_eAPPSIG_CanMsgList c_GTRY_SubMsgSig_ae[GTRY_CMD_MSGSIG_NB] = {
+        APPSIG_CAN_MSG_LGC_GTRY_CMD_POSITION_COORD,// GTRY_CMD_MSGSIG_POS_COORD
+        APPSIG_CAN_MSG_LGC_GTRY_CMD_POSITION_SPHERIC,// GTRY_CMD_MSGSIG_POS_SPHERIC
+        APPSIG_CAN_MSG_LGC_GTRY_CMD_STEPS,// GTRY_CMD_MSGSIG_POS_STEP
+        APPSIG_CAN_MSG_LGC_GTRY_CMD_CALIBRATION,// GTRY_CMD_MSGSIG_CALIB
+        APPSIG_CAN_MSG_LGC_REARMAMENT_CMD,// GTRY_CMD_MSGSIG_REARMAMENT
     };
     //********************************************************************************
     //                      Public functions - Prototyupes

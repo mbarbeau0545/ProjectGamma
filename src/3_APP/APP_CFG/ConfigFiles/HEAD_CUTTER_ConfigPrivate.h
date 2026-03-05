@@ -83,7 +83,7 @@
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
-        t_float32 caliValExpectedMrad_f32;          //---- calibration value expected ----//
+        t_float32 calibValExpected_f32;          //---- calibration value expected ----//
     } t_sHC_AxeAppCfg;
 
     ///@brief Structure to gather user command from AppSig 
@@ -125,7 +125,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_KNF_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_KNF,
-            .caliValExpectedMrad_f32 = 0.0F // Milliradian
+            .calibValExpected_f32 = 0.0F // radian
         },
         [HC_AXE_HD_CNTR_KNFE] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_CNTR_KNF_PLS,
@@ -134,7 +134,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF,
-            .caliValExpectedMrad_f32 = (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
+            .calibValExpected_f32 = (t_float32)(CST_PI_RAD / 2.0F) // radian
         },
         [HC_AXE_HD_HOLD_KNFE] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_HOLD_PLS,
@@ -143,7 +143,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_HOLD_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_HOLD,
-            .caliValExpectedMrad_f32 =  (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
+            .calibValExpected_f32 =  (t_float32)(CST_PI_RAD / 2.0F) // radian
         }
     };
 

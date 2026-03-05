@@ -108,6 +108,7 @@ typedef struct
 ///@brief calibration information
 typedef struct 
 {
+    t_eAPPSNS_SnsInterface snsItf_e;           //---- calibration sensor interface ongoing ----//
     t_eHC_AxeHandleList axeHead_e;              //---- calibration ongoing ----//
     t_float32 pulses_f32;                       //---- requested pulse for calibration ----//
     t_float32 speed_f32;                        //---- requested speed for calibration ----//
@@ -182,7 +183,10 @@ static t_sHC_CalibCmdInfo g_calibCmdInfo_s;
 static t_sHC_RearmInfo g_RearmInfo_s; 
 
 ///@brief current timestamp id apply 
-static t_uint32 g_currCmdTimeStampID_u32 = 0U; 
+static t_uint32 g_currCmdTimeStampID_u32 = 0U;
+
+///@brief wknow when first etry in safety 
+static t_bool g_flagFirstEntrySafety_b = FALSE;
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
 //********************************************************************************
@@ -427,6 +431,8 @@ static t_eReturnCode s_HC_GetQueuedTipAngles( t_float32 * f_alphaB_pmrad,
  * @return @ref integer pulses
  */  
 static t_sint32 s_HC_QuantizePulseCmd(t_eHC_AxeHandleList f_idxAxe_e, t_float32 f_pulseCmd_f32);
+static t_eReturnCode s_HC_GetAxeHandleFromSnsItf(t_eAPPSNS_SnsInterface f_snsItf_e,
+                                                t_eHC_AxeHandleList * f_pAxe_e);
 /**
  * @brief Merge or Write Iteration Pulse Command
  * @details  If the position are closed in mm or angle, in order to not have 
@@ -498,6 +504,7 @@ t_eReturnCode HEAD_CUTTER_Init(void)
     }
     if(Ret_e == RC_OK)
     {
+        g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
         g_calibCmdInfo_s.pulses_f32 = 0.0F;
         g_calibCmdInfo_s.speed_f32 = 0.0F;
         g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_NB;
@@ -587,7 +594,7 @@ static t_eReturnCode s_HC_StateMachine(void)
         break;
         case HC_FSM_PRD_TSK_OPS:
             Ret_e = s_HC_Fsm_PrdTsk_Operational();
-             if(Ret_e < RC_OK)
+            if(Ret_e < RC_OK)
             {
                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_SAFETY;
             }
@@ -596,7 +603,7 @@ static t_eReturnCode s_HC_StateMachine(void)
             Ret_e = s_HC_Fsm_PrdTsk_Calibration();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_OPS;
+                g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_PRE_OPS;
             }
             else if(Ret_e < RC_OK)
             {
@@ -605,11 +612,7 @@ static t_eReturnCode s_HC_StateMachine(void)
         break;
         case HC_FSM_PRD_TSK_SAFETY:
             Ret_e = s_HC_Fsm_PrdTsk_Safety();
-            if(Ret_e == RC_OK)
-            {
-                g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_CFG;
-            }
-            else if(Ret_e < RC_OK)
+            if(Ret_e < RC_OK)
             {
                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_ERROR;
             }
@@ -705,42 +708,58 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                     //---- move ----//
                     if(g_calibCmdInfo_s.isNewCmdReceiv_b == TRUE)
                     {
-                        FMKSRL_LOG("[HC][CALIB] : Current State -> MOVE, New command receive\r\n");
-                        pulsesCmd_s32 = s_HC_QuantizePulseCmd(g_calibCmdInfo_s.axeHead_e,
-                                                              g_calibCmdInfo_s.pulses_f32);
-                        Ret_e = s_HC_SetAxeSetPoint(g_calibCmdInfo_s.axeHead_e, 
-                                                    pulsesCmd_s32,
-                                                    g_calibCmdInfo_s.speed_f32,
-                                                    0.0F);
-                        if(Ret_e == RC_OK)
+                        if(g_calibCmdInfo_s.reqSts_e != g_calibCmdInfo_s.currSts_e)
                         {
+                            g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                             feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
-                            g_calibCmdInfo_s.pulses_f32 = 0.0F;
-                            g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                             Ret_e = RC_WARNING_PENDING;
                         }
                         else 
                         {
-                            feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
+                            FMKSRL_LOG("[HC][CALIB] : Current State -> MOVE, New command receive\r\n");
+                            pulsesCmd_s32 = s_HC_QuantizePulseCmd(g_calibCmdInfo_s.axeHead_e,
+                                                                g_calibCmdInfo_s.pulses_f32);
+                            Ret_e = s_HC_SetAxeSetPoint(g_calibCmdInfo_s.axeHead_e, 
+                                                        pulsesCmd_s32,
+                                                        g_calibCmdInfo_s.speed_f32,
+                                                        0.0F);
+                            if(Ret_e == RC_OK)
+                            {
+                                feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
+                                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                                Ret_e = RC_WARNING_PENDING;
+                            }
+                            else 
+                            {
+                                feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
+                            }
                         }
                     }
-                    if(g_calibCmdInfo_s.reqSts_e != g_calibCmdInfo_s.currSts_e)
+                    else 
                     {
-                        g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
+                        feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
+                        Ret_e = RC_WARNING_PENDING;
                     }
                 }
                 break;
                 case APPLGC_CALIB_REQSTS_REGISTER_VALUE:
                 {
                     t_eAPPSNS_SnsInterface snsItfID_e = c_HC_AppAxesCfg_as[g_calibCmdInfo_s.axeHead_e].snsIfEcdrPos_e;
-                    t_float32 snsVal_f32;
+                    t_sAPPSNS_SnsValueInfo snsValInfo_s = {
+                        .isValueOK_b = FALSE,
+                        .rqstedUnity_u8 = APPSNS_MEASTYPE_RAW,
+                        .rawValue_f32 = 0.0F,
+                        .SnsValue_f32 = 0.0F
+                    };
                     //---- get sns id value ----//
-                    Ret_e = APPLGC_GetSnsValue(snsItfID_e, &snsVal_f32);
-                    if(Ret_e == RC_OK)
+                    Ret_e = APPSNS_Get_SnsValue(snsItfID_e, &snsValInfo_s);
+                    if((Ret_e == RC_OK)
+                    && (snsValInfo_s.isValueOK_b))
                     {
                         Ret_e = APPSNSCAL_RegisterReference(snsItfID_e,
-                                                            snsVal_f32,
-                                                            c_HC_AppAxesCfg_as[g_calibCmdInfo_s.axeHead_e].caliValExpectedMrad_f32);
+                                                            snsValInfo_s.rawValue_f32,
+                                                            c_HC_AppAxesCfg_as[g_calibCmdInfo_s.axeHead_e].calibValExpected_f32);
                         if(Ret_e == RC_OK)
                         {
                             FMKSRL_LOG("[HC][CALIB] : Current State -> REG_VAL, Set calib successfully\r\n");
@@ -754,9 +773,20 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
 
                         }
                     }
+                    else 
+                    {
+                        ASSERT((t_uint16)Ret_e);
+                        FMKSRL_LOG("[HC][CALIB] : Current State -> REG_VAL, cannot access sns value, Retcode -> %d\r\n", (t_sint32)Ret_e);
+                        feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED;
+                    }
                     //---- register value ----//
+                    g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
+                    g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_NB;
                     g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
                     g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                    g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                    g_calibCmdInfo_s.speed_f32 = 0.0F;
+                    g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                 }
                 break;
                 case APPLGC_CALIB_STS_NB:
@@ -822,6 +852,9 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_PreOperational(void)
         if(Ret_e == RC_OK)
         {
             g_FlagMotorEnable_b = TRUE;
+            //---- set cmpte value to sns value ----//
+            g_KnifeTipCmpte_s = g_KnifeTipCurr_s;
+            g_KnifeHoldCmpte_s = g_KnifeHoldCurr_s;
         }
     }
 
@@ -927,6 +960,12 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Safety(void)
     t_uint8 sysOptKnv_u8 = 0;
     t_uint8 sysOptHoldKnv_u8 = 0;
 
+    if(g_flagFirstEntrySafety_b == FALSE)
+    {
+        g_flagFirstEntrySafety_b = TRUE;
+        FMKSRL_LOG("[HC] : Agent enter in safety state\r\n");
+    }
+    //---- get sys option ----//
     Ret_e = APPSYS_GetSysOption(APPSYS_OPT_ID_ACT_MTR_HD_KNF, &sysOptKnv_u8);
     if(Ret_e == RC_OK)
     {
@@ -961,7 +1000,8 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Safety(void)
             }
         }
 
-        if(Ret_e == RC_OK)
+        if((Ret_e == RC_OK)
+        && (g_FlagMotorEnable_b == TRUE))
         {
             g_FlagMotorEnable_b = FALSE;
         }
@@ -978,7 +1018,47 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Safety(void)
  *********************************/
 static t_eReturnCode s_HC_Fsm_PrdTsk_Error(void)
 {
-    return RC_OK;
+    t_eReturnCode Ret_e;
+    t_uint8 sysOptCntrKnv_u8 = 0;
+    t_uint8 sysOptKnv_u8 = 0;
+    t_uint8 sysOptHoldKnv_u8 = 0;
+
+    Ret_e = APPSYS_GetSysOption(APPSYS_OPT_ID_ACT_MTR_HD_KNF, &sysOptKnv_u8);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSYS_GetSysOption(APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF, &sysOptCntrKnv_u8);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSYS_GetSysOption(APPSYS_OPT_ID_ACT_MTR_HD_HOLD, &sysOptHoldKnv_u8);
+    }
+
+    //---- Disable axe KNIFE ----//
+    if(Ret_e == RC_OK)
+    {
+        if(sysOptKnv_u8 == APPSYS_OPT_ACT_MTR_HD_KNF_CL42T)
+        {
+            Ret_e = s_HC_AxeStop(HC_AXE_HD_KNFE, TRUE);
+        }
+
+        if(Ret_e == RC_OK)
+        {
+            if(sysOptCntrKnv_u8 == APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_CL42T)
+            {
+                Ret_e = s_HC_AxeStop(HC_AXE_HD_CNTR_KNFE, TRUE);
+            }
+        }
+
+        if(Ret_e == RC_OK)
+        {
+            if(sysOptHoldKnv_u8 == APPSYS_OPT_ACT_MTR_HD_HOLD_CL42T)
+            {
+                Ret_e = s_HC_AxeStop(HC_AXE_HD_HOLD_KNFE, TRUE);
+            }
+        }
+    }
+
+    return Ret_e;
 }
 
 /*********************************
@@ -988,26 +1068,50 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
 {
     t_eReturnCode Ret_e = RC_OK;
     t_eHC_AxeHandleList idxAxe_e;
+    t_eAPPLGC_RearmFeedbackSts rearmSts_e = APP_LGC_REARM_FBSTATUS_FAILED;
 
     if(g_RearmInfo_s.reqRearm_b == FALSE)
     {
-        Ret_e = RC_OK;
+        Ret_e = RC_WARNING_PENDING;
     }
     else
     {
         switch(g_RearmInfo_s.rearmType_e)
         {
-            case APP_LGC_REARM_TYPE_FSM_PRE_OPE:
+            case APPLGC_REARM_TYPE_SAFETY:
+                //---- stay here ----//
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SAFETY;
+                Ret_e = RC_WARNING_PENDING;
+            break;
+            case APPLGC_REARM_TYPE_FSM_PRE_OPE:
+                (void)LIBQUEUE_ClearAll(&g_QueueCmdPosRcvMngmt_s);
+                for(idxAxe_e = HC_AXE_HEAD ; idxAxe_e < HC_AXE_HD_NB ; idxAxe_e++)
+                {
+                    (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[idxAxe_e]);
+                    g_axeMissPulses_af32[idxAxe_e] = 0.0F;
+                }
+                g_currCmdTimeStampID_u32 = (t_uint32)0;
+                g_FlagRcvPosCmd_b = FALSE;
                 g_FlagPosCmdPending_b = FALSE;
                 g_FlagIterCmdReady_b = FALSE;
+                g_flagFirstEntrySafety_b = FALSE;
+                g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
+                g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_NB;
+                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                g_calibCmdInfo_s.speed_f32 = 0.0F;
                 g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
-                g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
+                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                 //---- reset to preope ----//
                 g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_PRE_OPS;
+
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SUCCESS;
+                g_RearmInfo_s.reqRearm_b = FALSE;
+                g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
             break;
 
-            case APP_LGC_REARM_TYPE_TOTAL:
+            case APPLGC_REARM_TYPE_TOTAL:
                 // Full functional reset of command/calibration runtime.
                 (void)LIBQUEUE_ClearAll(&g_QueueCmdPosRcvMngmt_s);
                 for(idxAxe_e = HC_AXE_HEAD ; idxAxe_e < HC_AXE_HD_NB ; idxAxe_e++)
@@ -1015,25 +1119,24 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
                     (void)LIBQUEUE_ClearAll(&g_QueueCmdIterRcvMngmt_as[idxAxe_e]);
                     g_axeMissPulses_af32[idxAxe_e] = 0.0F;
                 }
-
-                g_KnifeTipCmpte_s.carthPos_s.x_mm = 0.0F;
-                g_KnifeTipCmpte_s.carthPos_s.y_mm = 0.0F;
-                g_KnifeTipCmpte_s.jointAng_s.alpha_b_mrad = 0.0F;
-                g_KnifeTipCmpte_s.jointAng_s.alpha_c_mrad = 0.0F;
-                g_KnifeHoldCmpte_s.carthPos_s.x_mm = 0.0F;
-                g_KnifeHoldCmpte_s.carthPos_s.y_mm = 0.0F;
-                g_KnifeHoldCmpte_s.jointAng_s.alpha_b_mrad = 0.0F;
-                g_KnifeHoldCmpte_s.jointAng_s.alpha_c_mrad = 0.0F;
                 g_currCmdTimeStampID_u32 = (t_uint32)0;
+                g_flagFirstEntrySafety_b = FALSE;
                 g_FlagPosCmdPending_b = FALSE;
                 g_FlagIterCmdReady_b = FALSE;
                 g_FlagRcvPosCmd_b = FALSE;
                 g_calibCmdInfo_s.pulses_f32 = 0.0F;
                 g_calibCmdInfo_s.speed_f32 = 0.0F;
+                g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
+                g_calibCmdInfo_s.axeHead_e = HC_AXE_HD_NB;
                 g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_PRE_OPS;
                 g_Fsm_PrdTsk_OpeSts_e = HC_FSM_PRDTSK_OPE_SERVO;
+
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SUCCESS;
+                g_RearmInfo_s.reqRearm_b = FALSE;
+                g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
             break;
 
             default:
@@ -1042,11 +1145,20 @@ static t_eReturnCode s_HC_ApplyRearmRequest(void)
             break;
         }
 
-        if(Ret_e == RC_OK)
+        if((Ret_e == RC_OK)
+        || (Ret_e == RC_WARNING_PENDING))
         {
-            g_RearmInfo_s.reqRearm_b = FALSE;
-            g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
+            (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE, (t_float32)rearmSts_e);
         }
+        else 
+        {
+            (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE, (t_float32)APP_LGC_REARM_FBSTATUS_FAILED);
+        }
+        (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID, (t_float32)APPLGC_AGENT_HEAD_CUTTER);
+        (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE, (t_float32)g_RearmInfo_s.rearmType_e);
+        (void)APPSIG_ForceMsgSend(APPSIG_MSG_ORIGIN_CAN, APPSIG_CAN_MSG_LGC_REARMAMENT_CMD);
+        FMKSRL_LOG("[HC] : Rearm applied status -> %d\r\n", rearmSts_e);
+        
     }
 
     return Ret_e;
@@ -1487,7 +1599,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
                     if(Ret_e == RC_OK) 
                     {
                         //---- clear element from pos queue ----//
-                        Ret_e = LIBQUEUE_ReadElement(    &g_QueueCmdPosRcvMngmt_s,
+                        Ret_e = LIBQUEUE_ReadElement(   &g_QueueCmdPosRcvMngmt_s,
                                                         NULL,
                                                         sizeof(t_sHC_PosCmdQueueElem));
                         //---- adapt current alpha_b & alpha_c pos 
@@ -1879,6 +1991,37 @@ static t_eReturnCode s_HC_AxeStop(t_eHC_AxeHandleList f_idxAxe_e, t_bool f_isHar
     return Ret_e;
 }
 
+static t_eReturnCode s_HC_GetAxeHandleFromSnsItf(t_eAPPSNS_SnsInterface f_snsItf_e,
+                                                t_eHC_AxeHandleList * f_pAxe_e)
+{
+    t_eReturnCode Ret_e = RC_OK;
+
+    if(f_pAxe_e == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+    }
+    else
+    {
+        switch(f_snsItf_e)
+        {
+            case APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS:
+                *f_pAxe_e = HC_AXE_HD_CNTR_KNFE;
+            break;
+            case APPSNS_SNSITF_ECDR_HD_KNF_POS:
+                *f_pAxe_e = HC_AXE_HD_KNFE;
+            break;
+            case APPSNS_SNSITF_ECDR_HD_HOLD_POS:
+                *f_pAxe_e = HC_AXE_HD_HOLD_KNFE;
+            break;
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+            break;
+        }
+    }
+
+    return Ret_e;
+}
+
 /*********************************
  * s_HC_SigReceptionCallback
  *********************************/
@@ -1961,11 +2104,12 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 t_float32 cmdPulses_f32;
                 t_float32 cmdSpeed_f32;
 
-                if((f_nbSignal_u8 != (t_uint8)4)
+                if((f_nbSignal_u8 != (t_uint8)5) // + FEEDBACK not used here
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_CMD_CALIB_ID)
                 || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_CALIB_REQ_STATE)
                 || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_CMD_CALIB_PLS)
-                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_CMD_CALIB_SPD))
+                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_CMD_CALIB_SPD)
+                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_CMD_CALIB_CURR_FEEDBACK))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
@@ -1975,60 +2119,53 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                     reqSts_e = (t_eAPPLGC_CalibStatus)(f_sigValue_af32[1]);
                     cmdPulses_f32 = (f_sigValue_af32[2]);
                     cmdSpeed_f32 = (f_sigValue_af32[3]);
-                    
-                    if(sigSnsID_e == APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS)
+                    Ret_e = s_HC_GetAxeHandleFromSnsItf(sigSnsID_e, &axeHdleHead_e);
+                    if(Ret_e != RC_OK)
                     {
-                        axeHdleHead_e = HC_AXE_HD_CNTR_KNFE;
-                    }
-                    else if(sigSnsID_e == APPSNS_SNSITF_ECDR_HD_KNF_POS)
-                    {
-                        axeHdleHead_e = HC_AXE_HD_KNFE;
-                    }
-                    else if(sigSnsID_e == APPSNS_SNSITF_ECDR_HD_HOLD_POS)
-                    {
-                        axeHdleHead_e = HC_AXE_HD_HOLD_KNFE;
-                    }
-                    else 
-                    {
-                        Ret_e = RC_ERROR_PARAM_INVALID;
                         ASSERT((t_uint16)sigSnsID_e);
                     }
                     if(Ret_e == RC_OK)
-                    {                        
-                        //---- pulses are add if in the same sense 
-                        //      pulses are reset to 0 is sens != from previous ----//
-                        if(g_calibCmdInfo_s.pulses_f32 == (t_sint32)0)
-                        {
-                            g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
-                        }
-                        else if(((g_calibCmdInfo_s.pulses_f32 > (t_sint32)0)
-                            &&  (cmdPulses_f32 < (t_sint32)0))
-                        ||       ((g_calibCmdInfo_s.pulses_f32 < (t_sint32)0)
-                            &&  (cmdPulses_f32 > (t_sint32)0)))
-                        {
-                            g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
-                        }
-                        else 
-                        {
-                            g_calibCmdInfo_s.pulses_f32 += cmdPulses_f32;
-                        }
-
+                    {
                         if(reqSts_e >= APPLGC_CALIB_STS_NB)
                         {
+                            Ret_e = RC_ERROR_PARAM_INVALID;
                             ASSERT((t_uint16)reqSts_e);
                         }
                         else 
                         {
+                            if((reqSts_e != APPLGC_CALIB_REQSTS_MOVE)
+                            || (g_calibCmdInfo_s.snsItf_e != sigSnsID_e))
+                            {
+                                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                            }
+
+                            if(reqSts_e == APPLGC_CALIB_REQSTS_MOVE)
+                            {
+                                //---- pulses are added if in same direction.
+                                //---- pulses are reset when sign changes ----//
+                                if(g_calibCmdInfo_s.pulses_f32 == (t_float32)0.0F)
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
+                                }
+                                else if(((g_calibCmdInfo_s.pulses_f32 > (t_float32)0.0F)
+                                    &&  (cmdPulses_f32 < (t_float32)0.0F))
+                                ||       ((g_calibCmdInfo_s.pulses_f32 < (t_float32)0.0F)
+                                    &&  (cmdPulses_f32 > (t_float32)0.0F)))
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
+                                }
+                                else 
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 += cmdPulses_f32;
+                                }
+                            }
+
+                            g_calibCmdInfo_s.snsItf_e = sigSnsID_e;
                             g_calibCmdInfo_s.axeHead_e = axeHdleHead_e;
                             g_calibCmdInfo_s.reqSts_e = reqSts_e;
                             g_calibCmdInfo_s.speed_f32 = cmdSpeed_f32;
                             g_calibCmdInfo_s.isNewCmdReceiv_b = TRUE;
-                            
-                        }  
-                        if(Ret_e != RC_OK)
-                        {
-                            ASSERT((t_uint16)Ret_e);
-                        }
+                        } 
                     }
                     else 
                     {
@@ -2043,9 +2180,10 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 t_eAPPLGC_AgentList agent_e;
                 t_eAPPLGC_RearmType rearmType_e;
                 
-                if((f_nbSignal_u8 != (t_uint8)2)
+                if((f_nbSignal_u8 != (t_uint8)3)
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID)
-                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE))
+                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE)
+                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
@@ -2583,8 +2721,7 @@ static t_eReturnCode s_HC_CheckAngleAssociationValidity(t_float32 f_alphaB_mrad,
                         + (t_float32)prmLenghtKnifeMm_u.prmVal_u16;
 
         if((distAC_mm_f32 < (minReach_mm_f32 - distTol_mm_f32))
-        || (distAC_mm_f32 > (maxReach_mm_f32 + distTol_mm_f32))
-        || (posY_mm_f32 > (t_float32)(0.0F + distTol_mm_f32)))
+        || (distAC_mm_f32 > (maxReach_mm_f32 + distTol_mm_f32)))
         {
             Ret_e = RC_ERROR_LIMIT_REACHED;
             APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_HEAD_TIP_KNIVE_POS_LIMIT_ERROR,

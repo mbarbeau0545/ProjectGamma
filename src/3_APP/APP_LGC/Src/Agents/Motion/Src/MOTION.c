@@ -207,6 +207,7 @@ static t_eReturnCode s_MOT_PrdTsk_Ope_PropulsionMngmt(void);
  * @return ohters : @ref t_eReturnCode
  */
 static t_eReturnCode s_MOT_Fsm_PrdTsk_Safety(void);
+static t_eReturnCode s_MOT_ApplyRearmRequest(void);
 /**
  * @brief This function handle the Error state of State Machine
  * ----------------------------------------------------------------------------
@@ -239,6 +240,8 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_MOT_MtrDirStop(t_eMOT_ActDirectionList f_idxMtrDir_e, t_bool f_isHardStop_b);
+static t_eReturnCode s_MOT_GetDirActFromSnsItf(t_eAPPSNS_SnsInterface f_snsItf_e,
+                                               t_eMOT_ActDirectionList * f_pIdxActDir_e);
 /**
  * @brief Enable the motor axes
  * 
@@ -313,6 +316,7 @@ t_eReturnCode MOTION_Init(void)
         g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
         g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
         g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
+        g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
     }
     if(Ret_e == RC_OK)
     {
@@ -388,7 +392,7 @@ static t_eReturnCode s_MOT_StateMachine(void)
             Ret_e = s_MOT_Fsm_PrdTsk_Calibration();
             if(Ret_e == RC_OK)
             {
-                g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_OPS;
+                g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_PRE_OPS;
                 g_Fsm_PrdTsk_OpeSts_e = MOT_FSM_PRDTSK_OPE_SERVO;
             }
             else if(Ret_e < RC_OK)
@@ -405,11 +409,7 @@ static t_eReturnCode s_MOT_StateMachine(void)
         break;
         case MOT_FSM_PRD_TSK_SAFETY:
             Ret_e = s_MOT_Fsm_PrdTsk_Safety();
-            if(Ret_e == RC_OK)
-            {
-                g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_CFG;
-            }
-            else if(Ret_e < RC_OK)
+            if(Ret_e < RC_OK)
             {
                 g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_ERROR;
             }
@@ -482,32 +482,38 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Calibration(void)
             case APPLGC_CALIB_REQSTS_MOVE:
                 if(g_calibCmdInfo_s.isNewCmdReceiv_b == TRUE)
                 {
-                    idxActDir_e = 
-                    (g_calibCmdInfo_s.snsItf_e == APPSNS_SNSITF_ECDR_WHL_AV_L_POS) ? 
-                      MOT_ACTDIR_WHL_AV_L 
-                    : MOT_ACTDIR_WHL_AV_R;
-                    Ret_e = s_MOT_SetMtrDirSetPoint(idxActDir_e,
-                                                    g_calibCmdInfo_s.pulses_f32,
-                                                    g_calibCmdInfo_s.speed_f32,
-                                                    0.0F);
-                    if(Ret_e == RC_OK)
+                    if(g_calibCmdInfo_s.reqSts_e != g_calibCmdInfo_s.currSts_e)
                     {
+                        g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                         feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
-                        g_calibCmdInfo_s.pulses_f32 = 0.0F;
-                        g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                         Ret_e = RC_WARNING_PENDING;
                     }
                     else
                     {
-                        feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
-                    }
-                    if(g_calibCmdInfo_s.reqSts_e != g_calibCmdInfo_s.currSts_e)
-                    {
-                        g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
+                        idxActDir_e =
+                        (g_calibCmdInfo_s.snsItf_e == APPSNS_SNSITF_ECDR_WHL_AV_L_POS) ?
+                          MOT_ACTDIR_WHL_AV_L
+                        : MOT_ACTDIR_WHL_AV_R;
+                        Ret_e = s_MOT_SetMtrDirSetPoint(idxActDir_e,
+                                                        (t_sint32)g_calibCmdInfo_s.pulses_f32,
+                                                        g_calibCmdInfo_s.speed_f32,
+                                                        0.0F);
+                        if(Ret_e == RC_OK)
+                        {
+                            feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
+                            g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                            g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                            Ret_e = RC_WARNING_PENDING;
+                        }
+                        else
+                        {
+                            feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
+                        }
                     }
                 }
                 else 
                 {
+                    feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
                     Ret_e = RC_WARNING_PENDING;
                 }
                 break;
@@ -519,14 +525,20 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Calibration(void)
                     : MOT_ACTDIR_WHL_AV_R;
 
                 t_eAPPSNS_SnsInterface snsItfID_e = c_MOT_AppWhlDirCfg_as[idxActDir_e].snsIfEcdrPos_e;
-                t_float32 snsVal_f32;
+                t_sAPPSNS_SnsValueInfo snsValInfo_s = {
+                    .isValueOK_b = FALSE,
+                    .rqstedUnity_u8 = APPSNS_MEASTYPE_RAW,
+                    .rawValue_f32 = 0.0F,
+                    .SnsValue_f32 = 0.0F
+                };
 
-                Ret_e = APPLGC_GetSnsValue(snsItfID_e, &snsVal_f32);
-                if(Ret_e == RC_OK)
+                Ret_e = APPSNS_Get_SnsValue(snsItfID_e, &snsValInfo_s);
+                if((Ret_e == RC_OK)
+                && (snsValInfo_s.isValueOK_b))
                 {
                     Ret_e = APPSNSCAL_RegisterReference(snsItfID_e, 
-                                                        snsVal_f32,
-                                                        c_MOT_AppWhlDirCfg_as[idxActDir_e].caliValExpectedMrad_f32);
+                                                        snsValInfo_s.rawValue_f32,
+                                                        c_MOT_AppWhlDirCfg_as[idxActDir_e].calibValExpected_f32);
                     if(Ret_e == RC_OK)
                     {
                         feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_SUCCEED;
@@ -538,10 +550,19 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Calibration(void)
 
                     }
                 }
+                else
+                {
+                    ASSERT((t_uint16)Ret_e);
+                    feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED;
+                }
 
                 //---- register value ----//
+                g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
                 g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
                 g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                g_calibCmdInfo_s.speed_f32 = 0.0F;
+                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                 break;
             }
             case APPLGC_CALIB_STS_NB:
@@ -621,6 +642,18 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Operational(void)
 {
     t_eReturnCode RetTaskDir_e;
     t_eReturnCode RetTaskProp_e;
+
+    if(g_RearmInfo_s.reqRearm_b == TRUE)
+    {
+        g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_SAFETY;
+        return RC_OK;
+    }
+    else if((g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_MOVE)
+         || (g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_REGISTER_VALUE))
+    {
+        g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_CALIB_AXE;
+        return RC_OK;
+    }
     
     //---- direction management ----//
     RetTaskDir_e = s_MOT_PrdTsk_Ope_DirectionMngmt();
@@ -827,6 +860,12 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Safety(void)
         }
 
         //---- Forward wheel propulsion ----//
+
+    if((Ret_e >= RC_OK)
+    && (g_RearmInfo_s.reqRearm_b == TRUE))
+    {
+        return s_MOT_ApplyRearmRequest();
+    }
     }
     return Ret_e;
 }
@@ -837,6 +876,115 @@ static t_eReturnCode s_MOT_Fsm_PrdTsk_Safety(void)
 static t_eReturnCode s_MOT_Fsm_PrdTsk_Error(void)
 {
     return RC_OK;
+}
+
+/*********************************
+ * s_MOT_ApplyRearmRequest
+ *********************************/
+static t_eReturnCode s_MOT_ApplyRearmRequest(void)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    t_uint8 idxActDir_u8;
+    t_uint8 idxActProp_u8;
+    t_eAPPLGC_RearmFeedbackSts rearmSts_e = APP_LGC_REARM_FBSTATUS_FAILED;
+
+    if(g_RearmInfo_s.reqRearm_b == FALSE)
+    {
+        Ret_e = RC_WARNING_PENDING;
+    }
+    else
+    {
+        switch(g_RearmInfo_s.rearmType_e)
+        {
+            case APPLGC_REARM_TYPE_SAFETY:
+                //---- stay here ----//
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SAFETY;
+                Ret_e = RC_WARNING_PENDING;
+            break;
+            case APPLGC_REARM_TYPE_FSM_PRE_OPE:
+                for(idxActDir_u8 = 0U ; idxActDir_u8 < MOT_ACTDIR_NB ; idxActDir_u8++)
+                {
+                    g_MtrDirPayload_as[idxActDir_u8].dirSetPoint_mrad = 0.0F;
+                    g_MtrDirPayload_as[idxActDir_u8].speed_rpm = 0.0F;
+                    g_MtrDirPayload_as[idxActDir_u8].isReqCmd_b = FALSE;
+                    g_axeMissPulses_af32[idxActDir_u8] = 0.0F;
+                }
+                for(idxActProp_u8 = 0U ; idxActProp_u8 < MOT_ACTPROP_NB ; idxActProp_u8++)
+                {
+                    g_MtrPropPayload_as[idxActProp_u8].mode_e = MOT_PROPMODE_NB;
+                    g_MtrPropPayload_as[idxActProp_u8].propSetPoint_f32 = 0.0F;
+                    g_MtrPropPayload_as[idxActProp_u8].isReqCmd_b = FALSE;
+                }
+                g_FlagDirCmdPending_b = FALSE;
+                g_FlagPropCmdPending_b = FALSE;
+                g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
+                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                g_calibCmdInfo_s.speed_f32 = 0.0F;
+                g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                g_Fsm_PrdTsk_OpeSts_e = MOT_FSM_PRDTSK_OPE_SERVO;
+                g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_PRE_OPS;
+
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SUCCESS;
+                g_RearmInfo_s.reqRearm_b = FALSE;
+                g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
+            break;
+
+            case APPLGC_REARM_TYPE_TOTAL:
+                for(idxActDir_u8 = 0U ; idxActDir_u8 < MOT_ACTDIR_NB ; idxActDir_u8++)
+                {
+                    g_MtrDirPayload_as[idxActDir_u8].dirSetPoint_mrad = 0.0F;
+                    g_MtrDirPayload_as[idxActDir_u8].speed_rpm = 0.0F;
+                    g_MtrDirPayload_as[idxActDir_u8].isReqCmd_b = FALSE;
+                    g_axeMissPulses_af32[idxActDir_u8] = 0.0F;
+                }
+                for(idxActProp_u8 = 0U ; idxActProp_u8 < MOT_ACTPROP_NB ; idxActProp_u8++)
+                {
+                    g_MtrPropPayload_as[idxActProp_u8].mode_e = MOT_PROPMODE_NB;
+                    g_MtrPropPayload_as[idxActProp_u8].propSetPoint_f32 = 0.0F;
+                    g_MtrPropPayload_as[idxActProp_u8].isReqCmd_b = FALSE;
+                }
+                g_FlagDirCmdPending_b = FALSE;
+                g_FlagPropCmdPending_b = FALSE;
+                g_calibCmdInfo_s.snsItf_e = APPSNS_SNSITF_NB;
+                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                g_calibCmdInfo_s.speed_f32 = 0.0F;
+                g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_IDLE;
+                g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
+                g_Fsm_PrdTsk_CalibSts_e = MOT_FSM_PRDTSK_CALIB_INIT;
+                g_Fsm_PrdTsk_OpeSts_e = MOT_FSM_PRDTSK_OPE_SERVO;
+                g_Fsm_PrdcTskSts_e = MOT_FSM_PRD_TSK_PRE_OPS;
+
+                rearmSts_e = APP_LGC_REARM_FBSTATUS_SUCCESS;
+                g_RearmInfo_s.reqRearm_b = FALSE;
+                g_RearmInfo_s.rearmType_e = LGC_REARM_TYPE_NB;
+            break;
+
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+                ASSERT((t_uint16)g_RearmInfo_s.rearmType_e);
+            break;
+        }
+
+        if((Ret_e == RC_OK)
+        || (Ret_e == RC_WARNING_PENDING))
+        {
+            (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE, (t_float32)rearmSts_e);
+        }
+        else 
+        {
+            (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE, (t_float32)APP_LGC_REARM_FBSTATUS_FAILED);
+        }
+        (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID, (t_float32)APPLGC_AGENT_HEAD_CUTTER);
+        (void)APPSIG_SetSignalValue(APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE, (t_float32)g_RearmInfo_s.rearmType_e);
+        (void)APPSIG_ForceMsgSend(APPSIG_MSG_ORIGIN_CAN, APPSIG_CAN_MSG_LGC_REARMAMENT_CMD);
+        FMKSRL_LOG("[MOT] : Rearm applied status -> %d\r\n", rearmSts_e);
+        
+    }
+
+    return Ret_e;
 }
 
 
@@ -998,6 +1146,34 @@ static t_eReturnCode s_MOT_MtrDirStop(t_eMOT_ActDirectionList f_idxMtrDir_e, t_b
 
     return Ret_e;
 }
+
+static t_eReturnCode s_MOT_GetDirActFromSnsItf(t_eAPPSNS_SnsInterface f_snsItf_e,
+                                               t_eMOT_ActDirectionList * f_pIdxActDir_e)
+{
+    t_eReturnCode Ret_e = RC_OK;
+
+    if(f_pIdxActDir_e == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+    }
+    else
+    {
+        switch(f_snsItf_e)
+        {
+            case APPSNS_SNSITF_ECDR_WHL_AV_L_POS:
+                *f_pIdxActDir_e = MOT_ACTDIR_WHL_AV_L;
+            break;
+            case APPSNS_SNSITF_ECDR_WHL_AV_R_POS:
+                *f_pIdxActDir_e = MOT_ACTDIR_WHL_AV_R;
+            break;
+            default:
+                Ret_e = RC_ERROR_PARAM_INVALID;
+            break;
+        }
+    }
+
+    return Ret_e;
+}
 /*********************************
  * s_MOT_SigReceptionCallback
  *********************************/
@@ -1079,15 +1255,17 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
             {
                 // 0 appsns_id, 1:req_state 2:pulse 3:speed
                 t_eAPPSNS_SnsInterface sigSnsID_e;
+                t_eMOT_ActDirectionList idxActDir_e;
                 t_eAPPLGC_CalibStatus reqSts_e;
                 t_float32 cmdPulses_f32;
                 t_float32 cmdSpeed_f32;
 
-                if((f_nbSignal_u8 != (t_uint8)4)
+                if((f_nbSignal_u8 != (t_uint8)5)
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_CMD_CALIB_ID)
                 || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_CALIB_REQ_STATE)
                 || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_CMD_CALIB_PLS)
-                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_CMD_CALIB_SPD))
+                || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_CMD_CALIB_SPD)
+                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_CMD_CALIB_CURR_FEEDBACK))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
@@ -1097,41 +1275,46 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                     reqSts_e = (t_eAPPLGC_CalibStatus)(f_sigValue_af32[1]);
                     cmdPulses_f32 = (f_sigValue_af32[2]);
                     cmdSpeed_f32 = (f_sigValue_af32[3]);
+                    Ret_e = s_MOT_GetDirActFromSnsItf(sigSnsID_e, &idxActDir_e);
                     if(Ret_e == RC_OK)
-                    {                        
-                        //---- pulses are add if in the same sense 
-                        //      pulses are reset to 0 is sens != from previous ----//
-                        if(g_calibCmdInfo_s.pulses_f32 == (t_sint32)0)
-                        {
-                            g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
-                        }
-                        else if(((g_calibCmdInfo_s.pulses_f32 > (t_sint32)0)
-                            &&  (cmdPulses_f32 < (t_sint32)0))
-                        ||       ((g_calibCmdInfo_s.pulses_f32 < (t_sint32)0)
-                            &&  (cmdPulses_f32 > (t_sint32)0)))
-                        {
-                            g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
-                        }
-                        else 
-                        {
-                            g_calibCmdInfo_s.pulses_f32 += cmdPulses_f32;
-                        }
-
+                    {
                         if(reqSts_e >= APPLGC_CALIB_STS_NB)
                         {
+                            Ret_e = RC_ERROR_PARAM_INVALID;
                             ASSERT((t_uint16)reqSts_e);
                         }
                         else 
                         {
+                            (void)idxActDir_e;
+                            if((reqSts_e != APPLGC_CALIB_REQSTS_MOVE)
+                            || (g_calibCmdInfo_s.snsItf_e != sigSnsID_e))
+                            {
+                                g_calibCmdInfo_s.pulses_f32 = 0.0F;
+                            }
+
+                            if(reqSts_e == APPLGC_CALIB_REQSTS_MOVE)
+                            {
+                                if(g_calibCmdInfo_s.pulses_f32 == (t_float32)0.0F)
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
+                                }
+                                else if(((g_calibCmdInfo_s.pulses_f32 > (t_float32)0.0F)
+                                    &&  (cmdPulses_f32 < (t_float32)0.0F))
+                                ||       ((g_calibCmdInfo_s.pulses_f32 < (t_float32)0.0F)
+                                    &&  (cmdPulses_f32 > (t_float32)0.0F)))
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 = cmdPulses_f32;
+                                }
+                                else 
+                                {
+                                    g_calibCmdInfo_s.pulses_f32 += cmdPulses_f32;
+                                }
+                            }
+
                             g_calibCmdInfo_s.snsItf_e = sigSnsID_e;
                             g_calibCmdInfo_s.reqSts_e = reqSts_e;
                             g_calibCmdInfo_s.speed_f32 = cmdSpeed_f32;
                             g_calibCmdInfo_s.isNewCmdReceiv_b = TRUE;
-                            
-                        }  
-                        if(Ret_e != RC_OK)
-                        {
-                            ASSERT((t_uint16)Ret_e);
                         }
                     }
                     else 
@@ -1148,9 +1331,10 @@ static void s_MOT_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 t_eAPPLGC_AgentList agent_e;
                 t_eAPPLGC_RearmType rearmType_e;
                 
-                if((f_nbSignal_u8 != (t_uint8)2)
+                if((f_nbSignal_u8 != (t_uint8)3)
                 || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID)
-                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE))
+                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE)
+                || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_CMD_REARMAMENT_STATE))
                 {
                     Ret_e = RC_ERROR_PARAM_INVALID;
                     ASSERT((t_uint16)f_nbSignal_u8);

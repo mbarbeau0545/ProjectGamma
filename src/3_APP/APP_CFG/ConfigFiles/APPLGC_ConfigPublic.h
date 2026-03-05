@@ -100,11 +100,20 @@
     ///@brief Rearmament Type
     typedef enum 
     {
-        APP_LGC_REARM_TYPE_FSM_PRE_OPE = 0,     //---- rearmament type concern only a go back to fsm_ope ----//
-        APP_LGC_REARM_TYPE_TOTAL,               //---- rearmament type to Init of the agent ----//
+        APPLGC_REARM_TYPE_SAFETY = 0,           //---- rermament type -> stay in safety ----//
+        APPLGC_REARM_TYPE_FSM_PRE_OPE,          //---- rearmament type concern only a go back to fsm_ope ----//
+        APPLGC_REARM_TYPE_TOTAL,                //---- rearmament type to Init of the agent ----//
 
         LGC_REARM_TYPE_NB                       //---- rearmament type number  ----//
     } t_eAPPLGC_RearmType;
+
+    ///@brief Rearmament feedbakc status
+    typedef enum 
+    {
+        APP_LGC_REARM_FBSTATUS_FAILED = 0x1,                //---- rearmament feedback status failed to go/out of safety status ----//
+        APP_LGC_REARM_FBSTATUS_SAFETY = 0x2,                //---- rearmament feedback status is still in safety state----//
+        APP_LGC_REARM_FBSTATUS_SUCCESS = 0xFF,              //---- rearmament feedback status success----//
+    } t_eAPPLGC_RearmFeedbackSts;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */

@@ -1335,7 +1335,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html"><param name="Name" value="Constant.h"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="Name" value="M_PI"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="Name" value="CST_PI_RAD"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#a482b18facef5ed992793ac7581ff953e"><param name="Name" value="CONSTANT_H_INCLUDED"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#ab0878fd5aedeeef9db0cf676ad1176ff"><param name="Name" value="CST_MAX_UINT_16BIT"></OBJECT>
@@ -8746,7 +8746,7 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="_l_i_b_queue_8h.html#aa0fa45ba3a4edf229ad335edf98e5e17"><param name="Name" value="LIBQueue.h"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="Name" value="M_PI"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="Name" value="CST_PI_RAD"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe"><param name="Name" value="main(void)"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe"><param name="Name" value="main.c"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structt__s_f_m_k_f_d_c_a_n___rx_item_event_cfg.html#adbc62227046752b79ba83426188efeef"><param name="Name" value="maskId_u32"></OBJECT>

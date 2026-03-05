@@ -54,12 +54,12 @@
             "program": "${workspaceFolder}/.pio/build/pc_sim_debug/program.exe",
             "args": [
                 "--udp-port",
-                "19091",
+                "19090",
                 "--sleep-ms",
                 "1",
                 "--ana",
                 "1",
-                "2400"
+                "3300"
             ],
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",

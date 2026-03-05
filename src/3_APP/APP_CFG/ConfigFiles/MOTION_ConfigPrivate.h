@@ -51,7 +51,7 @@
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
-        t_float32 caliValExpectedMrad_f32;          //---- calibration value expected ----//
+        t_float32 calibValExpected_f32;          //---- calibration value expected ----//
     } t_sMOT_DirMtrCfg;
 
     ///@brief Structure to gather user command from AppSig 
@@ -92,7 +92,7 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_L_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_L_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_L,
-            .caliValExpectedMrad_f32 = 0.0F // Milliradian
+            .calibValExpected_f32 = 0.0F // radian
         },
         [MOT_ACTDIR_WHL_AV_R] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_R_PLS,
@@ -100,7 +100,7 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_R_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_R_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_R,
-            .caliValExpectedMrad_f32 = (0.0F) // Milliradian
+            .calibValExpected_f32 = (0.0F) // radian
         }
     };
 
@@ -112,7 +112,7 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_L_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_L_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_L,
-            .caliValExpectedMrad_f32 = 0.0F // Milliradian
+            .calibValExpected_f32 = 0.0F // Milliradian
         },
         [MOT_ACTPROP_WHL_AR_R] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_R_PLS,
@@ -120,7 +120,7 @@
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_R_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_R_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_R,
-            .caliValExpectedMrad_f32 = (0.0F) // Milliradian
+            .calibValExpected_f32 = (0.0F) // Milliradian
         }
     };
 

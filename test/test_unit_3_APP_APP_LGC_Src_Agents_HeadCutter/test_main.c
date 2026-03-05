@@ -435,12 +435,12 @@ void test_msg_callback_rearm_sets_rearm_request(void)
         APPSIG_SIGNAL_LGC_CMD_REARMAMENT_AGID,
         APPSIG_SIGNAL_LGC_CMD_REARMAMENT_TYPE
     };
-    t_float32 val_af32[2] = {(t_float32)APPLGC_AGENT_HEAD_CUTTER, (t_float32)APP_LGC_REARM_TYPE_TOTAL};
+    t_float32 val_af32[2] = {(t_float32)APPLGC_AGENT_HEAD_CUTTER, (t_float32)APPLGC_REARM_TYPE_TOTAL};
 
     s_HC_MsgReceptionCallback((t_uint16)APPSIG_CAN_MSG_LGC_REARMAMENT_CMD, (t_uint8)2, sig_ae, val_af32);
 
     TEST_ASSERT_TRUE(g_RearmInfo_s.reqRearm_b == TRUE);
-    TEST_ASSERT_EQUAL(APP_LGC_REARM_TYPE_TOTAL, g_RearmInfo_s.rearmType_e);
+    TEST_ASSERT_EQUAL(APPLGC_REARM_TYPE_TOTAL, g_RearmInfo_s.rearmType_e);
 }
 
 void test_calibration_move_consumes_new_cmd_and_sends_motor_setpoint(void)
@@ -614,7 +614,7 @@ void test_rearm_pre_ope_is_consumed_in_safety(void)
 {
     g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_SAFETY;
     g_RearmInfo_s.reqRearm_b = TRUE;
-    g_RearmInfo_s.rearmType_e = APP_LGC_REARM_TYPE_FSM_PRE_OPE;
+    g_RearmInfo_s.rearmType_e = APPLGC_REARM_TYPE_FSM_PRE_OPE;
     g_calibCmdInfo_s.reqSts_e = APPLGC_CALIB_REQSTS_MOVE;
     g_calibCmdInfo_s.currSts_e = APPLGC_CALIB_REQSTS_MOVE;
     g_calibCmdInfo_s.isNewCmdReceiv_b = TRUE;
@@ -656,7 +656,7 @@ void test_rearm_total_resets_runtime_buffers_and_timestamp(void)
 
     g_Fsm_PrdcTskSts_e = HC_FSM_PRD_TSK_SAFETY;
     g_RearmInfo_s.reqRearm_b = TRUE;
-    g_RearmInfo_s.rearmType_e = APP_LGC_REARM_TYPE_TOTAL;
+    g_RearmInfo_s.rearmType_e = APPLGC_REARM_TYPE_TOTAL;
 
     TEST_ASSERT_EQUAL(RC_OK, s_HC_StateMachine());
     TEST_ASSERT_EQUAL(HC_FSM_PRD_TSK_CFG, g_Fsm_PrdcTskSts_e);

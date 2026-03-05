@@ -454,7 +454,7 @@
           <LI><OBJECT type="text/sitemap"><param name="Name" value="CST_MAX_UINT_32BIT"><param name="Local" value="_constant_8h.html#a5c647c4b2a2e9464b58de6d1a44bb4f1"><param name="ImageNumber" value="11"></OBJECT>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="CST_MHZ_TO_HZ"><param name="Local" value="_constant_8h.html#a739ae5cb148d7f0049c0498ec6c609b1"><param name="ImageNumber" value="11"></OBJECT>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="CST_MSEC_TO_SEC"><param name="Local" value="_constant_8h.html#a935a0a9c987a2e9563bd9379f7a789c2"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="M_PI"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="ImageNumber" value="11"></OBJECT>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="CST_PI_RAD"><param name="Local" value="_constant_8h.html#ae71449b1cc6e6250b91f539153a7a0d3"><param name="ImageNumber" value="11"></OBJECT>
           </UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="TypeCommon.h"><param name="Local" value="_type_common_8h.html"><param name="ImageNumber" value="1"></OBJECT>
           <UL>
