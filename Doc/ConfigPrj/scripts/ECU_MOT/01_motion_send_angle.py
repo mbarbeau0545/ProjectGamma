@@ -1,6 +1,4 @@
-from argparse import ArgumentParser
-
-from app.script_runtime_api import log, send_symbol_msg
+from app.script_runtime_api import log, send_symbol_msg, sleep_ms
 
 MOT_ANGLE_SYMBOL = "LGC_MOT_CMD_WHL_AV_POSITION"
 SIG_DIR_L = "LGC_MOT_CMD_WHL_AVL_DIR"
@@ -13,7 +11,7 @@ def send_angle_command(angle_left_mrad: float,
                        angle_right_mrad: float,
                        speed_left_rpm: float,
                        speed_right_rpm: float,
-                       node: int) -> None:
+                       node : int = 0) -> None:
     send_symbol_msg(
         MOT_ANGLE_SYMBOL,
         {
@@ -32,12 +30,36 @@ def send_angle_command(angle_left_mrad: float,
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Send wheel front direction angle command to ECU_MOTION")
-    parser.add_argument("--left", type=float, required=True, help="Left wheel target angle (mrad)")
-    parser.add_argument("--right", type=float, required=True, help="Right wheel target angle (mrad)")
-    parser.add_argument("--speed-left", type=float, default=800.0, help="Left wheel speed (rpm)")
-    parser.add_argument("--speed-right", type=float, default=800.0, help="Right wheel speed (rpm)")
-    parser.add_argument("--node", type=int, default=2, help="CAN node (default: 2 for ECU_MOTION)")
 
-    args = parser.parse_args()
-    send_angle_command(args.left, args.right, args.speed_left, args.speed_right, args.node)
+    send_angle_command(
+        angle_left_mrad=1000, 
+        angle_right_mrad=1000,
+        speed_left_rpm= 20,
+        speed_right_rpm= 20
+    )
+    sleep_ms(1000)
+
+    send_angle_command(
+        angle_left_mrad=-1000, 
+        angle_right_mrad=-1000,
+        speed_left_rpm= 20,
+        speed_right_rpm= 20
+    )
+
+    sleep_ms(50)
+
+    send_angle_command(
+        angle_left_mrad=-1100, 
+        angle_right_mrad=-1100,
+        speed_left_rpm= 20,
+        speed_right_rpm= 20
+    )
+
+    sleep_ms(50)
+    
+    send_angle_command(
+        angle_left_mrad=-1200, 
+        angle_right_mrad=-1200,
+        speed_left_rpm= 20,
+        speed_right_rpm= 20
+    )

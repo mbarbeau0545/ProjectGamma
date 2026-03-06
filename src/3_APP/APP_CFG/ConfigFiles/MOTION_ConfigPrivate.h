@@ -45,13 +45,18 @@
     ///@brief Mapping structure beetween direction motor and application
     typedef struct 
     {
-        t_eAPPACT_ActInterface actifMtrSetPoint_e;     //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
+        t_eMOT_ActDirectionList selfID_e;
+        t_eAPPACT_ActInterface actifMtrSetPoint_e;  //---- Pulse/State actuators interface (Pulses in SetActValue, Drop Pulses in GetActValue)----//
         t_eAPPACT_ActInterface actIfSpeed_e;        //---- Speed actuator interface (Freq in SetActValue, Motor Sts in GetActValue) -----//
-        t_eAPPACT_ActInterface actIfTimTrig_e;       //---- Trigger Timer Actuator interface -----//
+        t_eAPPACT_ActInterface actIfTimTrig_e;      //---- Trigger Timer Actuator interface -----//
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
-        t_float32 calibValExpected_f32;          //---- calibration value expected ----//
+        t_eAPPSPM_ItemPrm prmPulseToRad_e;          //---- parameter id to pulse to rad prm ----//
+        t_eAPPSPM_ItemPrm prmRpmToHz_e;             //---- parameter id to pulse to rad prm ----//
+        t_eAPPSPM_ItemPrm prmDeltaMax_e;            //---- parameter id to pulse to rad prm ----//
+        t_eAPPSDM_DiagnosticItem diagDeltaLimit_e;  //---- Diagnostic for delta limit error ----//
+        t_float32 calibValExpected_f32;             //---- calibration value expected ----//
     } t_sMOT_DirMtrCfg;
 
     ///@brief Structure to gather user command from AppSig 
@@ -87,19 +92,31 @@
     ///@brief variable for application mapping
     const t_sMOT_DirMtrCfg c_MOT_AppWhlDirCfg_as[MOT_ACTDIR_NB] = {
         [MOT_ACTDIR_WHL_AV_L] = {
+            .selfID_e = MOT_ACTDIR_WHL_AV_L,
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_L_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_L_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_L_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_L_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_L,
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L,
+            .prmPulseToRad_e = APPSPM_PRM_MOT_ACTDIR_WHAVL_PULSE_TO_RAD,
+            .prmRpmToHz_e = APPSPM_PRM_MOT_ACTDIR_WHAVL_RPM_TO_HZ,
+            .prmDeltaMax_e = APPSPM_PRM_MOT_ACTDIR_WHAVL_DELTA_LIMIT_MRAD,
+            .diagDeltaLimit_e = APPSDM_DIAG_ITEM_WHL_AV_L_DELTA_LIMIT_ERROR,
             .calibValExpected_f32 = 0.0F // radian
         },
         [MOT_ACTDIR_WHL_AV_R] = {
+            .selfID_e = MOT_ACTDIR_WHL_AV_R,
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_WHL_AV_R_PLS,
             .actIfSpeed_e = APPACT_ACTITF_MTR_WHL_AV_R_SPD,
             .actIfTimTrig_e = APPACT_ACTITF_MTR_WHL_AV_R_TRG,
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_WHL_AV_R_POS,
             .lgcSrvID_e = APPLGC_SRV_WHEEL_AV_R,
+            .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R,
+            .prmPulseToRad_e = APPSPM_PRM_MOT_ACTDIR_WHAVR_PULSE_TO_RAD,
+            .prmRpmToHz_e = APPSPM_PRM_MOT_ACTDIR_WHAVR_RPM_TO_HZ,
+            .prmDeltaMax_e = APPSPM_PRM_MOT_ACTDIR_WHAVR_DELTA_LIMIT_MRAD,
+            .diagDeltaLimit_e = APPSDM_DIAG_ITEM_WHL_AV_R_DELTA_LIMIT_ERROR,
             .calibValExpected_f32 = (0.0F) // radian
         }
     };

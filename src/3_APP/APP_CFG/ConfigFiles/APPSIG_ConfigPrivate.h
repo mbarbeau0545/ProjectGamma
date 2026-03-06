@@ -462,6 +462,8 @@
         {(t_uint8)16,                                                    APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_LGC_MOT_FB_WHL_ARR_PROP
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_LGC_MOT_FSM_STS
         {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_LGC_MOT_FSM_CALIB
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_LGC_MOT_FSM_OPE_WHL_AVL
+        {(t_uint8)4,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_LGC_MOT_FSM_OPE_WHL_AVR
         {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_1_STATE
         {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_2_STATE
         {(t_uint8)1,                                                     APPSIG_SIG_ENCODE_INTEL,                                                 (t_float32)1,                                                     (t_sint32)0                                                      },// APPSIG_SIGNAL_CL42T_MTR_3_STATE
@@ -876,14 +878,14 @@
 
     ///@brief Variable for decoding SNS_ECDR_HD_CNTR_KNF_SPD
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPSNS_GET_ECDR_MOTION_as[4] = {
-    {APPSIG_SIGNAL_SNS_ECDR_HD_KNF_POS,                     (t_uint8)0                                             },
-    {APPSIG_SIGNAL_SNS_ECDR_HD_KNF_SPD,                     (t_uint8)16                                            },
-    {APPSIG_SIGNAL_SNS_ECDR_HD_CNTR_KNF_POS,                (t_uint8)32                                            },
-    {APPSIG_SIGNAL_SNS_ECDR_HD_CNTR_KNF_SPD,                (t_uint8)48                                            },
+    {APPSIG_SIGNAL_SNS_ECDR_WHL_AV_L_POS,                   (t_uint8)0                                             },
+    {APPSIG_SIGNAL_SNS_ECDR_WHL_AV_L_SPD,                   (t_uint8)16                                            },
+    {APPSIG_SIGNAL_SNS_ECDR_WHL_AV_R_POS,                   (t_uint8)32                                            },
+    {APPSIG_SIGNAL_SNS_ECDR_WHL_AV_R_SPD,                   (t_uint8)48                                            },
     };
 
 
-    ///@brief Variable for decoding SNS_ECDR_HD_CNTR_KNF_SPD
+    ///@brief Variable for decoding SNS_ECDR_WHL_AV_R_SPD
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_APPSNS_GET_TRQ_GTRY_XL_XR_Y_Z_as[4] = {
     {APPSIG_SIGNAL_SNS_TRQ_MTR_XL_TRQ,                      (t_uint8)0                                             },
     {APPSIG_SIGNAL_SNS_TRQ_MTR_XR_TRQ,                      (t_uint8)16                                            },
@@ -1226,13 +1228,15 @@
 
 
     ///@brief Variable for decoding LGC_MOT_CMD_WHL_ARR_PROP_SPD
-    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_LGC_MOT_DEBUG_FSM_as[2] = {
+    const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_LGC_MOT_DEBUG_FSM_as[4] = {
     {APPSIG_SIGNAL_LGC_MOT_FSM_STS,                         (t_uint8)0                                             },
     {APPSIG_SIGNAL_LGC_MOT_FSM_CALIB,                       (t_uint8)4                                             },
+    {APPSIG_SIGNAL_LGC_MOT_FSM_OPE_WHL_AVL,                 (t_uint8)8                                             },
+    {APPSIG_SIGNAL_LGC_MOT_FSM_OPE_WHL_AVR,                 (t_uint8)12                                            },
     };
 
 
-    ///@brief Variable for decoding LGC_MOT_FSM_CALIB
+    ///@brief Variable for decoding LGC_MOT_FSM_OPE_WHL_AVR
     const t_sAPPSIG_MsgSignalsCfg c_AppSig_Can_LGC_MOT_FB_DIR_PROPR_as[4] = {
     {APPSIG_SIGNAL_LGC_MOT_FB_WHL_AVL_DIR_POS,              (t_uint8)0                                             },
     {APPSIG_SIGNAL_LGC_MOT_FB_WHL_AVR_DIR_POS,              (t_uint8)16                                            },
@@ -1308,21 +1312,21 @@
     {APPSIG_CAN_ID_LGC_CL42T_MOTORS_INFO_GTRY,               {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)100,                                          (t_uint16)65535,                                        c_AppSig_Can_LGC_CL42T_MOTORS_INFO_GTRY_as,             (t_uint8)24}, // APPSIG_CAN_LGC_CL42T_MOTORS_INFO_GTRY
     {APPSIG_CAN_ID_LGC_CL42T_MOTORS_INFO_HEAD_GTRY,          {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)100,                                          (t_uint16)65535,                                        c_AppSig_Can_LGC_CL42T_MOTORS_INFO_HEAD_GTRY_as,        (t_uint8)24}, // APPSIG_CAN_LGC_CL42T_MOTORS_INFO_HEAD_GTRY
     {APPSIG_CAN_ID_LGC_CL42T_MOTORS_INFO_MOTION,             {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)100,                                          (t_uint16)65535,                                        c_AppSig_Can_LGC_CL42T_MOTORS_INFO_MOTION_as,           (t_uint8)24}, // APPSIG_CAN_LGC_CL42T_MOTORS_INFO_MOTION
-    {APPSIG_CAN_ID_LGC_REARMAMENT_CMD,                       {APPSIG_MSG_DIR_RX_TX,          APPSIG_MSG_DIR_RX_TX,          APPSIG_MSG_DIR_RX_TX},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_LGC_REARMAMENT_CMD_as,                     (t_uint8)3}, // APPSIG_CAN_LGC_REARMAMENT_CMD
-    {APPSIG_CAN_ID_LGC_GTRY_CMD_CALIBRATION,                 {APPSIG_MSG_DIR_RX_TX,          APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_CMD_CALIBRATION_as,               (t_uint8)3}, // APPSIG_CAN_LGC_GTRY_CMD_CALIBRATION
+    {APPSIG_CAN_ID_LGC_REARMAMENT_CMD,                       {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_RX},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_LGC_REARMAMENT_CMD_as,                     (t_uint8)3}, // APPSIG_CAN_LGC_REARMAMENT_CMD
+    {APPSIG_CAN_ID_LGC_GTRY_CMD_CALIBRATION,                 {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_CMD_CALIBRATION_as,               (t_uint8)3}, // APPSIG_CAN_LGC_GTRY_CMD_CALIBRATION
     {APPSIG_CAN_ID_LGC_GTRY_CMD_POSITION_COORD,              {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_CMD_POSITION_COORD_as,            (t_uint8)3}, // APPSIG_CAN_LGC_GTRY_CMD_POSITION_COORD
     {APPSIG_CAN_ID_LGC_GTRY_CMD_POSITION_SPHERIC,            {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_CMD_POSITION_SPHERIC_as,          (t_uint8)0}, // APPSIG_CAN_LGC_GTRY_CMD_POSITION_SPHERIC
     {APPSIG_CAN_ID_LGC_GTRY_CMD_STEPS,                       {APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)0,                                            (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_CMD_STEPS_as,                     (t_uint8)6}, // APPSIG_CAN_LGC_GTRY_CMD_STEPS
     {APPSIG_CAN_ID_LGC_GTRY_POSITION,                        {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_POSITION_as,                      (t_uint8)4}, // APPSIG_CAN_LGC_GTRY_POSITION
     {APPSIG_CAN_ID_LGC_GTRY_DEBUG_FSM,                       {APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED},          (t_uint16)500,                                          (t_uint16)65535,                                        c_AppSig_Can_LGC_GTRY_DEBUG_FSM_as,                     (t_uint8)7}, // APPSIG_CAN_LGC_GTRY_DEBUG_FSM
-    {APPSIG_CAN_ID_LGC_HC_CMD_CALIBRATION,                   {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX_TX,          APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_HC_CMD_CALIBRATION_as,                 (t_uint8)5}, // APPSIG_CAN_LGC_HC_CMD_CALIBRATION
+    {APPSIG_CAN_ID_LGC_HC_CMD_CALIBRATION,                   {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_HC_CMD_CALIBRATION_as,                 (t_uint8)5}, // APPSIG_CAN_LGC_HC_CMD_CALIBRATION
     {APPSIG_CAN_ID_LGC_HC_CMD_POSITION,                      {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_HC_CMD_POSITION_as,                    (t_uint8)6}, // APPSIG_CAN_LGC_HC_CMD_POSITION
     {APPSIG_CAN_ID_LGC_HC_FEEDBACK_POS,                      {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_HC_FEEDBACK_POS_as,                    (t_uint8)4}, // APPSIG_CAN_LGC_HC_FEEDBACK_POS
     {APPSIG_CAN_ID_LGC_HC_DEBUG_FSM,                         {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX,             APPSIG_MSG_DIR_UNUSED},          (t_uint16)500,                                          (t_uint16)65535,                                        c_AppSig_Can_LGC_HC_DEBUG_FSM_as,                       (t_uint8)3}, // APPSIG_CAN_LGC_HC_DEBUG_FSM
-    {APPSIG_CAN_ID_LGC_MOT_CMD_CALIBRATION,                  {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX_TX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_CMD_CALIBRATION_as,                (t_uint8)5}, // APPSIG_CAN_LGC_MOT_CMD_CALIBRATION
+    {APPSIG_CAN_ID_LGC_MOT_CMD_CALIBRATION,                  {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_CMD_CALIBRATION_as,                (t_uint8)5}, // APPSIG_CAN_LGC_MOT_CMD_CALIBRATION
     {APPSIG_CAN_ID_LGC_MOT_CMD_WHL_AV_POSITION,              {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_CMD_WHL_AV_POSITION_as,            (t_uint8)4}, // APPSIG_CAN_LGC_MOT_CMD_WHL_AV_POSITION
     {APPSIG_CAN_ID_LGC_MOT_CMD_WHL_AR_PROPULSION,            {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_RX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_CMD_WHL_AR_PROPULSION_as,          (t_uint8)4}, // APPSIG_CAN_LGC_MOT_CMD_WHL_AR_PROPULSION
-    {APPSIG_CAN_ID_LGC_MOT_DEBUG_FSM,                        {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_DEBUG_FSM_as,                      (t_uint8)2}, // APPSIG_CAN_LGC_MOT_DEBUG_FSM
+    {APPSIG_CAN_ID_LGC_MOT_DEBUG_FSM,                        {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_DEBUG_FSM_as,                      (t_uint8)4}, // APPSIG_CAN_LGC_MOT_DEBUG_FSM
     {APPSIG_CAN_ID_LGC_MOT_FB_DIR_PROPR,                     {APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_UNUSED,         APPSIG_MSG_DIR_TX},          (t_uint16)50,                                           (t_uint16)65535,                                        c_AppSig_Can_LGC_MOT_FB_DIR_PROPR_as,                   (t_uint8)4}, // APPSIG_CAN_LGC_MOT_FB_DIR_PROPR
     };
 

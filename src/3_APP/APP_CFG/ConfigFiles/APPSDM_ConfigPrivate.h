@@ -121,6 +121,8 @@
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_HOLD_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_L_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_R_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // WHL_AV_L_DELTA_LIMIT_ERROR
+        {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // WHL_AV_R_DELTA_LIMIT_ERROR
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

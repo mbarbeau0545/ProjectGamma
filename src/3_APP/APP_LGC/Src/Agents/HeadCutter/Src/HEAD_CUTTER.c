@@ -1910,7 +1910,11 @@ static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e,
         }
         else 
         {
-            Ret_e = RC_WARNING_BUSY;
+            Ret_e = APPACT_SetActValue(appAxeCfg_ps->actifMtrSetPoint_e, 0.0F);
+            if(Ret_e == RC_OK)
+            {
+                Ret_e = RC_WARNING_BUSY;
+            }
         }
     }
 

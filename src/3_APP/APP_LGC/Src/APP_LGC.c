@@ -212,11 +212,6 @@ t_eReturnCode APPLGC_Init(void)
         g_srvFuncInfo_as[idxSrv_u8].state_e = APPLGC_SRV_STATE_NB;        
     }
 
-    for(idxAgent_u8 = (t_uint8)0 ; idxAgent_u8 < APPLGC_AGENT_NB ; idxAgent_u8++)
-    {
-        c_AppLgc_AgentInfo_as[idxAgent_u8].init_pcb();
-    }
-
     Ret_e = APPSDM_AddCallbackEvnt(s_APPLGC_DiagnosticEvent);
 
     return Ret_e;
@@ -431,6 +426,23 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
         Ret_e = APPSIG_AddRcvMsgCallback(   APPSIG_CAN_MSG_APPLICATIONDIAGNOSTICECUSAFETY,
                                             APPSIG_MSG_ORIGIN_CAN,
                                             s_APPLGC_AppSigMsgRcvCallback);
+    }
+
+    switch(g_EcuPos_e)
+    {
+        case APPSYS_ECU_POS_GTRY:
+            Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_GANTRY].init_pcb();
+        break;
+        case APPSYS_ECU_POS_GTRY_HEAD:
+            Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_HEAD_CUTTER].init_pcb();
+        break;
+        case APPSYS_ECU_POS_MOTION:
+            Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_MOTION].init_pcb();
+        break;
+    }
+    if(Ret_e < RC_OK)
+    {
+        ASSERT((t_uint16)Ret_e);
     }
 
     return Ret_e;

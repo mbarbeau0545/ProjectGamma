@@ -1,5 +1,3 @@
-from argparse import ArgumentParser
-
 from app.script_runtime_api import log, send_symbol_msg, sleep_ms
 
 MOT_CALIB_SYMBOL = "LGC_MOT_CMD_CALIBRATION"
@@ -48,18 +46,23 @@ def run_nominal_calibration(sensor_id: int,
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Send calibration commands to ECU_MOTION")
-    parser.add_argument(
-        "--wheel",
-        choices=["left", "right"],
-        default="left",
-        help="Direction wheel to calibrate",
+    # Sequence directe sans argparse.
+    run_nominal_calibration(
+        sensor_id=SNS_ECDR_WHL_AV_L_POS,
+        move_pulses=400.0,
+        move_speed=800.0,
+        settle_ms=1500,
+        node=0,
     )
-    parser.add_argument("--pulses", type=float, default=400.0, help="Move pulses before register")
-    parser.add_argument("--speed", type=float, default=800.0, help="Calibration speed")
-    parser.add_argument("--settle-ms", type=int, default=1500, help="Wait before register value")
-    parser.add_argument("--node", type=int, default=2, help="CAN node (default: 2 for ECU_MOTION)")
-
-    args = parser.parse_args()
-    sensor = SNS_ECDR_WHL_AV_L_POS if args.wheel == "left" else SNS_ECDR_WHL_AV_R_POS
-    run_nominal_calibration(sensor, args.pulses, args.speed, args.settle_ms, args.node)
+    sleep_ms(100)
+    log("[DONE] MOTION calibration done for WHL_AV_L.")
+    run_nominal_calibration(
+        sensor_id=SNS_ECDR_WHL_AV_R_POS,
+        move_pulses=-400.0,
+        move_speed=800.0,
+        settle_ms=1500,
+        node=0,
+    )
+    log("[DONE] MOTION calibration done for WHL_AV_R.")
+    # run_nominal_calibration(SNS_ECDR_WHL_AV_R_POS, 400.0, 800.0, 1500, 0)
+    log("[DONE] MOTION calibration script finished.")

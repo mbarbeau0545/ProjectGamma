@@ -2452,7 +2452,16 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 else 
                 {
-                    Ret_e = RC_WARNING_BUSY;
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, 0.0F);
+                    if(Ret_e >= RC_OK)
+                    {
+                        axeCfg_ps = &c_GTRY_AppAxesCfg_as[GTRY_AXE_HANDLE_XR];
+                        Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, 0.0F);
+                        if(Ret_e == RC_OK)
+                        {
+                            Ret_e = RC_WARNING_BUSY;
+                        }
+                    }
                 }
             break;
             case GTRY_PHYS_AXE_Y:
@@ -2482,7 +2491,11 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 else 
                 {
-                    Ret_e = RC_WARNING_BUSY;
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, 0.0F);
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = RC_WARNING_BUSY;
+                    }
                 }
             break;
             case GTRY_PHYS_AXE_Z:
@@ -2512,7 +2525,11 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
                 }
                 else 
                 {
-                    Ret_e = RC_WARNING_BUSY;
+                    Ret_e = APPACT_SetActValue(axeCfg_ps->actifMtrSetPoint_e, 0.0F);
+                    if(Ret_e == RC_OK)
+                    {
+                        Ret_e = RC_WARNING_BUSY;
+                    }
                 }
             break;
             case GTRY_PHYS_AXE_NB:
