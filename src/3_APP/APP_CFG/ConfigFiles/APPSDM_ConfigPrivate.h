@@ -107,9 +107,12 @@
         {(t_uint16)5,                  (t_uint32)100,                (t_bool)False,                (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // APPSIG_MSG_TIMEOUT
         {(t_uint16)5,                  (t_uint32)65000,              (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // GTRY_CALIB_ERROR
         {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXES_OFF},// GTRY_OPE_ERROR
-        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF},// GTRY_X_OPE_ERROR
-        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Y_OFF},// GTRY_Y_OPE_ERROR
-        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Z_OFF},// GTRY_Z_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // GTRY_X_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // GTRY_Y_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // GTRY_Z_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_X_OFF},// GTRY_X_LIMIT_REACH
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Y_OFF},// GTRY_Y_LIMIT_REACH
+        {(t_uint16)5,                  (t_uint32)500,                (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_GANTRY_AXE_Z_OFF},// GTRY_Z_LIMIT_REACH
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_KNIFE_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_CNTR_KNIFE_OPE_ERROR
         {(t_uint16)0,                  (t_uint32)2000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_TIP_KNIVE_DELTA_LIMIT_ERROR
@@ -118,6 +121,8 @@
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_HEAD_CUTTER_OFF},// HEAD_HOLD_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_L_OPE_ERROR
         {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_MOTION_OFF},  // WHL_AV_R_OPE_ERROR
+        {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // WHL_AV_L_DELTA_LIMIT_ERROR
+        {(t_uint16)5,                  (t_uint32)1000,               (t_bool)True,                 (t_bool)True,                 APPSDM_DIAG_STRAT_NONE},        // WHL_AV_R_DELTA_LIMIT_ERROR
     };
 
     /* CAUTION : Automatic generated code section for Variable: End */

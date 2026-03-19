@@ -37,7 +37,7 @@
 // ********************************************************************
 ///@brief Motor instance used for Head Hold.
 ///@note  Kept as a cast to reduce dependency on a specific CL42T enumerator name.
-const static t_eCL42T_MotorId c_MtrHdHold_CL42T_Id = (t_eCL42T_MotorId)0;
+const static t_eCL42T_MotorId c_MtrHdHold_CL42T_Id = (t_eCL42T_MotorId)CL42T_MOTOR_3;
 
 static t_eAPPSYS_OptActMtrHdHold g_MtrHdHold_OptCfg_e = APPSYS_OPT_ACT_MTR_HD_HOLD_NB;
 
@@ -369,7 +369,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
      * Adjust them to your board wiring / IO assignment.
      */
     t_sCL42T_MotorSigCfg motorConfig = {
-        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_NB,
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_3,
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_3,
         .StateSignal_e = FMKIO_OUTPUT_SIGDIG_7,
         .EndStopSigCW_s = {

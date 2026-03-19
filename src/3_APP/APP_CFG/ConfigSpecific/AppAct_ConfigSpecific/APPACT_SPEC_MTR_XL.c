@@ -328,12 +328,12 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_2,
         .StateSignal_e = FMKIO_OUTPUT_SIGDIG_6,
         .EndStopSigCW_s = {
-            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_NB, //4,
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_4, //4,
             .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .EndStopSigCCW_s = {
-            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_NB, //3,
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_3, //3,
             .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },

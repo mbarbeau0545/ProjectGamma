@@ -220,7 +220,7 @@ static t_eReturnCode s_GTRY_SPEC_Algo_BuildIndustrialIterations(
 /*********************************
  * GANTRY_SPEC_BuildCartesianCmd
  *********************************/
-t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[], 
                                             t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps)
 {
     t_eReturnCode Ret_e;
@@ -234,9 +234,9 @@ t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[GTRY_CMD_SIG_
     else 
     {
         //--- here nothing to do 'cause already in cmd position ---//
-        bufferCmdPos_af32[GTRY_PHYS_AXE_X] = f_value_af32[GTRY_CMD_SIG_POS_X];
-        bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = f_value_af32[GTRY_CMD_SIG_POS_Y];
-        bufferCmdPos_af32[GTRY_PHYS_AXE_Z] = f_value_af32[GTRY_CMD_SIG_POS_Z];
+        bufferCmdPos_af32[GTRY_PHYS_AXE_X] = f_value_af32[0];
+        bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = f_value_af32[1];
+        bufferCmdPos_af32[GTRY_PHYS_AXE_Z] = f_value_af32[2];
 
         Ret_e = LIBQUEUE_WriteElement(  f_QueuePosCmd_ps,
                                         bufferCmdPos_af32,
@@ -249,7 +249,7 @@ t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[GTRY_CMD_SIG_
 /*********************************
  * GANTRY_SPEC_BuildSphericCmd
  *********************************/
-t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[], 
                                             t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps)
 {
     t_eReturnCode Ret_e;
@@ -266,13 +266,13 @@ t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[GTRY_CMD_SIG_
     }
     else 
     {
-        rayon_f32     = f_value_af32[GTRY_CMD_SIG_POS_RAYON];
-        theta_f32 = f_value_af32[GTRY_CMD_SIG_POS_THETHA];
-        phi_f32   = f_value_af32[GTRY_CMD_SIG_POS_PHI];
+        rayon_f32 = f_value_af32[0];
+        theta_f32 = f_value_af32[1];
+        phi_f32   = f_value_af32[2];
 
         //---- degrees to radian ----//
-        theta_f32 *= (M_PI / 180.0f);
-        phi_f32   *= (M_PI / 180.0f);
+        theta_f32 *= (CST_PI_RAD / 180.0f);
+        phi_f32   *= (CST_PI_RAD / 180.0f);
 
         bufferCmdPos_af32[GTRY_PHYS_AXE_X] = rayon_f32 * cosf(phi_f32) * cosf(theta_f32);
         bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = rayon_f32 * cosf(phi_f32) * sinf(theta_f32);
@@ -289,15 +289,12 @@ t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[GTRY_CMD_SIG_
 /*********************************
  * GANTRY_SPEC_BuildStepCmd
  *********************************/
-t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[], 
                                         t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps)
 {
     t_eReturnCode Ret_e;
     t_float32 bufferCmdPos_af32[GTRY_PHYS_AXE_NB];
     t_float32 axePos_af32[GTRY_PHYS_AXE_NB];
-    t_uAPPSPM_PrmValType pulseperMmAxeXID_u = {.prmVal_u16 = 0};
-    t_uAPPSPM_PrmValType pulseperMmAxeYID_u = {.prmVal_u16 = 0};
-    t_uAPPSPM_PrmValType pulseperMmAxeZID_u = {.prmVal_u16 = 0};
     t_float32 factorAxeX_f32;
     t_float32 factorAxeY_f32;
     t_float32 factorAxeZ_f32;
@@ -313,24 +310,8 @@ t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB],
         //---- 1- get current position ---// 
         Ret_e = GTRY_GetPosition(axePos_af32);
 
-        //---- 2- getpulse per mm parameter for each axe ---//
-        if(Ret_e == RC_OK)
-        {
-            Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_X_PULSE_PER_MM, 
-                                    &pulseperMmAxeXID_u);
-            if(Ret_e == RC_OK)
-            {
-                Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_MM, 
-                                        &pulseperMmAxeYID_u);
-            }
-            if(Ret_e == RC_OK)
-            {
-                Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_MM, 
-                                        &pulseperMmAxeZID_u);
-            }
-        }
         //--- 3- Compute factor depending on direction ----//
-        if(f_value_af32[GTRY_CMD_SIG_DIR_X] == APPACT_DIRECTION_CW)
+        if(f_value_af32[3] == APPACT_DIRECTION_CW)
         {
             factorAxeX_f32 = 1.0f;
         }
@@ -338,7 +319,7 @@ t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB],
         {
             factorAxeX_f32 = -1.0f;
         }
-        if(f_value_af32[GTRY_CMD_SIG_DIR_Y] == APPACT_DIRECTION_CW)
+        if(f_value_af32[4] == APPACT_DIRECTION_CW)
         {
             factorAxeY_f32 = 1.0f;
         }
@@ -346,7 +327,7 @@ t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB],
         {
             factorAxeY_f32 = -1.0f;
         }
-        if(f_value_af32[GTRY_CMD_SIG_DIR_Z] == APPACT_DIRECTION_CW)
+        if(f_value_af32[5] == APPACT_DIRECTION_CW)
         {
             factorAxeZ_f32 = 1.0f;
         }
@@ -359,14 +340,14 @@ t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB],
         bufferCmdPos_af32[GTRY_PHYS_AXE_Y] = axePos_af32[GTRY_PHYS_AXE_Y];
         bufferCmdPos_af32[GTRY_PHYS_AXE_Z] = axePos_af32[GTRY_PHYS_AXE_Z];
         //--- 5- Compute new position target ----//
-        bufferCmdPos_af32[GTRY_PHYS_AXE_X] += (f_value_af32[GTRY_CMD_SIG_STEP_X] 
-                                            * (t_float32)pulseperMmAxeXID_u.prmVal_u16 
+        bufferCmdPos_af32[GTRY_PHYS_AXE_X] += (f_value_af32[0] 
+                                            * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_X] 
                                             * factorAxeX_f32);
-        bufferCmdPos_af32[GTRY_PHYS_AXE_Y] += (f_value_af32[GTRY_CMD_SIG_STEP_Y] 
-                                            * (t_float32)pulseperMmAxeYID_u.prmVal_u16 
+        bufferCmdPos_af32[GTRY_PHYS_AXE_Y] += (f_value_af32[1] 
+                                            * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_Y] 
                                             * factorAxeY_f32);
-        bufferCmdPos_af32[GTRY_PHYS_AXE_Z] += (f_value_af32[GTRY_CMD_SIG_STEP_Z] 
-                                            * (t_float32)pulseperMmAxeZID_u.prmVal_u16
+        bufferCmdPos_af32[GTRY_PHYS_AXE_Z] += (f_value_af32[2] 
+                                            * g_param_s.pulsePerMm_af32[GTRY_PHYS_AXE_Z] 
                                             * factorAxeZ_f32);
         //---- 6- inster in pos Queue Cmd ----//
         Ret_e = LIBQUEUE_WriteElement(  f_QueuePosCmd_ps,
@@ -412,7 +393,7 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     t_uint32 pulseTomake_au32[GTRY_PHYS_AXE_NB] = {0,0,0};
     t_sint32 pulseSigns_as32[GTRY_PHYS_AXE_NB] = {1,1,1};
     t_uint16 nbIterMax_u16 = 0;
-    t_uint8 QueueXLeft_u8, QueueYLeft_u8, QueueZLeft_u8;
+    t_uint16 QueueXLeft_u16, QueueYLeft_u16, QueueZLeft_u16;
 
     if((f_currPos_af32 == NULL) || 
        (f_targetPos_af32 == NULL) || (f_missPulses_af32 == NULL) || 
@@ -440,13 +421,13 @@ t_eReturnCode GANTRY_SPEC_AlgorithmCompute( t_eGTRY_AlgoComputeType f_computeTyp
     nbIterMax_u16 = s_GTRY_SPEC_Algo_GetIndustrialIterCount(f_computeType_e, pulseTomake_au32);
 
     //---- 3- Check queues ----//
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_X], &QueueXLeft_u8);
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Y], &QueueYLeft_u8);
-    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Z], &QueueZLeft_u8);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_X], &QueueXLeft_u16);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Y], &QueueYLeft_u16);
+    LIBQUEUE_GetSizeLeft(&f_QueueIterCmd_as[GTRY_PHYS_AXE_Z], &QueueZLeft_u16);
 
-    if((QueueXLeft_u8 < nbIterMax_u16) 
-    || (QueueYLeft_u8 < nbIterMax_u16) 
-    || (QueueZLeft_u8 < nbIterMax_u16))
+    if((QueueXLeft_u16 < nbIterMax_u16) 
+    || (QueueYLeft_u16 < nbIterMax_u16) 
+    || (QueueZLeft_u16 < nbIterMax_u16))
     {
         return RC_WARNING_LIMIT_REACHED;
     }

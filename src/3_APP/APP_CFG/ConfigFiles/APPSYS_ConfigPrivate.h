@@ -48,7 +48,7 @@
     #define APPSYS_IO_ANALOG_SIGNAL (FMKIO_INPUT_SIGANA_2)
 
     ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
-    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (FALSE)
+    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (TRUE)
 
     ///@brief Signal send to know if the parameter has been send by ros 
     #define APPSYS_FLAG_PRM_RCV_STATUS (APPSIG_SIGNAL_PRM_FLAG_PARAM_SEND_OK)
@@ -250,7 +250,7 @@
             APPSYS_OPT_SNS_HD_DWN_LEFT_UNUSED,                 // APPSYS_OPT_ID_SNS_HD_DWN_LEFT
             APPSYS_OPT_SNS_HD_UP_RIGHT_UNUSED,                 // APPSYS_OPT_ID_SNS_HD_UP_RIGHT
             APPSYS_OPT_SNS_HD_DWN_RIGHT_UNUSED,                // APPSYS_OPT_ID_SNS_HD_DWN_RIGHT
-            APPSYS_OPT_SNS_TRQ_MTR_XL_ACS716,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
+            APPSYS_OPT_SNS_TRQ_MTR_XL_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
             APPSYS_OPT_SNS_TRQ_MTR_XR_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XR
             APPSYS_OPT_SNS_TRQ_MTR_Y_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Y
             APPSYS_OPT_SNS_TRQ_MTR_Z_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Z

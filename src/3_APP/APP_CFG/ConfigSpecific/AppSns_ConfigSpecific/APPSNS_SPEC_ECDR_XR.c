@@ -27,7 +27,7 @@
 // *                      Defines
 // ********************************************************************
 #define APPSNS_SPEC_ECDR_ID (FMKIO_INPUT_ENCODER_1)
-#define APPSNS_SPEC_ECDR_MULTIPLE_TOUR ((t_uint8)1)
+#define APPSNS_SPEC_ECDR_MULTIPLE_TOUR ((t_uint8)5)
 #define APPSNS_SPEC_ECDR_PULSE_PER_REV ((t_uint16)1000) // 1,8° per 
 /* CAUTION : Automatic generated code section for Include: Start */
 
@@ -153,8 +153,8 @@ t_eReturnCode APPSNS_SPEC_ECDR_XR_POS_GetSigValue(t_float32 *f_rawSigValue_pf32,
             case APPSYS_OPT_SNS_ECDR_XR_NEMA17:
                 Ret_e = FMKIO_Get_InEcdrPositionValue(  APPSNS_SPEC_ECDR_ID,
                                                         FMKIO_ECDR_VAL_FORMAT_MRADIAN,
-                                                        &position_f32,
-                                                        NULL);
+                                                        NULL,
+                                                        &position_f32);
                 if(Ret_e == RC_OK)
                 {
                     *f_rawSigValue_pf32 = position_f32 / 1000.0f; // value is in radian

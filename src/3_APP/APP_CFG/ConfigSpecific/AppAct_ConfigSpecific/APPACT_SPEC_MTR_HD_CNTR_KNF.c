@@ -58,9 +58,9 @@
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
-const static t_eCL42T_MotorId c_MtrXL_CL42T_Id = CL42T_MOTOR_3;
+const static t_eCL42T_MotorId c_MtrXL_CL42T_Id = CL42T_MOTOR_2;
 
-static t_eAPPSYS_OptActMtrXl g_Mtr_OptCfg_e = APPSYS_OPT_ACT_MTR_Y_NB;
+static t_eAPPSYS_OptActMtrHdCntrKnf g_Mtr_OptCfg_e = APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_NB;
 
 static t_sAPPACT_SPEC_CL42T_ShadowCmd g_cl42tShadowCmd_s;
 static t_sint32 g_droppPulses_s32;

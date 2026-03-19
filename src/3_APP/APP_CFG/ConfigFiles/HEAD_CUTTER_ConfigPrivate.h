@@ -26,8 +26,8 @@
     // *                      Defines
     // ********************************************************************
     ///@brief Fifo Buffer len define
-    #define HC_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)30) // must be divided by 3, 40 cmd 
-    #define HC_CMD_ITER_BUFFER_LEN            ((t_uint8)50)
+    #define HC_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)120) 
+    #define HC_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
 
 
     ///@brief Number of iteration we can send 
@@ -40,7 +40,11 @@
     #define HC_POS_CMD_TREATED_MAX              ((t_uint8)15)
     
     ///@brief Max Pos Cmd treated in fsm ope
-    #define HC_PuLSE_CMD_TREATED_MAX              ((t_uint8)15)
+    #define HC_PULSE_CMD_TREATED_MAX              ((t_uint8)15)
+    
+    ///@brief Minimum absolute pulse amount before queueing an iterative motor command.
+    ///       Smaller values are ignored to avoid flooding CL42T with 1-pulse commands.
+    #define HC_MIN_PULSE_CMD_ABS_S32              ((t_sint32)2)
 
     ///@brief When correction has to be made between compute & current position 
     ///         define the speed 
@@ -60,6 +64,15 @@
 
         HC_CDM_MSGSIG_NB
     } t_eHC_CmdSignals;
+
+    ///@brief command type for position
+    typedef enum 
+    {
+        HC_CMD_TYPE_POS_CARTH = 0,                  //---- Command type for position is x,y of the knife in mm ----//
+        HC_CMD_TYPE_POS_JOINT,                      //---- Command Type for position is angle joint in mrad ----//
+
+        HC_CMD_TYPE_POS_NB
+    } t_eHC_CmdPosType;
     //---------------------------STRUCTURE TYPES--------------------------//
     ///@brief Mapping structure beetween gantry and application
     typedef struct 
@@ -70,7 +83,7 @@
         t_eAPPSNS_SnsInterface snsIfEcdrPos_e;      //---- Encoder sensors interface ----//
         t_eAPPLGC_SrvList lgcSrvID_e;               //---- Logic service Id ----//
         t_eAPPSYS_SysOptionList sysOptEcdr_e;       //---- System encoder option ----//
-        t_float32 caliValExpectedMrad_f32;          //---- calibration value expected ----//
+        t_float32 calibValExpected_f32;          //---- calibration value expected ----//
     } t_sHC_AxeAppCfg;
 
     ///@brief Structure to gather user command from AppSig 
@@ -112,7 +125,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_KNF_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_KNF,
-            .caliValExpectedMrad_f32 = 0.0F // Milliradian
+            .calibValExpected_f32 = 0.0F // radian
         },
         [HC_AXE_HD_CNTR_KNFE] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_CNTR_KNF_PLS,
@@ -121,7 +134,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_CNTR_KNF_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF,
-            .caliValExpectedMrad_f32 = (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
+            .calibValExpected_f32 = (t_float32)(CST_PI_RAD / 2.0F) // radian
         },
         [HC_AXE_HD_HOLD_KNFE] = {
             .actifMtrSetPoint_e = APPACT_ACTITF_MTR_HD_HOLD_PLS,
@@ -130,7 +143,7 @@
             .snsIfEcdrPos_e = APPSNS_SNSITF_ECDR_HD_HOLD_POS,
             .lgcSrvID_e = APPLGC_SRV_HEAD_CUTTER,
             .sysOptEcdr_e = APPSYS_OPT_ID_SNS_ECDR_HD_HOLD,
-            .caliValExpectedMrad_f32 =  (t_float32)(CST_PI_MRAD / 2.0F) // Milliradian
+            .calibValExpected_f32 =  (t_float32)(CST_PI_RAD / 2.0F) // radian
         }
     };
 

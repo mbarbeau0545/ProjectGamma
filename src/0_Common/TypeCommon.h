@@ -25,6 +25,7 @@
     #ifndef NULL
         #define NULL ((void *)0)
     #endif // NULL
+
     /**
      * @brief Get a bit from a flag macro
      */

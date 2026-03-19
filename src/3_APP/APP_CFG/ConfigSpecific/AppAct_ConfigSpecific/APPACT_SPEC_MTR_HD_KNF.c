@@ -30,7 +30,7 @@
 // ********************************************************************
 // *                      Variables
 // ********************************************************************
-const static t_eCL42T_MotorId c_MtrHdKnf_CL42T_Id = CL42T_MOTOR_3;
+const static t_eCL42T_MotorId c_MtrHdKnf_CL42T_Id = CL42T_MOTOR_1;
 static t_eAPPSYS_OptActMtrHdKnf g_MtrHdKnf_OptCfg_e = APPSYS_OPT_ACT_MTR_HD_KNF_NB;
 static t_sAPPACT_SPEC_CL42T_ShadowCmd g_cl42tShadowCmd_s;
 static t_sint32 g_droppPulses_s32;

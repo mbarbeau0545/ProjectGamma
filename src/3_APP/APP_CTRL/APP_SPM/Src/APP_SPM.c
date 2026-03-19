@@ -372,11 +372,13 @@ static t_eReturnCode s_APPSM_Operational(void)
     t_sAPPSPM_ItemPrmInfo * prmInfo_ps;
     static t_uint16 s_currIdxPrmSig_u16 = (t_uint16)0;
     t_uint16 idxPrmSig_u16;
+    t_uint16 prmSend_u16 = (t_uint16)0;;
 
     for(idxPrmSig_u16 = (t_uint16)s_currIdxPrmSig_u16; 
         (idxPrmSig_u16 < APPSPM_PRM_NB) 
-    &&  ((idxPrmSig_u16 - s_currIdxPrmSig_u16) < APPSPM_SIG_SEND_PER_CYCLIC) 
-    &&  (Ret_e == RC_OK) ; idxPrmSig_u16++)
+    &&  (prmSend_u16 < APPSPM_SIG_SEND_PER_CYCLIC) 
+    &&  (Ret_e == RC_OK) ; 
+    idxPrmSig_u16++)
     {
         prmInfo_ps = &g_ItemPrmInfo_as[idxPrmSig_u16];
         //---- we send the value to sig and he deals with sending/ or do nothing ----//
@@ -388,6 +390,10 @@ static t_eReturnCode s_APPSM_Operational(void)
             {
                 Ret_e = APPSIG_SetSignalValue(  prmInfo_ps->prmCfg_ps->signal_e,
                                                 sigValue_f32);
+                if(Ret_e == RC_OK)
+                {
+                    prmSend_u16++;
+                }
             }
         }
     }
@@ -396,6 +402,10 @@ static t_eReturnCode s_APPSM_Operational(void)
         if(idxPrmSig_u16 >= APPSPM_PRM_NB)
         {
             s_currIdxPrmSig_u16 = (t_uint16)0;
+        }
+        else 
+        {
+            s_currIdxPrmSig_u16 = idxPrmSig_u16;
         }
     }
 
@@ -434,7 +444,7 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
                 if(Ret_e == RC_OK)
                 {
                     //---- apply offset and factor ----//
-
+                    FMKSRL_LOG("[SPM0], rcv prm %d, value %d", idxParam_u16, tmpValue_u32);
                     Ret_e = s_APPSPM_DecodeSigValue(&g_ItemPrmInfo_as[idxParam_u16],
                                                     (void *)&tmpValue_u32);
                 }

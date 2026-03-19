@@ -1,0 +1,13 @@
+{
+  "ecu": "ECU_HC",
+  "scripts": [
+    {
+      "name": "trajectory_demo",
+      "code": "# Example: send HeadCutter trajectory with helper API\n# pos_type: 0=cartesian (x,y), 1=joint (alpha_b, alpha_c)\n\nnode = 0\npoints = []\nfor i in range(4):\n    # joint example: alpha_b/alpha_c in mrad\n    alpha_b = 900 + i\n    alpha_c = 1000 + (i // 2)\n    points.append((alpha_b, alpha_c, 20, 20, 1))\n\nrun_hc_position_trajectory(points, dt_ms=10, node=node, start_pos_id=1)\n\nlog('trajectory done')\n"
+    },
+    {
+      "name": "hc_calibration",
+      "code": "# Example: send HeadCutter trajectory with helper API\n# pos_type: 0=cartesian (x,y), 1=joint (alpha_b, alpha_c)\n\n"
+    }
+  ]
+}

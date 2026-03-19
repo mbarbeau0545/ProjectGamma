@@ -78,3 +78,11 @@
 	path = Doc/ConfigPrj/GammaCfg
 	url = https://BladeRobotics@dev.azure.com/BladeRobotics/Gamma_Project/_git/Gamma_CfgPrj
 	branch = Dev
+[submodule "tools/MultiEcuMonitor"]
+	path = tools/MultiEcuMonitor
+	url = https://github.com/mbarbeau0545/MULTI_ECU_MONITOR
+	branch = Dev
+[submodule "src/4_PCSIM"]
+	path = src/4_PCSIM
+	url = https://github.com/mbarbeau0545/PC_SIM_APP
+	branch = Dev

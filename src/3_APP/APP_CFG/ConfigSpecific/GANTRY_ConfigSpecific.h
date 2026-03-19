@@ -29,27 +29,6 @@
     // ********************************************************************
     // *                      Types
     // ********************************************************************
-    ///@brief mapping between signals from appsig and cmd signal
-    typedef enum 
-    {
-        GTRY_CMD_SIG_HEAD = 0,
-        GTRY_CMD_SIG_POS_X = GTRY_CMD_SIG_HEAD,
-        GTRY_CMD_SIG_POS_Y,
-        GTRY_CMD_SIG_POS_Z,
-
-        GTRY_CMD_SIG_POS_RAYON,
-        GTRY_CMD_SIG_POS_THETHA,
-        GTRY_CMD_SIG_POS_PHI,
-
-        GTRY_CMD_SIG_STEP_X,
-        GTRY_CMD_SIG_STEP_Y,
-        GTRY_CMD_SIG_STEP_Z,
-        GTRY_CMD_SIG_DIR_X,
-        GTRY_CMD_SIG_DIR_Y,
-        GTRY_CMD_SIG_DIR_Z,
-
-        GTRY_CMD_SIG_NB
-    } t_eGTRY_CmdSignals;
 
     ///@brief Algorithm Computation type 
     typedef enum 
@@ -117,7 +96,7 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+    t_eReturnCode GANTRY_SPEC_BuildCartesianCmd(t_float32 f_value_af32[], 
                                                 t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
     /**
      * @brief This function handle the Safety state of State Machine
@@ -126,7 +105,7 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+    t_eReturnCode GANTRY_SPEC_BuildSphericCmd(  t_float32 f_value_af32[], 
                                                 t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
     /**
      * @brief This function handle the Safety state of State Machine
@@ -135,7 +114,7 @@
      * @return RC_WARNNING_PENDING : The State is on going 
      * @return ohters : @ref t_eReturnCode
      */
-    t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[GTRY_CMD_SIG_NB], 
+    t_eReturnCode GANTRY_SPEC_BuildStepCmd( t_float32 f_value_af32[], 
                                             t_sLIBQUEUE_QueueCore * f_QueuePosCmd_ps);
     /**
      * @brief This function handle the Safety state of State Machine

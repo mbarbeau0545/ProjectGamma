@@ -112,54 +112,6 @@
             .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_4_DEADTIME,
             .direction_e = APPSIG_SIGNAL_CL42T_MTR_4_DIRECTION,
             .health_e = APPSIG_SIGNAL_CL42T_MTR_4_HEALTH
-        },
-        [CL42T_MOTOR_5] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_5_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_5_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_5_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_5_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_5_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_5_HEALTH
-        },
-        [CL42T_MOTOR_6] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_6_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_6_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_6_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_6_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_6_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_6_HEALTH
-        },
-        [CL42T_MOTOR_7] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_7_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_7_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_7_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_7_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_7_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_7_HEALTH
-        },
-        [CL42T_MOTOR_8] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_8_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_8_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_8_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_8_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_8_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_8_HEALTH
-        },
-        [CL42T_MOTOR_9] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_9_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_9_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_9_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_9_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_9_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_9_HEALTH
-        },
-        [CL42T_MOTOR_10] = {
-            .mtrState_e = APPSIG_SIGNAL_CL42T_MTR_10_STATE,
-            .cwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_10_CW_ENDSTOP,
-            .ccwEndStop_e = APPSIG_SIGNAL_CL42T_MTR_10_CCW_ENDSTOP,
-            .deadTime_e = APPSIG_SIGNAL_CL42T_MTR_10_DEADTIME,
-            .direction_e = APPSIG_SIGNAL_CL42T_MTR_10_DIRECTION,
-            .health_e = APPSIG_SIGNAL_CL42T_MTR_10_HEALTH
         }
     };
     //********************************************************************************

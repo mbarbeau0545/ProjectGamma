@@ -153,8 +153,8 @@ t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_POS_GetSigValue(t_float32 *f_rawSigVa
             case APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_NEMA17:
                 Ret_e = FMKIO_Get_InEcdrPositionValue(  APPSNS_SPEC_ECDR_ID,
                                                         FMKIO_ECDR_VAL_FORMAT_MRADIAN,
-                                                        NULL,
-                                                        &position_f32);
+                                                        &position_f32,
+                                                        NULL);
                 if(Ret_e == RC_OK)
                 {
                     *f_rawSigValue_pf32 = position_f32 / 1000.0f; // value is in radian
@@ -172,6 +172,7 @@ t_eReturnCode APPSNS_SPEC_ECDR_HD_CNTR_KNF_POS_GetSigValue(t_float32 *f_rawSigVa
                                                 &position_f32);
                 if(Ret_e == RC_OK)
                 {
+                    //FMKSRL_LOG("Receive Ctnr KNife value");
                     *f_rawSigValue_pf32 = position_f32;
                     *f_isValue_OK = TRUE;
                 }
