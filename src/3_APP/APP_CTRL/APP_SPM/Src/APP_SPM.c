@@ -444,7 +444,7 @@ static void s_APPSPM_AppSigMsgRcvCallback(t_eAPPSIG_Signal f_prmSignal_e, t_floa
                 if(Ret_e == RC_OK)
                 {
                     //---- apply offset and factor ----//
-
+                    FMKSRL_LOG("[SPM0], rcv prm %d, value %d", idxParam_u16, tmpValue_u32);
                     Ret_e = s_APPSPM_DecodeSigValue(&g_ItemPrmInfo_as[idxParam_u16],
                                                     (void *)&tmpValue_u32);
                 }

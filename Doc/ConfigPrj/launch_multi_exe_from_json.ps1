@@ -62,9 +62,6 @@ $SafeExe = Resolve-AbsolutePath -InputPath $SafeExe -Label "Safety executable" -
 $RepoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\.."))
 
 $cfg = Get-Content -Raw -LiteralPath $ConfigJson | ConvertFrom-Json
-if (-not $cfg.ecus) {
-    throw "No ecus[] in ecus_config.json"
-}
 
 function Convert-ToBool {
     param(
@@ -192,8 +189,28 @@ function Start-BrokerIfNeeded {
             $pcsimEnabledCount++
         }
     }
-    if ($pcsimEnabledCount -lt 2) {
-        Write-Host "[BROKER] skipped (need at least 2 enabled PCSIM ECUs)"
+    $canClientsProp = $CfgObj.PSObject.Properties["can_clients"]
+    if ($null -ne $canClientsProp -and $null -ne $canClientsProp.Value) {
+        foreach ($client in $canClientsProp.Value) {
+            if ($null -eq $client) {
+                continue
+            }
+            $clientEnabled = Get-BoolProp -Obj $client -Name "enable_client" -Default $true
+            if (-not $clientEnabled) {
+                continue
+            }
+            $clientGate = ""
+            $clientGateProp = $client.PSObject.Properties["can_gate"]
+            if ($null -ne $clientGateProp -and $null -ne $clientGateProp.Value) {
+                $clientGate = ([string]$clientGateProp.Value).Trim().ToUpperInvariant()
+            }
+            if ($clientGate -eq "PCSIM") {
+                $pcsimEnabledCount++
+            }
+        }
+    }
+    if ($pcsimEnabledCount -lt 1) {
+        Write-Host "[BROKER] skipped (need at least 1 active PCSIM endpoint: ECU or can_client)"
         return
     }
 

@@ -423,7 +423,7 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
     }
     if(Ret_e == RC_OK)
     {
-        Ret_e = APPSIG_AddRcvMsgCallback(   APPSIG_CAN_MSG_APPLICATIONDIAGNOSTICECUSAFETY,
+        Ret_e = APPSIG_AddRcvMsgCallback(   APPSIG_CAN_MSG_APPLICATIONDIAGNOSTIC4,
                                             APPSIG_MSG_ORIGIN_CAN,
                                             s_APPLGC_AppSigMsgRcvCallback);
     }
@@ -453,8 +453,29 @@ static t_eReturnCode s_APPLGC_ConfigurationState(void)
  *********************************/
 static t_eReturnCode s_APPLGC_PreOperational(void)
 {
-    t_eReturnCode Ret_e = RC_OK;
+    t_eReturnCode Ret_e;
+    t_eCyclicModState actSts_e;
+    t_eCyclicModState snsSts_e;
 
+    //---- waiting sns & act module to be in ope state -----//
+    Ret_e = APPACT_GetState(&actSts_e);
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPSNS_GetState(&snsSts_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        if((actSts_e != STATE_CYCLIC_OPE)
+        || (snsSts_e != STATE_CYCLIC_OPE))
+        {
+            Ret_e = RC_WARNING_PENDING
+        }
+        else 
+        {
+            Ret_e = RC_OK;
+        }
+    }
+    
     return Ret_e;
 }
 /*********************************
@@ -649,15 +670,17 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
                                             t_float32 *f_sigValue_af32)
 {
     t_uint8 idxSrv_u8;
+    t_uint8 idxActItf_u8;
+    t_eReturnCode Ret_e;
     t_eAPPSDM_DiagnosticReport reprtEcuSafety_e;
 
     if((f_msgID_u16 >= (t_uint16)APPSIG_CAN_MSG_NB)
-    || (f_msgID_u16 != (t_uint16)APPSIG_CAN_MSG_APPLICATIONDIAGNOSTICECUSAFETY))
+    || (f_msgID_u16 != (t_uint16)APPSIG_CAN_MSG_APPLICATIONDIAGNOSTIC4))
     {
         ASSERT((t_uint16)f_msgID_u16);
     }
     else if((f_signal_ae == (t_eAPPSIG_Signal *)NULL)
-         || (f_sigValue_af32 == (t_float32 *)NULL))
+    || (f_sigValue_af32 == (t_float32 *)NULL))
     {
         ASSERT((t_uint16)0);
     }
@@ -685,6 +708,16 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
                 for(idxSrv_u8 = (t_uint8)0 ; idxSrv_u8 < (t_uint8)APPLGC_SRV_NB ; idxSrv_u8++)
                 {
                     (void)APPLGC_SetServiceHealth((t_eAPPLGC_SrvList)idxSrv_u8, APPLGC_SRV_HEALTH_ERROR);
+                }
+
+                for(idxActItf_u8 = (t_uint8)0 ; idxActItf_u8 < APPACT_ACTITF_NB ; idxActItf_u8++)
+                {
+                    Ret_e = APPACT_SetActValue((t_eAPPACT_ActInterface)idxActItf_u8, 0.0F);
+
+                    if(Ret_e != RC_OK)
+                    {
+                        ASSERT((t_uint16)Ret_e);
+                    }
                 }
             }
         }
