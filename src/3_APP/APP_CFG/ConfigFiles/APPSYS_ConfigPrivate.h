@@ -48,10 +48,11 @@
     #define APPSYS_IO_ANALOG_SIGNAL (FMKIO_INPUT_SIGANA_2)
 
     ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
-    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (TRUE)
+    #define APPSYS_SYS_OPT_EEPROM_PARAM_ENABLE (FALSE)
 
     ///@brief Signal send to know if the parameter has been send by ros 
     #define APPSYS_FLAG_PRM_RCV_STATUS (APPSIG_SIGNAL_PRM_FLAG_PARAM_SEND_OK)
+    #define APPSYS_SYS_MACH_BASED_ON_PRM (FALSE)
 
     ///@brief Number of ecu position parameter
     #define APPSYS_ECU_POS_MAX      ((t_uint32)6)

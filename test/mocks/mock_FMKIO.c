@@ -4,7 +4,7 @@ t_eReturnCode FMKIO_Set_OutDigSigValue(t_eFMKIO_OutDigSig a, t_eFMKIO_DigValue b
     return RC_OK;
 }
 
-t_eReturnCode FMKIO_Set_OutPwmSigPulses(t_eFMKIO_OutPwmSig a , t_uint16 b , t_uint16 c, t_uint16 d) {
+t_eReturnCode FMKIO_Set_OutPwmSigPulses(t_eFMKIO_OutPwmSig a , t_uint16 b , t_uint16 c, t_uint32 d) {
     return RC_OK;
 }
 

@@ -224,7 +224,16 @@ t_eReturnCode APPACT_SPEC_CL42T_PLS_SetValue( t_float32 f_SigValue_pf32,
         {
             s_APPACT_SPEC_CL42T_CheckTimeValidity(f_shadowCmd_ps);
             FMKCPU_GetTick(&f_shadowCmd_ps->lastCmdSet_u32);
-            if (f_SigValue_pf32 >= 0.0f)
+            // Saturate before the float32 -> sint32 cast to avoid wrapping on large CAN values.
+            if (f_SigValue_pf32 >= 2147483647.0f)
+            {
+                f_shadowCmd_ps->nbPulses_s32 = (t_sint32)0x7FFFFFFF;
+            }
+            else if (f_SigValue_pf32 <= -2147483648.0f)
+            {
+                f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(-2147483647L - 1L);
+            }
+            else if (f_SigValue_pf32 >= 0.0f)
             {
                 f_shadowCmd_ps->nbPulses_s32 = (t_sint32)(f_SigValue_pf32 + 0.5f);
             }

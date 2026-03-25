@@ -1,6 +1,6 @@
 {
   "general": {
-    "mode": "SIL",
+    "mode": "HIL",
     "refresh_ms": 50,
     "can_broker": {
       "enabled": true,
@@ -13,7 +13,7 @@
   "can_clients": [
     {
       "name": "TOOL_LOGGER",
-      "enable_client": true,
+      "enable_client": false,
       "can_gate": "PCSIM",
       "pcsim_can": {
         "shared_can_nodes": [
@@ -35,7 +35,7 @@
   "ecus": [
     {
       "name": "ECU_GTRY",
-      "enable_ecu": false,
+      "enable_ecu": true,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
@@ -102,8 +102,13 @@
         "idx": 1,
         "value_mv": 3000
       },
-      "can_gate": "PCSIM",
+      "can_gate": "WAVESHARE",
       "can_speed_bps": 250000,
+      "can_device_port": {
+        "Vid": "1A86",
+        "Pid": "7523",
+        "must_contain" : "CH340"
+      },
       "pcsim_can": {
         "timeout_s": 0.5,
         "poll_sleep_s": 5e-05,
@@ -126,7 +131,7 @@
     },
     {
       "name": "ECU_HC",
-      "enable_ecu": true,
+      "enable_ecu": false,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
@@ -195,6 +200,10 @@
       },
       "can_gate": "PCSIM",
       "can_speed_bps": 250000,
+      "can_device_port": {
+        "Vid": "1A86",
+        "Pid": "55D4"
+      },
       "pcsim_can": {
         "timeout_s": 0.5,
         "poll_sleep_s": 5e-05,
@@ -286,6 +295,10 @@
       },
       "can_gate": "PCSIM",
       "can_speed_bps": 250000,
+      "can_device_port": {
+        "Vid": "1A86",
+        "Pid": "55D4"
+      },
       "pcsim_can": {
         "timeout_s": 0.5,
         "poll_sleep_s": 5e-05,
@@ -332,6 +345,10 @@
       },
       "can_gate": "PCSIM",
       "can_speed_bps": 250000,
+      "can_device_port": {
+        "Vid": "1A86",
+        "Pid": "55D4"
+      },
       "pcsim_can": {
         "timeout_s": 0.5,
         "poll_sleep_s": 5e-05,
