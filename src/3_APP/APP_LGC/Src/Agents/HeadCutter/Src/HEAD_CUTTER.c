@@ -92,10 +92,18 @@ typedef struct
 
 } t_sHC_CarthPos;
 
+/// @brief pulse cmd posiiton 
+typedef struct 
+{
+    t_float32 Knife_f32;
+    t_float32 CntrKnife_f32;
+} t_sHC_PulsePos;
+
 typedef union 
 {
     t_sHC_CarthPos Carth_s;
     t_sHC_JointAngle Joint_s;
+    t_sHC_PulsePos Pulses_s;
 } t_uHC_CmdPos;
 
 
@@ -174,8 +182,7 @@ static t_bool g_FlagIterCmdReady_b = FALSE;
 ///@brief One Position cmd cannot be pushed inside PosQueue
 static t_bool g_FlagPosCmdPending_b = FALSE;
 ///@brief Flag Motor Enable 
-static t_bool g_FlagMotorEnable_b = FALSE;
-
+static t_bool g_flagMtrEnable_ab[HC_AXE_HD_NB];
 ///@brief Time Max to wait for the axe to go to the calibration point 
 static t_sHC_CalibCmdInfo g_calibCmdInfo_s;
 
@@ -310,6 +317,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Safety(void);
  */
 static t_eReturnCode s_HC_Fsm_PrdTsk_Error(void);
 static t_eReturnCode s_HC_ApplyRearmRequest(void);
+static t_eReturnCode s_HC_InterpretMtrStCmd(t_float32 * f_sigValue_af32);
 /**
  * @brief This function handle the reception of signals from APPSIG
  * ----------------------------------------------------------------------------
@@ -542,12 +550,12 @@ t_eReturnCode HEAD_CUTTER_PeriodicTask(void)
     t_eReturnCode Ret_e;
     
     //---- 1- Call Safety Update ----//
-    Ret_e = s_HC_SafetyUpdate();
-
+    Ret_e = s_HC_UpdatePosition();
+    
     //---- 2- Update Current position ----//
     if(Ret_e == RC_OK)
     {
-        Ret_e = s_HC_UpdatePosition();
+        Ret_e = s_HC_SafetyUpdate();
     }
     //---- 3- Call State Machine ----//
     if(Ret_e == RC_OK)
@@ -649,19 +657,12 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
     t_uint8 sysOptHdHoldKnf_u8;
     t_eAPPLGC_CalibFeedbackSts feedbackSts_e = APPLGC_CALIB_FBSTS_UNDEFINED_ERROR;
     
-    if(g_FlagMotorEnable_b == FALSE)
-    {
-        //---- calibration could not be done ----//
-        feedbackSts_e = APPLGC_CALIB_FBSTS_MTR_DISABLE;
-        FMKSRL_LOG("[HC][CALIB] : Motor Disable, could not proceed calibration\r\n");
-        Ret_e = RC_OK;
-    }
-    else if(g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_IDLE)
+    if(g_calibCmdInfo_s.reqSts_e == APPLGC_CALIB_REQSTS_IDLE)
     {
         //---- nothing to do here ---//
         FMKSRL_LOG("[HC][CALIB] : Application request IDLE state-> out of calibration\r\n");
         feedbackSts_e = APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED;
-        Ret_e = RC_OK; 
+        Ret_e = RC_OK;
     }
     else 
     {
@@ -696,6 +697,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                             g_axeMissPulses_af32[idxAxe_e] = 0.0F;
                         }
 
+                        g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                         g_calibCmdInfo_s.currSts_e = g_calibCmdInfo_s.reqSts_e;
                         feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
                         Ret_e = RC_WARNING_PENDING;
@@ -714,7 +716,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                             feedbackSts_e = APPLGC_CALIB_FBSTS_ONGOING;
                             Ret_e = RC_WARNING_PENDING;
                         }
-                        else 
+                        else
                         {
                             FMKSRL_LOG("[HC][CALIB] : Current State -> MOVE, New command receive\r\n");
                             pulsesCmd_s32 = s_HC_QuantizePulseCmd(g_calibCmdInfo_s.axeHead_e,
@@ -730,7 +732,13 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Calibration(void)
                                 g_calibCmdInfo_s.isNewCmdReceiv_b = FALSE;
                                 Ret_e = RC_WARNING_PENDING;
                             }
-                            else 
+                            else if(Ret_e == RC_WARNING_NOT_ALLOWED)
+                            {
+                                FMKSRL_LOG("[HC][CALIB] : Motor Disable, could not proceed calibration\r\n");
+                                feedbackSts_e = APPLGC_CALIB_FBSTS_MTR_DISABLE;
+                                Ret_e = RC_OK; // out of calib
+                            }
+                            else
                             {
                                 feedbackSts_e = APPLGC_CALIB_FBSTS_SET_VAL_FAILED;
                             }
@@ -851,7 +859,6 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_PreOperational(void)
         }
         if(Ret_e == RC_OK)
         {
-            g_FlagMotorEnable_b = TRUE;
             //---- set cmpte value to sns value ----//
             g_KnifeTipCmpte_s = g_KnifeTipCurr_s;
             g_KnifeHoldCmpte_s = g_KnifeHoldCurr_s;
@@ -909,7 +916,7 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Operational(void)
                 }
                 else if(Ret_e < RC_OK)
                 {
-                    ASSERT((t_uint16)0);
+                    ASSERT((t_uint16)Ret_e);
                 }
                 if(Ret_e == RC_OK)
                 {
@@ -1000,11 +1007,6 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Safety(void)
             }
         }
 
-        if((Ret_e == RC_OK)
-        && (g_FlagMotorEnable_b == TRUE))
-        {
-            g_FlagMotorEnable_b = FALSE;
-        }
         if(Ret_e == RC_OK)
         {
             Ret_e = s_HC_ApplyRearmRequest();
@@ -1549,81 +1551,90 @@ static t_eReturnCode s_HC_Fsm_PrdTsk_Ope_PosCmdMngmt(void)
                 alpha_b_mrad = posCmd_s.Pos_u.Joint_s.alpha_b_mrad;
                 alpha_c_mrad = posCmd_s.Pos_u.Joint_s.alpha_c_mrad;
             }
+            else if(posCmd_s.cmdPosType_e == HC_CMD_TYPE_PULSE_SPD)
+            {
+                pulseKnf_f32 = posCmd_s.Pos_u.Pulses_s.Knife_f32;
+                pulseCntrKnf_f32 = posCmd_s.Pos_u.Pulses_s.CntrKnife_f32;
+            }
             else 
             {
                 Ret_e = RC_ERROR_PARAM_INVALID;
                 ASSERT((t_uint16)posCmd_s.cmdPosType_e);
             }
 
-            //--- now we work with joint only ---//
-            if(Ret_e == RC_OK)
+            //--- now we work with joint only, 
+            //      if already in pulses, we pass that step ---//
+            if((Ret_e == RC_OK)
+            &&(posCmd_s.cmdPosType_e != HC_CMD_TYPE_PULSE_SPD))
             {
-                Ret_e = s_HC_CheckAngleAssociationValidity(alpha_b_mrad, alpha_c_mrad);
+                {
+                    Ret_e = s_HC_CheckAngleAssociationValidity(alpha_b_mrad, alpha_c_mrad);
+                }
+                if(Ret_e == RC_OK)
+                {
+                    
+                    //---- 3- calculate delta ----//
+                    //---- delta to apply = target - current planned point ----//
+                    deltaAlpha_b_f32 = alpha_b_mrad - currCmpte_alpha_b_f32;
+                    deltaAlpha_c_f32 = alpha_c_mrad - currCmpte_alpha_c_f32;
+
+                    Ret_e = s_HC_ComputePulseFromAngle( deltaAlpha_b_f32,
+                                                        deltaAlpha_c_f32,
+                                                        &pulseKnf_f32,
+                                                        &pulseCntrKnf_f32);
+                }
             }
             if(Ret_e == RC_OK)
             {
+                knfCmdIterPayload_s.frequency_f32 = 
+                    (t_float32)posCmd_s.speed_s.knifeSpd_rpm * prmKnifeRpmToHz_u.prmVal_f32;
+                knfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_KNFE, pulseKnf_f32);
+                knfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
+
+                cntrKnfCmdIterPayload_s.frequency_f32 = 
+                    (t_float32)posCmd_s.speed_s.cntrKnifeSpd_rpm * prmCntrKnifeRpmToHz_u.prmVal_f32;
+                cntrKnfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_CNTR_KNFE, pulseCntrKnf_f32);
+                cntrKnfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
                 
-                //---- 3- calculate delta ----//
-                //---- delta to apply = target - current planned point ----//
-                deltaAlpha_b_f32 = alpha_b_mrad - currCmpte_alpha_b_f32;
-                deltaAlpha_c_f32 = alpha_c_mrad - currCmpte_alpha_c_f32;
-
-                Ret_e = s_HC_ComputePulseFromAngle( deltaAlpha_b_f32,
-                                                    deltaAlpha_c_f32,
-                                                    &pulseKnf_f32,
-                                                    &pulseCntrKnf_f32);
-                if(Ret_e == RC_OK)
+                //---- write element only if there is at least one pulse -----//
+                if(knfCmdIterPayload_s.pulses_s32 != (t_sint32)0)
                 {
-                    knfCmdIterPayload_s.frequency_f32 = 
-                        (t_float32)posCmd_s.speed_s.knifeSpd_rpm * prmKnifeRpmToHz_u.prmVal_f32;
-                    knfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_KNFE, pulseKnf_f32);
-                    knfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
+                    Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
+                                                        &knfCmdIterPayload_s);
+                }
+                if((Ret_e == RC_OK)
+                && (cntrKnfCmdIterPayload_s.pulses_s32 != (t_sint32)0))
+                {
+                    Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
+                                                        &cntrKnfCmdIterPayload_s);
+                }
+                if(Ret_e == RC_OK) 
+                {
+                    //---- clear element from pos queue ----//
+                    Ret_e = LIBQUEUE_ReadElement(   &g_QueueCmdPosRcvMngmt_s,
+                                                    NULL,
+                                                    sizeof(t_sHC_PosCmdQueueElem));
+                    //---- adapt current alpha_b & alpha_c pos 
+                    currCmpte_alpha_b_f32 = alpha_b_mrad;
+                    currCmpte_alpha_c_f32 = alpha_c_mrad;
 
-                    cntrKnfCmdIterPayload_s.frequency_f32 = 
-                        (t_float32)posCmd_s.speed_s.cntrKnifeSpd_rpm * prmCntrKnifeRpmToHz_u.prmVal_f32;
-                    cntrKnfCmdIterPayload_s.pulses_s32 = s_HC_QuantizePulseCmd(HC_AXE_HD_CNTR_KNFE, pulseCntrKnf_f32);
-                    cntrKnfCmdIterPayload_s.triggerTimer_f32 = 0.0F;
-                    
-                    //---- write element only if there is at least one pulse -----//
-                    if(knfCmdIterPayload_s.pulses_s32 != (t_sint32)0)
+                    //---- Debug Log ----//
+                    FMKSRL_LOG( "[HC] : Set PosCmd, to reach alphB->%d, alphaC->%d, PulseKnf->%d, pulseCntrKnf->%d\r\n",
+                                (t_sint32)currCmpte_alpha_b_f32,
+                                (t_sint32)currCmpte_alpha_c_f32,
+                                knfCmdIterPayload_s.pulses_s32,
+                                cntrKnfCmdIterPayload_s.pulses_s32);
+
+                    //---- update the current time stamps ----//
+                    g_currCmdTimeStampID_u32 ++;
+                    if(g_currCmdTimeStampID_u32 > (t_uint32)HC_CMD_POS_TIMESTAMP_ID_MAX)
                     {
-                        Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_KNFE],
-                                                         &knfCmdIterPayload_s);
+                        g_currCmdTimeStampID_u32 = (t_uint32)0;
                     }
-                    if((Ret_e == RC_OK)
-                    && (cntrKnfCmdIterPayload_s.pulses_s32 != (t_sint32)0))
+
+                    if(g_FlagIterCmdReady_b == FALSE)
                     {
-                        Ret_e = s_HC_WriteOrMergeIterCmd(&g_QueueCmdIterRcvMngmt_as[HC_AXE_HD_CNTR_KNFE],
-                                                         &cntrKnfCmdIterPayload_s);
-                    }
-                    if(Ret_e == RC_OK) 
-                    {
-                        //---- clear element from pos queue ----//
-                        Ret_e = LIBQUEUE_ReadElement(   &g_QueueCmdPosRcvMngmt_s,
-                                                        NULL,
-                                                        sizeof(t_sHC_PosCmdQueueElem));
-                        //---- adapt current alpha_b & alpha_c pos 
-                        currCmpte_alpha_b_f32 = alpha_b_mrad;
-                        currCmpte_alpha_c_f32 = alpha_c_mrad;
-
-                        //---- Debug Log ----//
-                        FMKSRL_LOG( "[HC] : Set PosCmd, to reach alphB->%d, alphaC->%d, PulseKnf->%d, pulseCntrKnf->%d\r\n",
-                                    (t_sint32)currCmpte_alpha_b_f32,
-                                    (t_sint32)currCmpte_alpha_c_f32,
-                                    knfCmdIterPayload_s.pulses_s32,
-                                    cntrKnfCmdIterPayload_s.pulses_s32);
-
-                        //---- update the current time stamps ----//
-                        g_currCmdTimeStampID_u32 ++;
-                        if(g_currCmdTimeStampID_u32 > (t_uint32)HC_CMD_POS_TIMESTAMP_ID_MAX)
-                        {
-                            g_currCmdTimeStampID_u32 = (t_uint32)0;
-                        }
-
-                        if(g_FlagIterCmdReady_b == FALSE)
-                        {
-                            g_FlagIterCmdReady_b = TRUE;
-                        }
+                        g_FlagIterCmdReady_b = TRUE;
                     }
                 }
             }
@@ -1785,6 +1796,12 @@ static t_eReturnCode s_HC_SafetyUpdate(void)
     //---- TODO: look the current that flowss into motor when 
     //          they are on to find problem, nothing for now ----//
 
+    //---- 1- check position validity if not calibration ----//
+    if(g_Fsm_PrdcTskSts_e == HC_FSM_PRD_TSK_OPS)
+    {
+        Ret_e = s_HC_CheckPositionValidity(g_KnifeTipCurr_s.carthPos_s);
+    }
+
     return Ret_e;
 }
 
@@ -1887,6 +1904,11 @@ static t_eReturnCode s_HC_SetAxeSetPoint( t_eHC_AxeHandleList f_idxAxe_e,
         Ret_e = RC_ERROR_PARAM_INVALID;
         ASSERT((t_uint16)0);
     }
+    else if(g_flagMtrEnable_ab[f_idxAxe_e] == FALSE)
+    {
+        Ret_e = RC_WARNING_NOT_ALLOWED;
+        ASSERT((t_uint16)0);
+    }
     else 
     {
         appAxeCfg_ps = &c_HC_AppAxesCfg_as[f_idxAxe_e];
@@ -1957,6 +1979,10 @@ static t_eReturnCode s_HC_EnableAxe(t_eHC_AxeHandleList f_idxAxe_e)
                 Ret_e = RC_ERROR_PARAM_INVALID;
             break;
         }
+        if(Ret_e == RC_OK)
+        {
+            g_flagMtrEnable_ab[f_idxAxe_e] = TRUE;
+        }
     }
 
     return Ret_e;
@@ -1990,6 +2016,60 @@ static t_eReturnCode s_HC_AxeStop(t_eHC_AxeHandleList f_idxAxe_e, t_bool f_isHar
         }
 
         Ret_e = APPACT_SetActValue(appAxeCfg_ps->actIfSpeed_e, stopID_f32);
+
+        if((stopID_f32 == APPACT_HARD_STOP)
+        && (Ret_e == RC_OK))
+        {
+            g_flagMtrEnable_ab[f_idxAxe_e] = FALSE;
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
+ * s_HC_InterpretMtrStCmd
+ *********************************/
+static t_eReturnCode s_HC_InterpretMtrStCmd(t_float32 * f_sigValue_af32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    const t_eHC_AxeHandleList axeList_ae[2] = {
+        HC_AXE_HD_KNFE,
+        HC_AXE_HD_CNTR_KNFE
+    };
+    t_eAPPLGC_CmdMtrSts cmdMtrSts_e;
+
+    if(f_sigValue_af32 == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        for(t_uint8 idxCmd_u8 = 0U;
+            (idxCmd_u8 < (t_uint8)2) && (Ret_e == RC_OK);
+            idxCmd_u8++)
+        {
+            cmdMtrSts_e = (t_eAPPLGC_CmdMtrSts)f_sigValue_af32[idxCmd_u8];
+
+            switch(cmdMtrSts_e)
+            {
+                case APPLGC_MTR_STS_DISABLE:
+                    Ret_e = s_HC_AxeStop(axeList_ae[idxCmd_u8], TRUE);
+                break;
+                case APPLGC_MTR_STS_ENABLE:
+                    Ret_e = s_HC_EnableAxe(axeList_ae[idxCmd_u8]);
+                break;
+                case APPLGC_MTR_STS_STOP:
+                    Ret_e = s_HC_AxeStop(axeList_ae[idxCmd_u8], FALSE);
+                break;
+                case APPLGC_MTR_STS_NB:
+                default:
+                    Ret_e = RC_ERROR_PARAM_INVALID;
+                    ASSERT((t_uint16)cmdMtrSts_e);
+                break;
+            }
+        }
     }
 
     return Ret_e;
@@ -2053,12 +2133,12 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 t_eHC_CmdPosType cmdType_e;
 
                 if((f_nbSignal_u8 != (t_uint8)6)
-                || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X_ALPH_A)
-                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y_ALPH_B)
+                || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_X_ALPH_B)
+                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_Y_ALPH_C)
                 || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_HC_CMD_KNF_POS_SPD_RPM)
                 || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_HC_CMD_CNTR_KNF_POS_SPD_RPM)
-                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_TYPE_ID)
-                || (f_signal_ae[5] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID))
+                || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_POS_ID)
+                || (f_signal_ae[5] != APPSIG_SIGNAL_LGC_HC_CMD_KNIFE_TYPE_ID))
                 {
                     ASSERT((t_uint16)f_nbSignal_u8);
                 }
@@ -2068,36 +2148,68 @@ static void s_HC_MsgReceptionCallback(  t_uint16 f_msgID_u16,
                 }
                 else 
                 {
-                    cmdType_e = (t_eHC_CmdPosType)f_sigValue_af32[4];
+                    cmdType_e = (t_eHC_CmdPosType)f_sigValue_af32[5];
                     if(cmdType_e == HC_CMD_TYPE_POS_CARTH)
                     {
                         buffPos_s.Pos_u.Carth_s.x_mm =  f_sigValue_af32[0];
                         buffPos_s.Pos_u.Carth_s.y_mm =  f_sigValue_af32[1];
                     }
-                    else // HC_CMD_TYPE_POS_JOINT
+                    else if(cmdType_e == HC_CMD_TYPE_POS_JOINT)
                     {
                         buffPos_s.Pos_u.Joint_s.alpha_b_mrad =  f_sigValue_af32[0];
                         buffPos_s.Pos_u.Joint_s.alpha_c_mrad =  f_sigValue_af32[1];
                     }
+                    else if(cmdType_e == HC_CMD_TYPE_PULSE_SPD)
+                    {
+                        buffPos_s.Pos_u.Pulses_s.Knife_f32 = f_sigValue_af32[0];
+                        buffPos_s.Pos_u.Pulses_s.CntrKnife_f32 = f_sigValue_af32[1];
+                    }
+                    else 
+                    {
+                        Ret_e = RC_ERROR_PARAM_INVALID;
+                        ASSERT((t_uint16)cmdType_e);
+                    }
+                    if(Ret_e == RC_OK)
+                    {
 
-                    buffPos_s.speed_s.knifeSpd_rpm = f_sigValue_af32[2];
-                    buffPos_s.speed_s.cntrKnifeSpd_rpm =f_sigValue_af32[3];
-                    buffPos_s.cmdPosType_e = cmdType_e; // f_sigValue_af32[4]
-                    buffPos_s.timeStampID_u32 = (t_uint32)f_sigValue_af32[5];
-                    
-                    Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
-                                                    &buffPos_s,
-                                                    sizeof(t_sHC_PosCmdQueueElem));
-                    if(Ret_e != RC_OK)
-                    {
-                        ASSERT((t_uint16)Ret_e);
+                        buffPos_s.speed_s.knifeSpd_rpm = f_sigValue_af32[2];
+                        buffPos_s.speed_s.cntrKnifeSpd_rpm =f_sigValue_af32[3];
+                        buffPos_s.timeStampID_u32 = (t_uint32)f_sigValue_af32[4];
+                        buffPos_s.cmdPosType_e = cmdType_e; // f_sigValue_af32[5]
+                        
+                        Ret_e = LIBQUEUE_WriteElement(  &g_QueueCmdPosRcvMngmt_s,
+                                                        &buffPos_s,
+                                                        sizeof(t_sHC_PosCmdQueueElem));
+                            
+                        if(Ret_e != RC_OK)
+                        {
+                            ASSERT((t_uint16)Ret_e);
+                        }
+                        else if(g_FlagPosCmdPending_b == FALSE)
+                        {
+                            g_FlagPosCmdPending_b = TRUE;
+                        }
                     }
-                    else if(g_FlagPosCmdPending_b == FALSE)
-                    {
-                        g_FlagPosCmdPending_b = TRUE;
-                    }
+                
                 }
             }
+            break;
+            case APPSIG_CAN_MSG_LGC_HC_MTR_STS:
+                if((f_nbSignal_u8 != (t_uint8)2)
+                || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_HC_CMD_SIG_MTR_STS_KNF)
+                || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_HC_CMD_SIG_MTR_STS_CNTR_KNF))
+                {
+                    ASSERT((t_uint16)f_nbSignal_u8);
+                }
+                else if((f_sigValue_af32[0] >= (t_float32)APPLGC_MTR_STS_NB)
+                ||     (f_sigValue_af32[1] >= (t_float32)APPLGC_MTR_STS_NB))
+                {
+                    ASSERT((t_uint16)f_sigValue_af32[0]);
+                }
+                else 
+                {
+                    Ret_e = s_HC_InterpretMtrStCmd(f_sigValue_af32);
+                }
             break;
             case APPSIG_CAN_MSG_LGC_HC_CMD_CALIBRATION:
             {

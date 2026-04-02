@@ -114,11 +114,12 @@ function Test-BrokerAlive {
     }
 }
 
-function Test-BrokerProcessRunning {
+function Get-BrokerProcesses {
     param(
         [Parameter(Mandatory = $true)][string]$BrokerScriptPath
     )
 
+    $matches = @()
     try {
         $scriptNorm = [System.IO.Path]::GetFullPath($BrokerScriptPath).ToLowerInvariant()
         $procs = Get-CimInstance Win32_Process -ErrorAction Stop
@@ -133,14 +134,68 @@ function Test-BrokerProcessRunning {
                 continue
             }
             $cmdNorm = $cmd.ToLowerInvariant()
-            if (($cmdNorm.Contains("can_broker.py")) -and ($cmdNorm.Contains($scriptNorm) -or $cmdNorm.Contains("tools\\multiecumonitor\\can_broker.py"))) {
-                return $true
+            if ($cmdNorm.Contains("can_broker.py")) {
+                $matches += $proc
             }
         }
     } catch {
-        return $false
+        return @()
     }
 
+    return $matches
+}
+
+function Test-BrokerProcessRunning {
+    param(
+        [Parameter(Mandatory = $true)][string]$BrokerScriptPath
+    )
+
+    return (@(Get-BrokerProcesses -BrokerScriptPath $BrokerScriptPath).Count -gt 0)
+}
+
+function Stop-BrokerProcesses {
+    param(
+        [Parameter(Mandatory = $true)][string]$BrokerScriptPath,
+        [int]$Port,
+        [switch]$Dry
+    )
+
+    $brokerProcs = @(Get-BrokerProcesses -BrokerScriptPath $BrokerScriptPath)
+    $brokerAlive = Test-BrokerAlive -Port $Port
+
+    if ($brokerProcs.Count -eq 0) {
+        if ($brokerAlive) {
+            Write-Warning "Broker control port 127.0.0.1:$Port is busy but no can_broker.py process was found; restart skipped"
+            return $false
+        }
+        return $true
+    }
+
+    $brokerPids = @($brokerProcs | ForEach-Object { [int]$_.ProcessId })
+    Write-Host ("[BROKER] stopping existing instance(s): {0}" -f (($brokerPids | Sort-Object) -join ", "))
+    if ($Dry) {
+        return $true
+    }
+
+    foreach ($procId in $brokerPids) {
+        try {
+            Stop-Process -Id $procId -Force -ErrorAction Stop
+        } catch {
+            Write-Warning ("Failed to stop broker process PID {0}: {1}" -f $procId, $_.Exception.Message)
+        }
+    }
+
+    for ($attempt = 0; $attempt -lt 25; $attempt++) {
+        Start-Sleep -Milliseconds 200
+        $stillRunning = Test-BrokerProcessRunning -BrokerScriptPath $BrokerScriptPath
+        $stillAlive = Test-BrokerAlive -Port $Port
+        if ((-not $stillRunning) -and (-not $stillAlive)) {
+            Write-Host "[BROKER] previous instance stopped"
+            return $true
+        }
+    }
+
+    Write-Warning "Broker previous instance did not stop cleanly; restart skipped"
     return $false
 }
 
@@ -226,13 +281,12 @@ function Start-BrokerIfNeeded {
         return
     }
 
-    if (Test-BrokerProcessRunning -BrokerScriptPath $brokerScript) {
-        Write-Host "[BROKER] already running (process detected)"
-        return
-    }
-    if (Test-BrokerAlive -Port $port) {
-        Write-Host "[BROKER] already running on 127.0.0.1:$port"
-        return
+    $hasProcess = Test-BrokerProcessRunning -BrokerScriptPath $brokerScript
+    $isAlive = Test-BrokerAlive -Port $port
+    if ($hasProcess -or $isAlive) {
+        if (-not (Stop-BrokerProcesses -BrokerScriptPath $brokerScript -Port $port -Dry:$Dry)) {
+            return
+        }
     }
 
     Write-Host "[BROKER] start requested on 127.0.0.1:$port"

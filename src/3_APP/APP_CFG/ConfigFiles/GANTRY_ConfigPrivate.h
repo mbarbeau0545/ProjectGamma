@@ -28,7 +28,7 @@
     // ********************************************************************
     ///@brief Fifo Buffer len define
     #define GTRY_CMD_POS_RCV_BUFFER_LEN         ((t_uint8)120) // must be divided by 3, 40 cmd 
-    #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)100)
+    #define GTRY_CMD_ITER_BUFFER_LEN            ((t_uint8)GTRY_MAX_ITERATION)
 
     ///@brief direction to go to the right spot for referencing 
     #define GTRY_CALIB_DIR_AXE_X                ((t_sint32)-1)

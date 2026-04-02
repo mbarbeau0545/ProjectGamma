@@ -85,6 +85,16 @@
         APPLGC_CALIB_STS_NB                 //---- calibration state number ----//
     } t_eAPPLGC_CalibStatus;
 
+    ///@brief command motor state 
+    typedef enum 
+    {
+        APPLGC_MTR_STS_DISABLE = 0,         //---- user wants to disable motor ----//
+        APPLGC_MTR_STS_ENABLE,              //---- user wants to enable motor ----//
+        APPLGC_MTR_STS_STOP,                //---- user wants to stop motor ----//
+
+        APPLGC_MTR_STS_NB,
+    } t_eAPPLGC_CmdMtrSts;
+    
     ///@brief Calibration status Feedback
     typedef enum 
     {
@@ -93,7 +103,7 @@
         APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED = 3,       //---- Calibration FeedBack status, failed to registered calib value ----//
         APPLGC_CALIB_FBSTS_WRONG_STATE = 4,             //---- Calibration FeedBack status, wrong states ----//
         APPLGC_CALIB_FBSTS_SET_VAL_FAILED = 5,          //---- Calibration FeedBack status, failed to set calib value ----//
-        APPLGC_CALIB_FBSTS_UNDEFINED_ERROR = 6,             //---- Calibration FeedBack status, error undifend ----//
+        APPLGC_CALIB_FBSTS_UNDEFINED_ERROR = 6,          //---- Calibration FeedBack status, error undifend ----//
         APPLGC_CALIB_FBSTS_MTR_DISABLE = 7,             //---- Calibration FeedBack status, Mtr Disable, failed to enables it ----//
     } t_eAPPLGC_CalibFeedbackSts;
     

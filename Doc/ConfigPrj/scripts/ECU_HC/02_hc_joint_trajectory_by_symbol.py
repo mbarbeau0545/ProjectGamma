@@ -13,8 +13,8 @@ for i in range(120):
     alpha_c = 1000 + (i // 2)
 
     send_symbol_msg(symbol, {
-        "LGC_HC_CMD_KNIFE_POS_X_ALPH_A": alpha_b,
-        "LGC_HC_CMD_KNIFE_POS_Y_ALPH_B": alpha_c,
+        "LGC_HC_CMD_KNIFE_POS_X_ALPH_B": alpha_b,
+        "LGC_HC_CMD_KNIFE_POS_Y_ALPH_C": alpha_c,
         "LGC_HC_CMD_KNF_POS_SPD_RPM": 20,
         "LGC_HC_CMD_CNTR_KNF_POS_SPD_RPM": 20,
         "LGC_HC_CMD_KNIFE_TYPE_ID": 1,

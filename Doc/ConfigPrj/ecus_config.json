@@ -1,19 +1,27 @@
 {
   "general": {
-    "mode": "HIL",
+    "mode": "SIL",
     "refresh_ms": 50,
     "can_broker": {
       "enabled": true,
       "poll_sleep_s": 0.001,
       "max_pop_per_ecu": 128,
       "max_inject_per_cycle": 2048,
-      "control_port": 19600
+      "control_port": 19600,
+      "log_rules": {
+        "TOOL_LOGGER": [
+          "tx"
+        ],
+        "ECU_HC": [
+          "rx"
+        ]
+      }
     }
   },
   "can_clients": [
     {
       "name": "TOOL_LOGGER",
-      "enable_client": false,
+      "enable_client": true,
       "can_gate": "PCSIM",
       "pcsim_can": {
         "shared_can_nodes": [
@@ -25,9 +33,9 @@
         "rx_filters": []
       },
       "udp": {
-        "host": "172.23.192.45",
+        "host": "172.29.34.177",
         "port": 19110,
-        "timeout_s": 0.5,
+        "timeout_s": 1.5,
         "node": 0
       }
     }
@@ -35,7 +43,7 @@
   "ecus": [
     {
       "name": "ECU_GTRY",
-      "enable_ecu": true,
+      "enable_ecu": false,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
@@ -102,12 +110,12 @@
         "idx": 1,
         "value_mv": 3000
       },
-      "can_gate": "WAVESHARE",
+      "can_gate": "PCSIM",
       "can_speed_bps": 250000,
       "can_device_port": {
         "Vid": "1A86",
         "Pid": "7523",
-        "must_contain" : "CH340"
+        "must_contain": "CH340"
       },
       "pcsim_can": {
         "timeout_s": 0.5,
@@ -132,7 +140,7 @@
     {
       "name": "ECU_HC",
       "enable_ecu": false,
-      "ecu_in_debug": false,
+      "ecu_in_debug": true,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
       "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
@@ -181,7 +189,7 @@
         },
         {
           "idx": 3,
-          "mode": "manual",
+          "mode": "encdr_based_pulse",
           "constant_speed": 0.0,
           "ramp_min": -1000.0,
           "ramp_max": 1000.0,

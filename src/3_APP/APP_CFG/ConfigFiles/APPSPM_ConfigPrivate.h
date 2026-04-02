@@ -1107,7 +1107,7 @@
         .version_u8 = (t_uint8)1,
         .minItemVal_f32 = (t_float32)-32000,
         .maxItemVal_f32 = (t_float32)32000,
-        .DefaultItemVal_f32 = (t_float32)300,
+        .DefaultItemVal_f32 = (t_float32)340,
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,

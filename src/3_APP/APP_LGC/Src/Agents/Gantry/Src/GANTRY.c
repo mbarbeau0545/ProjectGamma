@@ -25,6 +25,23 @@
 // ********************************************************************
 #define GTRTY_SIZEOF_ELEM_POSCMD_QUEUE          (t_uint16)(sizeof(t_float32) * GTRY_PHYS_AXE_NB)
 #define GTRTY_SIZEOF_ELEM_ITERCMD_QUEUE          (t_uint16)(sizeof(t_sGTRY_MtrCmdIterPayload))
+
+#define GTRY_FLUSH_ALL_QUEUE()                     \
+    do                                             \
+    {                                              \
+        (void)LIBQUEUE_ClearAll(&g_QueueCmdPosRcvMngmt_s);                  \
+        (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_X]);  \
+        (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_Y]);  \
+        (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_Z]);  \
+    } while (0)
+
+#define GTRY_STOP_ALL_MTR()                     \
+    do                                          \
+    {                                           \
+        s_GTRY_AxeStop(GTRY_PHYS_AXE_X, FALSE); \
+        s_GTRY_AxeStop(GTRY_PHYS_AXE_Y, FALSE); \
+        s_GTRY_AxeStop(GTRY_PHYS_AXE_Z, FALSE); \
+    } while(0)                                  
 // ********************************************************************
 // *                      Types
 // ********************************************************************
@@ -168,8 +185,8 @@ static t_uint32 g_algoComputeTime_u32 = 0u;
 /// @brief To know where we start to send a iteration plan, for absolute timing planner 
 static t_uint32 g_startSendIter_u32 = 0u;
 
-///@brief Flag Motor Enable 
-static t_bool g_FlagMotorEnable_b = FALSE;
+///@brief Flag Motor Enable
+static t_bool g_flagMtrEnable_ab[GTRY_PHYS_AXE_NB];
 
 /* CAUTION : Automatic generated code section for Variable: Start */
 /* CAUTION : Automatic generated code section for Variable: End */
@@ -356,6 +373,15 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Safety(void);
 static t_eReturnCode s_GTRY_Fsm_PrdTsk_Error(void);
 static t_eReturnCode s_GTRY_ApplyRearmRequest(void);
 /**
+ * @brief This function converts a direct STEP/DIR command into motor setpoints
+ *          and sends them immediately for X, Y and Z axes.
+ * ----------------------------------------------------------------------------
+ * @param[in] f_sigValue_af32 : STEP_X/Y/Z, DIR_X/Y/Z and STOP payload values
+ * ----------------------------------------------------------------------------
+ * @return ohters : @ref t_eReturnCode
+ */
+static t_eReturnCode s_GTRY_SendStepCmd(t_float32 * f_sigValue_af32);
+/**
  * @brief This function handle the Send of iterations to all motor
  * ----------------------------------------------------------------------------
  * @param[in] f_physAxeID_e : which motor send iteration
@@ -429,6 +455,7 @@ static t_eReturnCode s_GTRY_AxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e, t_bool f_isH
  * @return @ref t_eReturnCode
  */
 static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e);
+static t_eReturnCode s_GTRY_InterpretMtrStCmd(t_float32 * f_sigValue_af32);
 /**
  * @brief Enable the motor axes
  * 
@@ -539,19 +566,22 @@ t_eReturnCode GANTRY_Init(void)
  *********************************/
 t_eReturnCode GANTRY_PeriodicTask(void)
 {
-    t_eReturnCode Ret_e;
+    t_eReturnCode Ret_e = RC_WARNING_NO_OPERATION;
     
-    //---- 1- Call Safety Update ----//
-    Ret_e = s_GTRY_SafetyUpdate();
+    
 
-    //---- 2- Update Current position ----//
-    if((Ret_e == RC_OK)
-    && (g_FlagPrmSet_b == TRUE))
+    //---- 1- Update Current position ----//
+    if(g_FlagPrmSet_b == TRUE)
     {
         Ret_e = s_GTRY_UpdatePosition();
     }
-    //---- 3- Call State Machine ----//
     if(Ret_e == RC_OK)
+    {
+        //---- 2- Call Safety Update ----//
+        Ret_e = s_GTRY_SafetyUpdate();
+    }
+    //---- 3- Call State Machine ----//
+    if(Ret_e >= RC_OK)
     {
         Ret_e = s_GTRY_StateMachine();
     }
@@ -638,7 +668,66 @@ t_eReturnCode  GTRY_GetPosition(t_float32 f_currPos_af32[GTRY_PHYS_AXE_NB])
  *********************************/
 static t_eReturnCode s_GTRY_SafetyUpdate(void)
 {
-    return RC_OK;
+    t_eReturnCode Ret_e;
+    t_uAPPSPM_PrmValType maxLenAXe_X_u;
+    t_uAPPSPM_PrmValType maxLenAXe_Y_u;
+    t_uAPPSPM_PrmValType maxLenAXe_Z_u;
+
+    Ret_e = APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_X_LEN_MM, &maxLenAXe_X_u);
+    if(Ret_e == RC_OK)
+    {
+        APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Y_LEN_MM, &maxLenAXe_Y_u);
+    }
+    if(Ret_e == RC_OK)
+    {
+        APPSPM_GetParam(APPSPM_PRM_GTRY_AXE_Y_LEN_MM, &maxLenAXe_Z_u);
+    }
+    if(Ret_e == RC_OK)
+    {
+        if(g_axeCurrPos_af32[GTRY_PHYS_AXE_X] >= (t_float32)maxLenAXe_X_u.prmVal_u16)
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_X_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                    (t_uint16)g_axeCurrPos_af32[GTRY_PHYS_AXE_X],
+                                    maxLenAXe_X_u.prmVal_u16);
+        }
+        else 
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_X_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_PASS,
+                                    0U,
+                                0U);
+        }
+        if(g_axeCurrPos_af32[GTRY_PHYS_AXE_Y] >= (t_float32)maxLenAXe_Y_u.prmVal_u16)
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_Y_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                    (t_uint16)g_axeCurrPos_af32[GTRY_PHYS_AXE_Y],
+                                    maxLenAXe_Y_u.prmVal_u16);
+        }
+        else 
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_Y_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_PASS,
+                                    0U,
+                                    0U);
+        }
+        if(g_axeCurrPos_af32[GTRY_PHYS_AXE_Z] >= (t_float32)maxLenAXe_Z_u.prmVal_u16)
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_Z_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_FAIL,
+                                    (t_uint16)g_axeCurrPos_af32[GTRY_PHYS_AXE_Z],
+                                    maxLenAXe_Z_u.prmVal_u16);
+        }
+        else 
+        {
+            APPSDM_ReportDiagEvnt(  APPSDM_DIAG_ITEM_GTRY_Z_LIMIT_REACH,
+                                    APPSDM_DIAG_ITEM_REPORT_PASS,
+                                    0U,
+                                    0U);
+        }
+    }
+    return Ret_e;
 }
 
 /*********************************
@@ -774,8 +863,19 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Calibration(void)
 {   
     t_eReturnCode Ret_e = RC_OK;
     t_eAPPLGC_CalibFeedbackSts feedbackSts_e = APPLGC_CALIB_FBSTS_UNDEFINED_ERROR;
+    t_eGTRY_PhysicalAxe idxAxe_e;
+    t_bool isAllMtrEnable_b = TRUE;
 
-    if(g_FlagMotorEnable_b == FALSE)
+    for(idxAxe_e = GTRY_PHYS_AXE_X; idxAxe_e < GTRY_PHYS_AXE_NB; idxAxe_e++)
+    {
+        if(g_flagMtrEnable_ab[idxAxe_e] == FALSE)
+        {
+            isAllMtrEnable_b = FALSE;
+            break;
+        }
+    }
+
+    if(isAllMtrEnable_b == FALSE)
     {
         feedbackSts_e = APPLGC_CALIB_FBSTS_MTR_DISABLE;
         FMKSRL_LOG("[GTRY][CALIB] : Motor Disable, could not proceed calibration\r\n");
@@ -1504,10 +1604,6 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_PreOperational(void)
     {
         Ret_e = s_GTRY_EnableAxe(GTRY_PHYS_AXE_Z);
     }
-    if(Ret_e == RC_OK)
-    {
-        g_FlagMotorEnable_b = TRUE;
-    }
 
     return Ret_e;
 }
@@ -1816,10 +1912,11 @@ static t_eReturnCode s_GTRY_Fsm_PrdTsk_Safety(void)
     {
         Ret_e = s_GTRY_AxeStop(GTRY_PHYS_AXE_Z, TRUE);
     }
-    if((Ret_e == RC_OK)
-    && (g_FlagMotorEnable_b == TRUE))
+    if(Ret_e == RC_OK)
     {
-        g_FlagMotorEnable_b = FALSE;
+        g_flagMtrEnable_ab[GTRY_PHYS_AXE_X] = FALSE;
+        g_flagMtrEnable_ab[GTRY_PHYS_AXE_Y] = FALSE;
+        g_flagMtrEnable_ab[GTRY_PHYS_AXE_Z] = FALSE;
     }
     if(Ret_e == RC_OK)
     {
@@ -1857,10 +1954,7 @@ static t_eReturnCode s_GTRY_ApplyRearmRequest(void)
             break;
             case APPLGC_REARM_TYPE_FSM_PRE_OPE:
             case APPLGC_REARM_TYPE_TOTAL:
-                (void)LIBQUEUE_ClearAll(&g_QueueCmdPosRcvMngmt_s);
-                (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_X]);
-                (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_Y]);
-                (void)LIBQUEUE_ClearAll(&g_QueueCmdIterMngmt_as[GTRY_PHYS_AXE_Z]);
+                GTRY_FLUSH_ALL_QUEUE();
                 g_FlagRcvPosCmd_b = FALSE;
                 g_FlagIterCmdReady_b = FALSE;
                 g_FlagPosCmdPending_b = FALSE;
@@ -1937,6 +2031,69 @@ static t_eReturnCode s_GTRY_SendMtrIteration(t_eGTRY_PhysicalAxe f_physAxeID_e, 
 }
 
 /*********************************
+ * s_GTRY_SendStepCmd
+ *********************************/
+static t_eReturnCode s_GTRY_SendStepCmd(t_float32 * f_sigValue_af32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    const t_float32 stepVal_af32[GTRY_PHYS_AXE_NB] = {
+        f_sigValue_af32[0],
+        f_sigValue_af32[1],
+        f_sigValue_af32[2]
+    };
+    t_float32 speed_f32;
+    t_sint32 pulseCmd_s32;
+
+    if(f_sigValue_af32 == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        for(t_eGTRY_PhysicalAxe idxAxe_e = GTRY_PHYS_AXE_HEAD;
+            (idxAxe_e < GTRY_PHYS_AXE_NB) && (Ret_e == RC_OK);
+            idxAxe_e++)
+        {
+            speed_f32 = g_algoParam_s.MaxFreq_af32[idxAxe_e];
+            if(speed_f32 <= 0.0F)
+            {
+                speed_f32 = g_algoParam_s.MinFreq_af32[idxAxe_e];
+            }
+            if(speed_f32 <= 0.0F)
+            {
+                speed_f32 = 1.0F;
+            }
+
+            if(stepVal_af32[idxAxe_e] >= 2147483647.0f)
+            {
+                pulseCmd_s32 = (t_sint32)0x7FFFFFFF;
+            }
+            else if(stepVal_af32[idxAxe_e] <= -2147483648.0f)
+            {
+                pulseCmd_s32 = (t_sint32)(-2147483647L - 1L);
+            }
+            else if(stepVal_af32[idxAxe_e] >= 0.0F)
+            {
+                pulseCmd_s32 = (t_sint32)(stepVal_af32[idxAxe_e] + 0.5F);
+            }
+            else
+            {
+                pulseCmd_s32 = (t_sint32)(stepVal_af32[idxAxe_e] - 0.5F);
+            }
+
+            Ret_e = s_GTRY_SetAxeSetPoint(  idxAxe_e,
+                                            pulseCmd_s32,
+                                            speed_f32,
+                                            0.0F);
+            
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
  * s_GTRY_GetPhysAxeFromSnsItf
  *********************************/
 static t_eReturnCode s_GTRY_GetPhysAxeFromSnsItf(t_eAPPSNS_SnsInterface f_snsItf_e,
@@ -1981,6 +2138,25 @@ static void s_GTRY_MsgReceptionCallback( t_uint16 f_msgID_u16,
     }
     switch(f_msgID_u16)
     {
+        case APPSIG_CAN_MSG_LGC_GTRY_MTR_STS:
+            if((f_nbSignal_u8 != (t_uint8)3)
+            || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_MTR_STS_X)
+            || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_MTR_STS_Y)
+            || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_MTR_STS_Z))
+            {
+                ASSERT((t_uint16)f_nbSignal_u8);
+            }
+            else if((f_sigValue_af32[0] >= (t_float32)APPLGC_MTR_STS_NB)
+            ||      (f_sigValue_af32[1] >= (t_float32)APPLGC_MTR_STS_NB)
+            ||      (f_sigValue_af32[2] >= (t_float32)APPLGC_MTR_STS_NB))
+            {
+                ASSERT((t_uint16)f_sigValue_af32[0]);
+            }
+            else
+            {
+                Ret_e = s_GTRY_InterpretMtrStCmd(f_sigValue_af32);
+            }
+        break;
         case APPSIG_CAN_MSG_LGC_GTRY_CMD_POSITION_COORD:
             if((f_nbSignal_u8 != (t_uint8)3)
             || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_POS_X)
@@ -1997,7 +2173,7 @@ static void s_GTRY_MsgReceptionCallback( t_uint16 f_msgID_u16,
                 && (g_FlagRcvPosCmd_b == FALSE))
                 {
                     g_FlagRcvPosCmd_b = TRUE;
-                }
+                }                
             }
         break;
         case APPSIG_CAN_MSG_LGC_GTRY_CMD_POSITION_SPHERIC:
@@ -2020,25 +2196,17 @@ static void s_GTRY_MsgReceptionCallback( t_uint16 f_msgID_u16,
             }
         break;
         case APPSIG_CAN_MSG_LGC_GTRY_CMD_STEPS:
-            if((f_nbSignal_u8 != (t_uint8)6)
+            if((f_nbSignal_u8 != (t_uint8)3)
             || (f_signal_ae[0] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_X)
             || (f_signal_ae[1] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Y)
-            || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z)
-            || (f_signal_ae[3] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_X)
-            || (f_signal_ae[4] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Y)
-            || (f_signal_ae[5] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_DIR_Z))
+            || (f_signal_ae[2] != APPSIG_SIGNAL_LGC_GTRY_CMD_SIG_STEP_Z))
             {
                 Ret_e = RC_ERROR_PARAM_INVALID;
                 ASSERT((t_uint16)f_nbSignal_u8);
             }
             else
             {
-                Ret_e = GANTRY_SPEC_BuildStepCmd(f_sigValue_af32, &g_QueueCmdPosRcvMngmt_s);
-                if((Ret_e == RC_OK)
-                && (g_FlagRcvPosCmd_b == FALSE))
-                {
-                    g_FlagRcvPosCmd_b = TRUE;
-                }
+                Ret_e = s_GTRY_SendStepCmd(f_sigValue_af32);
             }
         break;
         case APPSIG_CAN_MSG_LGC_GTRY_CMD_CALIBRATION:
@@ -2340,6 +2508,55 @@ static t_eReturnCode s_GTRY_UpdateAxePosition(t_eGTRY_PhysicalAxe f_idxAxe_e)
 }
 
 /*********************************
+ * s_GTRY_InterpretMtrStCmd
+ *********************************/
+static t_eReturnCode s_GTRY_InterpretMtrStCmd(t_float32 * f_sigValue_af32)
+{
+    t_eReturnCode Ret_e = RC_OK;
+    const t_eGTRY_PhysicalAxe axeList_ae[3] = {
+        GTRY_PHYS_AXE_X,
+        GTRY_PHYS_AXE_Y,
+        GTRY_PHYS_AXE_Z
+    };
+    t_eAPPLGC_CmdMtrSts cmdMtrSts_e;
+
+    if(f_sigValue_af32 == NULL)
+    {
+        Ret_e = RC_ERROR_PTR_NULL;
+        ASSERT((t_uint16)0);
+    }
+    else
+    {
+        for(t_uint8 idxCmd_u8 = 0U;
+            (idxCmd_u8 < (t_uint8)3) && (Ret_e == RC_OK);
+            idxCmd_u8++)
+        {
+            cmdMtrSts_e = (t_eAPPLGC_CmdMtrSts)f_sigValue_af32[idxCmd_u8];
+
+            switch(cmdMtrSts_e)
+            {
+                case APPLGC_MTR_STS_DISABLE:
+                    Ret_e = s_GTRY_AxeStop(axeList_ae[idxCmd_u8], TRUE);
+                break;
+                case APPLGC_MTR_STS_ENABLE:
+                    Ret_e = s_GTRY_EnableAxe(axeList_ae[idxCmd_u8]);
+                break;
+                case APPLGC_MTR_STS_STOP:
+                    Ret_e = s_GTRY_AxeStop(axeList_ae[idxCmd_u8], FALSE);
+                break;
+                case APPLGC_MTR_STS_NB:
+                default:
+                    Ret_e = RC_ERROR_PARAM_INVALID;
+                    ASSERT((t_uint16)cmdMtrSts_e);
+                break;
+            }
+        }
+    }
+
+    return Ret_e;
+}
+
+/*********************************
  * s_GTRY_AxeStop
  *********************************/
 static t_eReturnCode s_GTRY_AxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e, t_bool f_isHardStop_b)
@@ -2384,6 +2601,11 @@ static t_eReturnCode s_GTRY_AxeStop(t_eGTRY_PhysicalAxe f_idxAxe_e, t_bool f_isH
                 Ret_e = RC_ERROR_WRONG_STATE;
             break;
         }
+        if((Ret_e == RC_OK)
+        && (spdValue_f32 == APPACT_HARD_STOP))
+        {
+            g_flagMtrEnable_ab[f_idxAxe_e] = FALSE;
+        }
     }
 
     return Ret_e;
@@ -2405,6 +2627,11 @@ static t_eReturnCode s_GTRY_SetAxeSetPoint( t_eGTRY_PhysicalAxe f_idxAxe_e,
     if(f_idxAxe_e >= GTRY_PHYS_AXE_NB)
     {
         Ret_e = RC_ERROR_PARAM_INVALID;
+        ASSERT((t_uint16)0);
+    }
+    else if(g_flagMtrEnable_ab[f_idxAxe_e] == FALSE)
+    {
+        Ret_e = RC_WARNING_NOT_ALLOWED;
         ASSERT((t_uint16)0);
     }
     else 
@@ -2576,6 +2803,10 @@ static t_eReturnCode s_GTRY_EnableAxe(t_eGTRY_PhysicalAxe f_idxAxe_e)
             default:
                 Ret_e = RC_ERROR_WRONG_STATE;
             break;
+        }
+        if(Ret_e == RC_OK)
+        {
+            g_flagMtrEnable_ab[f_idxAxe_e] = TRUE;
         }
     }
 

@@ -473,11 +473,6 @@ static t_eReturnCode s_APPLGC_PreOperational(void)
         }
         else 
         {
-            Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XR_SPD, APPACT_ENABLE_MOTOR);
-            if(Ret_e == RC_OK)
-            {
-                Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_XL_SPD, APPACT_ENABLE_MOTOR);
-            }
             Ret_e = RC_OK;
         }
     }
@@ -505,46 +500,23 @@ static t_eReturnCode s_APPLGC_Operational(void)
     }
     if(Ret_e == RC_OK)
     {
-        // if(isSent_b == FALSE)
-        // {
-            
-        //     if(Ret_e == RC_OK)
-        //     {
-        //         Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Z_SPD, 200);
-        //         if(Ret_e == RC_OK)
-        //         {
-        //             Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Z_TRG, 0);
-        //         }
-        //         if(Ret_e == RC_OK)
-        //         {
-        //             Ret_e = APPACT_SetActValue(APPACT_ACTITF_MTR_Z_PLS, CL42T_SEND_INFINITE_PULSE);
-        //         }
-        //         if(Ret_e == RC_OK)
-        //         {
-        //             isSent_b = TRUE;
-        //         }
-        //     }
-        // }
+        switch(g_EcuPos_e)
+        {
+            case APPSYS_ECU_POS_GTRY:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_GANTRY].PeriodTask_pcb();
+            break;
+            case APPSYS_ECU_POS_GTRY_HEAD:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_HEAD_CUTTER].PeriodTask_pcb();
+            break;
+            case APPSYS_ECU_POS_MOTION:
+                Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_MOTION].PeriodTask_pcb();
+            break;
+        }
+        if(Ret_e < RC_OK)
+        {
+            ASSERT((t_uint16)Ret_e);
+        }
     }
-    // if(Ret_e == RC_OK)
-    // {
-    //     switch(g_EcuPos_e)
-    //     {
-    //         case APPSYS_ECU_POS_GTRY:
-    //             Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_GANTRY].PeriodTask_pcb();
-    //         break;
-    //         case APPSYS_ECU_POS_GTRY_HEAD:
-    //             Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_HEAD_CUTTER].PeriodTask_pcb();
-    //         break;
-    //         case APPSYS_ECU_POS_MOTION:
-    //             Ret_e = c_AppLgc_AgentInfo_as[APPLGC_AGENT_MOTION].PeriodTask_pcb();
-    //         break;
-    //     }
-    //     if(Ret_e < RC_OK)
-    //     {
-    //         ASSERT((t_uint16)Ret_e);
-    //     }
-    // }
    
     return Ret_e;
 }

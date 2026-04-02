@@ -1,0 +1,190 @@
+OPEN_AI : 4QEZEMRRRG927M25SMRK3CQF6AQQUP
+
+git rm -f src/drivers/canmera_drv/v4l2_camera
+
+
+1. VDD
+
+Rôle
+Alimentation principale du MCU pour la partie numérique. Sur le STM32G474, toutes les alimentations principales doivent être correctement reliées, avec découplage proche des broches.
+
+Exemple d’utilisation
+Vous alimentez la carte en 3,3 V externe sur le connecteur morpho. VDD sert alors de rail d’alimentation principal du microcontrôleur.
+Exemple concret : alimentation labo 3,3 V → 3V3/VDD et masse → GND.
+
+2. AVDD
+
+Rôle
+Alimentation analogique du STM32 : ADC, DAC, comparateurs, AOP, buffer de référence. Sur la NUCLEO-G474RE, AVDD est connecté à VREF+. ST précise que la partie analogique est dans le domaine VDDA/VSSA, et qu’en alimentation simple on peut relier VDDA à VDD via un filtrage externe.
+
+Exemple d’utilisation
+Vous mesurez un capteur analogique de courant avec l’ADC.
+AVDD détermine la qualité de l’alimentation analogique.
+Si vous voulez une mesure stable :
+
+vous gardez AVDD propre,
+
+vous évitez de faire passer des commutations bruyantes dessus,
+
+vous soignez les condensateurs de découplage.
+
+3. AGND
+
+Rôle
+Masse analogique du STM32, correspondant à VSSA. Elle sert de référence de retour pour les blocs analogiques.
+
+Exemple d’utilisation
+Pour un capteur analogique précis :
+
+signal capteur → entrée ADC,
+
+masse capteur → AGND,
+
+alimentation capteur analogique propre.
+
+Cela aide à limiter les erreurs dues au bruit de masse.
+
+4. GND
+
+Rôle
+Masse générale de la carte, référence 0 V. Elle est présente à plusieurs endroits sur les connecteurs Arduino et morpho.
+
+Exemple d’utilisation
+Vous branchez un module UART externe en 3,3 V :
+
+TX module → RX STM32,
+
+RX module → TX STM32,
+
+GND module → GND carte.
+
+Sans masse commune, la communication peut devenir erratique.
+
+5. VBAT
+
+Rôle
+Alimentation du backup domain : RTC, LSE, registres de sauvegarde, et certaines fonctions associées. ST précise que VBAT permet de conserver le RTC et les registres backup quand VDD est coupé. Sur la NUCLEO-G474RE, VBAT peut être alimenté par VDD via une configuration de ponts, ou séparément via le connecteur morpho.
+
+Exemple d’utilisation
+Vous voulez garder l’heure RTC lorsque l’alimentation principale est coupée :
+
+pile bouton ou source backup → VBAT,
+
+quartz LSE utilisé si nécessaire,
+
+le STM32 retrouve son heure au redémarrage.
+
+6. NRST
+
+Rôle
+Entrée de reset matériel du STM32. Le bouton noir RESET de la carte est relié à NRST. Sur la doc carte, NRST correspond au reset du MCU.
+
+Exemple d’utilisation
+Vous ajoutez un superviseur d’alimentation externe :
+
+sortie reset du superviseur → NRST,
+
+si la tension chute, le superviseur force un reset propre du microcontrôleur.
+
+Autre cas : bouton poussoir externe entre NRST et GND pour réinitialiser la cible.
+
+7. 3V3
+
+Rôle
+Rail 3,3 V disponible sur la carte, en entrée/sortie selon le mode d’alimentation. La doc carte l’indique explicitement sur le connecteur Arduino comme 3V3 input / output.
+
+Exemple d’utilisation
+Vous voulez alimenter un capteur I2C 3,3 V :
+
+3V3 → VCC capteur,
+
+GND → masse capteur,
+
+SDA/SCL → broches du STM32.
+
+Attention : il faut respecter le courant total disponible sur la carte.
+
+8. 5V
+
+Rôle
+Rail 5 V de la carte. La doc carte l’indique comme sortie 5 V côté Arduino, et il apparaît aussi sur le morpho.
+
+Exemple d’utilisation
+Vous alimentez un module qui demande 5 V mais qui dialogue en logique séparée :
+
+5V → alimentation du module,
+
+conversion de niveau si ses E/S ne sont pas compatibles 3,3 V.
+
+9. E5V
+
+Rôle
+Entrée 5 V externe sur le connecteur morpho. La doc Nucleo indique que la carte peut être alimentée par E5V.
+
+Exemple d’utilisation
+Vous n’utilisez pas le ST-LINK USB pour alimenter la carte :
+
+alimentation 5 V régulée externe → E5V,
+
+masse alim → GND.
+
+C’est utile dans un montage embarqué où la carte est intégrée à un système déjà alimenté en 5 V.
+
+10. 5V_USB_CHARGER / 5V_USB_CHGR
+
+Rôle
+C’est le 5 V issu de l’USB du ST-LINK, qui monte en premier sur la carte. La doc UM2505 le décrit explicitement comme le 5 V provenant du connecteur USB du STLINK-V3E, avant la montée du 5 V global de la carte.
+
+Exemple d’utilisation
+C’est surtout un rail de carte, pas une broche à utiliser comme GPIO ou comme source universelle pour votre application.
+Cas typique : diagnostic ou compréhension de la séquence d’alimentation du Nucleo pendant le branchement USB.
+
+11. VIN
+
+Rôle
+Entrée d’alimentation plus haute tension pour la carte. La doc Arduino du Nucleo indique VIN = entrée 7 V à 12 V. La carte régule ensuite cette tension pour ses rails internes.
+
+Exemple d’utilisation
+Vous avez une alimentation 9 V :
+
++9 V → VIN,
+
+0 V → GND.
+
+La carte crée ensuite ses tensions internes.
+C’est utile si votre système possède déjà un bus 9 V ou 12 V.
+
+12. IOREF
+
+Rôle
+Référence de niveau logique des connecteurs compatibles Arduino. Sur cette carte, IOREF est relié au 3V3 par défaut via le pont SB39.
+
+Exemple d’utilisation
+Vous utilisez un shield Arduino qui lit IOREF pour savoir si la logique de la carte est en 5 V ou 3,3 V.
+Ici, IOREF = 3,3 V, donc le shield doit travailler en logique 3,3 V.
+
+13. NC
+
+Rôle
+NC signifie Not Connected. La broche du connecteur n’est pas raccordée à un signal exploitable. Sur la doc carte, certaines positions sont explicitement marquées NC ou réservées.
+
+Exemple d’utilisation
+Aucun usage fonctionnel.
+Règle pratique : ne rien connecter dessus pour votre design.
+
+14. VREFP
+
+Rôle
+Même si dans votre phrase vous avez demandé les pins qui ne commencent pas par P, VREFP mérite d’être cité car il apparaît implicitement avec AVDD. C’est la référence de tension analogique positive du STM32. Sur la table Nucleo, VREFP est indiqué comme Voltage reference.
+
+Exemple d’utilisation
+Pour une acquisition analogique de meilleure précision, vous pouvez vouloir une référence analogique stable.
+Sur cette carte, comme AVDD est relié à VREF+, la référence suit l’alimentation analogique de la carte.
+
+git submodule add -b Dev https://BladeRobotics@dev.azure.com/BladeRobotics/Gamma_Project/_git/ros2_Logic src/control/logic_nd
+git submodule update --init --recursive src/control/logic_nd
+
+git submodule deinit -f src/drivers/imu_drv/bno055
+git rm -f --cached src/drivers/imu_drv/bno055
+
+rm -rf src/drivers/imu_drv/bno055

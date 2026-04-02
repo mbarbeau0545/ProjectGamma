@@ -70,6 +70,7 @@
     {
         HC_CMD_TYPE_POS_CARTH = 0,                  //---- Command type for position is x,y of the knife in mm ----//
         HC_CMD_TYPE_POS_JOINT,                      //---- Command Type for position is angle joint in mrad ----//
+        HC_CMD_TYPE_PULSE_SPD,                      //---- Command Type for position is pulse and speed no comûtation ----//
 
         HC_CMD_TYPE_POS_NB
     } t_eHC_CmdPosType;

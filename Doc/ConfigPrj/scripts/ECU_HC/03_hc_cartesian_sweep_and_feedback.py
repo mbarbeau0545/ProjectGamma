@@ -17,8 +17,8 @@ for i in range(100):
     y = y0 - (i % amp)
 
     send_symbol_msg(symbol, {
-        "LGC_HC_CMD_KNIFE_POS_X_ALPH_A": x,
-        "LGC_HC_CMD_KNIFE_POS_Y_ALPH_B": y,
+        "LGC_HC_CMD_KNIFE_POS_X_ALPH_B": x,
+        "LGC_HC_CMD_KNIFE_POS_Y_ALPH_C": y,
         "LGC_HC_CMD_KNF_POS_SPD_RPM": 25,
         "LGC_HC_CMD_CNTR_KNF_POS_SPD_RPM": 25,
         "LGC_HC_CMD_KNIFE_TYPE_ID": 0,
