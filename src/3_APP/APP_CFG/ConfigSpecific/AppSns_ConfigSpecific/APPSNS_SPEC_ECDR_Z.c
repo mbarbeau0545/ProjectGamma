@@ -102,9 +102,10 @@ t_eReturnCode APPSNS_SPEC_ECDR_Z_SetCfg(t_uint8 f_snsDvcOpt_u8, t_eAPPSNS_SnsDri
                     .pullMode_e = FMKIO_PULL_MODE_UP,
                     .speedMode_e = FMKIO_SPD_MODE_HIGH
                 };
-                Ret_e = FMKIO_Set_InEncoderSigCfg(  APPSNS_SPEC_ECDR_ID,
-                                                    sigEcdr_s,
-                                                    FMKIO_ENCODER_START_BOTH);
+                #warning special debug, potentially problem with PA15 read user manual PA15 is CN7-38 not 17
+                // Ret_e = FMKIO_Set_InEncoderSigCfg(  APPSNS_SPEC_ECDR_ID,
+                //                                     sigEcdr_s,
+                //                                     FMKIO_ENCODER_START_BOTH);
                 break;
             }
             case APPSYS_OPT_SNS_ECDR_Z_APPSIG:

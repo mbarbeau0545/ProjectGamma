@@ -674,6 +674,7 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
     t_uint8 idxSrv_u8;
     t_uint8 idxActItf_u8;
     t_eReturnCode Ret_e;
+    t_uint32 report_item_u32;
     t_eAPPSDM_DiagnosticReport reprtEcuSafety_e;
 
     if((f_msgID_u16 >= (t_uint16)APPSIG_CAN_MSG_NB)
@@ -703,10 +704,14 @@ static void s_APPLGC_AppSigMsgRcvCallback(  t_uint16 f_msgID_u16,
         else 
         {
             //---- if safety ecu is in error we set all service to default ----//
+            report_item_u32 = (t_uint32)f_sigValue_af32[0];
             reprtEcuSafety_e = (t_eAPPSDM_DiagnosticReport)f_sigValue_af32[1];
-            FMKSRL_LOG("[LGC] : Receive diagnostic from EcuSafety, REPORT ->%d\r\n", (t_uint16)reprtEcuSafety_e);
-            if(reprtEcuSafety_e == APPSDM_DIAG_ITEM_REPORT_FAIL)
+            if((report_item_u32 < CST_MAX_UINT_16BIT)
+            && (reprtEcuSafety_e == APPSDM_DIAG_ITEM_REPORT_FAIL))
             {
+                FMKSRL_LOG( "[LGC] : Receive diagnostic from EcuSafety, ITEM ->%d, REPORT ->%d\r\n", 
+                            (t_sint32)report_item_u32,
+                            (t_sint32)reprtEcuSafety_e);
                 for(idxSrv_u8 = (t_uint8)0 ; idxSrv_u8 < (t_uint8)APPLGC_SRV_NB ; idxSrv_u8++)
                 {
                     (void)APPLGC_SetServiceHealth((t_eAPPLGC_SrvList)idxSrv_u8, APPLGC_SRV_HEALTH_ERROR);

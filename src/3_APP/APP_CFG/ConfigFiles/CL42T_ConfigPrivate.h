@@ -49,6 +49,9 @@
 
     ///@brief number of command we can get 
     #define CL42T_CMD_QUEUE_SIZE ((t_uint8)20)
+
+    ///@brief offset estime pulse 
+    #define CL42T_OFFSET_PULSE ((t_float32)10.0F) 
     // ********************************************************************
     // *                      Types
     // ********************************************************************

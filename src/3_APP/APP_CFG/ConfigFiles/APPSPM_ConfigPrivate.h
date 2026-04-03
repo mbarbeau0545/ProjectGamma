@@ -391,7 +391,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_X_PULSE_PER_ROUND
     },
     [APPSPM_PRM_GTRY_AXE_Y_PULSE_PER_ROUND] = {
         .version_u8 = (t_uint8)1,
@@ -401,7 +401,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Y_PULSE_PER_ROUND
     },
     [APPSPM_PRM_GTRY_AXE_Z_PULSE_PER_ROUND] = {
         .version_u8 = (t_uint8)1,
@@ -411,7 +411,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Z_PULSE_PER_ROUND
     },
     [APPSPM_PRM_GTRY_AXE_X_LEN_MM] = {
         .version_u8 = (t_uint8)1,
@@ -451,7 +451,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_X_PINION_DIAM_MM
     },
     [APPSPM_PRM_GTRY_AXE_Y_PINION_DIAM_MM] = {
         .version_u8 = (t_uint8)1,
@@ -461,7 +461,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Y_PINION_DIAM_MM
     },
     [APPSPM_PRM_GTRY_AXE_Z_PINION_DIAM_MM] = {
         .version_u8 = (t_uint8)1,
@@ -471,7 +471,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_GTRY_AXE_Z_PINION_DIAM_MM
     },
     [APPSPM_PRM_GTRY_AXE_X_SAFE_HEIGHT] = {
         .version_u8 = (t_uint8)1,
@@ -1071,7 +1071,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_LEN_FROM_REFA_TO_REFB
     },
     [APPSPM_PRM_HC_LEN_HEAD_CNTR_KNIFE] = {
         .version_u8 = (t_uint8)1,
@@ -1081,7 +1081,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_LEN_HEAD_CNTR_KNIFE
     },
     [APPSPM_PRM_HC_LEN_HEAD_KNIFE] = {
         .version_u8 = (t_uint8)1,
@@ -1091,7 +1091,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_LEN_HEAD_KNIFE
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_X_MIN_MM] = {
         .version_u8 = (t_uint8)1,
@@ -1101,7 +1101,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_SINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_POS_X_MIN_MM
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_X_MAX_MM] = {
         .version_u8 = (t_uint8)1,
@@ -1111,7 +1111,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_POS_X_MAX_MM
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_Y_MIN_MM] = {
         .version_u8 = (t_uint8)1,
@@ -1121,7 +1121,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_POS_Y_MIN_MM
     },
     [APPSPM_PRM_HC_TIP_KNIFE_POS_Y_MAX_MM] = {
         .version_u8 = (t_uint8)1,
@@ -1131,7 +1131,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_POS_Y_MAX_MM
     },
     [APPSPM_PRM_HC_TIP_KNIFE_MAX_DELTA_ALPHA_B] = {
         .version_u8 = (t_uint8)1,
@@ -1141,7 +1141,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_MAX_DELTA_ALPHA_B
     },
     [APPSPM_PRM_HC_TIP_KNIFE_MAX_DELTA_ALPHA_C] = {
         .version_u8 = (t_uint8)1,
@@ -1151,7 +1151,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_TIP_KNF_MAX_DELTA_ALPHA_C
     },
     [APPSPM_PRM_HC_CNTR_KNIFE_PULSE_TO_RAD] = {
         .version_u8 = (t_uint8)1,
@@ -1161,7 +1161,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_CNTR_KNIFE_PULSE_TO_RAD
     },
     [APPSPM_PRM_HC_KNIFE_PULSE_TO_RAD] = {
         .version_u8 = (t_uint8)1,
@@ -1171,7 +1171,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_KNIFE_PULSE_TO_RAD
     },
     [APPSPM_PRM_HC_HOLD_KNIFE_PULSE_TO_RAD] = {
         .version_u8 = (t_uint8)1,
@@ -1181,7 +1181,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_HOLD_KNIFE_PULSE_TO_RAD
     },
     [APPSPM_PRM_HC_KNIFE_RPM_TO_HZ] = {
         .version_u8 = (t_uint8)1,
@@ -1191,7 +1191,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_KNIFE_RPM_TO_HZ
     },
     [APPSPM_PRM_HC_CNTR_KNIFE_RPM_TO_HZ] = {
         .version_u8 = (t_uint8)1,
@@ -1201,7 +1201,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_CNTR_KNIFE_RPM_TO_HZ
     },
     [APPSPM_PRM_HC_HOLD_KNIFE_RPM_TO_HZ] = {
         .version_u8 = (t_uint8)1,
@@ -1211,7 +1211,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_HC_HOLD_KNIFE_RPM_TO_HZ
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVL_PULSE_TO_RAD] = {
         .version_u8 = (t_uint8)1,
@@ -1221,7 +1221,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVL_PULSE_TO_RAD
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVR_PULSE_TO_RAD] = {
         .version_u8 = (t_uint8)1,
@@ -1231,7 +1231,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVR_PULSE_TO_RAD
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVL_RPM_TO_HZ] = {
         .version_u8 = (t_uint8)1,
@@ -1241,7 +1241,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVL_RPM_TO_HZ
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVR_RPM_TO_HZ] = {
         .version_u8 = (t_uint8)1,
@@ -1251,7 +1251,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_FLOAT32,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVR_RPM_TO_HZ
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVL_DELTA_LIMIT_MRAD] = {
         .version_u8 = (t_uint8)1,
@@ -1261,7 +1261,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVL_DELTA_LMT_MRAD
     },
     [APPSPM_PRM_MOT_ACTDIR_WHAVR_DELTA_LIMIT_MRAD] = {
         .version_u8 = (t_uint8)1,
@@ -1271,7 +1271,7 @@
         .factor_f32 = (t_float32)1.0,
         .offset_s16 = (t_sint16)0,
         .prmType_e = APPSPM_PRM_TYPE_UINT16,
-        .signal_e = APPSIG_SIGNAL_NB
+        .signal_e = APPSIG_SIGNAL_PRM_MOT_DIR_WHAVR_DELTA_LMT_MRAD
     },
     };
 

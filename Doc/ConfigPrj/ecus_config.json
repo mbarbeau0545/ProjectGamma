@@ -1,27 +1,23 @@
 {
   "general": {
-    "mode": "SIL",
+    "mode": "HIL",
     "refresh_ms": 50,
     "can_broker": {
-      "enabled": true,
+      "enabled": false,
+      "log_all": false,
       "poll_sleep_s": 0.001,
       "max_pop_per_ecu": 128,
       "max_inject_per_cycle": 2048,
       "control_port": 19600,
       "log_rules": {
-        "TOOL_LOGGER": [
-          "tx"
-        ],
-        "ECU_HC": [
-          "rx"
-        ]
+        
       }
     }
   },
   "can_clients": [
     {
       "name": "TOOL_LOGGER",
-      "enable_client": true,
+      "enable_client": false,
       "can_gate": "PCSIM",
       "pcsim_can": {
         "shared_can_nodes": [
@@ -44,7 +40,7 @@
     {
       "name": "ECU_GTRY",
       "enable_ecu": false,
-      "ecu_in_debug": false,
+      "ecu_in_debug": true,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
       "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
@@ -110,7 +106,7 @@
         "idx": 1,
         "value_mv": 3000
       },
-      "can_gate": "PCSIM",
+      "can_gate": "WAVESHARE",
       "can_speed_bps": 250000,
       "can_device_port": {
         "Vid": "1A86",
@@ -140,7 +136,7 @@
     {
       "name": "ECU_HC",
       "enable_ecu": false,
-      "ecu_in_debug": true,
+      "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/MessagingCfg/OpePrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareOpeCfg/Ope_Project_SoftwareCfg.xlsm",
       "fmkio_config_public": "src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
@@ -329,11 +325,11 @@
     },
     {
       "name": "ECU_SAFE",
-      "enable_ecu": false,
+      "enable_ecu": true,
       "ecu_in_debug": false,
       "sym_file": "Doc/ConfigPrj/GammaCfg/FirmwareSafetyCfg/MessagingCfg/SafetyPrjMsgDefinition.sym",
       "project_software_cfg": "Doc/ConfigPrj/GammaCfg/FirmwareSafetyCfg/Safety_Project_SoftwareCfg.xlsm",
-      "fmkio_config_public": "C://PROJECT//STM32//Gamma_Safety_SILTest//src//1_FMK//FMK_CFG//FMKCFG_ConfigFiles//FMKIO_COnfigPublic.h",
+      "fmkio_config_public": "C:/PROJECT/STM32/GAMMA/Gamma_Firmware_Safety/src/1_FMK/FMK_CFG/FMKCFG_ConfigFiles/FMKIO_COnfigPublic.h",
       "encoder_modes": [
         {
           "idx": 0,
@@ -351,7 +347,7 @@
         "idx": 1,
         "value_mv": 3000
       },
-      "can_gate": "PCSIM",
+      "can_gate": "WAVESHARE",
       "can_speed_bps": 250000,
       "can_device_port": {
         "Vid": "1A86",
