@@ -82,6 +82,16 @@
     */
     void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
 
+    /**
+    * @brief Stratefy Function : Disable Mouvement From Head 
+    */
+    void APPSDM_SPEC_DiagStrat_HEAD_CUTTER_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
+    /**
+    * @brief Stratefy Function : Disable motion
+    */
+    void APPSDM_SPEC_DiagStrat_MOTION_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e);
+
     /* CAUTION : Automatic generated code section for Diag Strategy Function Declaration: End */
    
 

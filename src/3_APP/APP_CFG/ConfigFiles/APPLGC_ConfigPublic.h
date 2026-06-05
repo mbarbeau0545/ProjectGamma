@@ -56,6 +56,9 @@
         APPLGC_SRV_GTRY_X = 0x00,
         APPLGC_SRV_GTRY_Y,
         APPLGC_SRV_GTRY_Z,
+        APPLGC_SRV_WHEEL_AV_R,
+        APPLGC_SRV_WHEEL_AV_L,
+        APPLGC_SRV_HEAD_CUTTER,
 
         APPLGC_SRV_NB,
     } t_eAPPLGC_SrvList;
@@ -65,11 +68,62 @@
     typedef enum ____t_eAPPLGC_AgentList
     {
         APPLGC_AGENT_GANTRY = 0x00,          // Gère la gestion du gantry
+        APPLGC_AGENT_HEAD_CUTTER,     // Gère la gestion du cutter
+        APPLGC_AGENT_MOTION,          // Gère la gestion des roues et leur direction
 
         APPLGC_AGENT_NB,
     } t_eAPPLGC_AgentList;
     /* CAUTION : Automatic generated code section for Enum: End */
+
+    ///@brief Calibration Common status 
+    typedef enum 
+    {
+        APPLGC_CALIB_REQSTS_IDLE = 0,          //---- Calibration statte IDLE Status ----//
+        APPLGC_CALIB_REQSTS_MOVE,              //---- Calibration statte Move Status ----//
+        APPLGC_CALIB_REQSTS_REGISTER_VALUE,    //---- Calibration statte Register Status ----//
+
+        APPLGC_CALIB_STS_NB                 //---- calibration state number ----//
+    } t_eAPPLGC_CalibStatus;
+
+    ///@brief command motor state 
+    typedef enum 
+    {
+        APPLGC_MTR_STS_DISABLE = 0,         //---- user wants to disable motor ----//
+        APPLGC_MTR_STS_ENABLE,              //---- user wants to enable motor ----//
+        APPLGC_MTR_STS_STOP,                //---- user wants to stop motor ----//
+
+        APPLGC_MTR_STS_NB,
+    } t_eAPPLGC_CmdMtrSts;
     
+    ///@brief Calibration status Feedback
+    typedef enum 
+    {
+        APPLGC_CALIB_FBSTS_ONGOING = 1,                 //---- Calibration FeedBack status, calib on going & accepted ----//
+        APPLGC_CALIB_FBSTS_REGIST_VAL_SUCCEED = 2,      //---- Calibration FeedBack status, successfully registered value ----//
+        APPLGC_CALIB_FBSTS_REGIST_VAL_FAILED = 3,       //---- Calibration FeedBack status, failed to registered calib value ----//
+        APPLGC_CALIB_FBSTS_WRONG_STATE = 4,             //---- Calibration FeedBack status, wrong states ----//
+        APPLGC_CALIB_FBSTS_SET_VAL_FAILED = 5,          //---- Calibration FeedBack status, failed to set calib value ----//
+        APPLGC_CALIB_FBSTS_UNDEFINED_ERROR = 6,          //---- Calibration FeedBack status, error undifend ----//
+        APPLGC_CALIB_FBSTS_MTR_DISABLE = 7,             //---- Calibration FeedBack status, Mtr Disable, failed to enables it ----//
+    } t_eAPPLGC_CalibFeedbackSts;
+    
+    ///@brief Rearmament Type
+    typedef enum 
+    {
+        APPLGC_REARM_TYPE_SAFETY = 0,           //---- rermament type -> stay in safety ----//
+        APPLGC_REARM_TYPE_FSM_PRE_OPE,          //---- rearmament type concern only a go back to fsm_ope ----//
+        APPLGC_REARM_TYPE_TOTAL,                //---- rearmament type to Init of the agent ----//
+
+        LGC_REARM_TYPE_NB                       //---- rearmament type number  ----//
+    } t_eAPPLGC_RearmType;
+
+    ///@brief Rearmament feedbakc status
+    typedef enum 
+    {
+        APP_LGC_REARM_FBSTATUS_FAILED = 0x1,                //---- rearmament feedback status failed to go/out of safety status ----//
+        APP_LGC_REARM_FBSTATUS_SAFETY = 0x2,                //---- rearmament feedback status is still in safety state----//
+        APP_LGC_REARM_FBSTATUS_SUCCESS = 0xFF,              //---- rearmament feedback status success----//
+    } t_eAPPLGC_RearmFeedbackSts;
     /* CAUTION : Automatic generated code section for Structure: Start */
 
     /* CAUTION : Automatic generated code section for Structure: End */

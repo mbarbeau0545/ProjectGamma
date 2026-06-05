@@ -1,0 +1,23 @@
+# Python dependencies detected from repository imports
+#
+# Install with:
+#   pip install -r requirements.txt
+
+# GUI / monitoring tools
+PyQt5
+pyqtgraph
+
+# Communication / device access
+pyserial
+
+# Config / validation
+pydantic>=2
+
+# Excel / code generation
+openpyxl
+
+# Word document generation
+python-docx
+
+# Optional: useful if you also want the PlatformIO CLI available via pip
+# platformio

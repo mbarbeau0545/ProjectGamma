@@ -513,52 +513,52 @@ t_eReturnCode FMKCPU_SetPeriphClockCfg(t_sFMKCPU_PllOscCfg ** f_PllOtherCfg_pas)
             case FMKCPU_RCC_CLK_ADC12:
                 periphClkCfg_s.Adc12ClockSelection = RCC_ADC12CLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLP ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_ADC12;
                 break;
             case FMKCPU_RCC_CLK_ADC345:
                 periphClkCfg_s.Adc345ClockSelection = RCC_ADC345CLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLP ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_ADC345;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_ADC345;
                 break;
             case FMKCPU_RCC_CLK_QSPI:
                 periphClkCfg_s.QspiClockSelection = RCC_QSPICLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLQ ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_QSPI;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_QSPI;
                 break;
             case FMKCPU_RCC_CLK_USART2:
                 periphClkCfg_s.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART2;
                 break;
             case FMKCPU_RCC_CLK_USART3:
                 periphClkCfg_s.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART3;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART3;
                 break;
             case FMKCPU_RCC_CLK_UART4:
                 periphClkCfg_s.Uart4ClockSelection = RCC_UART4CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_UART4;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_UART4;
                 break;
             case FMKCPU_RCC_CLK_UART5:
                 periphClkCfg_s.Uart5ClockSelection = RCC_UART5CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_UART5;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_UART5;
                 break;
             case FMKCPU_RCC_CLK_FDCAN:
                 periphClkCfg_s.FdcanClockSelection = RCC_FDCANCLKSOURCE_PLL;
                 //------ Reference Clock  Source PLLQ ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_FDCAN;
                 break;
             case FMKCPU_RCC_CLK_I2C3:
                 periphClkCfg_s.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
                 //------ Reference Clock  Source APB1 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_I2C3;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_I2C3;
                 break;
             case FMKCPU_RCC_CLK_USART1:
                 periphClkCfg_s.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
                 //------ Reference Clock  Source APB2 ------//
-                periphClkCfg_s.PeriphClockSelection = RCC_PERIPHCLK_USART1;
+                periphClkCfg_s.PeriphClockSelection |= RCC_PERIPHCLK_USART1;
                 break;
             case FMKCPU_RCC_CLK_DMA1:
             case FMKCPU_RCC_CLK_DMA2:

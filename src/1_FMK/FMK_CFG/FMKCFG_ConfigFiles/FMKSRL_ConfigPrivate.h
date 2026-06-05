@@ -227,11 +227,11 @@
 
     //--------- Tx, Rx Buffer for Serial Line 2 ---------//
     t_uint8 g_SrlLine_2_RxBuffer_ua8[256];
-    t_uint8 g_SrlLine_2_TxBuffer_ua8[2048];
+    t_uint8 g_SrlLine_2_TxBuffer_ua8[256];
 
     //--------- Tx, Rx Buffer for Serial Line 3 ---------//
-    t_uint8 g_SrlLine_3_RxBuffer_ua8[0];
-    t_uint8 g_SrlLine_3_TxBuffer_ua8[0];
+    t_uint8 g_SrlLine_3_RxBuffer_ua8[256];
+    t_uint8 g_SrlLine_3_TxBuffer_ua8[2048];
 
     //--------- Tx, Rx Buffer for Serial Line 4 ---------//
     t_uint8 g_SrlLine_4_RxBuffer_ua8[0];
@@ -263,18 +263,18 @@
             .Rx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_RxBuffer_ua8[0]),
             .Rx_bufferSize_u16 = (t_uint16)256,
             .Tx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_2_TxBuffer_ua8[0]),
-            .Tx_bufferSize_u16 = (t_uint16)2048,
+            .Tx_bufferSize_u16 = (t_uint16)256,
         },
         [FMKSRL_SERIAL_LINE_3] = {
             .c_clockPort_e = FMKCPU_RCC_CLK_USART3,
             .c_HwType_e    = FMKSRL_HW_PROTOCOL_USART,
             .c_IRQNType_e  = FMKCPU_NVIC_USART3_IRQN,
-            .c_DmaRqstRx   = (t_eFMKCPU_DmaRqst)0xFF,
-            .c_DmaRqstTx   = (t_eFMKCPU_DmaRqst)0xFF,
+            .c_DmaRqstRx   = FMKCPU_DMA_RQSTYPE_USART3_RX,
+            .c_DmaRqstTx   = FMKCPU_DMA_RQSTYPE_USART3_TX,
             .Rx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_3_RxBuffer_ua8[0]),
-            .Rx_bufferSize_u16 = (t_uint16)0,
+            .Rx_bufferSize_u16 = (t_uint16)256,
             .Tx_StartAddressBuffer_pu8 = (t_uint8 *)(&g_SrlLine_3_TxBuffer_ua8[0]),
-            .Tx_bufferSize_u16 = (t_uint16)0,
+            .Tx_bufferSize_u16 = (t_uint16)2048,
         },
         [FMKSRL_SERIAL_LINE_4] = {
             .c_clockPort_e = FMKCPU_RCC_CLK_UART4,

@@ -69,41 +69,41 @@
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_PULSE_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_PLS_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_PULSE_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_PLS_SetValue(t_float32 f_SigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_SPEED_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_SPD_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_SPEED_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_SPD_SetValue(t_float32 f_SigValue_pf32);
             /**
     *
     * @brief     @ref t_cbAppAct_GetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_TRG_GetValue(t_float32 *f_rawSigValue_pf32);
 
     /**
     *
     * @brief     @ref t_cbAppAct_SetIfValue
     *
     */
-    t_eReturnCode APPACT_SPEC_MTR_Z_TRIGTIME_SetValue(t_float32 f_SigValue_pf32);
+    t_eReturnCode APPACT_SPEC_MTR_Z_TRG_SetValue(t_float32 f_SigValue_pf32);
     /* CAUTION : Automatic generated code section for Specific Function Declaration: End */
 #endif            
 //************************************************************************************

@@ -20,6 +20,7 @@
 #include "./APPACT_SPEC_MTR_XL.h"
 /* CAUTION : Automatic generated code section for Include: End */
 #include "APP_CTRL/APP_SYS/Src/APP_SYS.h"
+#include "APP_CTRL/APP_SIG/Src/APP_SIG.h"
 #include "APP_CFG/ConfigFiles/APPACT_ConfigPublic.h"
 #include "APPACT_ConfigSpecific.h"
 // ********************************************************************
@@ -134,9 +135,9 @@ t_eReturnCode APPACT_SPEC_MTR_XL_SetCfg(t_uint8 f_actDvcOpt_u8, t_eAPPACT_ActDri
 
 
 /******************************************
-* APPACT_SPEC_MTR_XL_PULSE_GetValue
+* APPACT_SPEC_MTR_XL_PLS_GetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_PULSE_GetValue(t_float32 *f_rawSigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_PLS_GetValue(t_float32 *f_rawSigValue_pf32)
 {
     t_eReturnCode Ret_e;
     //    Your code for MTR_XL_GetIfValue here
@@ -165,9 +166,9 @@ t_eReturnCode APPACT_SPEC_MTR_XL_PULSE_GetValue(t_float32 *f_rawSigValue_pf32)
 
 
 /******************************************
-* APPACT_SPEC_MTR_XL_PULSE_SetValue
+* APPACT_SPEC_MTR_XL_PLS_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_PULSE_SetValue(t_float32 f_SigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_PLS_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for MTR_XL_SetIfValue here
@@ -175,10 +176,11 @@ t_eReturnCode APPACT_SPEC_MTR_XL_PULSE_SetValue(t_float32 f_SigValue_pf32)
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
-                Ret_e = APPACT_SPEC_CL42T_Pulse_SetValue(   f_SigValue_pf32, 
-                                                            c_MtrXL_CL42T_Id,
-                                                            APPACT_SPEC_MOTOR_XL_DIR_POS,
-                                                            &g_cl42tShadowCmd_s);
+            Ret_e = APPACT_SPEC_CL42T_PLS_SetValue(   f_SigValue_pf32, 
+                                                        c_MtrXL_CL42T_Id,
+                                                        APPACT_SPEC_MOTOR_XL_DIR_POS,
+                                                        APPSIG_SIGNAL_ACT_GET_PWR_MTR_XL_RLY,
+                                                        &g_cl42tShadowCmd_s);
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -195,17 +197,18 @@ t_eReturnCode APPACT_SPEC_MTR_XL_PULSE_SetValue(t_float32 f_SigValue_pf32)
 
 
 /******************************************
-* APPACT_SPEC_MTR_XL_SPEED_GetValue
+* APPACT_SPEC_MTR_XL_SPD_GetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_SPEED_GetValue(t_float32 *f_rawSigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_SPD_GetValue(t_float32 *f_rawSigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for MTR_XL_GetIfValue here
     switch(g_MtrXL_OptCfg_e)
     {
         case APPSYS_OPT_ACT_MTR_XL_CL42T:
-            Ret_e = APPACT_SPEC_CL42T_Speed_GetValue(   f_rawSigValue_pf32,
-                                                        c_MtrXL_CL42T_Id);
+            Ret_e = APPACT_SPEC_CL42T_SPD_GetValue( f_rawSigValue_pf32,
+                                                    APPSIG_SIGNAL_ACT_GET_PWR_MTR_XL_RLY,
+                                                    c_MtrXL_CL42T_Id);
         break;
         case APPSYS_OPT_ACT_MTR_XL_UNUSED:
             Ret_e = RC_WARNING_NO_OPERATION;
@@ -222,19 +225,21 @@ t_eReturnCode APPACT_SPEC_MTR_XL_SPEED_GetValue(t_float32 *f_rawSigValue_pf32)
 
 
 /******************************************
-* APPACT_SPEC_MTR_XL_SPEED_SetValue
+* APPACT_SPEC_MTR_XL_SPD_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_SPEED_SetValue(t_float32 f_SigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_SPD_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
+
     //    Your code for MTR_XL_SetIfValue here
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
-                Ret_e = APPACT_SPEC_CL42T_Speed_SetValue(   f_SigValue_pf32,
-                                                            c_MtrXL_CL42T_Id,
-                                                            APPACT_SPEC_MOTOR_XL_DIR_POS,
-                                                            &g_cl42tShadowCmd_s);
+            Ret_e = APPACT_SPEC_CL42T_SPD_SetValue(   f_SigValue_pf32,
+                                                        c_MtrXL_CL42T_Id,
+                                                        APPACT_SPEC_MOTOR_XL_DIR_POS,
+                                                        APPSIG_SIGNAL_ACT_GET_PWR_MTR_XL_RLY,
+                                                        &g_cl42tShadowCmd_s);
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -251,9 +256,9 @@ t_eReturnCode APPACT_SPEC_MTR_XL_SPEED_SetValue(t_float32 f_SigValue_pf32)
 
 
 /******************************************
-* APPACT_SPEC_MTR_XL_TRIGTIME_GetValue
+* APPACT_SPEC_MTR_XL_TRG_GetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_TRG_GetValue(t_float32 *f_rawSigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for MTR_XL_GetIfValue here
@@ -278,19 +283,21 @@ t_eReturnCode APPACT_SPEC_MTR_XL_TRIGTIME_GetValue(t_float32 *f_rawSigValue_pf32
 }
 
 /******************************************
-* APPACT_SPEC_MTR_XL_TRIGTIME_SetValue
+* APPACT_SPEC_MTR_XL_TRG_SetValue
 ******************************************/
-t_eReturnCode APPACT_SPEC_MTR_XL_TRIGTIME_SetValue(t_float32 f_SigValue_pf32)
+t_eReturnCode APPACT_SPEC_MTR_XL_TRG_SetValue(t_float32 f_SigValue_pf32)
 {
     t_eReturnCode Ret_e = RC_OK;
     //    Your code for MTR_XL_SetIfValue here
     switch(g_MtrXL_OptCfg_e)
         {
             case APPSYS_OPT_ACT_MTR_XL_CL42T:
-                Ret_e = APPACT_SPEC_CL42T_TrigTime_SetValue(f_SigValue_pf32,
-                                                            c_MtrXL_CL42T_Id,
-                                                            APPACT_SPEC_MOTOR_XL_DIR_POS,
-                                                            &g_cl42tShadowCmd_s);                
+            Ret_e = APPACT_SPEC_CL42T_TRG_SetValue(f_SigValue_pf32,
+                                                        c_MtrXL_CL42T_Id,
+                                                        APPACT_SPEC_MOTOR_XL_DIR_POS,
+                                                        APPSIG_SIGNAL_ACT_GET_PWR_MTR_XL_RLY,
+                                                        &g_cl42tShadowCmd_s);
+            
             break;
             case APPSYS_OPT_ACT_MTR_XL_UNUSED:
                 Ret_e = RC_WARNING_NO_OPERATION;
@@ -317,16 +324,16 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
     t_eReturnCode Ret_e;
 
     t_sCL42T_MotorSigCfg motorConfig = {
-        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_2,
+        .DiagSignal_e = FMKIO_INPUT_SIGFREQ_1,
         .DirSignal_e = FMKIO_OUTPUT_SIGDIG_2,
         .StateSignal_e = FMKIO_OUTPUT_SIGDIG_6,
         .EndStopSigCW_s = {
-            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_3,
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_4, //4,
             .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
         .EndStopSigCCW_s = {
-            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_4,
+            .EndStopSignal_e = FMKIO_INPUT_SIGEVNT_3, //3,
             .PullMode_e = FMKIO_PULL_MODE_UP,
             .triggerEvnt_e = FMKIO_STC_RISING_EDGE
         },
@@ -346,7 +353,7 @@ static t_eReturnCode s_APPACT_SPEC_CL42T_Cfg(void)
             }
         }
     };
-
+    
     Ret_e  = CL42T_AddMotorConfiguration(   c_MtrXL_CL42T_Id,
                                             motorConfig, 
                                             APPACT_SPEC_MOTOR_XL_ENABLE_DEADTIME,
@@ -368,7 +375,7 @@ static void s_APPACT_SPEC_CL42T_HealthCallback(t_eCL42T_MotorId f_MotorID_e, t_e
     {
         APPACT_SPEC_CL42T_Diagnostic(   f_defaultInfo_e,
                                         c_MtrXL_CL42T_Id,
-                                        APPSDM_DIAG_ITEM_LGC_GTRY_X_OPE_ERROR);
+                                        APPSDM_DIAG_ITEM_GTRY_X_OPE_ERROR);
     }
 
     return;

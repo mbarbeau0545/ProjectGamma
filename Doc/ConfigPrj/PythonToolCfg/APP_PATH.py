@@ -25,6 +25,8 @@ ACT_SPEC_FOLDER_PATH = r"APP_CFG\\ConfigSpecific\\AppAct_ConfigSpecific"
 APPSNS_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPublic.h"
 APPSNS_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNS_ConfigPrivate.h"
 APPSNS_C_PATH = r"src\\3_APP\\APP_CTRL\\APP_SNS\\Src\\APP_SNS.c"
+APPSNSCAL_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNSCAL_ConfigPublic.h"
+APPSNSCAL_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPSNSCAL_ConfigPrivate.h"
 
 APPACT_CONFIGPUBLIC_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPublic.h"
 APPACT_CONFIGPRIVATE_PATH = r"src\\3_APP\\APP_CFG\\ConfigFiles\\APPACT_ConfigPrivate.h"
@@ -47,12 +49,13 @@ APPSPM_CFG_PUBLIC = r'src\\3_APP\APP_CFG\\ConfigFiles\\APPSPM_ConfigPublic.h'
 
 APPSIG_CFG_PRIVATE = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPrivate.h'
 APPSIG_CFG_PUBLIC = r'src\3_APP\APP_CFG\ConfigFiles\APPSIG_ConfigPublic.h'
-SYM_MSG_CFG = r'Doc\ConfigPrj\MessagingCfg\PrjMsgDefinition.sym'
+SYM_MSG_CFG = r'Doc\ConfigPrj\GammaCfg\FirmwareOpeCfg\MessagingCfg\OpePrjMsgDefinition.sym'
 
 APPSYS_CFG_PUBLIC = r"src\3_APP\APP_CFG\ConfigFiles\APPSYS_ConfigPublic.h"
 APPSYS_CFG_PRIVATE = r"src\3_APP\APP_CFG\ConfigFiles\APPSYS_ConfigPrivate.h"
 SPACE_VARIABLE = 30
 EMPTY_CELL = "None"
+NONE_TYPE = "NoneType"
 
 ENUM_APPSNS_SNSS_RT      = "APPSNS_SNSITF"
 ENUM_APPSNS_SNSSST_RT    = "APPSNS_SNS_STATE"

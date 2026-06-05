@@ -145,6 +145,46 @@ void APPSDM_SPEC_DiagStrat_GANTRY_AXE_Z_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
     return;
 }
 
+/*********************************
+APPSDM_SPEC_DiagStrat_HEAD_CUTTER_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_HEAD_CUTTER_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_HEAD_CUTTER, srvHealth_e);
+    }
+
+    return;
+}
+
+/*********************************
+APPSDM_SPEC_DiagStrat_MOTION_OFF
+ *********************************/
+void APPSDM_SPEC_DiagStrat_MOTION_OFF(t_eAPPSDM_DiagStratOpe f_stratOpe_e)
+{
+    t_eAPPLGC_SrvHealth srvHealth_e;
+    t_eReturnCode Ret_e = RC_OK;
+
+    Ret_e = s_APPSDM_SPEC_GetHealthFromStratOpe(f_stratOpe_e, &srvHealth_e);
+
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_WHEEL_AV_R, srvHealth_e);
+    }
+    if(Ret_e == RC_OK)
+    {
+        Ret_e = APPLGC_SetServiceHealth(APPLGC_SRV_WHEEL_AV_L, srvHealth_e);
+    }
+
+    return;
+}
+
 /* CAUTION : Automatic generated code section for Diag Strategy Function Implementation: End */
 
 //*****************************************************************************

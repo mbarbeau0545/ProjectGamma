@@ -2,7 +2,9 @@
 #include "TypeCommon.h"
 #include "FMK_HAL/FMK_SRL/Src/FMK_SRL.h"
 
+#ifndef FMKSRL_LOG
 #define FMKSRL_LOG(fmt, ...) ((void)0)
+#endif
 
 
 void FMKSRL_LogUartSend(t_eFMKSRL_SerialLine f_SrlLine_e,

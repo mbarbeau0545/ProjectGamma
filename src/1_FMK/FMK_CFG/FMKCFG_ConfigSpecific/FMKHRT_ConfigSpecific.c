@@ -19,6 +19,7 @@
 #include "APP_CFG/ConfigFiles/APPSYS_ConfigPublic.h"
 #if defined(APPSYS_MODULE_FMKHRT_ENABLE)
 #include "./FMKHRT_ConfigSpecific.h"
+#include "FMK_HAL/FMK_SRL/Src/FMK_SRL.h"
 // ********************************************************************
 // *                      Defines
 // ********************************************************************
@@ -362,7 +363,6 @@ HAL_StatusTypeDef FMKHRT_HAL_HRTIM_WaveformStart(   HRTIM_HandleTypeDef * f_bspI
     HAL_StatusTypeDef bspRet_e = HAL_OK;
     t_eReturnCode Ret_e = RC_OK;
     t_uint32 bspslvTimId_u32;
-
     Ret_e = s_FMKHRTSPEC_GetSlvTimerId(f_timerIdx_u32, &bspslvTimId_u32);
 
     if(Ret_e == RC_OK)
@@ -380,7 +380,7 @@ HAL_StatusTypeDef FMKHRT_HAL_HRTIM_WaveformStart(   HRTIM_HandleTypeDef * f_bspI
         //---- not the best way to track the error -----//
         bspRet_e = HAL_ERROR;
     }
-
+    
     return bspRet_e;
 }
 

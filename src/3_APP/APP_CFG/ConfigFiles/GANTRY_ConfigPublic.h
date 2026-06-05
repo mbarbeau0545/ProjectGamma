@@ -18,7 +18,7 @@
     // ********************************************************************
     // *                      Defines
     // ********************************************************************
-    #define GTRY_MAX_ITERATION      ((t_sint32)50)
+    #define GTRY_MAX_ITERATION      ((t_sint32)100)
     // ********************************************************************
     // *                      Types
     // ********************************************************************
@@ -54,6 +54,19 @@
         t_float32 frequency_f32;        //---- frequency of the motor -----//
         t_float32 triggerTimer_f32;     //---- What time relatively to the first iteration, this iteration should be send ----//
     } t_sGTRY_MtrCmdIterPayload;
+
+    ///@brief CAN command messages handled by GANTRY message callback.
+    typedef enum
+    {
+        GTRY_CMD_MSGSIG_HEAD = 0,
+        GTRY_CMD_MSGSIG_POS_COORD = GTRY_CMD_MSGSIG_HEAD,       //---- position coordinate command ----//
+        GTRY_CMD_MSGSIG_POS_SPHERIC,                            //---- position spherical command ----//
+        GTRY_CMD_MSGSIG_POS_STEP,                               //---- step/dir command ----//
+        GTRY_CMD_MSGSIG_CALIB,                                  //---- calibration command ----//
+        GTRY_CMD_MSGSIG_REARMAMENT,                             //---- rearm command ----//
+
+        GTRY_CMD_MSGSIG_NB
+    } t_eGTRY_CmdMsg;
     // ********************************************************************
     // *                      Prototypes
     // ********************************************************************

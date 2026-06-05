@@ -25,6 +25,7 @@
     #ifndef NULL
         #define NULL ((void *)0)
     #endif // NULL
+
     /**
      * @brief Get a bit from a flag macro
      */
@@ -151,7 +152,6 @@
         STATE_CYCLIC_PREOPE,          /**< The module needs to make actions before the operational state */
         STATE_CYCLIC_OPE,             /**< The module performs operational cyclic action */
         STATE_CYCLIC_BUSY,            /**< The module is busy doing other things, cyclic operations are not executed */
-        STATE_CYCLIC_WAITING,         /**< The module is waiting ready to operate and waiting for a system signal */
         STATE_CYCLIC_ERROR            /**< The module is in error state, Deprecated mode */
     } t_eCyclicModState;
 

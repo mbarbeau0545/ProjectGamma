@@ -1,0 +1,7 @@
+#pragma once
+
+#include "1_FMK/FMK_HAL/FMK_IO/Src/FMK_IO.h"
+
+t_eReturnCode FMKIO_Set_OutDigSigValue(t_eFMKIO_OutDigSig a, t_eFMKIO_DigValue b);
+t_eReturnCode FMKIO_Set_OutPwmSigPulses(t_eFMKIO_OutPwmSig a , t_uint16 b , t_uint16 c, t_uint16 d);
+t_eReturnCode FMKIO_Get_InFreqSigValue(t_uint8 a, t_float32 *val);

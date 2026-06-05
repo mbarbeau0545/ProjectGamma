@@ -1,0 +1,352 @@
+/*********************************************************************
+ * @file        CAN.h
+ * @brief       Template_BriefDescription.
+ * @note        TemplateDetailsDescription.\n
+ *
+ * @author      xxxxxx
+ * @date        jj/mm/yyyy
+ * @version     1.0
+ */
+  
+#ifndef APPSYS_CONFIGPRIVATE_H_INCLUDED
+#define APPSYS_CONFIGPRIVATE_H_INCLUDED
+
+
+
+
+
+    // ********************************************************************
+    // *                      Includes
+    // ********************************************************************
+    #include "./APPSYS_ConfigPublic.h"
+    #include "1_FMK/FMK_HAL/FMK_IO/Src/FMK_IO.h"
+    #include "1_FMK/FMK_HAL/FMK_HRT/Src/FMK_HRT.h"
+    #include "1_FMK/FMK_HAL/FMK_CDA/Src/FMK_CDA.h"
+    #include "1_FMK/FMK_HAL/FMK_CPU/Src/FMK_CPU.h"
+    #include "1_FMK/FMK_HAL/FMK_TIM/Src/FMK_TIM.h"
+    #include "1_FMK/FMK_HAL/FMK_CAN/Src/FMK_FDCAN.h"
+    #include "1_FMK/FMK_HAL/FMK_SRL/Src/FMK_SRL.h"
+    #include "3_APP/APP_CTRL/APP_ACT/Src/APP_ACT.h"
+    #include "3_APP/APP_CTRL/APP_SDM/Src/APP_SDM.h"
+    #include "3_APP/APP_CTRL/APP_SPM/Src/APP_SPM.h"
+    #include "3_APP/APP_CTRL/APP_SNS/Src/APP_SNS.h"
+    #include "3_APP/APP_CTRL/APP_UDS/Src/APP_UDS.h"
+    #include "3_APP/APP_CTRL/APP_SIG/Src/APP_SIG.h"
+    #include "3_APP/APP_LGC/Src/APP_LGC.h"
+    // ********************************************************************
+    // *                      Defines
+    // ********************************************************************
+#if defined(FMKCPU_STM32_ECU_FAMILY_G4)
+    #define APPSYS_SYSTEM_CORE_SPEED FMKCPU_CORE_CLOCK_SPEED_128MHZ
+#elif defined(FMKCPU_STM32_ECU_FAMILY_H7)
+    #define APPSYS_SYSTEM_CORE_SPEED FMKCPU_CORE_CLOCK_SPEED_400MHZ
+#endif
+    #define APPSYS_ITLINE_FASTTASK              FMKTIM_INTERRUPT_LINE_EVNT_1    /**< Timer Line use for FastTask */
+    #define APPSYS_WATCHDOG_ENABLE              (FALSE)
+
+    ///@brief Analog pin that define the Ecu Position 
+    #define APPSYS_IO_ANALOG_SIGNAL (FMKIO_INPUT_SIGANA_2)
+
+    ///@brief Flag to know if user wants to reach the eeprom sys option parmeter
+    #define APPSYS_EEPROM_PARAM_ENABLE (FALSE)
+    #define APPSYS_SYS_MACH_BASED_ON_PRM (FALSE)
+
+    ///@brief Signal send to know if the parameter has been send by ros 
+    #define APPSYS_FLAG_PRM_RCV_STATUS (APPSIG_SIGNAL_PRM_FLAG_PARAM_SEND_OK)
+
+    ///@brief Number of ecu position parameter
+    #define APPSYS_ECU_POS_MAX      ((t_uint32)6)
+
+    ///@brief Time waiting PC to send Parameter
+    #define APPSYS_WAIT_PRM_TIMEOUT ((t_uint32)1000)
+    // ********************************************************************
+    // *                      Types
+    // ********************************************************************
+    /* CAUTION : Automatic generated code section for Enum: Start */
+
+    /* CAUTION : Automatic generated code section for Enum: End */
+	//-----------------------------ENUM TYPES-----------------------------//
+
+    /* CAUTION : Automatic generated code section for Structure: Start */
+
+    /* CAUTION : Automatic generated code section for Structure: End */
+	//-----------------------------STRUCT TYPES---------------------------//
+    ///@brief range for determine the ecu position 
+    typedef struct 
+    {
+        t_float32 min_f32;
+        t_float32 max_f32;
+    } t_sAPPSYS_EcuPosAnaRange;
+    /* CAUTION : Automatic generated code section : Start */
+
+    /* CAUTION : Automatic generated code section : End */
+	//-----------------------------TYPEDEF TYPES---------------------------//
+    /**
+    *
+    *	@brief      Set a module function init 
+
+    */
+    typedef t_eReturnCode (t_cbAppSys_FuncInit)(void);
+    /**
+    *
+    *	@brief      Set a module cyclic function
+
+    */
+    typedef t_eReturnCode (t_cbAppSys_FuncCyclic)(void);
+    /**
+    *
+    *	@brief Function to know the module state.\n 
+    *
+    *	@param[in]  f_State_pe : store the value, value from @ref t_eCyclicModState
+    *
+    *   @retval RC_OK                             @ref RC_OK
+    *   @retval RC_ERROR_PTR_NULL                 @ref RC_ERROR_PTR_NUL
+    */
+    typedef t_eReturnCode (t_cbAppSys_GetState)(t_eCyclicModState *f_state_pe);
+    /**
+    *
+    *	@brief Function to update the module state.\n
+    *
+    *	@param[in]  f_State_e : the new value, value from @ref t_eCyclicModState
+    *
+    *   @retval RC_OK                             @ref RC_OK
+    */
+    typedef t_eReturnCode (t_cbAppSys_SetState)(t_eCyclicModState f_state_pe);
+
+    /* Structure to store Init and Cyclic Func*/
+    typedef struct 
+    {
+        t_cbAppSys_FuncInit   * Init_pcb;        
+        t_cbAppSys_FuncCyclic * Cyclic_pcb;
+        t_cbAppSys_GetState   * GetState_pcb;
+        t_cbAppSys_SetState   * SetState_pcb;
+        t_eAPPSIG_Signal        signal_e;
+    } t_sAppSys_SysFunc;
+    // ********************************************************************
+    // *                      Prototypes
+    // ********************************************************************
+        
+    // ********************************************************************
+    // *                      Variables
+    // ********************************************************************
+    
+    // Flag automatic generate code
+    /**< variable to store modules functions */
+    t_sAppSys_SysFunc c_AppSys_ModuleFunc_apf[APPSYS_MODULE_NB] = {
+        //----- FrameWork module -----//
+        {FMKCPU_Init,    FMKCPU_Cyclic,     FMKCPU_GetState,   FMKCPU_SetState,     APPSIG_SIGNAL_FMKCPU_MODSTATE},
+        {FMKTIM_Init,    FMKTIM_Cyclic,     FMKTIM_GetState,   FMKTIM_SetState,     APPSIG_SIGNAL_FMKTIM_MODSTATE},
+        {FMKHRT_Init,    FMKHRT_Cyclic,     FMKHRT_GetState,   FMKHRT_SetState,     APPSIG_SIGNAL_FMKHRT_MODSTATE},
+        {FMKCDA_Init,    FMKCDA_Cyclic,     FMKCDA_GetState,   FMKCDA_SetState,     APPSIG_SIGNAL_FMKCDA_MODSTATE},
+        {FMKIO_Init,     FMKIO_Cyclic,      FMKIO_GetState,    FMKIO_SetState,      APPSIG_SIGNAL_FMKIO_MODSTATE},
+#ifdef APPSYS_MODULE_FMKCAN_ENABLE
+        {FMKFDCAN_Init,  FMKFDCAN_Cyclic,   FMKFDCAN_GetState, FMKFDCAN_SetState,   APPSIG_SIGNAL_FMKFDCAN_MODSTATE},
+#endif // APPSYS_MODULE_FMKCAN_ENABLE
+#ifdef APPSYS_MODULE_FMKSRL_ENABLE
+        {FMKSRL_Init,   FMKSRL_Cyclic,      FMKSRL_GetState,   FMKSRL_SetState,     APPSIG_SIGNAL_FMKSRL_MODSTATE},
+#endif // APPSYS_MODULE_FMKSRL_ENABLE
+
+        //----- Application module -----//
+        {APPSDM_Init,    APPSDM_Cyclic,     APPSDM_GetState,   APPSDM_SetState,      APPSIG_SIGNAL_APPSDM_MODSTATE},
+        {APPSPM_Init,    APPSPM_Cyclic,     APPSPM_GetState,   APPSPM_SetState,      APPSIG_SIGNAL_APPSPM_MODSTATE},
+        {APPSIG_Init,    APPSIG_Cyclic,     APPSIG_GetState,   APPSIG_SetState,      APPSIG_SIGNAL_APPSIG_MODSTATE},
+        {APPSNS_Init,    APPSNS_Cyclic,     APPSNS_GetState,   APPSNS_SetState,      APPSIG_SIGNAL_APPSNS_MODSTATE},
+        {APPACT_Init,    APPACT_Cyclic,     APPACT_GetState,   APPACT_SetState,      APPSIG_SIGNAL_APPACT_MODSTATE},
+        {APPLGC_Init,    APPLGC_Cyclic,     APPLGC_GetState,   APPLGC_SetState,      APPSIG_SIGNAL_APPLGC_MODSTATE},
+    };
+
+
+    /* CAUTION : Automatic generated code section for Variable: Start */
+    ///@brief Machine Option Configuration
+    const t_uint8 c_AppSys_MachOptCfg_ua8[APPSYS_MACHINE_NB][APPSYS_OPT_ID_NB] = {
+        [APPSYS_MACHINE_GTRY] = {
+            APPSYS_OPT_SNS_ECDR_XL_NEMA17,                     // APPSYS_OPT_ID_SNS_ECDR_XL
+            APPSYS_OPT_SNS_ECDR_XR_NEMA17,                     // APPSYS_OPT_ID_SNS_ECDR_XR
+            APPSYS_OPT_SNS_ECDR_Y_NEMA17,                      // APPSYS_OPT_ID_SNS_ECDR_Y
+            APPSYS_OPT_SNS_ECDR_Z_NEMA17,                      // APPSYS_OPT_ID_SNS_ECDR_Z
+            APPSYS_OPT_SNS_ECDR_WHL_AV_L_UNUSED,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L
+            APPSYS_OPT_SNS_ECDR_WHL_AV_R_UNUSED,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R
+            APPSYS_OPT_SNS_ECDR_HD_KNF_APPSIG,                 // APPSYS_OPT_ID_SNS_ECDR_HD_KNF
+            APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_APPSIG,            // APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF
+            APPSYS_OPT_SNS_ECDR_HD_HOLD_APPSIG,                // APPSYS_OPT_ID_SNS_ECDR_HD_HOLD
+            APPSYS_OPT_SNS_HD_UP_LEFT_APPSIG,                  // APPSYS_OPT_ID_SNS_HD_UP_LEFT
+            APPSYS_OPT_SNS_HD_DWN_LEFT_APPSIG,                 // APPSYS_OPT_ID_SNS_HD_DWN_LEFT
+            APPSYS_OPT_SNS_HD_UP_RIGHT_APPSIG,                 // APPSYS_OPT_ID_SNS_HD_UP_RIGHT
+            APPSYS_OPT_SNS_HD_DWN_RIGHT_APPSIG,                // APPSYS_OPT_ID_SNS_HD_DWN_RIGHT
+            APPSYS_OPT_SNS_TRQ_MTR_XL_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
+            APPSYS_OPT_SNS_TRQ_MTR_XR_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XR
+            APPSYS_OPT_SNS_TRQ_MTR_Y_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Y
+            APPSYS_OPT_SNS_TRQ_MTR_Z_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Z
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_UNUSED,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_UNUSED,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R
+            APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_UNUSED,              // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_UNUSED,            // APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_UNUSED,             // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_XL_CL42T,                       // APPSYS_OPT_ID_ACT_MTR_XL
+            APPSYS_OPT_ACT_MTR_XR_CL42T,                       // APPSYS_OPT_ID_ACT_MTR_XR
+            APPSYS_OPT_ACT_MTR_Y_CL42T,                        // APPSYS_OPT_ID_ACT_MTR_Y
+            APPSYS_OPT_ACT_MTR_Z_CL42T,                        // APPSYS_OPT_ID_ACT_MTR_Z
+            APPSYS_OPT_ACT_MTR_WHL_AV_L_UNUSED,                // APPSYS_OPT_ID_ACT_MTR_WHL_AV_L
+            APPSYS_OPT_ACT_MTR_WHL_AV_R_UNUSED,                // APPSYS_OPT_ID_ACT_MTR_WHL_AV_R
+            APPSYS_OPT_ACT_MTR_HD_KNF_UNUSED,                  // APPSYS_OPT_ID_ACT_MTR_HD_KNF
+            APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_UNUSED,             // APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF
+            APPSYS_OPT_ACT_MTR_HD_HOLD_UNUSED,                 // APPSYS_OPT_ID_ACT_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_L
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_R
+            APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_UNUSED,           // APPSYS_OPT_ID_SYS_ROBOT_DIR_FORWARD
+            APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_UNUSED,          // APPSYS_OPT_ID_SYS_ROBOT_DIR_BACKWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_UNUSED,          // APPSYS_OPT_ID_SYS_ROBOT_PROP_FORWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_UNUSED,         // APPSYS_OPT_ID_SYS_ROBOT_PROP_BACKWARD
+        },
+        [APPSYS_MACHINE_HD] = {
+            APPSYS_OPT_SNS_ECDR_XL_APPSIG,                     // APPSYS_OPT_ID_SNS_ECDR_XL
+            APPSYS_OPT_SNS_ECDR_XR_APPSIG,                     // APPSYS_OPT_ID_SNS_ECDR_XR
+            APPSYS_OPT_SNS_ECDR_Y_APPSIG,                      // APPSYS_OPT_ID_SNS_ECDR_Y
+            APPSYS_OPT_SNS_ECDR_Z_APPSIG,                      // APPSYS_OPT_ID_SNS_ECDR_Z
+            APPSYS_OPT_SNS_ECDR_WHL_AV_L_UNUSED,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L
+            APPSYS_OPT_SNS_ECDR_WHL_AV_R_UNUSED,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R
+            APPSYS_OPT_SNS_ECDR_HD_KNF_NEMA17,                 // APPSYS_OPT_ID_SNS_ECDR_HD_KNF
+            APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_NEMA17,            // APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF
+            APPSYS_OPT_SNS_ECDR_HD_HOLD_NEMA17,                // APPSYS_OPT_ID_SNS_ECDR_HD_HOLD
+            APPSYS_OPT_SNS_HD_UP_LEFT_CAPTEUR_DIST,            // APPSYS_OPT_ID_SNS_HD_UP_LEFT
+            APPSYS_OPT_SNS_HD_DWN_LEFT_CAPTEUR_DIST,           // APPSYS_OPT_ID_SNS_HD_DWN_LEFT
+            APPSYS_OPT_SNS_HD_UP_RIGHT_CAPTEUR_DIST,           // APPSYS_OPT_ID_SNS_HD_UP_RIGHT
+            APPSYS_OPT_SNS_HD_DWN_RIGHT_CAPTEUR_DIST,          // APPSYS_OPT_ID_SNS_HD_DWN_RIGHT
+            APPSYS_OPT_SNS_TRQ_MTR_XL_UNUSED,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
+            APPSYS_OPT_SNS_TRQ_MTR_XR_UNUSED,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XR
+            APPSYS_OPT_SNS_TRQ_MTR_Y_UNUSED,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Y
+            APPSYS_OPT_SNS_TRQ_MTR_Z_UNUSED,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Z
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R
+            APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_APPSIG,              // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_APPSIG,             // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_XL_UNUSED,                      // APPSYS_OPT_ID_ACT_MTR_XL
+            APPSYS_OPT_ACT_MTR_XR_UNUSED,                      // APPSYS_OPT_ID_ACT_MTR_XR
+            APPSYS_OPT_ACT_MTR_Y_UNUSED,                       // APPSYS_OPT_ID_ACT_MTR_Y
+            APPSYS_OPT_ACT_MTR_Z_UNUSED,                       // APPSYS_OPT_ID_ACT_MTR_Z
+            APPSYS_OPT_ACT_MTR_WHL_AV_L_UNUSED,                // APPSYS_OPT_ID_ACT_MTR_WHL_AV_L
+            APPSYS_OPT_ACT_MTR_WHL_AV_R_UNUSED,                // APPSYS_OPT_ID_ACT_MTR_WHL_AV_R
+            APPSYS_OPT_ACT_MTR_HD_KNF_CL42T,                   // APPSYS_OPT_ID_ACT_MTR_HD_KNF
+            APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_CL42T,              // APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF
+            APPSYS_OPT_ACT_MTR_HD_HOLD_CL42T,                  // APPSYS_OPT_ID_ACT_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_L
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_R
+            APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_UNUSED,           // APPSYS_OPT_ID_SYS_ROBOT_DIR_FORWARD
+            APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_UNUSED,          // APPSYS_OPT_ID_SYS_ROBOT_DIR_BACKWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_UNUSED,          // APPSYS_OPT_ID_SYS_ROBOT_PROP_FORWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_UNUSED,         // APPSYS_OPT_ID_SYS_ROBOT_PROP_BACKWARD
+        },
+        [APPSYS_MACHINE_MOTION] = {
+            APPSYS_OPT_SNS_ECDR_XL_APPSIG,                     // APPSYS_OPT_ID_SNS_ECDR_XL
+            APPSYS_OPT_SNS_ECDR_XR_APPSIG,                     // APPSYS_OPT_ID_SNS_ECDR_XR
+            APPSYS_OPT_SNS_ECDR_Y_APPSIG,                      // APPSYS_OPT_ID_SNS_ECDR_Y
+            APPSYS_OPT_SNS_ECDR_Z_APPSIG,                      // APPSYS_OPT_ID_SNS_ECDR_Z
+            APPSYS_OPT_SNS_ECDR_WHL_AV_L_NEMA17,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L
+            APPSYS_OPT_SNS_ECDR_WHL_AV_R_NEMA17,               // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R
+            APPSYS_OPT_SNS_ECDR_HD_KNF_APPSIG,                 // APPSYS_OPT_ID_SNS_ECDR_HD_KNF
+            APPSYS_OPT_SNS_ECDR_HD_CNTR_KNF_APPSIG,            // APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF
+            APPSYS_OPT_SNS_ECDR_HD_HOLD_APPSIG,                // APPSYS_OPT_ID_SNS_ECDR_HD_HOLD
+            APPSYS_OPT_SNS_HD_UP_LEFT_UNUSED,                  // APPSYS_OPT_ID_SNS_HD_UP_LEFT
+            APPSYS_OPT_SNS_HD_DWN_LEFT_UNUSED,                 // APPSYS_OPT_ID_SNS_HD_DWN_LEFT
+            APPSYS_OPT_SNS_HD_UP_RIGHT_UNUSED,                 // APPSYS_OPT_ID_SNS_HD_UP_RIGHT
+            APPSYS_OPT_SNS_HD_DWN_RIGHT_UNUSED,                // APPSYS_OPT_ID_SNS_HD_DWN_RIGHT
+            APPSYS_OPT_SNS_TRQ_MTR_XL_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
+            APPSYS_OPT_SNS_TRQ_MTR_XR_APPSIG,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_XR
+            APPSYS_OPT_SNS_TRQ_MTR_Y_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Y
+            APPSYS_OPT_SNS_TRQ_MTR_Z_APPSIG,                   // APPSYS_OPT_ID_SNS_TRQ_MTR_Z
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_L_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L
+            APPSYS_OPT_SNS_TRQ_MTR_WHL_AV_R_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R
+            APPSYS_OPT_SNS_TRQ_MTR_HD_KNF_APPSIG,              // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_CNTR_KNF_APPSIG,            // APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNF
+            APPSYS_OPT_SNS_TRQ_MTR_HD_HOLD_APPSIG,             // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_XL_UNUSED,                      // APPSYS_OPT_ID_ACT_MTR_XL
+            APPSYS_OPT_ACT_MTR_XR_UNUSED,                      // APPSYS_OPT_ID_ACT_MTR_XR
+            APPSYS_OPT_ACT_MTR_Y_UNUSED,                       // APPSYS_OPT_ID_ACT_MTR_Y
+            APPSYS_OPT_ACT_MTR_Z_UNUSED,                       // APPSYS_OPT_ID_ACT_MTR_Z
+            APPSYS_OPT_ACT_MTR_WHL_AV_L_CL42T,                 // APPSYS_OPT_ID_ACT_MTR_WHL_AV_L
+            APPSYS_OPT_ACT_MTR_WHL_AV_R_CL42T,                 // APPSYS_OPT_ID_ACT_MTR_WHL_AV_R
+            APPSYS_OPT_ACT_MTR_HD_KNF_UNUSED,                  // APPSYS_OPT_ID_ACT_MTR_HD_KNF
+            APPSYS_OPT_ACT_MTR_HD_CNTR_KNF_UNUSED,             // APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF
+            APPSYS_OPT_ACT_MTR_HD_HOLD_UNUSED,                 // APPSYS_OPT_ID_ACT_MTR_HD_HOLD
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_L_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_L
+            APPSYS_OPT_ACT_MTR_PROP_WHL_AR_R_UNUSED,           // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_R
+            APPSYS_OPT_SYS_ROBOT_DIR_FORWARD_ENABLE,           // APPSYS_OPT_ID_SYS_ROBOT_DIR_FORWARD
+            APPSYS_OPT_SYS_ROBOT_DIR_BACKWARD_DISABLE,         // APPSYS_OPT_ID_SYS_ROBOT_DIR_BACKWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_FORWARD_DISABLE,         // APPSYS_OPT_ID_SYS_ROBOT_PROP_FORWARD
+            APPSYS_OPT_SYS_ROBOT_PROP_BACKWARD_ENABLE,         // APPSYS_OPT_ID_SYS_ROBOT_PROP_BACKWARD
+        },
+    };
+
+    ///@brief Variable to get/set the machine configuration
+    const t_eAPPSPM_ItemPrm c_AppSys_SysOpt_ItemPrmID_ae[APPSYS_OPT_ID_NB] = {
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_XL,                    // APPSYS_OPT_ID_SNS_ECDR_XL
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_XR,                    // APPSYS_OPT_ID_SNS_ECDR_XR
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_Y,                     // APPSYS_OPT_ID_SNS_ECDR_Y
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_Z,                     // APPSYS_OPT_ID_SNS_ECDR_Z
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_WHL_AV_L,              // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_L
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_WHL_AV_R,              // APPSYS_OPT_ID_SNS_ECDR_WHL_AV_R
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_HD_KNF,                // APPSYS_OPT_ID_SNS_ECDR_HD_KNF
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_HD_CNTR_KNF,           // APPSYS_OPT_ID_SNS_ECDR_HD_CNTR_KNF
+        APPSPM_PRM_SYS_OPT_SNS_ECDR_HD_HOLD,               // APPSYS_OPT_ID_SNS_ECDR_HD_HOLD
+        APPSPM_PRM_SYS_OPT_SNS_HD_UP_LEFT,                 // APPSYS_OPT_ID_SNS_HD_UP_LEFT
+        APPSPM_PRM_SYS_OPT_SNS_HD_DWN_LEFT,                // APPSYS_OPT_ID_SNS_HD_DWN_LEFT
+        APPSPM_PRM_SYS_OPT_SNS_HD_UP_RIGHT,                // APPSYS_OPT_ID_SNS_HD_UP_RIGHT
+        APPSPM_PRM_SYS_OPT_SNS_HD_DWN_RIGHT,               // APPSYS_OPT_ID_SNS_HD_DWN_RIGHT
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_XL,                 // APPSYS_OPT_ID_SNS_TRQ_MTR_XL
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_XR,                 // APPSYS_OPT_ID_SNS_TRQ_MTR_XR
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_Y,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_Y
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_Z,                  // APPSYS_OPT_ID_SNS_TRQ_MTR_Z
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_WHL_AV_L,           // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_L
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_WHL_AV_R,           // APPSYS_OPT_ID_SNS_TRQ_MTR_WHL_AV_R
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_HD_KNF,             // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_KNF
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_CNTR_KNF,           // APPSYS_OPT_ID_SNS_TRQ_MTR_CNTR_KNF
+        APPSPM_PRM_SYS_OPT_SNS_TRQ_MTR_HD_HOLD,            // APPSYS_OPT_ID_SNS_TRQ_MTR_HD_HOLD
+        APPSPM_PRM_SYS_OPT_ACT_MTR_XL,                     // APPSYS_OPT_ID_ACT_MTR_XL
+        APPSPM_PRM_SYS_OPT_ACT_MTR_XR,                     // APPSYS_OPT_ID_ACT_MTR_XR
+        APPSPM_PRM_SYS_OPT_ACT_MTR_Y,                      // APPSYS_OPT_ID_ACT_MTR_Y
+        APPSPM_PRM_SYS_OPT_ACT_MTR_Z,                      // APPSYS_OPT_ID_ACT_MTR_Z
+        APPSPM_PRM_SYS_OPT_ACT_MTR_WHL_AV_L,               // APPSYS_OPT_ID_ACT_MTR_WHL_AV_L
+        APPSPM_PRM_SYS_OPT_ACT_MTR_WHL_AV_R,               // APPSYS_OPT_ID_ACT_MTR_WHL_AV_R
+        APPSPM_PRM_SYS_OPT_ACT_MTR_HD_KNF,                 // APPSYS_OPT_ID_ACT_MTR_HD_KNF
+        APPSPM_PRM_SYS_OPT_ACT_MTR_HD_CNTR_KNF,            // APPSYS_OPT_ID_ACT_MTR_HD_CNTR_KNF
+        APPSPM_PRM_SYS_OPT_ACT_MTR_HD_HOLD,                // APPSYS_OPT_ID_ACT_MTR_HD_HOLD
+        APPSPM_PRM_SYS_OPT_ACT_MTR_PROP_WHL_AR_L,          // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_L
+        APPSPM_PRM_SYS_OPT_ACT_MTR_PROP_WHL_AR_R,          // APPSYS_OPT_ID_ACT_MTR_PROP_WHL_AR_R
+        APPSPM_PRM_SYS_OPT_SYS_ROBOT_DIR_FORWARD,          // APPSYS_OPT_ID_SYS_ROBOT_DIR_FORWARD
+        APPSPM_PRM_SYS_OPT_SYS_ROBOT_DIR_BACKWARD,         // APPSYS_OPT_ID_SYS_ROBOT_DIR_BACKWARD
+        APPSPM_PRM_SYS_OPT_SYS_ROBOT_PROP_FORWARD,         // APPSYS_OPT_ID_SYS_ROBOT_PROP_FORWARD
+        APPSPM_PRM_SYS_OPT_SYS_ROBOT_PROP_BACKWARD,        // APPSYS_OPT_ID_SYS_ROBOT_PROP_BACKWARD
+    };
+
+    /* CAUTION : Automatic generated code section for Variable: End */
+
+    const t_sAPPSYS_EcuPosAnaRange c_EcuPosAnaRange_as[APPSYS_ECU_POS_MAX] = {
+        {2551,      3550},
+        {2051,      2550},
+        {1551,      2050},
+        {1051,      1550},
+        {551,       1050},
+        {50,        550}
+    };
+    //********************************************************************************
+    //                      Public functions - Prototyupes
+    //********************************************************************************
+
+#endif // APPSYS_CONFIGPRIVATE_H_INCLUDED           
+//************************************************************************************
+// End of File
+//************************************************************************************
+
+/**
+ *
+ *	@brief
+ *	@note   
+ *
+ *
+ *	@params[in] 
+ *	@params[out]
+ *	 
+ *
+ *
+ */

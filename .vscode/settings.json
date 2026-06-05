@@ -107,5 +107,6 @@
   "files.associations": {
     "*.tpl": "c",
     "app_sdm.h": "c"
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }
